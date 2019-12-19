@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# temp ignores
+bin/gen-toml.py
+redirects.yml

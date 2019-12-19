@@ -1,0 +1,15 @@
+headers:
+  - for: /*
+    values:
+      Strict-Transport-Security: max-age=800
+      X-Frame-Options: DENY
+      X-From: Netlify
+      X-XSS-Protection: 1; mode=block
+refracts:
+  - https://www.mozilla.org/en-US/firefox/:
+    - firefox.com/switch
+    - www.firefox.com/switch
+  - https://www.mozilla.org/mobile/:
+    - firefox.com/mobile
+    - www.firefox.com/mobile
+    status: 302

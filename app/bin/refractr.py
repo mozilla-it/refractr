@@ -74,27 +74,26 @@ class Refract:
     def create(spec):
         assert isinstance(spec, dict), 'error: non-dict passed as spec to Refract.create'
         raw = spec.pop('raw', None)
-        src = tuplify(spec.pop('src', None))
-        rewrite = tuplify(spec.pop('rewrite', None))
-        redirect = tuplify(spec.pop('redirect', None))
+        src = spec.pop('src', None)
+        rewrite = spec.pop('rewrite', None)
+        redirect = spec.pop('redirect', None)
         status = spec.pop('status', 301)
-        ssl = spec.pop('ssl', True)
         if raw:
             return RawNginx(raw)
         if src:
             if rewrite:
                 return Rewrite(rewrite, src, status)
             elif redirect:
-                return Redirect(redirect, src, status, ssl)
+                return Redirect(redirect, src, status)
             raise RefractSpecError(spec)
         elif len(spec) == 1:
             dst, src = list(spec.items())[0]
-            return Redirect(tuplify(dst), tuplify(src), status, ssl)
+            return Redirect(dst, src, status)
         raise RefractSpecError(spec)
 
-    def __init__(self, dsts=None, srcs=None, status=None):
-        self.dsts = dsts or ()
-        self.srcs = srcs or ()
+    def __init__(self, dst=None, src=None, status=None):
+        self.dsts = tuplify(dst) or ()
+        self.srcs = tuplify(src) or ()
         self.status = status
 
     def __repr__(self):
@@ -133,9 +132,8 @@ class RawNginx(Refract):
 
 
 class Redirect(Refract):
-    def __init__(self, dsts, srcs, status, ssl):
-        super().__init__(dsts, srcs, status)
-        self.ssl = ssl
+    def __init__(self, dst, src, status):
+        super().__init__(dst, src, status)
 
     def render_ssl_redirect(self):
         return Section(
@@ -170,6 +168,8 @@ class Redirect(Refract):
 
 
 class Rewrite(Refract):
+    def __init__(self, dst, src, status):
+        super().__init__(dst, src, status)
     def render(self):
         pass
 
@@ -177,6 +177,8 @@ class Rewrite(Refract):
 def load_yaml(config):
     spec = yaml.safe_load(open(config))
     return Dict(spec)
+
+
 
 
 def main(args):

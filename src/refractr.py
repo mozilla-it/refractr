@@ -5,7 +5,6 @@ import sys
 import toml
 
 from ruamel import yaml
-from argparse import ArgumentParser
 from addict import Dict
 from urllib import parse
 from tldextract import extract
@@ -21,11 +20,8 @@ from leatherman.fuzzy import fuzzy
 from leatherman.dictionary import head, body, head_body
 from leatherman.dbg import dbg
 
-OUTPUT = ["echo", "file"]
-
-DIR = os.path.abspath(os.path.dirname(__file__) + "/..")
-CWD = os.path.abspath(os.getcwd())
-REL = os.path.relpath(DIR, CWD)
+HTTP_PORT = 8080
+HTTPS_PORT = 8443
 
 def dups(*args):
     arg, *args = args
@@ -68,6 +64,22 @@ class RefractSpecError(Exception):
         msg = f'refract spec error; spec={spec}'
         super().__init__(msg)
 
+
+class RefractrConfig:
+    def __init__(self, spec):
+        self.refracts = list(chain(*[Refract.create(spec).render() for spec in spec.refracts]))
+
+    def render(self):
+        http = Section('http', include='../conf/mime.types')
+        http.sections.add(dups('server', self.refracts))
+        events = Section('events', worker_connections='1024')
+        config = Config(
+            http,
+            events,
+            daemon='on',
+            worker_process='auto',
+            error_log='var/error.log')
+        return config
 
 class Refract:
     @staticmethod
@@ -138,27 +150,30 @@ class Redirect(Refract):
     def render_ssl_redirect(self):
         return Section(
             'server',
-            dups('listen', '80', '[::]:80'),
+            dups('listen', HTTP_PORT, f'[::]:{HTTP_PORT}'),
             kvo('server_name', join(domains(self.srcs))),
             kmvo('return', self.status, f'https://$server_name$request_uri'))
 
     def render_redirect(self):
         scheme, netloc, path, params, query, fragment = urlparse(self.src)
+        listen = dups('listen', HTTPS_PORT, f'[::]:{HTTPS_PORT}')
+        server_name = kvo('server_name', join(domains(self.srcs)))
+        return_ = kmvo('return', self.status, self.dst)
         if path:
             return Section(
                 'server',
-                dups('listen', '443', '[::]:443'),
-                kvo('server_name', join(domains(self.srcs))),
                 Location(
                     path,
-                    kmvo('return', self.status, self.dst))
+                    listen,
+                    server_name,
+                    return_)
             )
 
         return Section(
             'server',
-            dups('listen', '443', '[::]:443'),
-            kvo('server_name', join(domains(self.srcs))),
-            kmvo('return', self.status, self.dst))
+            listen,
+            server_name,
+            return_)
 
     def render(self):
         return [
@@ -170,6 +185,7 @@ class Redirect(Refract):
 class Rewrite(Refract):
     def __init__(self, dst, src, status):
         super().__init__(dst, src, status)
+
     def render(self):
         pass
 
@@ -179,34 +195,8 @@ def load_yaml(config):
     return Dict(spec)
 
 
+def refract(config=None, output=None, redirect_pns=None, **kwargs):
+    spec = load_yaml(config)
+    config = RefractrConfig(spec)
+    print(config.render())
 
-
-def main(args):
-    parser = ArgumentParser()
-    parser.add_argument(
-        "-c",
-        "--config",
-        metavar="CFG",
-        default=f"{REL}/refractr.yml",
-        help='default="%(default)s"; specify the config yaml to use',
-    )
-    parser.add_argument(
-        "-o",
-        "--output",
-        metavar="OUT",
-        default=OUTPUT[0],
-        choices=OUTPUT,
-        help='default="%(default)s"; specify one of %(choices)s',
-    )
-    parser.add_argument(
-        "redirect_pns",
-        nargs="*",
-        default=["*"],
-        help='default="%(default)s"; patterns to limit redirects',
-    )
-    ns = parser.parse_args(args)
-    config = render_nginx(**ns.__dict__)
-    print(config)
-
-if __name__ == '__main__':
-    main(sys.argv[1:])

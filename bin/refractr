@@ -1,0 +1,46 @@
+#!/usr/bin/env python3
+import os
+import sys
+
+from argparse import ArgumentParser
+from leatherman.dbg import dbg
+
+OUTPUT = ["echo", "file"]
+
+DIR = os.path.abspath(os.path.dirname(__file__) + "/..")
+CWD = os.path.abspath(os.getcwd())
+REL = os.path.relpath(DIR, CWD)
+SRC = f"{DIR}/src"
+
+sys.path.insert(0, SRC)
+
+from refractr import refract
+
+def main(args):
+    parser = ArgumentParser()
+    parser.add_argument(
+        "-c",
+        "--config",
+        metavar="CFG",
+        default=f"{REL}/refractr.yml",
+        help='default="%(default)s"; specify the config yaml to use',
+    )
+    parser.add_argument(
+        "-o",
+        "--output",
+        metavar="OUT",
+        default=OUTPUT[0],
+        choices=OUTPUT,
+        help='default="%(default)s"; specify one of %(choices)s',
+    )
+    parser.add_argument(
+        "redirect_pns",
+        nargs="*",
+        default=["*"],
+        help='default="%(default)s"; patterns to limit redirects',
+    )
+    ns = parser.parse_args(args)
+    refract(**ns.__dict__)
+
+if __name__ == '__main__':
+    main(sys.argv[1:])

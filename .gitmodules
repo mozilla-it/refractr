@@ -1,0 +1,4 @@
+[submodule "repos/nginx-config-builder"]
+	path = repos/nginx-config-builder
+	url = ssh://git@github.com/mozilla-it/nginx-config-builder
+	branch = master

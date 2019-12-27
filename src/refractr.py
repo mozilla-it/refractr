@@ -71,7 +71,7 @@ class RefractrConfig:
 
     def render(self):
         http = Section('http', include='../conf/mime.types')
-        http.sections.add(dups('server', self.refracts))
+        http.sections.add(*self.refracts)
         events = Section('events', worker_connections='1024')
         config = Config(
             http,
@@ -162,10 +162,10 @@ class Redirect(Refract):
         if path:
             return Section(
                 'server',
+                listen,
+                server_name,
                 Location(
                     path,
-                    listen,
-                    server_name,
                     return_)
             )
 

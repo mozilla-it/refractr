@@ -70,16 +70,7 @@ class RefractrConfig:
         self.refracts = list(chain(*[Refract.create(spec).render() for spec in spec.refracts]))
 
     def render(self):
-        http = Section('http', include='../conf/mime.types')
-        http.sections.add(*self.refracts)
-        events = Section('events', worker_connections='1024')
-        config = Config(
-            http,
-            events,
-            daemon='on',
-            worker_process='auto',
-            error_log='var/error.log')
-        return config
+        return '\n'.join([repr(refract) for refract in self.refracts])
 
 class Refract:
     @staticmethod

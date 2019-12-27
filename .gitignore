@@ -131,3 +131,6 @@ dmypy.json
 # temp ignores
 bin/gen-toml.py
 redirects.yml
+
+# ignore generated refractr.conf
+etc/nginx/conf.d/refractr.conf

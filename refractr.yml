@@ -6,85 +6,53 @@ headers:
       X-From: Netlify
       X-XSS-Protection: 1; mode=block
 refracts:
-  # bug 1485429, 1432228
-  - https://www.mozilla.org/en-US/firefox/:
-    - firefox.com/switch
-    - www.firefox.com/switch
-  - https://www.mozilla.org/mobile/:
-    - firefox.com/mobile
-    - www.firefox.com/mobile
-    status: 302 #FIXME: just for testing; probably remove
-
-  - https://www.mozilla.org/firefox/channel/:
-    - firefox.com/beta
-    - www.firefox.com/beta
-    - firefox.com/aurora
-    - www.firefox.com/aurora
-
-  - https://nightly.mozilla.org/:
-    - firefox.com/nightly
-    - www.firefox.com/nightly
-
-  - https://www.mozilla.org/m/:
-    - firefox.com/m
-    - www.firefox.com/m
-
-  - https://www.mozilla.org/firefox/central/:
-    - firefox.com/tour
-    - www.firefox.com/tour
-
-  # bug 870410
-  - https://www.mozilla.org/contribute/universityambassadors/:
-    - firefox.com/universityambassadors
-    - www.firefox.com/universityambassadors
-  - https://www.mozilla.org/firefox/os/?utm_source=firefox-com&utm_medium=referral&utm_content=firefox-os:
-    - firefox.com/os
-    - www.firefox.com/os
-
-  # bug 1004274
-  - https://www.mozilla.org/firefox/desktop/?utm_source=firefox-com&utm_medium=referral&utm_content=firefox-desktop:
-    - firefox.com/desktop
-    - www.firefox.com/desktop
-
-  # bug 1053356
-  - https://www.mozilla.org/firefox/android/?utm_source=firefox-com&utm_medium=referral&utm_content=firefox-android:
-    - firefox.com/android
-    - www.firefox.com/android
-
-  # bug 1091132
-  - https://www.mozilla.org/firefox/developer/?utm_source=firefox-com&utm_medium=referral&utm_content=firefox-developer:
-    - firefox.com/developer
-    - www.firefox.com/developer
-
-  # bug 1091891
-  - https://www.mozilla.org/firefox/independent/?utm_source=firefox-com&utm_medium=referral&utm_content=firefox-10:
-    - firefox.com/10
-    - www.firefox.com/10
-    - firefox.com/independent
-    - www.firefox.com/independent
-
-  # bug 1098044
-  - https://www.mozilla.org/firefox/hello/?utm_source=firefox-com&utm_medium=referral&utm_content=firefox-hello:
-    - firefox.com/hello
-    - www.firefox.com/hello
-
-  # bug 1159397
-  - https://www.mozilla.org/firefox/personal/:
-    - firefox.com/personal
-    - www.firefox.com/personal
-  - https://www.mozilla.org/firefox/personal/*:
-    - firefox.com/personal/*
-    - www.firefox.com/personal/*
-
-  # bug 1219380
-  - https://www.mozilla.org/firefox/choose/:
-    - firefox.com/choose
-    - www.firefox.com/choose
-
-  # bug 896570, 1427843
-  - https://www.mozilla.org/firefox/?utm_source=firefox-com&utm_medium=referral:
+  - src:
     - firefox.com
     - www.firefox.com
+    dst:
+      # bug 1485429, 1432228
+      /switch: https://www.mozilla.org/en-US/firefox/
+      /mobile: https://www.mozilla.org/mobile/
+
+      /beta: https://www.mozilla.org/firefox/channel/
+
+      /aurora: https://www.mozilla.org/firefox/channel/
+
+      /nightly: https://nightly.mozilla.org/
+
+      /m: https://www.mozilla.org/m/
+
+      /tour: https://www.mozilla.org/firefox/central/
+
+      # bug 870410
+      /universityambassadors: https://www.mozilla.org/contribute/universityambassadors/
+      /os: https://www.mozilla.org/firefox/os/?utm_source=firefox-com&utm_medium=referral&utm_content=firefox-os
+
+      # bug 1004274
+      /desktop: https://www.mozilla.org/firefox/desktop/?utm_source=firefox-com&utm_medium=referral&utm_content=firefox-desktop
+
+      # bug 1053356
+      /android: https://www.mozilla.org/firefox/android/?utm_source=firefox-com&utm_medium=referral&utm_content=firefox-android
+
+      # bug 1091132
+      /developer: https://www.mozilla.org/firefox/developer/?utm_source=firefox-com&utm_medium=referral&utm_content=firefox-developer
+
+      # bug 1091891
+      /10: https://www.mozilla.org/firefox/independent/?utm_source=firefox-com&utm_medium=referral&utm_content=firefox-10
+      /independant: https://www.mozilla.org/firefox/independent/?utm_source=firefox-com&utm_medium=referral&utm_content=firefox-10
+
+      # bug 1098044
+      /hello: https://www.mozilla.org/firefox/hello/?utm_source=firefox-com&utm_medium=referral&utm_content=firefox-hello
+
+      # bug 1159397
+      /personal: https://www.mozilla.org/firefox/personal/
+      /personal/*: https://www.mozilla.org/firefox/personal/*
+
+      # bug 1219380
+      /choose: https://www.mozilla.org/firefox/choose/
+
+      # bug 896570, 1427843
+      /: https://www.mozilla.org/firefox/?utm_source=firefox-com&utm_medium=referral
 
   - https://www.openwebgames.com/: openwebgames.com
 

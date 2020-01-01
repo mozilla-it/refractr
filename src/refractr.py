@@ -32,7 +32,9 @@ def kmvo(*args):
     return KeyMultiValueOption(arg, args)
 
 def tuplify(value):
-    if isinstance(value, (list, tuple)):
+    if isinstance(value, dict):
+        return value
+    elif isinstance(value, (list, tuple)):
         return tuple(value)
     elif value != None:
         return (value,)
@@ -41,7 +43,7 @@ def tuplify(value):
 def urlparse(url):
     if url.startswith('http'):
         return parse.urlparse(url)
-    return parse.urlparse(f'scheme://{url}')
+    return parse.urlparse(f'http://{url}')
 
 def domains(urls):
     return [urlparse(url)[1] for url in urls]
@@ -67,45 +69,25 @@ class RefractSpecError(Exception):
 
 class RefractrConfig:
     def __init__(self, spec):
-        self.refracts = list(chain(*[Refract.create(spec).render() for spec in spec.refracts]))
+        self.refracts = [Refract(spec) for spec in spec.refracts]
 
     def render(self):
-        return '\n'.join([repr(refract) for refract in self.refracts])
+        stanzas = list(chain(*[refract.render() for refract in self.refracts]))
+        return '\n'.join([repr(stanza) for stanza in stanzas])
 
 class Refract:
-    @staticmethod
-    def create(spec):
-        assert isinstance(spec, dict), 'error: non-dict passed as spec to Refract.create'
-        raw = spec.pop('raw', None)
-        src = spec.pop('src', None)
-        rewrite = spec.pop('rewrite', None)
-        redirect = spec.pop('redirect', None)
-        status = spec.pop('status', 301)
-        if raw:
-            return RawNginx(raw)
-        if src:
-            if rewrite:
-                return Rewrite(rewrite, src, status)
-            elif redirect:
-                return Redirect(redirect, src, status)
-            raise RefractSpecError(spec)
-        elif len(spec) == 1:
+    def __init__(self, spec):
+        assert spec and isinstance(spec, dict), 'error: non-dict or empty passed as spec'
+        nginx = spec.pop('nginx', None)
+        src = spec.get('src', None)
+        dst = spec.get('dst', None)
+        status = spec.get('status', 301)
+        if len(spec) == 1:
             dst, src = list(spec.items())[0]
-            return Redirect(dst, src, status)
-        raise RefractSpecError(spec)
-
-    def __init__(self, dst=None, src=None, status=None):
-        self.dsts = tuplify(dst) or ()
-        self.srcs = tuplify(src) or ()
+        self.nginx = nginx
+        self.srcs = tuplify(src)
+        self.dsts = tuplify(dst)
         self.status = status
-
-    def __repr__(self):
-        fields = ', '.join([
-            f'dsts={self.dsts}',
-            f'srcs={self.srcs}',
-            f'satus={self.status}',
-        ])
-        return f'{self.__class__.__name__}({fields})'
 
     @property
     def src(self):
@@ -117,68 +99,59 @@ class Refract:
         if self.dsts:
             return self.dsts[0]
 
-class RawNginx(Refract):
-    def __init__(self, raw):
-        self.raw = raw
+    @property
+    def server_name(self):
+        return join(domains(self.srcs))
 
-    def render(self):
-        class RawNginxObject:
-            def __repr__(self_):
-                return self.raw
-        return [RawNginxObject()]
+    def listen(self, port):
+        return port, f'[::]:{port}'
 
     def __repr__(self):
         fields = ', '.join([
-            f'raw={"yes" if self.raw else "no"}',
+            f'nginx={self.nginx}',
+            f'srcs={self.srcs}',
+            f'dsts={self.dsts}',
+            f'status={self.status}',
         ])
         return f'{self.__class__.__name__}({fields})'
 
-
-class Redirect(Refract):
-    def __init__(self, dst, src, status):
-        super().__init__(dst, src, status)
-
-    def render_ssl_redirect(self):
+    def render_http_to_https(self):
         return Section(
             'server',
-            dups('listen', HTTP_PORT, f'[::]:{HTTP_PORT}'),
-            kvo('server_name', join(domains(self.srcs))),
-            kmvo('return', self.status, f'https://$server_name$request_uri'))
+            kvo('server_name', self.server_name),
+            dups('listen', *self.listen(HTTP_PORT)),
+            kmvo('return', self.status, f'https://$server_name$request_uri')
+        )
 
-    def render_redirect(self):
-        scheme, netloc, path, params, query, fragment = urlparse(self.src)
-        listen = dups('listen', HTTPS_PORT, f'[::]:{HTTPS_PORT}')
-        server_name = kvo('server_name', join(domains(self.srcs)))
-        return_ = kmvo('return', self.status, self.dst)
-        if path:
+    def render_refract(self):
+        server_name = kvo('server_name', self.server_name)
+        listen = dups('listen', *self.listen(HTTPS_PORT))
+        if isinstance(self.dsts, dict):
+            locations = []
+            for path, dst in self.dsts.items():
+                locations += [Location(
+                    path,
+                    kmvo('return', self.status, dst)
+                )]
             return Section(
                 'server',
                 listen,
                 server_name,
-                Location(
-                    path,
-                    return_)
+                *locations,
             )
 
         return Section(
             'server',
             listen,
             server_name,
-            return_)
+            kmvo('return', self.status, self.dst),
+        )
 
     def render(self):
         return [
-            self.render_ssl_redirect(),
-            self.render_redirect(),
+            self.render_http_to_https(),
+            self.render_refract(),
         ]
-
-
-class Rewrite(Refract):
-    def __init__(self, dst, src, status):
-        super().__init__(dst, src, status)
-
-    def render(self):
-        pass
 
 
 def load_yaml(config):
@@ -190,4 +163,3 @@ def refract(config=None, output=None, redirect_pns=None, **kwargs):
     spec = load_yaml(config)
     config = RefractrConfig(spec)
     print(config.render())
-

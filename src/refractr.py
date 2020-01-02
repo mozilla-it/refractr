@@ -103,7 +103,6 @@ class Refract:
         domains, paths = domains_paths(srcs)
         if paths != ('',):
             dsts = dict(zip(paths, dsts))
-            print(dsts)
         self.nginx = nginx
         self.srcs = domains
         self.dsts = dsts

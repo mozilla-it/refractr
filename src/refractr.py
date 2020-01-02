@@ -8,7 +8,7 @@ from ruamel import yaml
 from addict import Dict
 from urllib import parse
 from tldextract import extract
-from itertools import chain
+from itertools import chain, product
 from collections import OrderedDict
 from nginx.config.helpers import duplicate_options
 from nginx.config.api import KeyOption as ko
@@ -22,6 +22,11 @@ from leatherman.dbg import dbg
 
 HTTP_PORT = 8080
 HTTPS_PORT = 8443
+
+class DomainPathMismatchError(Exception):
+    def __init__(self, domains, paths):
+        msg = f'domains|paths mismatch error; the product must match; domains={domains} paths={paths}'
+        super().__init__(msg)
 
 def dups(*args):
     arg, *args = args
@@ -47,6 +52,15 @@ def urlparse(url):
 
 def domains(urls):
     return [urlparse(url)[1] for url in urls]
+
+def domains_paths(urls):
+    pairs = [urlparse(url)[1:3] for url in urls]
+    domains, paths = zip(*pairs)
+    domains = tuple(set(domains))
+    paths = tuple(set(paths))
+    if sorted(pairs) == sorted(product(domains, paths)):
+        return domains, paths
+    raise DomainPathMismatchError(domains, paths)
 
 def join(items, sep=' '):
     return sep.join(items)
@@ -84,9 +98,15 @@ class Refract:
         status = spec.get('status', 301)
         if len(spec) == 1:
             dst, src = list(spec.items())[0]
+        srcs = tuplify(src)
+        dsts = tuplify(dst)
+        domains, paths = domains_paths(srcs)
+        if paths != ('',):
+            dsts = dict(zip(paths, dsts))
+            print(dsts)
         self.nginx = nginx
-        self.srcs = tuplify(src)
-        self.dsts = tuplify(dst)
+        self.srcs = domains
+        self.dsts = dsts
         self.status = status
 
     @property

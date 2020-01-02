@@ -134,3 +134,6 @@ redirects.yml
 
 # ignore generated refractr.conf
 etc/nginx/conf.d/refractr.conf
+
+# ignore doit db
+.doit.db

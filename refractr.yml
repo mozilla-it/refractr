@@ -54,18 +54,14 @@ refracts:
       # bug 896570, 1427843
       /: https://www.mozilla.org/firefox/?utm_source=firefox-com&utm_medium=referral
 
-  - https://www.openwebgames.com/: openwebgames.com
-
-  - https://air.mozilla.org/: air.mozilla.com
-
-  - https://www.mozilla.org/contribute/friends: friends.mozilla.org
-
-  # Not including m.allizom.org here because it doesn't currently work
-  - https://mana.mozilla.org/wiki/display/NAGIOS/*: m.mozilla.org/*
-
-  - https://careers.mozilla.org/:
-    - jobs.mozilla.org
-    - jobs.mozilla.com
+  # bug 537925
+  # TODO: test this works as expected / previous behavior
+  - src:
+    - contribute.mozilla.org
+    dst:
+      /index.html: http://www.mozilla.org/contribute/
+      /*: http://guides.mozilla.org/*
+      /: http://www.mozilla.org/contribute/
 
   # bug 1263033, 20170327
   - https://donate.mozilla.org/: join.mozilla.org
@@ -341,12 +337,6 @@ refracts:
     - firefox.be
     - www.firefox.be
 
-  # bug 537925
-  # TODO: test this works as expected / previous behavior
-  - http://www.mozilla.org/contribute/: contribute.mozilla.org/index.html
-  - http://guides.mozilla.org/*: contribute.mozilla.org/*
-  - http://www.mozilla.org/contribute/: contribute.mozilla.org
-
   # bug 713065
   - https://wiki.mozilla.org/MarketingGuide: guides.mozilla.org
 
@@ -369,14 +359,18 @@ refracts:
 
   # bug 1119912, 1165757, 1213900, 1200359
   # TODO: verify this works as expected / previously
-  - https://www.mozilla.org/about/partnerships/contentservices/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team: content.mozilla.org/dmexco
-  - https://www.mozilla.org/about/partnerships/contentservices/:splat/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team: content.mozilla.org/*
-  - https://www.mozilla.org/about/partnerships/contentservices/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team: content.mozilla.org
+  - src: content.mozilla.org
+    dst:
+      /dmexco: https://www.mozilla.org/about/partnerships/contentservices/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team
+      /*: https://www.mozilla.org/about/partnerships/contentservices/:splat/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team
+      /: https://www.mozilla.org/about/partnerships/contentservices/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team
 
   # bug 756358
   # TODO: verify this works as expected
-  - http://www.mozilla.org/media/dnt/dnt-enabler.tpl: dnt.mozilla.org/dnt-enabler.tpl
-  - https://www.mozilla.org/firefox/dnt/: dnt.mozilla.org
+  - src: dnt.mozilla.org
+    dst:
+      /dnt-enabler.tpl: http://www.mozilla.org/media/dnt/dnt-enabler.tpl
+      /: https://www.mozilla.org/firefox/dnt/
 
   # bug 1185027
   - https://www.contributejson.org/: contributejson.org
@@ -436,9 +430,6 @@ refracts:
 
   # bug 1301642, 1326390
   - 'https://www.mozilla.org/firefox/channel/#nightly': nightly.mozilla.org
-
-  # bug 1304806
-  - https://phonebook.mozilla.org/: phonebook.mozilla.com
 
   # bug 985510
   - https://pontoon.mozilla.org/: pontoon.mozillalabs.com
@@ -550,9 +541,6 @@ refracts:
   # bug 1502902
   - https://events.mozilla.org/techspeakers/: techspeakers.mozilla.org
 
-    # bug 1459170
-  - https://perf-html.io/: cleopatra.io
-
     # bug 1522224
   - https://testpilot.firefox.com/: contribute.testpilot.firefox.com
 
@@ -568,11 +556,13 @@ refracts:
 
   - https://www.mozilla.org/: triagebot.mozilla.org
 
-  # bug 1566155
+  # bug 1566155, 1304806
   # TODO: test this works as before
-  - https://people.mozilla.org/o: phonebook.mozilla.org/tree.php
-  - https://people.mozilla.org/s?query=:*&who=staff: phonebook.mozilla.org/*
-  - https://people.mozilla.org/: phonebook.mozilla.org
+  - src: phonebook.mozilla.org
+    dst:
+      /tree.php: https://people.mozilla.org/o
+      /*: https://people.mozilla.org/s?query=:*&who=staff
+      /: https://people.mozilla.org/
 
   - https://pad.mozilla.org/: public.etherpad-mozilla.org
 
@@ -584,9 +574,11 @@ refracts:
 
   # bug 1587941
   # TODO: test this works as before
-  - https://support.mozilla.org/products/firefox-lockwise/: lockwise.firefox.com/faq.html
-  - https://mozilla-lockwise.github.io/addon/updates.json: lockwise.firefox.com/addon/updates.json
-  - https://www.mozilla.org/firefox/lockwise/: lockwise.firefox.com
+  - src: lockwise.firefox.com
+    dst:
+      /faq.html: https://support.mozilla.org/products/firefox-lockwise/
+      /addon/updates.json: https://mozilla-lockwise.github.io/addon/updates.json
+      /: https://www.mozilla.org/firefox/lockwise/
 
   - https://www.mozilla.org/firefox/lockwise/: lockbox.firefox.com
 

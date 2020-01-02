@@ -154,15 +154,15 @@ class Refract:
                 )]
             return Section(
                 'server',
-                listen,
                 server_name,
+                listen,
                 *locations,
             )
 
         return Section(
             'server',
-            listen,
             server_name,
+            listen,
             kmvo('return', self.status, self.dst),
         )
 

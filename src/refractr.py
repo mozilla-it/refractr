@@ -20,8 +20,8 @@ from leatherman.fuzzy import fuzzy
 from leatherman.dictionary import head, body, head_body
 from leatherman.dbg import dbg
 
-HTTP_PORT = 8080
-HTTPS_PORT = 8443
+HTTP_PORT = 80
+HTTPS_PORT = 443
 
 class DomainPathMismatchError(Exception):
     def __init__(self, domains, paths):

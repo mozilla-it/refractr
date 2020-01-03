@@ -20,3 +20,13 @@ def task_build():
             'docker build . -t refractr',
         ],
     }
+
+def task_test():
+    return {
+        'task_dep': [
+            'build',
+        ],
+        'actions': [
+            'docker run -it refractr nginx -t'
+        ],
+    }

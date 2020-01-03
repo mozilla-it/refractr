@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: refractr
+  namespace: refractr-stage
+  labels:
+    app: refractr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: refractr
+  template:
+    metadata:
+      labels:
+        app: refractr
+    spec:
+      containers:
+        - name: refractr-web
+          image: itsre/refractr:dev
+          ports:
+            - containerPort: 8000
+          envFrom:
+          - configMapRef:
+              name: refractr-stage
+          - secretRef:
+              name: refractr-stage

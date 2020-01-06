@@ -20,9 +20,10 @@ spec:
         - name: refractr-web
           image: itsre/refractr:dev
           ports:
-            - containerPort: 8000
-          envFrom:
-          - configMapRef:
-              name: refractr-stage
-          - secretRef:
-              name: refractr-stage
+            - containerPort: 80
+            - containerPort: 443
+              #          envFrom:
+              #          - configMapRef:
+              #              name: refractr-stage
+              #          - secretRef:
+              #              name: refractr-stage

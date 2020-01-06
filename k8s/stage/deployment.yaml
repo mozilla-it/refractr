@@ -6,6 +6,8 @@ metadata:
   namespace: refractr-stage
   labels:
     app: refractr
+  annotations:
+    fluxcd.io/automated: "true"
 spec:
   replicas: 1
   selector:

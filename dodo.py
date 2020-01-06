@@ -27,6 +27,7 @@ def task_test():
             'build',
         ],
         'actions': [
-            'docker run -it refractr nginx -t'
+            'docker run -it refractr nginx -t',
+            'python3 -m py.test'
         ],
     }

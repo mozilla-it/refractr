@@ -1,8 +1,8 @@
 # FROM nginx:alpine #FIXME before production
 FROM nginx
 
-EXPOSE 8080
-EXPOSE 8443
+EXPOSE 80
+EXPOSE 443
 
 COPY etc/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY etc/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf

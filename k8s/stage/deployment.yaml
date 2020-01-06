@@ -8,6 +8,7 @@ metadata:
     app: refractr
   annotations:
     fluxcd.io/automated: "true"
+    fluxcd.io/tag.app: glob:dev-*
 spec:
   replicas: 1
   selector:
@@ -24,8 +25,3 @@ spec:
           ports:
             - containerPort: 80
             - containerPort: 443
-              #          envFrom:
-              #          - configMapRef:
-              #              name: refractr-stage
-              #          - secretRef:
-              #              name: refractr-stage

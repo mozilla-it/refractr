@@ -4,21 +4,28 @@ import os
 import sys
 import toml
 
+from urllib import parse
+from itertools import chain, product
 from ruamel import yaml
 from addict import Dict
-from urllib import parse
-from tldextract import extract
-from itertools import chain, product
 from collections import OrderedDict
 from nginx.config.helpers import duplicate_options
 from nginx.config.api import KeyOption as ko
 from nginx.config.api import KeyValueOption as kvo
-from nginx.config.api import KeyMultiValueOption
-from nginx.config.api import Config, Section, Location
+from nginx.config.api import Config, Section, Location, KeyMultiValueOption
 
 from leatherman.fuzzy import fuzzy
 from leatherman.dictionary import head, body, head_body
 from leatherman.dbg import dbg
+
+def setup_yaml():
+    """ https://stackoverflow.com/a/8661021 """
+    represent_dict_order = lambda self, data: self.represent_mapping(
+        "tag:yaml.org,2002:map", data.items()
+    )
+    yaml.add_representer(OrderedDict, represent_dict_order)
+
+setup_yaml()
 
 HTTP_PORT = 80
 HTTPS_PORT = 443
@@ -28,6 +35,14 @@ class DomainPathMismatchError(Exception):
         msg = f'domains|paths mismatch error; the product must match; domains={domains} paths={paths}'
         super().__init__(msg)
 
+class RefractSpecError(Exception):
+    def __init__(self, spec):
+        msg = f'refract spec error; spec={spec}'
+        super().__init__(msg)
+
+def join(items, sep=' '):
+    return sep.join(items)
+
 def dups(*args):
     arg, *args = args
     return duplicate_options(arg, args)
@@ -35,15 +50,6 @@ def dups(*args):
 def kmvo(*args):
     arg, *args = args
     return KeyMultiValueOption(arg, args)
-
-def tuplify(value):
-    if isinstance(value, dict):
-        return value
-    elif isinstance(value, (list, tuple)):
-        return tuple(value)
-    elif value != None:
-        return (value,)
-    return value
 
 def urlparse(url):
     if url.startswith('http'):
@@ -62,61 +68,58 @@ def domains_paths(urls):
         return domains, paths
     raise DomainPathMismatchError(domains, paths)
 
-def join(items, sep=' '):
-    return sep.join(items)
+def tuplify(value):
+    if isinstance(value, dict):
+        return value
+    elif isinstance(value, (list, tuple)):
+        return tuple(value)
+    elif value != None:
+        return (value,)
+    return value
 
-def setup_yaml():
-    """ https://stackoverflow.com/a/8661021 """
-    represent_dict_order = lambda self, data: self.represent_mapping(
-        "tag:yaml.org,2002:map", data.items()
-    )
-    yaml.add_representer(OrderedDict, represent_dict_order)
+def load_refract(spec):
+    dst = spec.pop('dst', None)
+    src = spec.pop('src', None)
+    nginx = spec.pop('nginx', None)
+    tests = spec.pop('tests', {})
+    status = spec.pop('status', 301)
+    if len(spec) == 1:
+        dst, src = list(spec.items())[0]
+    srcs = tuplify(src)
+    for src in srcs:
+        given = f'http://{src}'
+        try:
+            for loc, dst_ in dst.items():
+                tests[f'{given}{loc}'] = dst_
+        except AttributeError:
+            tests[given] = dst
+    return dict(dst=dst, srcs=srcs, nginx=nginx, tests=tests, status=status)
 
-setup_yaml()
-
-
-class RefractSpecError(Exception):
-    def __init__(self, spec):
-        msg = f'refract spec error; spec={spec}'
-        super().__init__(msg)
-
+def load_spec(config):
+    spec = yaml.safe_load(open(config))
+    spec['refracts'] = [load_refract(refract) for refract in spec['refracts']]
+    return Dict(spec)
 
 class RefractrConfig:
     def __init__(self, spec):
-        self.refracts = [Refract(spec) for spec in spec.refracts]
+        self.refracts = [Refract(**spec) for spec in spec.refracts]
 
     def render(self):
         stanzas = list(chain(*[refract.render() for refract in self.refracts]))
         return '\n'.join([repr(stanza) for stanza in stanzas])
 
 class Refract:
-    def __init__(self, spec):
-        assert spec and isinstance(spec, dict), 'error: non-dict or empty passed as spec'
-        nginx = spec.pop('nginx', None)
-        src = spec.get('src', None)
-        dst = spec.get('dst', None)
-        status = spec.get('status', 301)
-        if len(spec) == 1:
-            dst, src = list(spec.items())[0]
-        srcs = tuplify(src)
-        dsts = tuplify(dst)
-        domains, paths = domains_paths(srcs)
-        if paths != ('',):
-            dsts = dict(zip(paths, dsts))
+    def __init__(self, dst=None, srcs=None, nginx=None, tests=None, status=None):
+        self.dst = dst
+        self.srcs = srcs
         self.nginx = nginx
-        self.srcs = domains
-        self.dsts = dsts
+        self.tests = tests
         self.status = status
 
     @property
     def src(self):
         if self.srcs:
             return self.srcs[0]
-
-    @property
-    def dst(self):
-        if self.dsts:
-            return self.dsts[0]
 
     @property
     def server_name(self):
@@ -127,9 +130,10 @@ class Refract:
 
     def __repr__(self):
         fields = ', '.join([
-            f'nginx={self.nginx}',
+            f'dst={self.dst}',
             f'srcs={self.srcs}',
-            f'dsts={self.dsts}',
+            f'nginx={self.nginx}',
+            f'tests={self.tests}',
             f'status={self.status}',
         ])
         return f'{self.__class__.__name__}({fields})'
@@ -145,9 +149,9 @@ class Refract:
     def render_refract(self):
         server_name = kvo('server_name', self.server_name)
         listen = dups('listen', *self.listen(HTTPS_PORT))
-        if isinstance(self.dsts, dict):
+        if isinstance(self.dst, dict):
             locations = []
-            for path, dst in self.dsts.items():
+            for path, dst in self.dst.items():
                 locations += [Location(
                     path,
                     kmvo('return', self.status, dst)
@@ -173,12 +177,7 @@ class Refract:
         ]
 
 
-def load_yaml(config):
-    spec = yaml.safe_load(open(config))
-    return Dict(spec)
-
-
 def refract(config=None, output=None, redirect_pns=None, **kwargs):
-    spec = load_yaml(config)
+    spec = load_spec(config)
     config = RefractrConfig(spec)
     print(config.render())

@@ -8,7 +8,7 @@ metadata:
     app: refractr
   annotations:
     fluxcd.io/automated: "true"
-    fluxcd.io/tag.app: glob:dev-*
+    fluxcd.io/tag.refractr-web: glob:dev-*
 spec:
   replicas: 1
   selector:

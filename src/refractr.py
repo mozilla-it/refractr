@@ -7,7 +7,6 @@ import toml
 from urllib import parse
 from itertools import chain, product
 from ruamel import yaml
-from addict import Dict
 from collections import OrderedDict
 from nginx.config.helpers import duplicate_options
 from nginx.config.api import KeyOption as ko
@@ -68,41 +67,9 @@ def domains_paths(urls):
         return domains, paths
     raise DomainPathMismatchError(domains, paths)
 
-def tuplify(value):
-    if isinstance(value, dict):
-        return value
-    elif isinstance(value, (list, tuple)):
-        return tuple(value)
-    elif value != None:
-        return (value,)
-    return value
-
-def load_refract(spec):
-    dst = spec.pop('dst', None)
-    src = spec.pop('src', None)
-    nginx = spec.pop('nginx', None)
-    tests = spec.pop('tests', {})
-    status = spec.pop('status', 301)
-    if len(spec) == 1:
-        dst, src = list(spec.items())[0]
-    srcs = tuplify(src)
-    for src in srcs:
-        given = f'http://{src}'
-        try:
-            for loc, dst_ in dst.items():
-                tests[f'{given}{loc}'] = dst_
-        except AttributeError:
-            tests[given] = dst
-    return dict(dst=dst, srcs=srcs, nginx=nginx, tests=tests, status=status)
-
-def load_spec(config):
-    spec = yaml.safe_load(open(config))
-    spec['refracts'] = [load_refract(refract) for refract in spec['refracts']]
-    return Dict(spec)
-
 class RefractrConfig:
     def __init__(self, spec):
-        self.refracts = [Refract(**spec) for spec in spec.refracts]
+        self.refracts = [Refract(**spec) for spec in spec['refracts']]
 
     def render(self):
         stanzas = list(chain(*[refract.render() for refract in self.refracts]))
@@ -176,8 +143,38 @@ class Refract:
             self.render_refract(),
         ]
 
+def tuplify(value):
+    if isinstance(value, dict):
+        return value
+    elif isinstance(value, (list, tuple)):
+        return tuple(value)
+    elif value != None:
+        return (value,)
+    return value
+
+def load_refract(spec):
+    dst = spec.pop('dst', None)
+    src = spec.pop('src', None)
+    nginx = spec.pop('nginx', None)
+    tests = spec.pop('tests', {})
+    status = spec.pop('status', 301)
+    if len(spec) == 1:
+        dst, src = list(spec.items())[0]
+    srcs = tuplify(src)
+    for src in srcs:
+        given = f'http://{src}'
+        try:
+            for loc, dst_ in dst.items():
+                tests[f'{given}{loc}'] = dst_
+        except AttributeError:
+            tests[given] = dst
+    return dict(dst=dst, srcs=srcs, nginx=nginx, tests=tests, status=status)
+
+def load_refractr_config(config):
+    spec = yaml.safe_load(open(config))
+    spec['refracts'] = [load_refract(refract) for refract in spec['refracts']]
+    return RefractrConfig(spec)
 
 def refract(config=None, output=None, redirect_pns=None, **kwargs):
-    spec = load_spec(config)
-    config = RefractrConfig(spec)
+    config = load_refractr_config(config)
     print(config.render())

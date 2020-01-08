@@ -1,9 +1,9 @@
 language: python
 service:
-- docker
+ - docker
 script:
-  docker login -u "${DOCKER_USER}" -p "${DOCKER_PASSWORD}"
-  docker build -t itsre/refractr:$TRAVIS_COMMIT .
+  - docker login -u "${DOCKER_USER}" -p "${DOCKER_PASSWORD}"
+  - docker build -t itsre/refractr:$TRAVIS_COMMIT .
 env:
   global:
   - secure: WzfRonZ0EGZRZR16C5KTuJgzbW3fFjAPYW5H9bTIAgM3pfVFNKP7hbTvL7lcpEzEuixjmqNPH59Q4jJi1qtgqHXZj9I4+xhd2/FskwWukg/Am5TQy1fr6WcbEkit97vZokDfaCanmL9RR0IXEdhkf2QmM5Uy2CoyXqmJCi3IxXu+cpTjW53rxW2eFmpE0CrQo/Jgu+wqr25SiCvTjqMInDYxK1vHwocN3zGQ1iEZlwfbTqi6bYCSQBhqeTBmOpEA2N3SOspRalFotqRAyaOarqgBlgPPfe9xs8wwxdO6sp30K3w3rm2gCCVrNbkgkIzDr1pFVIR6s1GLhdESGNIMBu1mNJA0DBxcCCYBGTWIGI/mdO9/Mz0csO8xadI4TU3dNAJcppZfnXbAPT40M628YuZbkNd7kfnGP9rq6Evc/2cMSVG63ud0L9w/Z3Xf+HiseLwp2m8QWU7JEbHKu84NjBdj9mmJyu/zkf2J8iUZXffIvSjR4LLR731ODCfKdZqzzjhxk6SzarwHSk6lCJE0Ul/FF4CZ5feRiRnKipFWnah3UOsi4nDpX34hXueQPfS/GPBRUNfQvCs9XOzug79nUxyqpF0Qx/pt8rRjXlklb1Kunc3hH8y6uQSRORwJ11zFy2ABVcWnQBHEaBkBlv4GFP4Ins/tT02YnTJTpluWbHM=

@@ -1,0 +1,6 @@
+language: python
+python:
+- '3.7'
+- pypy
+script:
+    docker build -t itsre/refractr:$TRAVIS_COMMIT .

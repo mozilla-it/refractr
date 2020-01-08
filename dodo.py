@@ -32,7 +32,7 @@ def task_drun():
             'build',
         ],
         'actions': [
-                f'docker rm -f {CONTAINER}',
+                f'[ "$(docker ps | grep {CONTAINER})" ] && docker rm -f {CONTAINER} || true',
             LongRunning(
                 f'nohup docker run -d -p 80:80 -p 443:443 --name {CONTAINER} {IMAGE}  > /dev/null &'),
         ],

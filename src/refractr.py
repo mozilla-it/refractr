@@ -110,7 +110,7 @@ class Refract:
             'server',
             kvo('server_name', self.server_name),
             dups('listen', *self.listen(HTTP_PORT)),
-            kmvo('return', self.status, f'https://$server_name$request_uri')
+            kmvo('return', self.status, f'https://$host$request_uri')
         )
 
     def render_refract(self):
@@ -170,11 +170,11 @@ def load_refract(spec):
             tests[given] = dst
     return dict(dst=dst, srcs=srcs, nginx=nginx, tests=tests, status=status)
 
-def load_refractr_config(config):
+def load_refractr(config):
     spec = yaml.safe_load(open(config))
     spec['refracts'] = [load_refract(refract) for refract in spec['refracts']]
     return RefractrConfig(spec)
 
 def refract(config=None, output=None, redirect_pns=None, **kwargs):
-    config = load_refractr_config(config)
-    print(config.render())
+    refracrt = load_refractr(config)
+    print(refracrt.render())

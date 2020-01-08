@@ -45,7 +45,7 @@ def task_test():
             'drun',
         ],
         'actions': [
-            'docker ps',
+            'sleep 1',
             f'docker exec {CONTAINER} nginx -t',
             'PYTHONPATH=./src python3 -m py.test -vv -q',
         ],

@@ -1,0 +1,14 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: refractr
+  namespace: refractr-prod
+spec:
+  template:
+    spec:
+      $setElementOrder/containers:
+      - name: refractr-web
+      containers:
+      - image: itsre/refractr:dev-1.2
+        name: refractr-web

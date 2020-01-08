@@ -1,6 +1,8 @@
 language: python
+service:
+  - docker
 python:
 - '3.7'
 - pypy
 script:
-    docker build -t itsre/refractr:$TRAVIS_COMMIT .
+    ocker build -t itsre/refractr:$TRAVIS_COMMIT .

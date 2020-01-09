@@ -9,38 +9,41 @@ from refractr import load_refractr, Refract, urlparse
 
 from leatherman.dbg import dbg
 
+LOCALHOST = '127.0.0.1'
 REFRACTR_YML = os.environ.get('REFRACTR_YML', './refractr.yml')
 
 refractr = load_refractr(REFRACTR_YML)
 
-def _test_redirect(src, dst, status, localhost='127.0.0.1'):
+def replace(pr, **kwargs):
+    return ParseResult(
+        scheme=kwargs.get('scheme', pr.scheme),
+        netloc=kwargs.get('netloc', pr.netloc),
+        path=kwargs.get('path', pr.path),
+        params=kwargs.get('params', pr.params),
+        query=kwargs.get('query', pr.query),
+        fragment=kwargs.get('fragment', pr.fragment))
+
+def _validate_hop(given, expect, headers, status):
+    response = requests.get(given.geturl(), headers=headers, allow_redirects=False)
+    dbg(response)
+    assert response.status_code == status
+    location = urlparse(response.headers['Location'])
+    assert location == expect
+    return location
+
+def _test_http_to_https(url, status):
+    headers = {
+        'Host': url.netloc
+    }
+    given = replace(url, netloc=LOCALHOST)
+    expect = replace(url, scheme='https', path=url.path or '/')
+    location = _validate_hop(given, expect, headers, status)
+
+def _test_redirect(src, dst, status):
     given = urlparse(src)
     expect = urlparse(dst)
-    headers = {
-        'Host': given.netloc
-    }
-    if given.scheme == 'http': # and expect.scheme == 'https':
-        given1 = ParseResult(
-            scheme=given.scheme,
-            netloc=localhost,
-            path=given.path,
-            params=given.params,
-            query=given.query,
-            fragment=given.fragment)
-        expect1 = ParseResult(
-            scheme='https',
-            netloc=given.netloc,
-            path=given.path or '/', # ensure trailing /
-            params=given.params,
-            query=given.query,
-            fragment=given.fragment)
-        r1 = requests.get(given1.geturl(), headers=headers, allow_redirects=False)
-        assert r1.status_code == status
-        location = urlparse(r1.headers['Location'])
-        dbg(given)
-        dbg(expect1)
-        dbg(location)
-        assert location == expect1
+    if given.scheme == 'http' and expect.scheme == 'https':
+       location = _test_http_to_https(given, status)
 
 @pytest.mark.parametrize('refract', refractr.refracts)
 def test_refractr(refract):

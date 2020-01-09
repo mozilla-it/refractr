@@ -4,3 +4,4 @@ ruamel.yaml
 leatherman==0.1.5
 pytest==5.3.2
 nginx-config-builder==1.0.1
+requests=2.22.0

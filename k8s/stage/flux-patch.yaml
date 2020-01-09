@@ -10,5 +10,5 @@ spec:
       $setElementOrder/containers:
       - name: refractr-web
       containers:
-      - image: itsre/refractr:7f8036e5b26758729841a6738f21674da727538c
+      - image: itsre/refractr:3153ae2de540cfcbb19e01bf8758ef3625e1d072
         name: refractr-web

@@ -14,6 +14,7 @@ from nginx.config.api import KeyValueOption as kvo
 from nginx.config.api import Config, Section, Location, KeyMultiValueOption
 
 from leatherman.fuzzy import fuzzy
+from leatherman.yaml import yaml_format
 from leatherman.dictionary import head, body, head_body
 from leatherman.dbg import dbg
 
@@ -95,6 +96,18 @@ class Refract:
     def listen(self, port):
         return port, f'[::]:{port}'
 
+    def __str__(self):
+        json = dict(tests=self.tests)
+        if self.nginx:
+            json.update(dict(nginx=self.nginx))
+        else:
+            json = dict(srcs=self.srcs, dst=self.dst, status=self.status, tests=self.tests)
+            json.update(dict(
+                srcs=self.srcs,
+                dst=self.dst,
+                status=self.status))
+        return yaml_format(json)
+
     def __repr__(self):
         fields = ', '.join([
             f'dst={self.dst}',
@@ -143,13 +156,13 @@ class Refract:
             self.render_refract(),
         ]
 
-def tuplify(value):
+def listify(value):
     if isinstance(value, dict):
         return value
     elif isinstance(value, (list, tuple)):
-        return tuple(value)
+        return list(value)
     elif value != None:
-        return (value,)
+        return [value]
     return value
 
 def load_refract(spec):
@@ -160,7 +173,7 @@ def load_refract(spec):
     status = spec.pop('status', 301)
     if len(spec) == 1:
         dst, src = list(spec.items())[0]
-    srcs = tuplify(src)
+    srcs = listify(src)
     for src in srcs:
         given = f'http://{src}'
         try:

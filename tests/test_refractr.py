@@ -9,6 +9,7 @@ from refractr import load_refractr, Refract, urlparse
 
 from leatherman.dbg import dbg
 
+NL_TAB = '\n  '
 LOCALHOST = '127.0.0.1'
 REFRACTR_YML = os.environ.get('REFRACTR_YML', './refractr.yml')
 
@@ -58,7 +59,6 @@ def _test_redirect(src, dst, status):
 def test_refractr(refract):
     assert isinstance(refract, Refract)
     assert refract.tests
-    print('\n  tests:')
+    print(NL_TAB+NL_TAB.join(str(refract).split('\n')))
     for src, dst in refract.tests.items():
-        print(f'  - {src} -> {dst}')
         _test_redirect(src, dst, refract.status)

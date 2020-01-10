@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 
 from doit.tools import LongRunning
+from subprocess import check_output
 
+VERSION = check_output('git describe --match v* --abbrev=7', shell=True).decode('utf-8').strip()
 IMAGE = 'refractr'
 CONTAINER = 'refractr-test'
 
 DOIT_CONFIG = {
+    'default_tasks': ['test'],
     'verbosity': 2,
 }
 
@@ -22,7 +25,7 @@ def task_build():
             'generate',
         ],
         'actions': [
-            f'docker build . -t {IMAGE}',
+            f'docker build . -t {IMAGE}:{VERSION}',
         ],
     }
 
@@ -34,7 +37,7 @@ def task_drun():
         'actions': [
                 f'[ "$(docker ps | grep {CONTAINER})" ] && docker rm -f {CONTAINER} || true',
             LongRunning(
-                f'nohup docker run -d -p 80:80 -p 443:443 --name {CONTAINER} {IMAGE}  > /dev/null &'),
+                f'nohup docker run -d -p 80:80 -p 443:443 --name {CONTAINER} {IMAGE}:{VERSION} > /dev/null &'),
         ],
     }
 

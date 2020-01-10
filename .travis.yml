@@ -7,13 +7,13 @@ branches:
   - flux-sync-refractr-stage
 install:
   - git fetch --unshallow --tags
-  - VERSION=$(git describe --match v* --abbrev=7)
+  - VERSION=$(git describe --match "v*" --abbrev=7)
   - pip install doit
   - pip install -r requirements.txt
 script:
   - doit test
-  - docker login -u "${DOCKER_USER}" -p "${DOCKER_PASSWORD}"
   - echo $VERSION
+  - docker login -u "${DOCKER_USER}" -p "${DOCKER_PASSWORD}"
   - docker push "itsre/refractr:$VERSION"
 env:
   global:

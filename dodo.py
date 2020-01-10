@@ -3,9 +3,9 @@
 from doit.tools import LongRunning
 from subprocess import check_output
 
-VERSION = check_output('git describe --match v* --abbrev=7', shell=True).decode('utf-8').strip()
-IMAGE = 'refractr'
+IMAGE = 'itsre/refractr'
 CONTAINER = 'refractr-test'
+VERSION = check_output('git describe --match "v*" --abbrev=7', shell=True).decode('utf-8').strip()
 
 DOIT_CONFIG = {
     'default_tasks': ['test'],

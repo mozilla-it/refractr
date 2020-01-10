@@ -13,7 +13,7 @@ install:
 script:
   - doit test
   - echo $VERSION
-  - echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USER}" --password-stdin
+  - echo "${DOCKER_PASSWORD}" | docker login --username "${DOCKER_USER}" --password-stdin
   - docker push "itsre/refractr:$VERSION"
 env:
   global:

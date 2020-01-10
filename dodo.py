@@ -47,6 +47,6 @@ def task_test():
         'actions': [
             'sleep 1',
             f'docker exec {CONTAINER} nginx -t',
-            'PYTHONPATH=./src python3 -m pytest -vv -q',
+            'PYTHONPATH=./src python3 -m pytest -vv -q -s',
         ],
     }

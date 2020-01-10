@@ -58,5 +58,7 @@ def _test_redirect(src, dst, status):
 def test_refractr(refract):
     assert isinstance(refract, Refract)
     assert refract.tests
+    print('\n  tests:')
     for src, dst in refract.tests.items():
+        print(f'  - {src} -> {dst}')
         _test_redirect(src, dst, refract.status)

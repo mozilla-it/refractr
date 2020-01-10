@@ -13,6 +13,7 @@ install:
 script:
   - doit test
   - echo $VERSION
+  - echo DOCKER_USER="$DOCKER_USER"
   - [ -z "$DOCKER_USER" ] && echo "DOCKER_USER empty"
   - [ -z "$DOCKER_PASSWORD" ] && echo "DOCKER_PASSWORD empty"
   - echo "${DOCKER_PASSWORD}" | docker login --username "${DOCKER_USER}" --password-stdin

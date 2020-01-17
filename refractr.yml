@@ -11,57 +11,57 @@ refracts:
     - www.firefox.com
     dst:
       # bug 1485429, 1432228
-      /switch: https://www.mozilla.org/en-US/firefox/
-      /mobile: https://www.mozilla.org/mobile/
+    - /switch: https://www.mozilla.org/en-US/firefox/
+    - /mobile: https://www.mozilla.org/mobile/
 
-      /beta: https://www.mozilla.org/firefox/channel/
+    - /beta: https://www.mozilla.org/firefox/channel/
 
-      /aurora: https://www.mozilla.org/firefox/channel/
+    - /aurora: https://www.mozilla.org/firefox/channel/
 
-      /nightly: https://nightly.mozilla.org/
+    - /nightly: https://nightly.mozilla.org/
 
-      /m: https://www.mozilla.org/m/
+    - /m: https://www.mozilla.org/m/
 
-      /tour: https://www.mozilla.org/firefox/central/
+    - /tour: https://www.mozilla.org/firefox/central/
 
       # bug 870410
-      /universityambassadors: https://www.mozilla.org/contribute/universityambassadors/
-      /os: https://www.mozilla.org/firefox/os/?utm_source=firefox-com&utm_medium=referral&utm_content=firefox-os
+    - /universityambassadors: https://www.mozilla.org/contribute/universityambassadors/
+    - /os: https://www.mozilla.org/firefox/os/?utm_source=firefox-com&utm_medium=referral&utm_content=firefox-os
 
       # bug 1004274
-      /desktop: https://www.mozilla.org/firefox/desktop/?utm_source=firefox-com&utm_medium=referral&utm_content=firefox-desktop
+    - /desktop: https://www.mozilla.org/firefox/desktop/?utm_source=firefox-com&utm_medium=referral&utm_content=firefox-desktop
 
       # bug 1053356
-      /android: https://www.mozilla.org/firefox/android/?utm_source=firefox-com&utm_medium=referral&utm_content=firefox-android
+    - /android: https://www.mozilla.org/firefox/android/?utm_source=firefox-com&utm_medium=referral&utm_content=firefox-android
 
       # bug 1091132
-      /developer: https://www.mozilla.org/firefox/developer/?utm_source=firefox-com&utm_medium=referral&utm_content=firefox-developer
+    - /developer: https://www.mozilla.org/firefox/developer/?utm_source=firefox-com&utm_medium=referral&utm_content=firefox-developer
 
       # bug 1091891
-      /10: https://www.mozilla.org/firefox/independent/?utm_source=firefox-com&utm_medium=referral&utm_content=firefox-10
-      /independant: https://www.mozilla.org/firefox/independent/?utm_source=firefox-com&utm_medium=referral&utm_content=firefox-10
+    - /10: https://www.mozilla.org/firefox/independent/?utm_source=firefox-com&utm_medium=referral&utm_content=firefox-10
+    - /independant: https://www.mozilla.org/firefox/independent/?utm_source=firefox-com&utm_medium=referral&utm_content=firefox-10
 
       # bug 1098044
-      /hello: https://www.mozilla.org/firefox/hello/?utm_source=firefox-com&utm_medium=referral&utm_content=firefox-hello
+    - /hello: https://www.mozilla.org/firefox/hello/?utm_source=firefox-com&utm_medium=referral&utm_content=firefox-hello
 
       # bug 1159397
-      /personal: https://www.mozilla.org/firefox/personal/
-      /personal/*: https://www.mozilla.org/firefox/personal/*
+    - /personal: https://www.mozilla.org/firefox/personal/
+    - /personal/*: https://www.mozilla.org/firefox/personal/*
 
       # bug 1219380
-      /choose: https://www.mozilla.org/firefox/choose/
+    - /choose: https://www.mozilla.org/firefox/choose/
 
       # bug 896570, 1427843
-      /: https://www.mozilla.org/firefox/?utm_source=firefox-com&utm_medium=referral
+    - /: https://www.mozilla.org/firefox/?utm_source=firefox-com&utm_medium=referral
 
   # bug 537925
   # TODO: test this works as expected / previous behavior
   - src:
     - contribute.mozilla.org
     dst:
-      /index.html: http://www.mozilla.org/contribute/
-      /*: http://guides.mozilla.org/*
-      /: http://www.mozilla.org/contribute/
+    - /index.html: http://www.mozilla.org/contribute/
+    - /*: http://guides.mozilla.org/*
+    - /: http://www.mozilla.org/contribute/
 
   # bug 1263033, 20170327
   - https://donate.mozilla.org/: join.mozilla.org
@@ -361,16 +361,16 @@ refracts:
   # TODO: verify this works as expected / previously
   - src: content.mozilla.org
     dst:
-      /dmexco: https://www.mozilla.org/about/partnerships/contentservices/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team
-      /*: https://www.mozilla.org/about/partnerships/contentservices/:splat/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team
-      /: https://www.mozilla.org/about/partnerships/contentservices/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team
+    - /dmexco: https://www.mozilla.org/about/partnerships/contentservices/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team
+    - /*: https://www.mozilla.org/about/partnerships/contentservices/:splat/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team
+    - /: https://www.mozilla.org/about/partnerships/contentservices/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team
 
   # bug 756358
   # TODO: verify this works as expected
   - src: dnt.mozilla.org
     dst:
-      /dnt-enabler.tpl: http://www.mozilla.org/media/dnt/dnt-enabler.tpl
-      /: https://www.mozilla.org/firefox/dnt/
+    - /dnt-enabler.tpl: http://www.mozilla.org/media/dnt/dnt-enabler.tpl
+    - /: https://www.mozilla.org/firefox/dnt/
 
   # bug 1185027
   - https://www.contributejson.org/: contributejson.org
@@ -560,9 +560,9 @@ refracts:
   # TODO: test this works as before
   - src: phonebook.mozilla.org
     dst:
-      /tree.php: https://people.mozilla.org/o
-      /*: https://people.mozilla.org/s?query=:*&who=staff
-      /: https://people.mozilla.org/
+    - /tree.php: https://people.mozilla.org/o
+    - /*: https://people.mozilla.org/s?query=:*&who=staff
+    - /: https://people.mozilla.org/
 
   - https://pad.mozilla.org/: public.etherpad-mozilla.org
 
@@ -576,9 +576,9 @@ refracts:
   # TODO: test this works as before
   - src: lockwise.firefox.com
     dst:
-      /faq.html: https://support.mozilla.org/products/firefox-lockwise/
-      /addon/updates.json: https://mozilla-lockwise.github.io/addon/updates.json
-      /: https://www.mozilla.org/firefox/lockwise/
+    - /faq.html: https://support.mozilla.org/products/firefox-lockwise/
+    - /addon/updates.json: https://mozilla-lockwise.github.io/addon/updates.json
+    - /: https://www.mozilla.org/firefox/lockwise/
 
   - https://www.mozilla.org/firefox/lockwise/: lockbox.firefox.com
 

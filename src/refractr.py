@@ -35,6 +35,11 @@ class DomainPathMismatchError(Exception):
         msg = f'domains|paths mismatch error; the product must match; domains={domains} paths={paths}'
         super().__init__(msg)
 
+class LoadRefractError(Exception):
+    def __init__(self, dst):
+        msg = f'load refract error; dst={dst}'
+        super().__init__(msg)
+
 class RefractSpecError(Exception):
     def __init__(self, spec):
         msg = f'refract spec error; spec={spec}'
@@ -55,6 +60,18 @@ def urlparse(url):
     if url.startswith('http'):
         return parse.urlparse(url)
     return parse.urlparse(f'http://{url}')
+
+def is_scalar(obj):
+    return isinstance(obj, (str, bool, int, float))
+
+def is_list_of_scalars(obj):
+    if isinstance(obj, (list, tuple)):
+        return all([is_scalar(item) for item in obj])
+    return False
+
+def is_list_of_dicts(obj):
+    if isinstance(obj, (list, tuple)):
+        return all([isinstance(item, dict) for item in obj])
 
 def domains(urls):
     return [urlparse(url)[1] for url in urls]
@@ -129,12 +146,14 @@ class Refract:
     def render_refract(self):
         server_name = kvo('server_name', self.server_name)
         listen = dups('listen', *self.listen(HTTPS_PORT))
-        if isinstance(self.dst, dict):
+        if is_list_of_dicts(self.dst):
             locations = []
-            for path, dst in self.dst.items():
+            for dst in self.dst:
+                if_= dst.get('if', None)
+                path, target = head_body(dst)
                 locations += [Location(
                     path,
-                    kmvo('return', self.status, dst)
+                    kmvo('return', self.status, target)
                 )]
             return Section(
                 'server',
@@ -176,11 +195,17 @@ def load_refract(spec):
     srcs = listify(src)
     for src in srcs:
         given = f'http://{src}'
-        try:
-            for loc, dst_ in dst.items():
-                tests[f'{given}{loc}'] = dst_
-        except AttributeError:
+        if is_list_of_dicts(dst):
+            for item in dst:
+                try:
+                    location, target = head_body(item)
+                    tests[f'{given}{location}'] = target
+                except:
+                    continue
+        elif is_scalar(dst):
             tests[given] = dst
+        else:
+            raise LoadRefractError(dst)
     return dict(dst=dst, srcs=srcs, nginx=nginx, tests=tests, status=status)
 
 def load_refractr(config):

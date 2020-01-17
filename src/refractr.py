@@ -208,11 +208,12 @@ def load_refract(spec):
             raise LoadRefractError(dst)
     return dict(dst=dst, srcs=srcs, nginx=nginx, tests=tests, status=status)
 
-def load_refractr(config):
+def load_refractr(config, refractr_pns):
     spec = yaml.safe_load(open(config))
-    spec['refracts'] = [load_refract(refract) for refract in spec['refracts']]
+    refracts = [load_refract(refract) for refract in spec['refracts']]
+    spec['refracts'] = [refract for refract in refracts if fuzzy(refract['srcs']).include(*refractr_pns)]
     return RefractrConfig(spec)
 
-def refract(config=None, output=None, redirect_pns=None, **kwargs):
-    refracrt = load_refractr(config)
+def refract(config=None, output=None, refractr_pns=None, **kwargs):
+    refracrt = load_refractr(config, refractr_pns)
     print(refracrt.render())

@@ -438,9 +438,6 @@ refracts:
   # bug 1206287
   - https://www.srihash.org/: srihash.org
 
-  # bug 1293353
-  - https://mozilla.service-now.com/: thehub.mozilla.com
-
   # bug 499384
   - http://affiliates.mozilla.org/:
     - firefoxparty.com
@@ -514,6 +511,9 @@ refracts:
   - https://hubs.mozilla.com/:
     - hub.mozilla.com
     - hub.mozilla.org
+
+  # bug 1293353
+  - https://mozilla.service-now.com/: thehub.mozilla.com
 
   # TODO: figure out if start.mozilla.com and start-prod.mozilla.com belong here or with *.start*.mozilla.com sites
   # bug 1492531

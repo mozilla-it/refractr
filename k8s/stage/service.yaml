@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: refractr-stage
+  name: refractr-stage
+  labels:
+    k8s-app: ingress
+spec:
+  selector:
+    app: refractr
+  type: ClusterIP
+  clusterIP: None
+  ports:
+  - name: web
+    port: 80
+    protocol: TCP

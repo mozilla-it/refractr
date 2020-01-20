@@ -112,6 +112,9 @@ refracts:
   # bug 681943
   - https://mozillafestival.org/: festival.mozilla.org
 
+  # bug 1490779
+  - https://aus4.mozilla.org/: aus2.mozilla.org
+
   # bug 692904
   - https://www.mozilla-russia.org/:
     - mozilla.com.ru

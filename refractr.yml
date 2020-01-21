@@ -574,8 +574,12 @@ refracts:
 
   - https://www.mozilla.org/: triagebot.mozilla.org
 
-  # bug 1566155, 1304806
   # TODO: test this works as before
+  # bug 1304806
+  - https://phonebook.mozilla.org/: phonebook.mozilla.com
+    headers:
+      Public-Key-Pins: "max-age=3600; pin-sha256=\"zSvnhQdjmYpQNahZ5voq6EGaNgaT0ElRiy+mzBD7p+k=\"; pin-sha256=\"5kJvNEMw0KjrCAu7eXY5HZdvyCS13BbA0VJG1RSP91w=\"; pin-sha256=\"YLh1dUR9y6Kja30RrAn7JKnbQG/uEtLMkBgFF2Fuihg=\"; pin-sha256=\"sRHdihwgkaib1P1gxX8HFszlD+7/gTfNvuAybgLPNis=\""
+  # bug 1566155
   - src: phonebook.mozilla.org
     dst:
     - /tree.php: https://people.mozilla.org/o
@@ -608,3 +612,27 @@ refracts:
 
   # Test apex domain
   - https://www.mozilla.org/: mozilla-redirects.xyz
+
+  # Bug 149411
+  - http://start.mozilla.org/:
+    - start.mozilla.com
+      start-prod.mozilla.com
+  - src:
+    - wildcard.start.mozilla.com
+    - *.start.mozilla.com
+    - *.start2.mozilla.com
+    - *.start3.mozilla.com
+    - *.start-prod.mozilla.com
+    dst:
+      - ^/?(.*): https://$http_host/$1
+    status: 307
+  - src:
+    - wildcard.start.mozilla.com
+    - *.start.mozilla.com
+    - *.start2.mozilla.com
+    - *.start3.mozilla.com
+    - *.start-prod.mozilla.com
+    dst:
+      - if: $http_host ^([a-z]{2,3}-[a-z]{2})?\.(start.*)$
+         ^: http://start.mozilla.org/$1/?
+

@@ -577,8 +577,6 @@ refracts:
   # TODO: test this works as before
   # bug 1304806
   - https://phonebook.mozilla.org/: phonebook.mozilla.com
-    headers:
-      Public-Key-Pins: "max-age=3600; pin-sha256=\"zSvnhQdjmYpQNahZ5voq6EGaNgaT0ElRiy+mzBD7p+k=\"; pin-sha256=\"5kJvNEMw0KjrCAu7eXY5HZdvyCS13BbA0VJG1RSP91w=\"; pin-sha256=\"YLh1dUR9y6Kja30RrAn7JKnbQG/uEtLMkBgFF2Fuihg=\"; pin-sha256=\"sRHdihwgkaib1P1gxX8HFszlD+7/gTfNvuAybgLPNis=\""
   # bug 1566155
   - src: phonebook.mozilla.org
     dst:

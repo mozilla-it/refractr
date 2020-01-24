@@ -623,14 +623,6 @@ refracts:
     - '*.start-prod.mozilla.com'
     dst:
       - ^/?(.*): https://$http_host/$1
-    status: 307
-  - src:
-    - wildcard.start.mozilla.com
-    - '*.start.mozilla.com'
-    - '*.start2.mozilla.com'
-    - '*.start3.mozilla.com'
-    - '*.start-prod.mozilla.com'
-    dst:
       - if: '$http_host ^([a-z]{2,3}-[a-z]{2})?\.(start.*)$'
         ^: http://start.mozilla.org/$1/?
-
+    status: 307

@@ -93,12 +93,16 @@ class RefractrConfig:
         stanzas = list(chain(*[refract.render() for refract in self.refracts]))
         return '\n'.join([repr(stanza) for stanza in stanzas])
 
+def startswith(s, *tests):
+    result = any([s.startswith(test) for test in tests])
+    return result
+
 class Refract:
     def __init__(self, dst=None, srcs=None, nginx=None, tests=None, status=None):
         self.dst = dst
         self.srcs = srcs
         self.nginx = nginx
-        self.tests = tests
+        self._tests = tests
         self.status = status
 
     @property
@@ -109,6 +113,33 @@ class Refract:
     @property
     def server_name(self):
         return join(domains(self.srcs))
+
+    @property
+    def is_rewrite(self):
+        if isinstance(self.dst, (list, tuple)):
+            return any([startswith(k, '^', 'if') for d in self.dst for k,v in d.items()])
+        return False
+
+    @property
+    def tests(self):
+        if self._tests:
+            return self._tests
+        tests = {}
+        if not self.is_rewrite:
+            for src in self.srcs:
+                given = f'http://{src}'
+                if is_list_of_dicts(self.dst):
+                    for item in self.dst:
+                        try:
+                            location, target = head_body(item)
+                            tests[f'{given}{location}'] = target
+                        except:
+                            continue
+                elif is_scalar(self.dst):
+                    tests[given] = self.dst
+                else:
+                    raise LoadRefractError(self.dst)
+        return tests
 
     def listen(self, port):
         return port, f'[::]:{port}'
@@ -149,7 +180,7 @@ class Refract:
         if is_list_of_dicts(self.dst):
             locations = []
             for dst in self.dst:
-                if_= dst.get('if', None)
+                if_ = dst.pop('if', None)
                 path, target = head_body(dst)
                 locations += [Location(
                     path,
@@ -188,27 +219,16 @@ def load_refract(spec):
     dst = spec.pop('dst', None)
     src = spec.pop('src', None)
     nginx = spec.pop('nginx', None)
-    tests = spec.pop('tests', {})
+    tests = spec.pop('tests', None)
     status = spec.pop('status', 301)
     if len(spec) == 1:
         dst, src = list(spec.items())[0]
     srcs = listify(src)
-    for src in srcs:
-        given = f'http://{src}'
-        if is_list_of_dicts(dst):
-            for item in dst:
-                try:
-                    location, target = head_body(item)
-                    tests[f'{given}{location}'] = target
-                except:
-                    continue
-        elif is_scalar(dst):
-            tests[given] = dst
-        else:
-            raise LoadRefractError(dst)
     return dict(dst=dst, srcs=srcs, nginx=nginx, tests=tests, status=status)
 
-def load_refractr(config, refractr_pns):
+def load_refractr(config, refractr_pns=None):
+    if refractr_pns == None:
+        refractr_pns = ["*"]
     spec = yaml.safe_load(open(config))
     refracts = [load_refract(refract) for refract in spec['refracts']]
     spec['refracts'] = [refract for refract in refracts if fuzzy(refract['srcs']).include(*refractr_pns)]

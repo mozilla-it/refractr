@@ -614,7 +614,7 @@ refracts:
   # Bug 149411
   - http://start.mozilla.org/:
     - start.mozilla.com
-      start-prod.mozilla.com
+    - start-prod.mozilla.com
   - src:
     - wildcard.start.mozilla.com
     - '*.start.mozilla.com'

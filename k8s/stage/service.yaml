@@ -2,9 +2,9 @@ kind: Service
 apiVersion: v1
 metadata:
   namespace: refractr-stage
-  name: refractr-stage
+  name: refractr
   labels:
-    k8s-app: ingress
+    app: ingress
 spec:
   selector:
     app: refractr

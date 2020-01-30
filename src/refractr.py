@@ -16,6 +16,7 @@ from nginx.config.api import Config, Section, Location, KeyMultiValueOption
 from leatherman.fuzzy import fuzzy
 from leatherman.yaml import yaml_format
 from leatherman.dictionary import head, body, head_body
+from leatherman.repr import __repr__
 from leatherman.dbg import dbg
 
 def setup_yaml():
@@ -156,16 +157,6 @@ class Refract:
                 status=self.status))
         return yaml_format(json)
 
-    def __repr__(self):
-        fields = ', '.join([
-            f'dst={self.dst}',
-            f'srcs={self.srcs}',
-            f'nginx={self.nginx}',
-            f'tests={self.tests}',
-            f'status={self.status}',
-        ])
-        return f'{self.__class__.__name__}({fields})'
-
     def render_http_to_https(self):
         return Section(
             'server',
@@ -205,6 +196,8 @@ class Refract:
             self.render_http_to_https(),
             self.render_refract(),
         ]
+
+    __repr__ = __repr__
 
 def listify(value):
     if isinstance(value, dict):

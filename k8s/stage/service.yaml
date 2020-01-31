@@ -4,7 +4,7 @@ metadata:
   namespace: refractr-stage
   name: refractr
   labels:
-    app: ingress
+    app: refractr
 spec:
   selector:
     app: refractr

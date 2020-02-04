@@ -29,13 +29,23 @@ def task_build():
         ],
     }
 
-def task_drun():
+def task_check():
     return {
         'task_dep': [
             'build',
         ],
         'actions': [
-                f'[ "$(docker ps -a | grep {CONTAINER})" ] && docker rm -f {CONTAINER} || true',
+            f'docker run {IMAGE}:{VERSION} nginx -t',
+        ],
+    }
+
+def task_drun():
+    return {
+        'task_dep': [
+            'check',
+        ],
+        'actions': [
+            f'[ "$(docker ps -a | grep {CONTAINER})" ] && docker rm -f {CONTAINER} || true',
             LongRunning(
                 f'nohup docker run -d -p 80:80 -p 443:443 --name {CONTAINER} {IMAGE}:{VERSION} > /dev/null &'),
         ],
@@ -49,7 +59,6 @@ def task_test():
         ],
         'actions': [
             'sleep 1',
-            f'docker exec {CONTAINER} nginx -t',
             'PYTHONPATH=./src python3 -m pytest -vv -q -s',
         ],
     }

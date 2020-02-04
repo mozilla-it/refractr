@@ -165,15 +165,12 @@ class Refract:
             kmvo('return', self.status, f'https://$host$request_uri')
         )
 
-    def render_refract(self):
-        if self.is_rewrite:
-            return None
+    def render_redirect(self):
         server_name = kvo('server_name', self.server_name)
         listen = dups('listen', *self.listen(HTTPS_PORT))
         if is_list_of_dicts(self.dst):
             locations = []
             for dst in self.dst:
-                if_ = dst.pop('if', None)
                 path, target = head_body(dst)
                 locations += [Location(
                     path,
@@ -192,6 +189,35 @@ class Refract:
             listen,
             kmvo('return', self.status, self.dst),
         )
+
+    def render_rewrite(self):
+        server_name = kvo('server_name', self.server_name)
+        listen = dups('listen', *self.listen(HTTPS_PORT))
+        rewrites = []
+        for dst in self.dst:
+            if_ = dst.pop('if', None)
+            return_ = kvo('return', self.status)
+            match, target = head_body(dst)
+            rewrite = kmvo(
+                'rewrite',
+                match,
+                target
+            )
+            if if_:
+                rewrite = Section(f'if ({if_})', rewrite)
+            rewrites += [rewrite]
+        return Section(
+            'server',
+            server_name,
+            listen,
+            *rewrites,
+            return_,
+        )
+
+    def render_refract(self):
+        if self.is_rewrite:
+            return self.render_rewrite()
+        return self.render_redirect()
 
     def render(self):
         return [

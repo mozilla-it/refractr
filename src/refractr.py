@@ -92,7 +92,7 @@ class RefractrConfig:
 
     def render(self):
         stanzas = list(chain(*[refract.render() for refract in self.refracts]))
-        return '\n'.join([repr(stanza) for stanza in stanzas])
+        return '\n'.join([repr(stanza) for stanza in stanzas if stanza])
 
 def startswith(s, *tests):
     result = any([s.startswith(test) for test in tests])
@@ -158,17 +158,16 @@ class Refract:
         return yaml_format(json)
 
     def render_http_to_https(self):
-        if self.is_rewrite:
-            pass
-        else:
-            return Section(
-                'server',
-                kvo('server_name', self.server_name),
-                dups('listen', *self.listen(HTTP_PORT)),
-                kmvo('return', self.status, f'https://$host$request_uri')
-            )
+        return Section(
+            'server',
+            kvo('server_name', self.server_name),
+            dups('listen', *self.listen(HTTP_PORT)),
+            kmvo('return', self.status, f'https://$host$request_uri')
+        )
 
     def render_refract(self):
+        if self.is_rewrite:
+            return None
         server_name = kvo('server_name', self.server_name)
         listen = dups('listen', *self.listen(HTTPS_PORT))
         if is_list_of_dicts(self.dst):

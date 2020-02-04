@@ -1,7 +1,7 @@
 doit
 black
 ruamel.yaml
-leatherman==0.1.5
+leatherman==0.1.6
 pytest==5.3.2
 nginx-config-builder==1.0.1
 requests==2.22.0

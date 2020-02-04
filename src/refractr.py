@@ -158,12 +158,15 @@ class Refract:
         return yaml_format(json)
 
     def render_http_to_https(self):
-        return Section(
-            'server',
-            kvo('server_name', self.server_name),
-            dups('listen', *self.listen(HTTP_PORT)),
-            kmvo('return', self.status, f'https://$host$request_uri')
-        )
+        if self.is_rewrite:
+            pass
+        else:
+            return Section(
+                'server',
+                kvo('server_name', self.server_name),
+                dups('listen', *self.listen(HTTP_PORT)),
+                kmvo('return', self.status, f'https://$host$request_uri')
+            )
 
     def render_refract(self):
         server_name = kvo('server_name', self.server_name)

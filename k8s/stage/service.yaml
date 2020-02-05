@@ -9,7 +9,6 @@ spec:
   selector:
     app: refractr
   type: ClusterIP
-  clusterIP: None
   ports:
   - name: web
     port: 80

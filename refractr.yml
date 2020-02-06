@@ -643,7 +643,9 @@ refracts:
     - '*.start3.mozilla.com'
     - '*.start-prod.mozilla.com'
     dst:
-      - if: '$http_host ~ "^(?<lang>[a-z]{2,3}-[a-z]{2})?\.(start.*)$"'
+      - if: '$http_host ~ "^(?<lang>[a-z]{2,3}(-[a-z]{2})?)?\.(start.*)$"'
         ^: http://start.mozilla.org/$lang$request_uri
     tests:
+      http://ca.start.mozilla.com: http://start.mozilla.org/ca/
       http://en-us.start.mozilla.com: http://start.mozilla.org/en-us/
+      http://en-uk.start.mozilla.com: http://start.mozilla.org/en-uk/

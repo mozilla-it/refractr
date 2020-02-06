@@ -608,8 +608,10 @@ refracts:
     # bug 1536288
   - https://www.mozilla.org/pt-BR/: firefox-bug-handling.mozilla.org
 
-  # Test apex domain
-  - https://www.mozilla.org/: mozilla-redirects.xyz
+  # Test domains
+  - https://www.mozilla.org/:
+    - mozilla-redirects.xyz
+    - refractr.allizom.org
 
   # Bug 149411
   - http://start.mozilla.org/:

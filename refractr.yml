@@ -63,8 +63,15 @@ refracts:
     - /*: http://guides.mozilla.org/*
     - /: http://www.mozilla.org/contribute/
 
-  # bug 1263033, 20170327
+  # bug 1263033
   - https://donate.mozilla.org/: join.mozilla.org
+    status: 307
+
+  # bug 20170327
+  - https://videos.cdn.mozilla.net/:
+    - videos-cdn.mozilla.net
+    - videos.mozilla.org
+    - videos-ssl-cdn.mozilla.net
 
   # TODO: addons
 
@@ -190,6 +197,7 @@ refracts:
   - https://wiki.mozilla.org/B2G:
     - boot2gecko.org
     - www.boot2gecko.org
+    status: 307
 
   # bug 1056359
   - https://www.mozilla.org/en-US/firefox/new/:
@@ -284,6 +292,13 @@ refracts:
 
   # bug 838939
   - https://www.mozilla.org/firefox/: spark.mozilla.org
+
+  - https://mozilla.org/:
+    - redirect-san.mozilla.org
+    status: 307
+
+  - http://mozilla.org/: redirects-http-only.external.zlb.scl3.mozilla.com
+    status: 307
 
   # bug 688019, 1427843
   - https://www.mozilla.org/firefox/new/?utm_source=getfirefox-org&utm_medium=referral:
@@ -431,6 +446,7 @@ refracts:
 
   # bug 1150296
   - https://irccloud.mozilla.com/: irccloud.mozilla.org
+    status: 302
 
   # bug 1335617
   - https://www.mozilla.org/en-US/about/policy/lean-data/:
@@ -454,6 +470,7 @@ refracts:
 
   # bug 1311146
   - https://donate.mozilla.org/: sendto.mozilla.org
+    status: 307
 
   # bug 1206287
   - https://www.srihash.org/: srihash.org
@@ -489,6 +506,7 @@ refracts:
   - https://mana.mozilla.org/wiki/display/NAGIOS/*:
     - m.mozilla.org/*
     - m.allizom.org/*
+    status: 307
 
   # bug 1414285, 1429854
   - https://onlinexperiences.com/scripts/Server.nxp?LASCmd=L:0&AI=1&InitialDisplay=1&ClientBrowser=0&ShowKey=44908: airmo.mozilla.org
@@ -571,6 +589,7 @@ refracts:
 
     # bug 1543423
   - https://discourse.mozilla.org/: discourse.mozilla-community.org
+    status: 307
 
   - https://www.mozilla.org/: triagebot.mozilla.org
 
@@ -624,7 +643,7 @@ refracts:
     - '*.start3.mozilla.com'
     - '*.start-prod.mozilla.com'
     dst:
-      - ^/?(.*): https://$http_host/$1
-      - if: '$http_host ~ "^([a-z]{2,3})(-[a-z]{2})?\.(start.*)$"'
-        ^: http://start.mozilla.org/$1/?
-    status: 307
+      - if: '$http_host ~ "^(?<lang>[a-z]{2,3}-[a-z]{2})?\.(start.*)$"'
+        ^: http://start.mozilla.org/$lang$request_uri
+    tests:
+      http://en-us.start.mozilla.com: http://start.mozilla.org/en-us/

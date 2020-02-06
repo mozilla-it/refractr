@@ -645,7 +645,9 @@ refracts:
     dst:
       - if: '$http_host ~ "^(?<lang>[a-z]{2,3}(-[a-z]{2})?)?\.(start.*)$"'
         ^: http://start.mozilla.org/$lang$request_uri
+        redirect: http://start.mozilla.org/
     tests:
       http://ca.start.mozilla.com: http://start.mozilla.org/ca/
       http://en-us.start.mozilla.com: http://start.mozilla.org/en-us/
       http://en-uk.start.mozilla.com: http://start.mozilla.org/en-uk/
+      http://wildcard.start.mozilla.com: http://start.mozilla.org/

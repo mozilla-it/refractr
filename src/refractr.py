@@ -213,6 +213,7 @@ class Refract:
         rewrites = []
         for dst in self.dst:
             if_ = dst.pop('if', None)
+            redirect = dst.pop('redirect', None)
             match, target = head_body(dst)
             rewrite = kmvo(
                 'rewrite',
@@ -223,6 +224,8 @@ class Refract:
             if if_:
                 rewrite = Section(f'if ({if_})', rewrite)
             rewrites += [rewrite]
+            if redirect:
+                rewrites += [kmvo('return', self.status, redirect)]
         return Section(
             'server',
             server_name,

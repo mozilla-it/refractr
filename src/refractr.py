@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import re
 import sys
 import toml
 
@@ -12,6 +13,7 @@ from nginx.config.helpers import duplicate_options
 from nginx.config.api import KeyOption as ko
 from nginx.config.api import KeyValueOption as kvo
 from nginx.config.api import Config, Section, Location, KeyMultiValueOption
+from urllib.parse import ParseResult
 
 from leatherman.fuzzy import fuzzy
 from leatherman.yaml import yaml_format
@@ -61,6 +63,21 @@ def urlparse(url):
     if url.startswith('http'):
         return parse.urlparse(url)
     return parse.urlparse(f'http://{url}')
+
+def replace(pr, **kwargs):
+    return ParseResult(
+        scheme=kwargs.get('scheme', pr.scheme),
+        netloc=kwargs.get('netloc', pr.netloc),
+        path=kwargs.get('path', pr.path),
+        params=kwargs.get('params', pr.params),
+        query=kwargs.get('query', pr.query),
+        fragment=kwargs.get('fragment', pr.fragment))
+
+def status_to_word(status):
+    return {
+        301: 'permanent',
+        302: 'temporary',
+    }[status]
 
 def is_scalar(obj):
     return isinstance(obj, (str, bool, int, float))
@@ -196,12 +213,12 @@ class Refract:
         rewrites = []
         for dst in self.dst:
             if_ = dst.pop('if', None)
-            return_ = kvo('return', self.status)
             match, target = head_body(dst)
             rewrite = kmvo(
                 'rewrite',
                 match,
-                target
+                target,
+                status_to_word(self.status),
             )
             if if_:
                 rewrite = Section(f'if ({if_})', rewrite)
@@ -211,7 +228,6 @@ class Refract:
             server_name,
             listen,
             *rewrites,
-            return_,
         )
 
     def render_refract(self):

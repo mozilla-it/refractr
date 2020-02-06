@@ -3,10 +3,8 @@
 import os
 import pytest
 import requests
-from urllib.parse import ParseResult
 
-from refractr import load_refractr, Refract, urlparse
-
+from refractr import load_refractr, Refract, urlparse, replace
 from leatherman.dbg import dbg
 
 NL_TAB = '\n  '
@@ -14,15 +12,6 @@ LOCALHOST = '127.0.0.1'
 REFRACTR_YML = os.environ.get('REFRACTR_YML', './refractr.yml')
 
 refractr = load_refractr(REFRACTR_YML)
-
-def replace(pr, **kwargs):
-    return ParseResult(
-        scheme=kwargs.get('scheme', pr.scheme),
-        netloc=kwargs.get('netloc', pr.netloc),
-        path=kwargs.get('path', pr.path),
-        params=kwargs.get('params', pr.params),
-        query=kwargs.get('query', pr.query),
-        fragment=kwargs.get('fragment', pr.fragment))
 
 def _validate_hop(given, expect, headers, status):
     response = requests.get(given.geturl(), headers=headers, allow_redirects=False)

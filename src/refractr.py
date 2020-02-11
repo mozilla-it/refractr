@@ -214,16 +214,20 @@ class Refract:
         for dst in self.dst:
             if_ = dst.pop('if', None)
             redirect = dst.pop('redirect', None)
-            match, target = head_body(dst)
-            rewrite = kmvo(
-                'rewrite',
-                match,
-                target,
-                status_to_word(self.status),
-            )
-            if if_:
-                rewrite = Section(f'if ({if_})', rewrite)
-            rewrites += [rewrite]
+            try:
+                match, target = head_body(dst)
+                rewrite = kmvo(
+                    'rewrite',
+                    match,
+                    target,
+                    status_to_word(self.status),
+                )
+                if if_:
+                    rewrite = Section(f'if ({if_})', rewrite)
+                rewrites += [rewrite]
+            except:
+                if redirect == None:
+                    raise
             if redirect:
                 rewrites += [kmvo('return', self.status, redirect)]
         return Section(

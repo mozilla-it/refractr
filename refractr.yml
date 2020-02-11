@@ -665,3 +665,18 @@ refracts:
       http://malware-error.mozilla.com?hl=en&url=path: 'https://www.stopbadware.org/firefox?hl=en&url=path'
       http://malware-error.mozilla.com?url=path: 'https://www.stopbadware.org/firefox?url=path'
       http://malware-error.mozilla.com: https://malware-error.mozilla.com/
+
+  - src:
+    - phish-error.mozilla.com
+    - '*.phish-error.mozilla.com'
+    dst:
+      - if: '$query_string ~ "^(?<hl>hl=[^&]+)&(?<url>url=[^&]+)"'
+        ^/$: 'https://safebrowsing.google.com/safebrowsing/report_error/?tpl=mozilla&$hl&$url?'
+      - if: '$query_string ~ "^(?<url>url=[^&]+)"'
+        ^/$: 'https://safebrowsing.google.com/safebrowsing/report_error/?tpl=mozilla&$url?'
+      - redirect: https://$host$request_uri
+    tests:
+      http://phish-error.mozilla.com?hl=en&url=path: 'https://safebrowsing.google.com/safebrowsing/report_error/?tpl=mozilla&hl=en&url=path'
+      http://phish-error.mozilla.com?url=path: 'https://safebrowsing.google.com/safebrowsing/report_error/?tpl=mozilla&url=path'
+      http://phish-error.mozilla.com: https://phish-error.mozilla.com/
+

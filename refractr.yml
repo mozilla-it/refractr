@@ -762,4 +762,4 @@ refracts:
     - /firefox/livebookmarks: http://www.mozilla.org/firefox/livebookmarks.html
     - /rss20.xml: http://feeds.bbci.co.uk/news/rss.xml?edition=int
     - /firefox/headlines.xml: http://feeds.bbci.co.uk/news/rss.xml?edition=int
-    - /: http://www.mozilla.org/firefox/livebookmarks.html
+    - /: 'https://support.mozilla.org/en-US/kb/live-bookmarks?redirectlocale=en-US&redirectslug=Live+Bookmarks'

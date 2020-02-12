@@ -14,7 +14,7 @@ SRC = f"{DIR}/src"
 
 sys.path.insert(0, SRC)
 
-from refractr import refract
+from refractr import load_refractr
 
 def main(args):
     parser = ArgumentParser()
@@ -40,7 +40,8 @@ def main(args):
         help='default="%(default)s"; patterns to limit refracts',
     )
     ns = parser.parse_args(args)
-    refract(**ns.__dict__)
+    refractr = load_refractr(**ns.__dict__)
+    print(refractr.render())
 
 if __name__ == '__main__':
     main(sys.argv[1:])

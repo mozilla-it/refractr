@@ -270,14 +270,10 @@ def load_refract(spec):
     srcs = listify(src)
     return dict(dst=dst, srcs=srcs, nginx=nginx, tests=tests, status=status)
 
-def load_refractr(config, refractr_pns=None):
+def load_refractr(config=None, refractr_pns=None, **kwargs):
     if refractr_pns == None:
         refractr_pns = ["*"]
     spec = yaml.safe_load(open(config))
     refracts = [load_refract(refract) for refract in spec['refracts']]
     spec['refracts'] = [refract for refract in refracts if fuzzy(refract['srcs']).include(*refractr_pns)]
     return RefractrConfig(spec)
-
-def refract(config=None, output=None, refractr_pns=None, **kwargs):
-    refractr = load_refractr(config, refractr_pns)
-    print(refractr.render())

@@ -279,5 +279,5 @@ def load_refractr(config, refractr_pns=None):
     return RefractrConfig(spec)
 
 def refract(config=None, output=None, refractr_pns=None, **kwargs):
-    refracrt = load_refractr(config, refractr_pns)
-    print(refracrt.render())
+    refractr = load_refractr(config, refractr_pns)
+    print(refractr.render())

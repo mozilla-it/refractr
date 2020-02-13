@@ -287,11 +287,12 @@ refracts:
   # bug 1342698
   - http://blog.mozilla.org/: mozillausa.org
 
-  # bug 838939
-  - https://www.mozilla.org/firefox/: downloadmozillafirefox.com
-
-  # bug 838939
-  - https://www.mozilla.org/firefox/: spark.mozilla.org
+  - https://www.mozilla.org/firefox/:
+    # bug 838939
+    - downloadmozillafirefox.com
+    # bug 948963
+    - spark.mozilla.org
+    status: 302
 
   - https://mozilla.org/:
     - redirect-san.mozilla.org

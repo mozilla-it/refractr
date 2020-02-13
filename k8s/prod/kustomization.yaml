@@ -3,3 +3,6 @@ kind: Kustomization
 namespace: refractr-prod
 resources:
 - deployment.yaml
+- issuer.yaml
+- service.yaml
+- ingress.yaml

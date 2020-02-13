@@ -681,6 +681,34 @@ refracts:
       http://phish-error.mozilla.com: https://phish-error.mozilla.com/
 
   - src:
+    - phish-report.mozilla.com
+    - '*.phish-report.mozilla.com'
+    dst:
+      - if: '$query_string ~ "^hl=(?<hl>es)(?:-ES|-AR)&url=(?<url>[^&]+)"'
+        ^/$: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=$hl&url=$url?'
+      - if: '$query_string ~ "^hl=(?:nb|nn)-NO&url=(?<url>[^&]+)"'
+        ^/$: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=no&url=$url?'
+      - if: '$query_string ~ "^hl=pt-PT&url=(?<url>[^&]+)"'
+        ^/$: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=pt-BR&url=$url?'
+      - if: '$query_string ~ "^hl=(?<hl>ar|bg|cs|da|de|el|en|en-GB|es|fi|fr|hu|it|iw|ja|ko|nl|no|l|pt-BR|ru|sk|sv|tr|zh-CN|zh-TW)&url=(?<url>[^&]+)"'
+        ^/$: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=$hl&url=$url?'
+      - if: '$query_string ~ "^hl=(?<hl>[^&]+)&url=(?<url>[^&]+)"'
+        ^/$: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=$hl&url=$url?'
+      # bug 1387246, send lone url query strings to google safebrowsing
+      - if: '$query_string ~ "url=(?<url>[^&]+)"'
+        ^/$: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&url=$url?'
+      - redirect: https://www.mozilla.org/
+    tests:
+      http://phish-report.mozilla.com?hl=es&url=path: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=es&url=path'
+      http://phish-report.mozilla.com?hl=nb-NO&url=path: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=no&url=path'
+      http://phish-report.mozilla.com?hl=pt-PT&url=path: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=pt-BR&url=path'
+      http://phish-report.mozilla.com?hl=en-GB&url=path: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=en-GB&url=path'
+      http://phish-report.mozilla.com?hl=zh-TW&url=path: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=zh-TW&url=path'
+      http://phish-report.mozilla.com?hl=foo&url=bar: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=foo&url=bar'
+      http://phish-report.mozilla.com?url=foobar: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&url=foobar'
+      http://phish-report.mozilla.com/foobar: https://www.mozilla.org/
+
+  - src:
     - fxfeeds.mozilla.org
     - fxfeeds.mozilla.com
     - fxfeeds.mozillazine.org
@@ -763,3 +791,10 @@ refracts:
     - /rss20.xml: http://feeds.bbci.co.uk/news/rss.xml?edition=int
     - /firefox/headlines.xml: http://feeds.bbci.co.uk/news/rss.xml?edition=int
     - /: 'https://support.mozilla.org/en-US/kb/live-bookmarks?redirectlocale=en-US&redirectslug=Live+Bookmarks'
+
+  - https://mozilla.github.io/oi-website/: openinnovation.mozilla.org
+
+  # bug 617681
+  - http://blog.mozilla.org/operationfx/2007/12/14/declassified-information-and-the-winner-is/:
+    - operationfirefox.com
+    - www.operationfirefox.com

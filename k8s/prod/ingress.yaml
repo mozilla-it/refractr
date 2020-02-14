@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.io/ingress.class: "nginx"
-    cert-manager.io/cluster-issuer: letsencrypt-staging
+    cert-manager.io/issuer: letsencrypt-staging
     nginx.ingress.kubernetes.io/rewrite-target: /
     #    nginx.ingress.kubernetes.io/ssl-redirect: "true"
     #    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
@@ -45,4 +45,5 @@ spec:
     protocol: TCP
     targetPort: 443
   selector:
-    k8s-app: ingress-nginx
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx

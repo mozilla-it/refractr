@@ -55,13 +55,8 @@ refracts:
     - /: https://www.mozilla.org/firefox/?utm_source=firefox-com&utm_medium=referral
 
   # bug 537925
-  # TODO: test this works as expected / previous behavior
-  - src:
-    - contribute.mozilla.org
-    dst:
-    - /index.html: http://www.mozilla.org/contribute/
-    - /*: http://guides.mozilla.org/*
-    - /: http://www.mozilla.org/contribute/
+  # NOTE: simplified this after testing, this simple redirect is all that is needed
+  - https://www.mozilla.org/contribute/: contribute.mozilla.org
 
   # bug 1263033
   - https://donate.mozilla.org/: join.mozilla.org
@@ -73,9 +68,8 @@ refracts:
     - videos.mozilla.org
     - videos-ssl-cdn.mozilla.net
 
-  # TODO: addons
-
-  - http://www.mozillalabs.com/:
+  # NOTE: changed from http->https after verifying
+  - https://www.mozillalabs.com/:
     - labs.mozilla.org
     - labs.mozilla.com
 
@@ -89,15 +83,18 @@ refracts:
     - firefoxaddons.com
     - www.firefoxaddons.com
 
-  - http://www.mozilla.org/projects/calendar/lightning/:
+  # NOTE: changed from http->https after verifying
+  - https://www.thunderbird.net/:
     - lightning-project.org
     - www.lightning-project.org
 
   # bug 510914
-  - http://wiki.mozilla.org/: library.mozilla.org
+  # NOTE: changed from http->https after verifying
+  - https://wiki.mozilla.org/: library.mozilla.org
 
   # bug 572191
-  - http://crash-stats.mozilla.com/: #FIXME: http? really?
+  # NOTE: changed from http->https after verifying
+  - https://crash-stats.mozilla.com/:
     - talkback.mozilla.org
     - talkback-public.mozilla.org
     - talkback-reports.mozilla.org
@@ -164,7 +161,8 @@ refracts:
   - https://www.mozilla.org/MPL/: mpl.mozilla.org
 
   # bug 941881
-  - http://www.mozilla.org/en-US/contribute/studentambassadors/:
+  # NOTE: changed from http->https after verifying
+  - https://www.mozilla.org/en-US/contribute/studentambassadors/:
     - ambassadors.mozilla.org
     - students.mozilla.org
     - fsa.mozilla.org
@@ -178,7 +176,8 @@ refracts:
   - https://docs.google.com/forms/d/1VSlo6TZ5p42LyTx2q7Wd5vQ5hZHvWtA9JN6JWicXmBM/viewform: confsurvey.mozilla.org
 
   # bug 850584
-  - http://download.cdn.mozilla.net/: releases.mozilla.org
+  # NOTE: changed from http->https after verifying
+  - https://download.cdn.mozilla.net/: releases.mozilla.org
 
   # bug 1025191
   - https://www.mozilla.org/en-US/:
@@ -189,7 +188,8 @@ refracts:
   - https://wiki.mozilla.org/: wiki.mozilla.com
 
   # bug 1136318
-  - http://www.mozilla.de/: #FIXME: http? really?
+  # NOTE: changed from http->https after verifying
+  - https://www.mozilla.de/:
     - mozilla.at
     - www.mozilla.at
 
@@ -225,6 +225,7 @@ refracts:
   - https://whatsdeployed.io/: whatsdeployed.paas.allizom.org #FIXME: note I swtiched to https as the final destination
 
   # bug 1220879
+  # FIXME: http is insecure, https throws SSL_ERROR_BAD_CERT_DOMAIN
   - http://prs.mozilla.io/: prs.paas.allizom.org
 
   # bug 1225273, 1359534
@@ -251,7 +252,8 @@ refracts:
     - www.mozilla.frl
 
   # bug 1234248
-  - http://planet.firefox.com/ux/: ux.firefox.com
+  # FIXME: this doesnt exist, remove
+  # - http://planet.firefox.com/ux/: ux.firefox.com
 
   # bug 1255190
   - https://www.openwebgames.com/: openwebgames.com
@@ -285,7 +287,8 @@ refracts:
     - www.popcornjs.org
 
   # bug 1342698
-  - http://blog.mozilla.org/: mozillausa.org
+  # NOTE: changed from http->https after verifying
+  - https://blog.mozilla.org/: mozillausa.org
 
   - https://www.mozilla.org/firefox/:
     # bug 838939
@@ -298,7 +301,9 @@ refracts:
     - redirect-san.mozilla.org
     status: 307
 
-  - http://mozilla.org/: redirects-http-only.external.zlb.scl3.mozilla.com
+  # NOTE: changed from http->https after verifying
+  # FIXME: how is this zeus stuff going to work going forward?
+  - https://mozilla.org/: redirects-http-only.external.zlb.scl3.mozilla.com
     status: 307
 
   # bug 688019, 1427843
@@ -408,7 +413,8 @@ refracts:
   # TODO: verify this works as expected
   - src: dnt.mozilla.org
     dst:
-    - /dnt-enabler.tpl: http://www.mozilla.org/media/dnt/dnt-enabler.tpl
+    # NOTE: changed from http->https after verifying
+    - /dnt-enabler.tpl: https://www.mozilla.org/media/dnt/dnt-enabler.tpl
     - /: https://www.mozilla.org/firefox/dnt/
 
   # bug 1185027
@@ -482,11 +488,12 @@ refracts:
   - https://www.srihash.org/: srihash.org
 
   # bug 499384
-  - http://affiliates.mozilla.org/:
-    - firefoxparty.com
-    - www.firefoxparty.com
-    - mozillaparty.com
-    - www.mozillaparty.com
+  # FIXME: this doesn't exist; remove
+#  - http://affiliates.mozilla.org/:
+#    - firefoxparty.com
+#    - www.firefoxparty.com
+#    - mozillaparty.com
+#    - www.mozillaparty.com
 
   # bug 1340330
   - https://www.metricsgraphicsjs.org/: metricsgraphicsjs.org
@@ -559,7 +566,6 @@ refracts:
   # bug 1293353
   - https://mozilla.service-now.com/: thehub.mozilla.com
 
-  # TODO: figure out if start.mozilla.com and start-prod.mozilla.com belong here or with *.start*.mozilla.com sites
   # bug 1492531
   - https://wiki.mozilla.org/Pastebin: pastebin.mozilla.org
 
@@ -639,7 +645,8 @@ refracts:
     - refractr.allizom.org
 
   # bug 149411
-  - http://start.mozilla.org/:
+  # NOTE: changed from http->https after verifying
+  - https://start.mozilla.org/:
     - start.mozilla.com
     - start-prod.mozilla.com
   - src:
@@ -650,13 +657,13 @@ refracts:
     - '*.start-prod.mozilla.com'
     dst:
       - if: '$http_host ~ "^(?<lang>[a-z]{2,3}(-[a-z]{2})?)?\.(start.*)$"'
-        ^: http://start.mozilla.org/$lang$request_uri
-        redirect: http://start.mozilla.org/
+        ^: https://start.mozilla.org/$lang$request_uri
+        redirect: https://start.mozilla.org/
     tests:
-      http://ca.start.mozilla.com: http://start.mozilla.org/ca/
-      http://en-us.start.mozilla.com: http://start.mozilla.org/en-us/
-      http://en-uk.start.mozilla.com: http://start.mozilla.org/en-uk/
-      http://wildcard.start.mozilla.com: http://start.mozilla.org/
+      http://ca.start.mozilla.com: https://start.mozilla.org/ca/
+      http://en-us.start.mozilla.com: https://start.mozilla.org/en-us/
+      http://en-uk.start.mozilla.com: https://start.mozilla.org/en-uk/
+      http://wildcard.start.mozilla.com: https://start.mozilla.org/
 
   - src:
     - malware-error.mozilla.com
@@ -801,7 +808,8 @@ refracts:
   - https://mozilla.github.io/oi-website/: openinnovation.mozilla.org
 
   # bug 617681
-  - http://blog.mozilla.org/operationfx/2007/12/14/declassified-information-and-the-winner-is/:
+  # NOTE: changed from http->https after verifying
+  - https://blog.mozilla.org/operationfx/2007/12/14/declassified-information-and-the-winner-is/:
     - operationfirefox.com
     - www.operationfirefox.com
 
@@ -813,7 +821,9 @@ refracts:
     status: 302
 
   # bug 940553
-  - http://blog.mozilla.org/website-archive/2011/11/15/webify-me/:
+  # NOTE: changed from http->https after verifying
+  # FIXME: dst renders: "This site has been archived or suspended."; remove?
+  - https://blog.mozilla.org/website-archive/2011/11/15/webify-me/:
     - webifyme.org
     - www.webifyme.org
 

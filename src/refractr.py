@@ -133,6 +133,14 @@ class Refract:
         return join(domains(self.srcs))
 
     @property
+    def is_simple_dst(self):
+        return isinstance(self.dst, str)
+
+    @property
+    def is_http_dst(self):
+        return self.is_simple_dst and self.dst.startswith('http://')
+
+    @property
     def is_rewrite(self):
         if isinstance(self.dst, (list, tuple)):
             return any([startswith(k, '^', 'if') for d in self.dst for k,v in d.items()])
@@ -174,12 +182,12 @@ class Refract:
                 status=self.status))
         return yaml_format(json)
 
-    def render_http_to_https(self):
+    def render_http_to_https(self, target='https://$host$request_uri'):
         return Section(
             'server',
             kvo('server_name', self.server_name),
             dups('listen', *self.listen(HTTP_PORT)),
-            kmvo('return', self.status, f'https://$host$request_uri')
+            kmvo('return', self.status, target)
         )
 
     def render_redirect(self):
@@ -243,6 +251,10 @@ class Refract:
         return self.render_redirect()
 
     def render(self):
+        if False and self.is_http_dst: #FIXME: if we support single hop, tests need update
+            return [
+                self.render_http_to_https(self.dst)
+            ]
         return [
             self.render_http_to_https(),
             self.render_refract(),

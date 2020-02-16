@@ -111,6 +111,12 @@ class RefractrConfig:
         stanzas = list(chain(*[refract.render() for refract in self.refracts]))
         return '\n'.join([repr(stanza) for stanza in stanzas if stanza])
 
+    def json(self):
+        return dict(refracts=[refract.json() for refract in self.refracts])
+
+    def __str__(self):
+        return yaml_format(self.json())
+
 def startswith(s, *tests):
     result = any([s.startswith(test) for test in tests])
     return result
@@ -170,17 +176,19 @@ class Refract:
     def listen(self, port):
         return port, f'[::]:{port}'
 
-    def __str__(self):
+    def json(self):
         json = dict(tests=self.tests)
         if self.nginx:
             json.update(dict(nginx=self.nginx))
         else:
-            json = dict(srcs=self.srcs, dst=self.dst, status=self.status, tests=self.tests)
             json.update(dict(
                 srcs=self.srcs,
                 dst=self.dst,
                 status=self.status))
-        return yaml_format(json)
+        return json
+
+    def __str__(self):
+        return yaml_format(self.json())
 
     def render_http_to_https(self, target='https://$host$request_uri'):
         return Section(

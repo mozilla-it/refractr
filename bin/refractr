@@ -34,6 +34,12 @@ def main(args):
         help='default="%(default)s"; specify one of %(choices)s',
     )
     parser.add_argument(
+        '-l',
+        '--load-only',
+        action='store_true',
+        help='default="%(default)s"; toggle load-only option'
+    )
+    parser.add_argument(
         "refractr_pns",
         nargs="*",
         default=["*"],
@@ -41,7 +47,10 @@ def main(args):
     )
     ns = parser.parse_args(args)
     refractr = load_refractr(**ns.__dict__)
-    print(refractr.render())
+    if ns.load_only:
+        print(refractr)
+    else:
+        print(refractr.render())
 
 if __name__ == '__main__':
     main(sys.argv[1:])

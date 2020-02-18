@@ -222,11 +222,13 @@ refracts:
   - https://blog.mozilla.org/creative: creative.mozilla.org
 
   # bug 1220879
-  - https://whatsdeployed.io/: whatsdeployed.paas.allizom.org #FIXME: note I swtiched to https as the final destination
+  # NOTE: changed from http->https after verifying
+  # FIXME: commented out because peterbe, gave perms to kill the redirect
+  # - https://whatsdeployed.io/: whatsdeployed.paas.allizom.org
 
   # bug 1220879
-  # FIXME: http is insecure, https throws SSL_ERROR_BAD_CERT_DOMAIN
-  - http://prs.mozilla.io/: prs.paas.allizom.org
+  # FIXME: commented out because peterbe, gave perms to kill the redirect
+  # - http://prs.mozilla.io/: prs.paas.allizom.org
 
   # bug 1225273, 1359534
   - https://docs.taskcluster.net/: taskcluster.net

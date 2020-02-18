@@ -423,7 +423,8 @@ refracts:
   - https://www.contributejson.org/: contributejson.org
 
   # bug 1335596
-  - https://mozilla.ninja/: designlanguage.mozilla.org
+  # NOTE: changed redirect to its final destination
+  - https://mozilla.design/: designlanguage.mozilla.org
 
   # bug 1200302
   - https://discourse.mozilla.org/c/add-ons: forums.mozilla.org

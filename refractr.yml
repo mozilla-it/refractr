@@ -470,10 +470,6 @@ refracts:
     - leandatapractices.com
     - www.leandatapractices.com
 
-  # TODO: figure out if phish-error.mozilla.com belongs here or with the wildcard *.phish-error.mozilla.com site
-  # TODO: figure out if phish-report.mozilla.com belongs here or with the wildcard *.phish-report.mozilla.com site
-  # TODO: figure out if malware-error.mozilla.com belongs here or with the wildcard *.malware-error.mozilla.com site
-
   # bug 1306375
   - https://wiki.mozilla.org/TestEngineering/Testrail: moztrap.mozilla.org
 

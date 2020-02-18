@@ -223,11 +223,11 @@ refracts:
 
   # bug 1220879
   # NOTE: changed from http->https after verifying
-  # FIXME: commented out because peterbe, gave perms to kill the redirect
+  # FIXME: peterbe gave perms to kill the redirect; remove
   # - https://whatsdeployed.io/: whatsdeployed.paas.allizom.org
 
   # bug 1220879
-  # FIXME: commented out because peterbe, gave perms to kill the redirect
+  # FIXME: peterbe gave perms to kill the redirect; remove
   # - http://prs.mozilla.io/: prs.paas.allizom.org
 
   # bug 1225273, 1359534
@@ -821,15 +821,16 @@ refracts:
 
   # bug 940553
   # NOTE: changed from http->https after verifying
-  # FIXME: dst renders: "This site has been archived or suspended."; remove?
-  - https://blog.mozilla.org/website-archive/2011/11/15/webify-me/:
-    - webifyme.org
-    - www.webifyme.org
+  # FIXME: "This site has been archived or suspended." removing
+  # - https://blog.mozilla.org/website-archive/2011/11/15/webify-me/:
+  #  - webifyme.org
+  #  - www.webifyme.org
 
   # bug 797641
-  - https://blog.mozilla.org/website-archive/2012/10/03/keep-on-rockin/:
-    - rockyourfirefox.com
-    - www.rockyourfirefox.com
+  # FIXME: "This site has been archived or suspended." removing
+  # - https://blog.mozilla.org/website-archive/2012/10/03/keep-on-rockin/:
+  #  - rockyourfirefox.com
+  #  - www.rockyourfirefox.com
 
   # bug 835529
   - https://support.mozilla.org/: www.support.mozilla.org

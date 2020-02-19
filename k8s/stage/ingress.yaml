@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-staging
+    kubernetes.io/ingress.class: "refractr"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    #    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    #    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.org/server-snippets: "server_name ~^.*$;"             # Catch all server names
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers "X-Frame-Options: SAMEORIGIN";
+      more_set_headers "Content-Security-Policy: frame-ancestors 'none'";
+  name: refractr-stage
+  namespace: refractr-stage
+spec:
+  tls:
+  - hosts:
+    - mozilla-redirects.xyz
+    secretName: mozilla-redirects-xyz-tls
+  rules:
+  - host: mozilla-redirects.xyz
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: refractr
+          servicePort: 30592

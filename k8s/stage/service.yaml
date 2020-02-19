@@ -1,15 +1,15 @@
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
-  namespace: refractr-stage
   name: refractr
-  labels:
-    app: refractr
+  namespace: refractr-stage
 spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - name: http
+    port: 30592
+    protocol: TCP
+    targetPort: 80
   selector:
     app: refractr
-  type: ClusterIP
-  ports:
-  - name: web
-    port: 80
-    protocol: TCP
+  type: NodePort

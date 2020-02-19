@@ -5,6 +5,7 @@ import pytest
 import requests
 
 from refractr import load_refractr, Refract, urlparse, replace
+from utils import validate_hop
 from leatherman.dbg import dbg
 
 NL_TAB = '\n  '
@@ -13,14 +14,7 @@ REFRACTR_YML = os.environ.get('REFRACTR_YML', './refractr.yml')
 
 refractr = load_refractr(REFRACTR_YML)
 
-def _validate_hop(given, expect, headers, status):
-    response = requests.get(given.geturl(), headers=headers, allow_redirects=False)
-    assert response.status_code == status
-    location = urlparse(response.headers['Location'])
-    assert location == expect
-    return location
-
-def _test_http_to_https(given, status):
+def validate_http_to_https(given, status):
     headers = {
         'Host': given.netloc
     }
@@ -29,7 +23,7 @@ def _test_http_to_https(given, status):
     location = _validate_hop(given1, expect, headers, status)
     return location
 
-def _test_https_to_target(given, expect, status):
+def validate_https_to_target(given, expect, status):
     headers = {
         'Host': given.netloc
     }
@@ -37,16 +31,16 @@ def _test_https_to_target(given, expect, status):
     location = _validate_hop(given1, expect, headers, status)
     return location
 
-def _test_redirect(src, dst, status):
+def validate_redirect(src, dst, status):
     given = urlparse(src)
     expect = urlparse(dst)
     if given.scheme == 'http' and expect.scheme == 'https':
-       given = _test_http_to_https(given, status)
-    _test_https_to_target(given, expect, status)
+       given = validate_http_to_https(given, status)
+    validate_https_to_target(given, expect, status)
 
 @pytest.mark.parametrize('refract', refractr.refracts)
 def test_refractr(refract):
     assert isinstance(refract, Refract)
     print(NL_TAB + NL_TAB.join(str(refract).split('\n')))
     for src, dst in refract.tests.items():
-        _test_redirect(src, dst, refract.status)
+        validate_redirect(src, dst, refract.status)

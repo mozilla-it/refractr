@@ -10,5 +10,7 @@ if [ -z "$HOST" ]; then
     echo "Usage: test-redirect <host>"
     exit 1
 fi
+echo "80"
 curl -vv -kIL --resolve $HOST:80:127.0.0.1 --resolve $HOST:443:127.0.0.1 http://$HOST:80 2>/dev/null | grep Location
+echo "443"
 curl -vv -kIL --resolve $HOST:80:127.0.0.1 --resolve $HOST:443:127.0.0.1 http://$HOST:443 2>/dev/null | grep Location

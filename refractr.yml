@@ -205,7 +205,6 @@ refracts:
     - wwww.mozilla.it
 
   # bug 1212631, 1427843
-  # FIXME: removed escape for &
   - https://www.mozilla.org/firefox/new/?utm_source=getfirefox-co-uk&utm_medium=referral: getfirefox.co.uk
 
 
@@ -220,15 +219,6 @@ refracts:
 
   # bug 1214568
   - https://blog.mozilla.org/creative: creative.mozilla.org
-
-  # bug 1220879
-  # NOTE: changed from http->https after verifying
-  # FIXME: peterbe gave perms to kill the redirect; remove
-  # - https://whatsdeployed.io/: whatsdeployed.paas.allizom.org
-
-  # bug 1220879
-  # FIXME: peterbe gave perms to kill the redirect; remove
-  # - http://prs.mozilla.io/: prs.paas.allizom.org
 
   # bug 1225273, 1359534
   - https://docs.taskcluster.net/: taskcluster.net
@@ -252,10 +242,6 @@ refracts:
   - https://www.mozilla.org/fy-NL/:
     - mozilla.frl
     - www.mozilla.frl
-
-  # bug 1234248
-  # FIXME: this doesnt exist, remove
-  # - http://planet.firefox.com/ux/: ux.firefox.com
 
   # bug 1255190
   - https://www.openwebgames.com/: openwebgames.com
@@ -485,14 +471,6 @@ refracts:
 
   # bug 1206287
   - https://www.srihash.org/: srihash.org
-
-  # bug 499384
-  # FIXME: this doesn't exist; remove
-#  - http://affiliates.mozilla.org/:
-#    - firefoxparty.com
-#    - www.firefoxparty.com
-#    - mozillaparty.com
-#    - www.mozillaparty.com
 
   # bug 1340330
   - https://www.metricsgraphicsjs.org/: metricsgraphicsjs.org
@@ -734,19 +712,6 @@ refracts:
   # bug 1614193
   - https://voice.mozilla.org/fy-NL/: voice.mozilla.frl
     status: 302
-
-  # bug 940553
-  # NOTE: changed from http->https after verifying
-  # FIXME: "This site has been archived or suspended." removing
-  # - https://blog.mozilla.org/website-archive/2011/11/15/webify-me/:
-  #  - webifyme.org
-  #  - www.webifyme.org
-
-  # bug 797641
-  # FIXME: "This site has been archived or suspended." removing
-  # - https://blog.mozilla.org/website-archive/2012/10/03/keep-on-rockin/:
-  #  - rockyourfirefox.com
-  #  - www.rockyourfirefox.com
 
   # bug 835529
   - https://support.mozilla.org/: www.support.mozilla.org

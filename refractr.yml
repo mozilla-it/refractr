@@ -613,9 +613,6 @@ refracts:
     # bug 1440375
   - https://www.mozilla.org/pt-BR/: mozilla.com.br
 
-    # bug 1536288
-  - https://www.mozilla.org/pt-BR/: firefox-bug-handling.mozilla.org
-
   # Test domains
   - https://www.mozilla.org/:
     - mozilla-redirects.xyz

@@ -3,6 +3,7 @@ import os
 import sys
 
 from argparse import ArgumentParser
+from leatherman.yaml import yaml_print
 from leatherman.dbg import dbg
 
 OUTPUT = ["echo", "file"]
@@ -40,6 +41,12 @@ def main(args):
         help='default="%(default)s"; toggle load-only option'
     )
     parser.add_argument(
+        '-v',
+        '--validate-only',
+        action='store_true',
+        help='default="%(default)s"; toggle validate-only option'
+    )
+    parser.add_argument(
         "refractr_pns",
         nargs="*",
         default=["*"],
@@ -47,7 +54,9 @@ def main(args):
     )
     ns = parser.parse_args(args)
     refractr = load_refractr(**ns.__dict__)
-    if ns.load_only:
+    if ns.validate_only:
+        yaml_print(refractr.validate())
+    elif ns.load_only:
         print(refractr)
     else:
         print(refractr.render())

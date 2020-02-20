@@ -2,11 +2,11 @@
 
 import os
 import pytest
-import requests
 
 from refractr import load_refractr, Refract, urlparse, replace
-from utils import validate_hop
-from leatherman.dbg import dbg
+from utils import urlparse, validate_hop
+
+from leatherman.dictionary import head_body
 
 NL_TAB = '\n  '
 LOCALHOST = '127.0.0.1'
@@ -20,7 +20,7 @@ def validate_http_to_https(given, status):
     }
     given1 = replace(given, netloc=LOCALHOST)
     expect = replace(given, scheme='https', path=given.path or '/')
-    location = _validate_hop(given1, expect, headers, status)
+    location = validate_hop(given1, expect, status, headers)
     return location
 
 def validate_https_to_target(given, expect, status):
@@ -28,7 +28,7 @@ def validate_https_to_target(given, expect, status):
         'Host': given.netloc
     }
     given1 = replace(given, scheme='http', netloc=LOCALHOST+':443')
-    location = _validate_hop(given1, expect, headers, status)
+    location = validate_hop(given1, expect, status, headers)
     return location
 
 def validate_redirect(src, dst, status):
@@ -42,5 +42,6 @@ def validate_redirect(src, dst, status):
 def test_refractr(refract):
     assert isinstance(refract, Refract)
     print(NL_TAB + NL_TAB.join(str(refract).split('\n')))
-    for src, dst in refract.tests.items():
+    for test in refract.tests:
+        src, dst = head_body(test)
         validate_redirect(src, dst, refract.status)

@@ -6,14 +6,7 @@ import sys
 import toml
 
 from urllib import parse
-from itertools import chain, product
-from ruamel import yaml
-from collections import OrderedDict
-from nginx.config.helpers import duplicate_options
-from nginx.config.api import KeyOption as ko
-from nginx.config.api import KeyValueOption as kvo
-from nginx.config.api import Config, Section, Location, KeyMultiValueOption
-from urllib.parse import ParseResult
+from itertools import chain
 
 from leatherman.fuzzy import fuzzy
 from leatherman.yaml import yaml_format
@@ -21,12 +14,7 @@ from leatherman.dictionary import head, body, head_body
 from leatherman.repr import __repr__
 from leatherman.dbg import dbg
 
-def setup_yaml():
-    """ https://stackoverflow.com/a/8661021 """
-    represent_dict_order = lambda self, data: self.represent_mapping(
-        "tag:yaml.org,2002:map", data.items()
-    )
-    yaml.add_representer(OrderedDict, represent_dict_order)
+from utils import *
 
 setup_yaml()
 
@@ -48,78 +36,22 @@ class RefractSpecError(Exception):
         msg = f'refract spec error; spec={spec}'
         super().__init__(msg)
 
-def join(items, sep=' '):
-    return sep.join(items)
-
-def dups(*args):
-    arg, *args = args
-    return duplicate_options(arg, args)
-
-def kmvo(*args):
-    arg, *args = args
-    return KeyMultiValueOption(arg, args)
-
-def urlparse(url):
-    if url.startswith('http'):
-        return parse.urlparse(url)
-    return parse.urlparse(f'http://{url}')
-
-def replace(pr, **kwargs):
-    return ParseResult(
-        scheme=kwargs.get('scheme', pr.scheme),
-        netloc=kwargs.get('netloc', pr.netloc),
-        path=kwargs.get('path', pr.path),
-        params=kwargs.get('params', pr.params),
-        query=kwargs.get('query', pr.query),
-        fragment=kwargs.get('fragment', pr.fragment))
-
-def status_to_word(status):
-    return {
-        301: 'permanent',
-        302: 'temporary',
-    }[status]
-
-def is_scalar(obj):
-    return isinstance(obj, (str, bool, int, float))
-
-def is_list_of_scalars(obj):
-    if isinstance(obj, (list, tuple)):
-        return all([is_scalar(item) for item in obj])
-    return False
-
-def is_list_of_dicts(obj):
-    if isinstance(obj, (list, tuple)):
-        return all([isinstance(item, dict) for item in obj])
-
-def domains(urls):
-    return [urlparse(url)[1] for url in urls]
-
-def domains_paths(urls):
-    pairs = [urlparse(url)[1:3] for url in urls]
-    domains, paths = zip(*pairs)
-    domains = tuple(set(domains))
-    paths = tuple(set(paths))
-    if sorted(pairs) == sorted(product(domains, paths)):
-        return domains, paths
-    raise DomainPathMismatchError(domains, paths)
-
 class RefractrConfig:
     def __init__(self, spec):
         self.refracts = [Refract(**spec) for spec in spec['refracts']]
+
+    def __str__(self):
+        return yaml_format(self.json())
+
+    def json(self):
+        return dict(refracts=[refract.json() for refract in self.refracts])
 
     def render(self):
         stanzas = list(chain(*[refract.render() for refract in self.refracts]))
         return '\n'.join([repr(stanza) for stanza in stanzas if stanza])
 
-    def json(self):
-        return dict(refracts=[refract.json() for refract in self.refracts])
-
-    def __str__(self):
-        return yaml_format(self.json())
-
-def startswith(s, *tests):
-    result = any([s.startswith(test) for test in tests])
-    return result
+    def validate(self):
+        return dict(refracts=[refract.validate() for refract in self.refracts])
 
 class Refract:
     def __init__(self, dst=None, srcs=None, nginx=None, tests=None, status=None):
@@ -156,7 +88,7 @@ class Refract:
     def tests(self):
         if self._tests:
             return self._tests
-        tests = {}
+        tests = []
         if not self.is_rewrite:
             for src in self.srcs:
                 given = f'http://{src}'
@@ -164,11 +96,11 @@ class Refract:
                     for item in self.dst:
                         try:
                             location, target = head_body(item)
-                            tests[f'{given}{location}'] = target
+                            tests += [{f'{given}{location}': target}]
                         except:
                             continue
                 elif is_scalar(self.dst):
-                    tests[given] = self.dst
+                    tests = [{given: self.dst}]
                 else:
                     raise LoadRefractError(self.dst)
         return tests
@@ -176,7 +108,7 @@ class Refract:
     def listen(self, port):
         return port, f'[::]:{port}'
 
-    def json(self):
+    def json(self, **kwargs):
         json = dict(tests=self.tests)
         if self.nginx:
             json.update(dict(nginx=self.nginx))
@@ -185,6 +117,7 @@ class Refract:
                 srcs=self.srcs,
                 dst=self.dst,
                 status=self.status))
+        json.update(**kwargs)
         return json
 
     def __str__(self):
@@ -259,25 +192,24 @@ class Refract:
         return self.render_redirect()
 
     def render(self):
-        if False and self.is_http_dst: #FIXME: if we support single hop, tests need update
-            return [
-                self.render_http_to_https(self.dst)
-            ]
         return [
             self.render_http_to_https(),
             self.render_refract(),
         ]
 
-    __repr__ = __repr__
+    def validate(self):
+        tests = []
+        for test in self.tests:
+            src, dst = head_body(test)
+            given = urlparse(src)
+            expect = urlparse(dst)
+            results = follow_hops(given, expect)
+            test.update(results=results)
+            tests += [test]
+        return self.json(tests=tests)
 
-def listify(value):
-    if isinstance(value, dict):
-        return value
-    elif isinstance(value, (list, tuple)):
-        return list(value)
-    elif value != None:
-        return [value]
-    return value
+
+    __repr__ = __repr__
 
 def load_refract(spec):
     dst = spec.pop('dst', None)

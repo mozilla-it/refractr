@@ -5,22 +5,21 @@ metadata:
     kubernetes.io/ingress.class: "refractr"
     cert-manager.io/cluster-issuer: letsencrypt-prod
     nginx.ingress.kubernetes.io/rewrite-target: /
-    #    nginx.ingress.kubernetes.io/ssl-redirect: "true"
-    #    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
     # Catch all server names
     nginx.ingress.kubernetes.io/server-snippet: "server_name ~^.*$;"
-    #    nginx.ingress.kubernetes.io/configuration-snippet: |
-    #      more_set_headers "X-Frame-Options: SAMEORIGIN";
-    #      more_set_headers "Content-Security-Policy: frame-ancestors 'none'";
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers "X-Frame-Options: SAMEORIGIN";
+      more_set_headers "Content-Security-Policy: frame-ancestors 'none'";
   name: refractr-prod
   namespace: refractr-prod
 spec:
   tls:
   - hosts:
-    - refractr.allizom.org
-    secretName: refractr-allizom-org-tls
+    - mozilla-redirects.xyz
+    secretName: mozilla-redirects-xyz-tls
   rules:
-  - host: refractr.allizom.org
+  - host: mozilla-redirects.xyz
     http:
       paths:
       - path: /

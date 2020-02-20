@@ -625,6 +625,7 @@ refracts:
   - https://start.mozilla.org/:
     - start.mozilla.com
     - start-prod.mozilla.com
+
   - src:
     - wildcard.start.mozilla.com
     - '*.start.mozilla.com'
@@ -632,70 +633,70 @@ refracts:
     - '*.start3.mozilla.com'
     - '*.start-prod.mozilla.com'
     dst:
-      - if: '$http_host ~ "^(?<lang>[a-z]{2,3}(-[a-z]{2})?)?\.(start.*)$"'
-        ^: https://start.mozilla.org/$lang$request_uri
-        redirect: https://start.mozilla.org/
+    - if: '$http_host ~ "^(?<lang>[a-z]{2,3}(-[a-z]{2})?)?\.(start.*)$"'
+      ^: https://start.mozilla.org/$lang$request_uri
+      redirect: https://start.mozilla.org/
     tests:
-      http://ca.start.mozilla.com: https://start.mozilla.org/ca/
-      http://en-us.start.mozilla.com: https://start.mozilla.org/en-us/
-      http://en-uk.start.mozilla.com: https://start.mozilla.org/en-uk/
-      http://wildcard.start.mozilla.com: https://start.mozilla.org/
+    - http://ca.start.mozilla.com: https://start.mozilla.org/ca/
+    - http://en-us.start.mozilla.com: https://start.mozilla.org/en-us/
+    - http://en-uk.start.mozilla.com: https://start.mozilla.org/en-uk/
+    - http://wildcard.start.mozilla.com: https://start.mozilla.org/
 
   - src:
     - malware-error.mozilla.com
     - '*.malware-error.mozilla.com'
     dst:
-      - if: '$query_string ~ "^hl=(?<hl>[^&]+)&url=(?<url>[^&]+)"'
-        ^/$: 'https://www.stopbadware.org/firefox?hl=$hl&url=$url?'
-      - if: '$query_string ~ "^url=(?<url>[^&]+)"'
-        ^/$: 'https://www.stopbadware.org/firefox?url=$url?'
-      - redirect: https://$host$request_uri
+    - if: '$query_string ~ "^hl=(?<hl>[^&]+)&url=(?<url>[^&]+)"'
+      ^/$: 'https://www.stopbadware.org/firefox?hl=$hl&url=$url?'
+    - if: '$query_string ~ "^url=(?<url>[^&]+)"'
+      ^/$: 'https://www.stopbadware.org/firefox?url=$url?'
+    - redirect: https://$host$request_uri
     tests:
-      http://malware-error.mozilla.com?hl=en&url=path: 'https://www.stopbadware.org/firefox?hl=en&url=path'
-      http://malware-error.mozilla.com?url=path: 'https://www.stopbadware.org/firefox?url=path'
-      http://malware-error.mozilla.com: https://malware-error.mozilla.com/
+    - http://malware-error.mozilla.com?hl=en&url=path: 'https://www.stopbadware.org/firefox?hl=en&url=path'
+    - http://malware-error.mozilla.com?url=path: 'https://www.stopbadware.org/firefox?url=path'
+    - http://malware-error.mozilla.com: https://malware-error.mozilla.com/
 
   - src:
     - phish-error.mozilla.com
     - '*.phish-error.mozilla.com'
     dst:
-      - if: '$query_string ~ "^hl=(?<hl>[^&]+)&url=(?<url>[^&]+)"'
-        ^/$: 'https://safebrowsing.google.com/safebrowsing/report_error/?tpl=mozilla&hl=$hl&url=$url?'
-      - if: '$query_string ~ "^url=(?<url>[^&]+)"'
-        ^/$: 'https://safebrowsing.google.com/safebrowsing/report_error/?tpl=mozilla&url=$url?'
-      - redirect: https://$host$request_uri
+    - if: '$query_string ~ "^hl=(?<hl>[^&]+)&url=(?<url>[^&]+)"'
+      ^/$: 'https://safebrowsing.google.com/safebrowsing/report_error/?tpl=mozilla&hl=$hl&url=$url?'
+    - if: '$query_string ~ "^url=(?<url>[^&]+)"'
+      ^/$: 'https://safebrowsing.google.com/safebrowsing/report_error/?tpl=mozilla&url=$url?'
+    - redirect: https://$host$request_uri
     tests:
-      http://phish-error.mozilla.com?hl=en&url=path: 'https://safebrowsing.google.com/safebrowsing/report_error/?tpl=mozilla&hl=en&url=path'
-      http://phish-error.mozilla.com?url=path: 'https://safebrowsing.google.com/safebrowsing/report_error/?tpl=mozilla&url=path'
-      http://phish-error.mozilla.com: https://phish-error.mozilla.com/
+    - http://phish-error.mozilla.com?hl=en&url=path: 'https://safebrowsing.google.com/safebrowsing/report_error/?tpl=mozilla&hl=en&url=path'
+    - http://phish-error.mozilla.com?url=path: 'https://safebrowsing.google.com/safebrowsing/report_error/?tpl=mozilla&url=path'
+    - http://phish-error.mozilla.com: https://phish-error.mozilla.com/
 
   - src:
     - phish-report.mozilla.com
     - '*.phish-report.mozilla.com'
     dst:
-      - if: '$query_string ~ "^hl=(?<hl>es)(?:-ES|-AR)&url=(?<url>[^&]+)"'
-        ^/$: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=$hl&url=$url?'
-      - if: '$query_string ~ "^hl=(?:nb|nn)-NO&url=(?<url>[^&]+)"'
-        ^/$: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=no&url=$url?'
-      - if: '$query_string ~ "^hl=pt-PT&url=(?<url>[^&]+)"'
-        ^/$: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=pt-BR&url=$url?'
-      - if: '$query_string ~ "^hl=(?<hl>ar|bg|cs|da|de|el|en|en-GB|es|fi|fr|hu|it|iw|ja|ko|nl|no|l|pt-BR|ru|sk|sv|tr|zh-CN|zh-TW)&url=(?<url>[^&]+)"'
-        ^/$: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=$hl&url=$url?'
-      - if: '$query_string ~ "^hl=(?<hl>[^&]+)&url=(?<url>[^&]+)"'
-        ^/$: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=$hl&url=$url?'
-      # bug 1387246, send lone url query strings to google safebrowsing
-      - if: '$query_string ~ "url=(?<url>[^&]+)"'
-        ^/$: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&url=$url?'
-      - redirect: https://www.mozilla.org/
+    - if: '$query_string ~ "^hl=(?<hl>es)(?:-ES|-AR)&url=(?<url>[^&]+)"'
+      ^/$: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=$hl&url=$url?'
+    - if: '$query_string ~ "^hl=(?:nb|nn)-NO&url=(?<url>[^&]+)"'
+      ^/$: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=no&url=$url?'
+    - if: '$query_string ~ "^hl=pt-PT&url=(?<url>[^&]+)"'
+      ^/$: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=pt-BR&url=$url?'
+    - if: '$query_string ~ "^hl=(?<hl>ar|bg|cs|da|de|el|en|en-GB|es|fi|fr|hu|it|iw|ja|ko|nl|no|l|pt-BR|ru|sk|sv|tr|zh-CN|zh-TW)&url=(?<url>[^&]+)"'
+      ^/$: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=$hl&url=$url?'
+    - if: '$query_string ~ "^hl=(?<hl>[^&]+)&url=(?<url>[^&]+)"'
+      ^/$: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=$hl&url=$url?'
+    # bug 1387246, send lone url query strings to google safebrowsing
+    - if: '$query_string ~ "url=(?<url>[^&]+)"'
+      ^/$: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&url=$url?'
+    - redirect: https://www.mozilla.org/
     tests:
-      http://phish-report.mozilla.com?hl=es&url=path: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=es&url=path'
-      http://phish-report.mozilla.com?hl=nb-NO&url=path: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=no&url=path'
-      http://phish-report.mozilla.com?hl=pt-PT&url=path: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=pt-BR&url=path'
-      http://phish-report.mozilla.com?hl=en-GB&url=path: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=en-GB&url=path'
-      http://phish-report.mozilla.com?hl=zh-TW&url=path: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=zh-TW&url=path'
-      http://phish-report.mozilla.com?hl=foo&url=bar: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=foo&url=bar'
-      http://phish-report.mozilla.com?url=foobar: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&url=foobar'
-      http://phish-report.mozilla.com/foobar: https://www.mozilla.org/
+    - http://phish-report.mozilla.com?hl=es&url=path: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=es&url=path'
+    - http://phish-report.mozilla.com?hl=nb-NO&url=path: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=no&url=path'
+    - http://phish-report.mozilla.com?hl=pt-PT&url=path: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=pt-BR&url=path'
+    - http://phish-report.mozilla.com?hl=en-GB&url=path: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=en-GB&url=path'
+    - http://phish-report.mozilla.com?hl=zh-TW&url=path: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=zh-TW&url=path'
+    - http://phish-report.mozilla.com?hl=foo&url=bar: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=foo&url=bar'
+    - http://phish-report.mozilla.com?url=foobar: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&url=foobar'
+    - http://phish-report.mozilla.com/foobar: https://www.mozilla.org/
 
   - https://mozilla.github.io/oi-website/: openinnovation.mozilla.org
 

@@ -18,9 +18,6 @@ from utils import *
 
 setup_yaml()
 
-HTTP_PORT = 80
-HTTPS_PORT = 443
-
 class DomainPathMismatchError(Exception):
     def __init__(self, domains, paths):
         msg = f'domains|paths mismatch error; the product must match; domains={domains} paths={paths}'
@@ -108,9 +105,6 @@ class Refract:
                     raise LoadRefractError(self.dst)
         return tests
 
-    def listen(self, port):
-        return port, f'[::]:{port}'
-
     def json(self, **kwargs):
         json = dict(tests=self.tests)
         if self.nginx:
@@ -126,17 +120,8 @@ class Refract:
     def __str__(self):
         return yaml_format(self.json())
 
-    def render_http_to_https(self, target='https://$host$request_uri'):
-        return Section(
-            'server',
-            kvo('server_name', self.server_name),
-            dups('listen', *self.listen(HTTP_PORT)),
-            kmvo('return', self.status, target)
-        )
-
     def render_redirect(self):
         server_name = kvo('server_name', self.server_name)
-        listen = dups('listen', *self.listen(HTTPS_PORT))
         if is_list_of_dicts(self.dst):
             locations = []
             for dst in self.dst:
@@ -148,20 +133,17 @@ class Refract:
             return Section(
                 'server',
                 server_name,
-                listen,
                 *locations,
             )
 
         return Section(
             'server',
             server_name,
-            listen,
             kmvo('return', self.status, self.dst),
         )
 
     def render_rewrite(self):
         server_name = kvo('server_name', self.server_name)
-        listen = dups('listen', *self.listen(HTTPS_PORT))
         rewrites = []
         for dst in self.dst:
             if_ = dst.pop('if', None)
@@ -185,7 +167,6 @@ class Refract:
         return Section(
             'server',
             server_name,
-            listen,
             *rewrites,
         )
 
@@ -196,7 +177,7 @@ class Refract:
 
     def render(self):
         return [
-            self.render_http_to_https(),
+            #self.render_http_to_https(),
             self.render_refract(),
         ]
 

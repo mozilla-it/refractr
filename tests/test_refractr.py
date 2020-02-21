@@ -14,28 +14,17 @@ REFRACTR_YML = os.environ.get('REFRACTR_YML', './refractr.yml')
 
 refractr = load_refractr(REFRACTR_YML)
 
-def validate_http_to_https(given, status):
-    headers = {
-        'Host': given.netloc
-    }
-    given1 = replace(given, netloc=LOCALHOST)
-    expect = replace(given, scheme='https', path=given.path or '/')
-    location = validate_hop(given1, expect, status, headers)
-    return location
-
 def validate_https_to_target(given, expect, status):
     headers = {
         'Host': given.netloc
     }
-    given1 = replace(given, scheme='http', netloc=LOCALHOST+':443')
+    given1 = replace(given, scheme='http', netloc=LOCALHOST+':80')
     location = validate_hop(given1, expect, status, headers)
     return location
 
 def validate_redirect(src, dst, status):
     given = urlparse(src)
     expect = urlparse(dst)
-    if given.scheme == 'http' and expect.scheme == 'https':
-       given = validate_http_to_https(given, status)
     validate_https_to_target(given, expect, status)
 
 @pytest.mark.parametrize('refract', refractr.refracts)

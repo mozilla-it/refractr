@@ -53,6 +53,9 @@ class RefractrConfig:
     def validate(self):
         return dict(refracts=[refract.validate() for refract in self.refracts])
 
+    def sources(self):
+        return dict(sources=sorted(list(chain(*[refract.srcs for refract in self.refracts]))))
+
 class Refract:
     def __init__(self, dst=None, srcs=None, nginx=None, tests=None, status=None):
         self.dst = dst
@@ -207,7 +210,6 @@ class Refract:
             test.update(results=results)
             tests += [test]
         return self.json(tests=tests)
-
 
     __repr__ = __repr__
 

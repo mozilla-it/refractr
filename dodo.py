@@ -12,17 +12,24 @@ DOIT_CONFIG = {
     'verbosity': 2,
 }
 
-def task_generate():
+def task_nginx():
     return {
         'actions': [
             'bin/refractr > etc/nginx/conf.d/refractr.conf',
         ],
     }
 
+def task_domains():
+    return {
+        'actions': [
+            'bin/refractr --domains-only > domains.yml',
+        ]
+    }
+
 def task_build():
     return {
         'task_dep': [
-            'generate',
+            'nginx',
         ],
         'actions': [
             f'docker build . -t {IMAGE}:{VERSION}',

@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-staging
-    kubernetes.io/ingress.class: "refractr"
+    kubernetes.io/ingress.class: "refractr-stage"
     nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/ssl-redirect: "true"            # Does this break getting certs?
     nginx.org/server-snippets: "server_name ~^.*$;"             # Catch all server names

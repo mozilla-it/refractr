@@ -1,0 +1,32 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: "refractr"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.org/server-snippets: "server_name ~^.*$;"     # Catch all server names
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      more_set_headers "X-Frame-Options: SAMEORIGIN";
+      more_set_headers "Content-Security-Policy: frame-ancestors 'none'";
+  name: refractr-prod
+  namespace: refractr-prod
+spec:
+  tls:
+    {% for domain in domains %}
+    - hosts:
+        - "{{ domain }}"
+      secretName: cert-{{ domain | replace(".", "-") | replace("*", "wildcard")}}
+    {% endfor %}
+  rules:
+    {% for domain in domains %}
+    - host: "{{ domain }}"
+    {% endfor %}
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592

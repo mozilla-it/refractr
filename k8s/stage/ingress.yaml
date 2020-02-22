@@ -1,3 +1,4 @@
+---
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -5,8 +6,8 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-staging
     kubernetes.io/ingress.class: "refractr"
     nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"            # Does this break getting certs?
-    nginx.org/server-snippets: "server_name ~^.*$;"             # Catch all server names
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.org/server-snippets: "server_name ~^.*$;"     # Catch all server names
     nginx.ingress.kubernetes.io/configuration-snippet: |
       more_set_headers "X-Frame-Options: SAMEORIGIN";
       more_set_headers "Content-Security-Policy: frame-ancestors 'none'";
@@ -14,12 +15,1018 @@ metadata:
   namespace: refractr-stage
 spec:
   tls:
-  - hosts:
-    - refractr.allizom.org
-    secretName: refractr-allizom-org-tls
-  - hosts:
-    - refractr1.allizom.org
-    secretName: refractr1-allizom-org-tls
-  backend:
-    serviceName: refractr
-    servicePort: 30592
+    - hosts:
+        - "*.malware-error.mozilla.com"
+      secretName: cert-wildcard-malware-error-mozilla-com
+    - hosts:
+        - "*.phish-error.mozilla.com"
+      secretName: cert-wildcard-phish-error-mozilla-com
+    - hosts:
+        - "*.phish-report.mozilla.com"
+      secretName: cert-wildcard-phish-report-mozilla-com
+    - hosts:
+        - "*.start-prod.mozilla.com"
+      secretName: cert-wildcard-start-prod-mozilla-com
+    - hosts:
+        - "*.start.mozilla.com"
+      secretName: cert-wildcard-start-mozilla-com
+    - hosts:
+        - "*.start2.mozilla.com"
+      secretName: cert-wildcard-start2-mozilla-com
+    - hosts:
+        - "*.start3.mozilla.com"
+      secretName: cert-wildcard-start3-mozilla-com
+    - hosts:
+        - "activations.mozilla.com"
+      secretName: cert-activations-mozilla-com
+    - hosts:
+        - "activations.mozilla.org"
+      secretName: cert-activations-mozilla-org
+    - hosts:
+        - "addons.update.mozilla.org"
+      secretName: cert-addons-update-mozilla-org
+    - hosts:
+        - "air.mozilla.com"
+      secretName: cert-air-mozilla-com
+    - hosts:
+        - "air.mozilla.org"
+      secretName: cert-air-mozilla-org
+    - hosts:
+        - "airmo.mozilla.org"
+      secretName: cert-airmo-mozilla-org
+    - hosts:
+        - "ambassadors.mozilla.org"
+      secretName: cert-ambassadors-mozilla-org
+    - hosts:
+        - "apps.mozillalabs.com"
+      secretName: cert-apps-mozillalabs-com
+    - hosts:
+        - "arewefunyet.com"
+      secretName: cert-arewefunyet-com
+    - hosts:
+        - "arewestableyet.com"
+      secretName: cert-arewestableyet-com
+    - hosts:
+        - "ask.mozilla.org"
+      secretName: cert-ask-mozilla-org
+    - hosts:
+        - "aurora.mozilla.org"
+      secretName: cert-aurora-mozilla-org
+    - hosts:
+        - "aus2.mozilla.org"
+      secretName: cert-aus2-mozilla-org
+    - hosts:
+        - "beta.mozilla.org"
+      secretName: cert-beta-mozilla-org
+    - hosts:
+        - "boot2gecko.org"
+      secretName: cert-boot2gecko-org
+    - hosts:
+        - "calendar.mozilla.org"
+      secretName: cert-calendar-mozilla-org
+    - hosts:
+        - "careers.mozilla.com"
+      secretName: cert-careers-mozilla-com
+    - hosts:
+        - "cleopatra.io"
+      secretName: cert-cleopatra-io
+    - hosts:
+        - "communitystore.mozilla.org"
+      secretName: cert-communitystore-mozilla-org
+    - hosts:
+        - "confsurvey.mozilla.org"
+      secretName: cert-confsurvey-mozilla-org
+    - hosts:
+        - "content.mozilla.org"
+      secretName: cert-content-mozilla-org
+    - hosts:
+        - "contribute.mozilla.org"
+      secretName: cert-contribute-mozilla-org
+    - hosts:
+        - "contribute.testpilot.firefox.com"
+      secretName: cert-contribute-testpilot-firefox-com
+    - hosts:
+        - "contributejson.org"
+      secretName: cert-contributejson-org
+    - hosts:
+        - "creative.mozilla.org"
+      secretName: cert-creative-mozilla-org
+    - hosts:
+        - "designlanguage.mozilla.org"
+      secretName: cert-designlanguage-mozilla-org
+    - hosts:
+        - "detodosparatodos.com"
+      secretName: cert-detodosparatodos-com
+    - hosts:
+        - "detodosparatodos.org"
+      secretName: cert-detodosparatodos-org
+    - hosts:
+        - "dev.mozilla.org"
+      secretName: cert-dev-mozilla-org
+    - hosts:
+        - "devderby.mozilla.org"
+      secretName: cert-devderby-mozilla-org
+    - hosts:
+        - "developer.mozilla.com"
+      secretName: cert-developer-mozilla-com
+    - hosts:
+        - "discourse.mozilla-community.org"
+      secretName: cert-discourse-mozilla-community-org
+    - hosts:
+        - "dnt.mozilla.org"
+      secretName: cert-dnt-mozilla-org
+    - hosts:
+        - "docs.pub.build.mozilla.org"
+      secretName: cert-docs-pub-build-mozilla-org
+    - hosts:
+        - "downloadmozillafirefox.com"
+      secretName: cert-downloadmozillafirefox-com
+    - hosts:
+        - "events.mozspaces.org"
+      secretName: cert-events-mozspaces-org
+    - hosts:
+        - "extendfirefox.com"
+      secretName: cert-extendfirefox-com
+    - hosts:
+        - "extensions.mozilla.org"
+      secretName: cert-extensions-mozilla-org
+    - hosts:
+        - "extensiontest.com"
+      secretName: cert-extensiontest-com
+    - hosts:
+        - "fashionyourfirefox.com"
+      secretName: cert-fashionyourfirefox-com
+    - hosts:
+        - "feedback.mozilla.org"
+      secretName: cert-feedback-mozilla-org
+    - hosts:
+        - "festival.mozilla.org"
+      secretName: cert-festival-mozilla-org
+    - hosts:
+        - "firefox-downloaden.de"
+      secretName: cert-firefox-downloaden-de
+    - hosts:
+        - "firefox-hacks.de"
+      secretName: cert-firefox-hacks-de
+    - hosts:
+        - "firefox.be"
+      secretName: cert-firefox-be
+    - hosts:
+        - "firefox.com"
+      secretName: cert-firefox-com
+    - hosts:
+        - "firefox.hu"
+      secretName: cert-firefox-hu
+    - hosts:
+        - "firefox.lt"
+      secretName: cert-firefox-lt
+    - hosts:
+        - "firefox.pt"
+      secretName: cert-firefox-pt
+    - hosts:
+        - "firefox2.de"
+      secretName: cert-firefox2-de
+    - hosts:
+        - "firefox4all.com"
+      secretName: cert-firefox4all-com
+    - hosts:
+        - "firefoxaddons.com"
+      secretName: cert-firefoxaddons-com
+    - hosts:
+        - "firefoxbrowser.com"
+      secretName: cert-firefoxbrowser-com
+    - hosts:
+        - "firefoxbrowser.org"
+      secretName: cert-firefoxbrowser-org
+    - hosts:
+        - "firefoxcup.com"
+      secretName: cert-firefoxcup-com
+    - hosts:
+        - "firefoxcup2010.com"
+      secretName: cert-firefoxcup2010-com
+    - hosts:
+        - "firefoxflicks.com"
+      secretName: cert-firefoxflicks-com
+    - hosts:
+        - "firefoxflicks.mozilla.org"
+      secretName: cert-firefoxflicks-mozilla-org
+    - hosts:
+        - "firefoxflicks.org"
+      secretName: cert-firefoxflicks-org
+    - hosts:
+        - "firefoxik.ru"
+      secretName: cert-firefoxik-ru
+    - hosts:
+        - "firefoxquantum.com"
+      secretName: cert-firefoxquantum-com
+    - hosts:
+        - "firefoxsoftware.com"
+      secretName: cert-firefoxsoftware-com
+    - hosts:
+        - "forums.mozilla.org"
+      secretName: cert-forums-mozilla-org
+    - hosts:
+        - "friends.mozilla.org"
+      secretName: cert-friends-mozilla-org
+    - hosts:
+        - "fsa.mozilla.org"
+      secretName: cert-fsa-mozilla-org
+    - hosts:
+        - "geckoview.dev"
+      secretName: cert-geckoview-dev
+    - hosts:
+        - "getfirefox.co.uk"
+      secretName: cert-getfirefox-co-uk
+    - hosts:
+        - "getfirefox.com"
+      secretName: cert-getfirefox-com
+    - hosts:
+        - "getfirefox.de"
+      secretName: cert-getfirefox-de
+    - hosts:
+        - "getfirefox.net"
+      secretName: cert-getfirefox-net
+    - hosts:
+        - "getfirefox.org"
+      secretName: cert-getfirefox-org
+    - hosts:
+        - "getfirfox.com"
+      secretName: cert-getfirfox-com
+    - hosts:
+        - "git.mozilla.org"
+      secretName: cert-git-mozilla-org
+    - hosts:
+        - "guides.mozilla.org"
+      secretName: cert-guides-mozilla-org
+    - hosts:
+        - "gv.dev"
+      secretName: cert-gv-dev
+    - hosts:
+        - "hub.mozilla.com"
+      secretName: cert-hub-mozilla-com
+    - hosts:
+        - "hub.mozilla.org"
+      secretName: cert-hub-mozilla-org
+    - hosts:
+        - "impactmozilla.com"
+      secretName: cert-impactmozilla-com
+    - hosts:
+        - "input.mozilla.com"
+      secretName: cert-input-mozilla-com
+    - hosts:
+        - "input.mozilla.org"
+      secretName: cert-input-mozilla-org
+    - hosts:
+        - "irccloud.mozilla.org"
+      secretName: cert-irccloud-mozilla-org
+    - hosts:
+        - "jobs.mozilla.com"
+      secretName: cert-jobs-mozilla-com
+    - hosts:
+        - "jobs.mozilla.org"
+      secretName: cert-jobs-mozilla-org
+    - hosts:
+        - "join.mozilla.org"
+      secretName: cert-join-mozilla-org
+    - hosts:
+        - "krakenbenchmark.mozilla.com"
+      secretName: cert-krakenbenchmark-mozilla-com
+    - hosts:
+        - "labs.mozilla.com"
+      secretName: cert-labs-mozilla-com
+    - hosts:
+        - "labs.mozilla.org"
+      secretName: cert-labs-mozilla-org
+    - hosts:
+        - "leandatapractices.com"
+      secretName: cert-leandatapractices-com
+    - hosts:
+        - "leandatapractices.org"
+      secretName: cert-leandatapractices-org
+    - hosts:
+        - "library.mozilla.org"
+      secretName: cert-library-mozilla-org
+    - hosts:
+        - "lightning-project.org"
+      secretName: cert-lightning-project-org
+    - hosts:
+        - "lockbox.firefox.com"
+      secretName: cert-lockbox-firefox-com
+    - hosts:
+        - "lockwise.firefox.com"
+      secretName: cert-lockwise-firefox-com
+    - hosts:
+        - "m.allizom.org/*"
+      secretName: cert-m-allizom-org/wildcard
+    - hosts:
+        - "m.input.mozilla.com"
+      secretName: cert-m-input-mozilla-com
+    - hosts:
+        - "m.input.mozilla.org"
+      secretName: cert-m-input-mozilla-org
+    - hosts:
+        - "m.mozilla.org/*"
+      secretName: cert-m-mozilla-org/wildcard
+    - hosts:
+        - "malware-error.mozilla.com"
+      secretName: cert-malware-error-mozilla-com
+    - hosts:
+        - "masterfirefoxos.mozilla.org"
+      secretName: cert-masterfirefoxos-mozilla-org
+    - hosts:
+        - "metricsgraphicsjs.org"
+      secretName: cert-metricsgraphicsjs-org
+    - hosts:
+        - "mixedreality.mozilla.org"
+      secretName: cert-mixedreality-mozilla-org
+    - hosts:
+        - "mobilepartners.mozilla.org"
+      secretName: cert-mobilepartners-mozilla-org
+    - hosts:
+        - "mozila.eu"
+      secretName: cert-mozila-eu
+    - hosts:
+        - "mozilla-podcasts.org"
+      secretName: cert-mozilla-podcasts-org
+    - hosts:
+        - "mozilla-redirects.xyz"
+      secretName: cert-mozilla-redirects-xyz
+    - hosts:
+        - "mozilla.at"
+      secretName: cert-mozilla-at
+    - hosts:
+        - "mozilla.ca"
+      secretName: cert-mozilla-ca
+    - hosts:
+        - "mozilla.com.br"
+      secretName: cert-mozilla-com-br
+    - hosts:
+        - "mozilla.com.ru"
+      secretName: cert-mozilla-com-ru
+    - hosts:
+        - "mozilla.eu"
+      secretName: cert-mozilla-eu
+    - hosts:
+        - "mozilla.fr"
+      secretName: cert-mozilla-fr
+    - hosts:
+        - "mozilla.frl"
+      secretName: cert-mozilla-frl
+    - hosts:
+        - "mozilla.hu"
+      secretName: cert-mozilla-hu
+    - hosts:
+        - "mozilla.it"
+      secretName: cert-mozilla-it
+    - hosts:
+        - "mozilla.nl"
+      secretName: cert-mozilla-nl
+    - hosts:
+        - "mozilla.org.uk"
+      secretName: cert-mozilla-org-uk
+    - hosts:
+        - "mozillactf.org"
+      secretName: cert-mozillactf-org
+    - hosts:
+        - "mozillaecuador.org"
+      secretName: cert-mozillaecuador-org
+    - hosts:
+        - "mozillafirefox.com"
+      secretName: cert-mozillafirefox-com
+    - hosts:
+        - "mozillafirefox.pl"
+      secretName: cert-mozillafirefox-pl
+    - hosts:
+        - "mozillafoundation.com"
+      secretName: cert-mozillafoundation-com
+    - hosts:
+        - "mozillafoundation.net"
+      secretName: cert-mozillafoundation-net
+    - hosts:
+        - "mozillaservice.net"
+      secretName: cert-mozillaservice-net
+    - hosts:
+        - "mozillausa.org"
+      secretName: cert-mozillausa-org
+    - hosts:
+        - "mozsecworld.org"
+      secretName: cert-mozsecworld-org
+    - hosts:
+        - "moztrap.mozilla.org"
+      secretName: cert-moztrap-mozilla-org
+    - hosts:
+        - "mpl.mozilla.org"
+      secretName: cert-mpl-mozilla-org
+    - hosts:
+        - "nightly.mozilla.org"
+      secretName: cert-nightly-mozilla-org
+    - hosts:
+        - "onemozilla.org"
+      secretName: cert-onemozilla-org
+    - hosts:
+        - "open.mozilla.org"
+      secretName: cert-open-mozilla-org
+    - hosts:
+        - "openinnovation.mozilla.org"
+      secretName: cert-openinnovation-mozilla-org
+    - hosts:
+        - "openwebgames.com"
+      secretName: cert-openwebgames-com
+    - hosts:
+        - "operationfirefox.com"
+      secretName: cert-operationfirefox-com
+    - hosts:
+        - "pastebin.mozilla.org"
+      secretName: cert-pastebin-mozilla-org
+    - hosts:
+        - "phish-error.mozilla.com"
+      secretName: cert-phish-error-mozilla-com
+    - hosts:
+        - "phish-report.mozilla.com"
+      secretName: cert-phish-report-mozilla-com
+    - hosts:
+        - "phonebook.mozilla.com"
+      secretName: cert-phonebook-mozilla-com
+    - hosts:
+        - "phonebook.mozilla.org"
+      secretName: cert-phonebook-mozilla-org
+    - hosts:
+        - "pontoon.mozillalabs.com"
+      secretName: cert-pontoon-mozillalabs-com
+    - hosts:
+        - "popcornjs.org"
+      secretName: cert-popcornjs-org
+    - hosts:
+        - "print.mozilla.com"
+      secretName: cert-print-mozilla-com
+    - hosts:
+        - "public.etherpad-mozilla.org"
+      secretName: cert-public-etherpad-mozilla-org
+    - hosts:
+        - "redirect-san.mozilla.org"
+      secretName: cert-redirect-san-mozilla-org
+    - hosts:
+        - "redirects-http-only.external.zlb.scl3.mozilla.com"
+      secretName: cert-redirects-http-only-external-zlb-scl3-mozilla-com
+    - hosts:
+        - "refractr.allizom.org"
+      secretName: cert-refractr-allizom-org
+    - hosts:
+        - "refractr1.allizom.org"
+      secretName: cert-refractr1-allizom-org
+    - hosts:
+        - "refractr2.allizom.org"
+      secretName: cert-refractr2-allizom-org
+    - hosts:
+        - "releases.mozilla.org"
+      secretName: cert-releases-mozilla-org
+    - hosts:
+        - "reports.telemetry.mozilla.org"
+      secretName: cert-reports-telemetry-mozilla-org
+    - hosts:
+        - "sendto.mozilla.org"
+      secretName: cert-sendto-mozilla-org
+    - hosts:
+        - "smartdogz.org"
+      secretName: cert-smartdogz-org
+    - hosts:
+        - "spark.mozilla.org"
+      secretName: cert-spark-mozilla-org
+    - hosts:
+        - "spidermonkey.dev"
+      secretName: cert-spidermonkey-dev
+    - hosts:
+        - "srihash.org"
+      secretName: cert-srihash-org
+    - hosts:
+        - "start-prod.mozilla.com"
+      secretName: cert-start-prod-mozilla-com
+    - hosts:
+        - "start.mozilla.com"
+      secretName: cert-start-mozilla-com
+    - hosts:
+        - "store.mozilla.com"
+      secretName: cert-store-mozilla-com
+    - hosts:
+        - "store.mozilla.org"
+      secretName: cert-store-mozilla-org
+    - hosts:
+        - "students.mozilla.org"
+      secretName: cert-students-mozilla-org
+    - hosts:
+        - "talkback-public.mozilla.org"
+      secretName: cert-talkback-public-mozilla-org
+    - hosts:
+        - "talkback-reports.mozilla.org"
+      secretName: cert-talkback-reports-mozilla-org
+    - hosts:
+        - "talkback.mozilla.org"
+      secretName: cert-talkback-mozilla-org
+    - hosts:
+        - "taskcluster.net"
+      secretName: cert-taskcluster-net
+    - hosts:
+        - "techspeakers.mozilla.org"
+      secretName: cert-techspeakers-mozilla-org
+    - hosts:
+        - "thehub.mozilla.com"
+      secretName: cert-thehub-mozilla-com
+    - hosts:
+        - "themes.mozilla.org"
+      secretName: cert-themes-mozilla-org
+    - hosts:
+        - "trackingprotection.info"
+      secretName: cert-trackingprotection-info
+    - hosts:
+        - "treestatus.mozilla.org"
+      secretName: cert-treestatus-mozilla-org
+    - hosts:
+        - "triagebot.mozilla.org"
+      secretName: cert-triagebot-mozilla-org
+    - hosts:
+        - "update-firefox.com"
+      secretName: cert-update-firefox-com
+    - hosts:
+        - "update.mozilla.org"
+      secretName: cert-update-mozilla-org
+    - hosts:
+        - "updates.mozilla.org"
+      secretName: cert-updates-mozilla-org
+    - hosts:
+        - "use-application-dns.net"
+      secretName: cert-use-application-dns-net
+    - hosts:
+        - "videos-cdn.mozilla.net"
+      secretName: cert-videos-cdn-mozilla-net
+    - hosts:
+        - "videos-ssl-cdn.mozilla.net"
+      secretName: cert-videos-ssl-cdn-mozilla-net
+    - hosts:
+        - "videos.mozilla.org"
+      secretName: cert-videos-mozilla-org
+    - hosts:
+        - "virtual-redirect-mozilla.com"
+      secretName: cert-virtual-redirect-mozilla-com
+    - hosts:
+        - "virtual-redirect-mozilla.org"
+      secretName: cert-virtual-redirect-mozilla-org
+    - hosts:
+        - "voice.mozilla.frl"
+      secretName: cert-voice-mozilla-frl
+    - hosts:
+        - "webdev.mozilla.org"
+      secretName: cert-webdev-mozilla-org
+    - hosts:
+        - "webfwd.net"
+      secretName: cert-webfwd-net
+    - hosts:
+        - "webfwd.org"
+      secretName: cert-webfwd-org
+    - hosts:
+        - "website-beta.mozilla.org"
+      secretName: cert-website-beta-mozilla-org
+    - hosts:
+        - "webwewant.mozilla.org"
+      secretName: cert-webwewant-mozilla-org
+    - hosts:
+        - "wiki.mozilla.com"
+      secretName: cert-wiki-mozilla-com
+    - hosts:
+        - "wildcard.start.mozilla.com"
+      secretName: cert-wildcard-start-mozilla-com
+    - hosts:
+        - "www.arewefunyet.com"
+      secretName: cert-www-arewefunyet-com
+    - hosts:
+        - "www.boot2gecko.org"
+      secretName: cert-www-boot2gecko-org
+    - hosts:
+        - "www.detodosparatodos.com"
+      secretName: cert-www-detodosparatodos-com
+    - hosts:
+        - "www.detodosparatodos.org"
+      secretName: cert-www-detodosparatodos-org
+    - hosts:
+        - "www.extendfirefox.com"
+      secretName: cert-www-extendfirefox-com
+    - hosts:
+        - "www.fashionyourfirefox.com"
+      secretName: cert-www-fashionyourfirefox-com
+    - hosts:
+        - "www.firefox-hacks.de"
+      secretName: cert-www-firefox-hacks-de
+    - hosts:
+        - "www.firefox.be"
+      secretName: cert-www-firefox-be
+    - hosts:
+        - "www.firefox.com"
+      secretName: cert-www-firefox-com
+    - hosts:
+        - "www.firefox.hu"
+      secretName: cert-www-firefox-hu
+    - hosts:
+        - "www.firefox.lt"
+      secretName: cert-www-firefox-lt
+    - hosts:
+        - "www.firefox.pt"
+      secretName: cert-www-firefox-pt
+    - hosts:
+        - "www.firefox2.de"
+      secretName: cert-www-firefox2-de
+    - hosts:
+        - "www.firefox4all.com"
+      secretName: cert-www-firefox4all-com
+    - hosts:
+        - "www.firefoxaddons.com"
+      secretName: cert-www-firefoxaddons-com
+    - hosts:
+        - "www.firefoxbrowser.com"
+      secretName: cert-www-firefoxbrowser-com
+    - hosts:
+        - "www.firefoxbrowser.org"
+      secretName: cert-www-firefoxbrowser-org
+    - hosts:
+        - "www.firefoxcup.com"
+      secretName: cert-www-firefoxcup-com
+    - hosts:
+        - "www.firefoxcup2010.com"
+      secretName: cert-www-firefoxcup2010-com
+    - hosts:
+        - "www.firefoxflicks.com"
+      secretName: cert-www-firefoxflicks-com
+    - hosts:
+        - "www.firefoxflicks.org"
+      secretName: cert-www-firefoxflicks-org
+    - hosts:
+        - "www.firefoxik.ru"
+      secretName: cert-www-firefoxik-ru
+    - hosts:
+        - "www.firefoxsoftware.com"
+      secretName: cert-www-firefoxsoftware-com
+    - hosts:
+        - "www.getfirefox.com"
+      secretName: cert-www-getfirefox-com
+    - hosts:
+        - "www.getfirefox.de"
+      secretName: cert-www-getfirefox-de
+    - hosts:
+        - "www.getfirefox.net"
+      secretName: cert-www-getfirefox-net
+    - hosts:
+        - "www.getfirefox.org"
+      secretName: cert-www-getfirefox-org
+    - hosts:
+        - "www.getfirfox.com"
+      secretName: cert-www-getfirfox-com
+    - hosts:
+        - "www.impactmozilla.com"
+      secretName: cert-www-impactmozilla-com
+    - hosts:
+        - "www.leandatapractices.com"
+      secretName: cert-www-leandatapractices-com
+    - hosts:
+        - "www.leandatapractices.org"
+      secretName: cert-www-leandatapractices-org
+    - hosts:
+        - "www.lightning-project.org"
+      secretName: cert-www-lightning-project-org
+    - hosts:
+        - "www.mozila.eu"
+      secretName: cert-www-mozila-eu
+    - hosts:
+        - "www.mozilla.at"
+      secretName: cert-www-mozilla-at
+    - hosts:
+        - "www.mozilla.ca"
+      secretName: cert-www-mozilla-ca
+    - hosts:
+        - "www.mozilla.com.ru"
+      secretName: cert-www-mozilla-com-ru
+    - hosts:
+        - "www.mozilla.eu"
+      secretName: cert-www-mozilla-eu
+    - hosts:
+        - "www.mozilla.fr"
+      secretName: cert-www-mozilla-fr
+    - hosts:
+        - "www.mozilla.frl"
+      secretName: cert-www-mozilla-frl
+    - hosts:
+        - "www.mozilla.hu"
+      secretName: cert-www-mozilla-hu
+    - hosts:
+        - "www.mozilla.net"
+      secretName: cert-www-mozilla-net
+    - hosts:
+        - "www.mozilla.nl"
+      secretName: cert-www-mozilla-nl
+    - hosts:
+        - "www.mozilla.org.uk"
+      secretName: cert-www-mozilla-org-uk
+    - hosts:
+        - "www.mozillactf.org"
+      secretName: cert-www-mozillactf-org
+    - hosts:
+        - "www.mozillaecuador.org"
+      secretName: cert-www-mozillaecuador-org
+    - hosts:
+        - "www.mozillafirefox.com"
+      secretName: cert-www-mozillafirefox-com
+    - hosts:
+        - "www.mozillafirefox.pl"
+      secretName: cert-www-mozillafirefox-pl
+    - hosts:
+        - "www.mozillaservice.net"
+      secretName: cert-www-mozillaservice-net
+    - hosts:
+        - "www.mozsecworld.org"
+      secretName: cert-www-mozsecworld-org
+    - hosts:
+        - "www.onemozilla.org"
+      secretName: cert-www-onemozilla-org
+    - hosts:
+        - "www.operationfirefox.com"
+      secretName: cert-www-operationfirefox-com
+    - hosts:
+        - "www.popcornjs.org"
+      secretName: cert-www-popcornjs-org
+    - hosts:
+        - "www.store.mozilla.org"
+      secretName: cert-www-store-mozilla-org
+    - hosts:
+        - "www.support.mozilla.org"
+      secretName: cert-www-support-mozilla-org
+    - hosts:
+        - "www.trackingprotection.info"
+      secretName: cert-www-trackingprotection-info
+    - hosts:
+        - "www.update-firefox.com"
+      secretName: cert-www-update-firefox-com
+    - hosts:
+        - "www.webfwd.net"
+      secretName: cert-www-webfwd-net
+    - hosts:
+        - "www.webfwd.org"
+      secretName: cert-www-webfwd-org
+    - hosts:
+        - "wwww.mozilla.it"
+      secretName: cert-wwww-mozilla-it
+  rules:
+    - host: "*.malware-error.mozilla.com"
+    - host: "*.phish-error.mozilla.com"
+    - host: "*.phish-report.mozilla.com"
+    - host: "*.start-prod.mozilla.com"
+    - host: "*.start.mozilla.com"
+    - host: "*.start2.mozilla.com"
+    - host: "*.start3.mozilla.com"
+    - host: "activations.mozilla.com"
+    - host: "activations.mozilla.org"
+    - host: "addons.update.mozilla.org"
+    - host: "air.mozilla.com"
+    - host: "air.mozilla.org"
+    - host: "airmo.mozilla.org"
+    - host: "ambassadors.mozilla.org"
+    - host: "apps.mozillalabs.com"
+    - host: "arewefunyet.com"
+    - host: "arewestableyet.com"
+    - host: "ask.mozilla.org"
+    - host: "aurora.mozilla.org"
+    - host: "aus2.mozilla.org"
+    - host: "beta.mozilla.org"
+    - host: "boot2gecko.org"
+    - host: "calendar.mozilla.org"
+    - host: "careers.mozilla.com"
+    - host: "cleopatra.io"
+    - host: "communitystore.mozilla.org"
+    - host: "confsurvey.mozilla.org"
+    - host: "content.mozilla.org"
+    - host: "contribute.mozilla.org"
+    - host: "contribute.testpilot.firefox.com"
+    - host: "contributejson.org"
+    - host: "creative.mozilla.org"
+    - host: "designlanguage.mozilla.org"
+    - host: "detodosparatodos.com"
+    - host: "detodosparatodos.org"
+    - host: "dev.mozilla.org"
+    - host: "devderby.mozilla.org"
+    - host: "developer.mozilla.com"
+    - host: "discourse.mozilla-community.org"
+    - host: "dnt.mozilla.org"
+    - host: "docs.pub.build.mozilla.org"
+    - host: "downloadmozillafirefox.com"
+    - host: "events.mozspaces.org"
+    - host: "extendfirefox.com"
+    - host: "extensions.mozilla.org"
+    - host: "extensiontest.com"
+    - host: "fashionyourfirefox.com"
+    - host: "feedback.mozilla.org"
+    - host: "festival.mozilla.org"
+    - host: "firefox-downloaden.de"
+    - host: "firefox-hacks.de"
+    - host: "firefox.be"
+    - host: "firefox.com"
+    - host: "firefox.hu"
+    - host: "firefox.lt"
+    - host: "firefox.pt"
+    - host: "firefox2.de"
+    - host: "firefox4all.com"
+    - host: "firefoxaddons.com"
+    - host: "firefoxbrowser.com"
+    - host: "firefoxbrowser.org"
+    - host: "firefoxcup.com"
+    - host: "firefoxcup2010.com"
+    - host: "firefoxflicks.com"
+    - host: "firefoxflicks.mozilla.org"
+    - host: "firefoxflicks.org"
+    - host: "firefoxik.ru"
+    - host: "firefoxquantum.com"
+    - host: "firefoxsoftware.com"
+    - host: "forums.mozilla.org"
+    - host: "friends.mozilla.org"
+    - host: "fsa.mozilla.org"
+    - host: "geckoview.dev"
+    - host: "getfirefox.co.uk"
+    - host: "getfirefox.com"
+    - host: "getfirefox.de"
+    - host: "getfirefox.net"
+    - host: "getfirefox.org"
+    - host: "getfirfox.com"
+    - host: "git.mozilla.org"
+    - host: "guides.mozilla.org"
+    - host: "gv.dev"
+    - host: "hub.mozilla.com"
+    - host: "hub.mozilla.org"
+    - host: "impactmozilla.com"
+    - host: "input.mozilla.com"
+    - host: "input.mozilla.org"
+    - host: "irccloud.mozilla.org"
+    - host: "jobs.mozilla.com"
+    - host: "jobs.mozilla.org"
+    - host: "join.mozilla.org"
+    - host: "krakenbenchmark.mozilla.com"
+    - host: "labs.mozilla.com"
+    - host: "labs.mozilla.org"
+    - host: "leandatapractices.com"
+    - host: "leandatapractices.org"
+    - host: "library.mozilla.org"
+    - host: "lightning-project.org"
+    - host: "lockbox.firefox.com"
+    - host: "lockwise.firefox.com"
+    - host: "m.allizom.org/*"
+    - host: "m.input.mozilla.com"
+    - host: "m.input.mozilla.org"
+    - host: "m.mozilla.org/*"
+    - host: "malware-error.mozilla.com"
+    - host: "masterfirefoxos.mozilla.org"
+    - host: "metricsgraphicsjs.org"
+    - host: "mixedreality.mozilla.org"
+    - host: "mobilepartners.mozilla.org"
+    - host: "mozila.eu"
+    - host: "mozilla-podcasts.org"
+    - host: "mozilla-redirects.xyz"
+    - host: "mozilla.at"
+    - host: "mozilla.ca"
+    - host: "mozilla.com.br"
+    - host: "mozilla.com.ru"
+    - host: "mozilla.eu"
+    - host: "mozilla.fr"
+    - host: "mozilla.frl"
+    - host: "mozilla.hu"
+    - host: "mozilla.it"
+    - host: "mozilla.nl"
+    - host: "mozilla.org.uk"
+    - host: "mozillactf.org"
+    - host: "mozillaecuador.org"
+    - host: "mozillafirefox.com"
+    - host: "mozillafirefox.pl"
+    - host: "mozillafoundation.com"
+    - host: "mozillafoundation.net"
+    - host: "mozillaservice.net"
+    - host: "mozillausa.org"
+    - host: "mozsecworld.org"
+    - host: "moztrap.mozilla.org"
+    - host: "mpl.mozilla.org"
+    - host: "nightly.mozilla.org"
+    - host: "onemozilla.org"
+    - host: "open.mozilla.org"
+    - host: "openinnovation.mozilla.org"
+    - host: "openwebgames.com"
+    - host: "operationfirefox.com"
+    - host: "pastebin.mozilla.org"
+    - host: "phish-error.mozilla.com"
+    - host: "phish-report.mozilla.com"
+    - host: "phonebook.mozilla.com"
+    - host: "phonebook.mozilla.org"
+    - host: "pontoon.mozillalabs.com"
+    - host: "popcornjs.org"
+    - host: "print.mozilla.com"
+    - host: "public.etherpad-mozilla.org"
+    - host: "redirect-san.mozilla.org"
+    - host: "redirects-http-only.external.zlb.scl3.mozilla.com"
+    - host: "refractr.allizom.org"
+    - host: "refractr1.allizom.org"
+    - host: "refractr2.allizom.org"
+    - host: "releases.mozilla.org"
+    - host: "reports.telemetry.mozilla.org"
+    - host: "sendto.mozilla.org"
+    - host: "smartdogz.org"
+    - host: "spark.mozilla.org"
+    - host: "spidermonkey.dev"
+    - host: "srihash.org"
+    - host: "start-prod.mozilla.com"
+    - host: "start.mozilla.com"
+    - host: "store.mozilla.com"
+    - host: "store.mozilla.org"
+    - host: "students.mozilla.org"
+    - host: "talkback-public.mozilla.org"
+    - host: "talkback-reports.mozilla.org"
+    - host: "talkback.mozilla.org"
+    - host: "taskcluster.net"
+    - host: "techspeakers.mozilla.org"
+    - host: "thehub.mozilla.com"
+    - host: "themes.mozilla.org"
+    - host: "trackingprotection.info"
+    - host: "treestatus.mozilla.org"
+    - host: "triagebot.mozilla.org"
+    - host: "update-firefox.com"
+    - host: "update.mozilla.org"
+    - host: "updates.mozilla.org"
+    - host: "use-application-dns.net"
+    - host: "videos-cdn.mozilla.net"
+    - host: "videos-ssl-cdn.mozilla.net"
+    - host: "videos.mozilla.org"
+    - host: "virtual-redirect-mozilla.com"
+    - host: "virtual-redirect-mozilla.org"
+    - host: "voice.mozilla.frl"
+    - host: "webdev.mozilla.org"
+    - host: "webfwd.net"
+    - host: "webfwd.org"
+    - host: "website-beta.mozilla.org"
+    - host: "webwewant.mozilla.org"
+    - host: "wiki.mozilla.com"
+    - host: "wildcard.start.mozilla.com"
+    - host: "www.arewefunyet.com"
+    - host: "www.boot2gecko.org"
+    - host: "www.detodosparatodos.com"
+    - host: "www.detodosparatodos.org"
+    - host: "www.extendfirefox.com"
+    - host: "www.fashionyourfirefox.com"
+    - host: "www.firefox-hacks.de"
+    - host: "www.firefox.be"
+    - host: "www.firefox.com"
+    - host: "www.firefox.hu"
+    - host: "www.firefox.lt"
+    - host: "www.firefox.pt"
+    - host: "www.firefox2.de"
+    - host: "www.firefox4all.com"
+    - host: "www.firefoxaddons.com"
+    - host: "www.firefoxbrowser.com"
+    - host: "www.firefoxbrowser.org"
+    - host: "www.firefoxcup.com"
+    - host: "www.firefoxcup2010.com"
+    - host: "www.firefoxflicks.com"
+    - host: "www.firefoxflicks.org"
+    - host: "www.firefoxik.ru"
+    - host: "www.firefoxsoftware.com"
+    - host: "www.getfirefox.com"
+    - host: "www.getfirefox.de"
+    - host: "www.getfirefox.net"
+    - host: "www.getfirefox.org"
+    - host: "www.getfirfox.com"
+    - host: "www.impactmozilla.com"
+    - host: "www.leandatapractices.com"
+    - host: "www.leandatapractices.org"
+    - host: "www.lightning-project.org"
+    - host: "www.mozila.eu"
+    - host: "www.mozilla.at"
+    - host: "www.mozilla.ca"
+    - host: "www.mozilla.com.ru"
+    - host: "www.mozilla.eu"
+    - host: "www.mozilla.fr"
+    - host: "www.mozilla.frl"
+    - host: "www.mozilla.hu"
+    - host: "www.mozilla.net"
+    - host: "www.mozilla.nl"
+    - host: "www.mozilla.org.uk"
+    - host: "www.mozillactf.org"
+    - host: "www.mozillaecuador.org"
+    - host: "www.mozillafirefox.com"
+    - host: "www.mozillafirefox.pl"
+    - host: "www.mozillaservice.net"
+    - host: "www.mozsecworld.org"
+    - host: "www.onemozilla.org"
+    - host: "www.operationfirefox.com"
+    - host: "www.popcornjs.org"
+    - host: "www.store.mozilla.org"
+    - host: "www.support.mozilla.org"
+    - host: "www.trackingprotection.info"
+    - host: "www.update-firefox.com"
+    - host: "www.webfwd.net"
+    - host: "www.webfwd.org"
+    - host: "wwww.mozilla.it"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592

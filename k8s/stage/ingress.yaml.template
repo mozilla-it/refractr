@@ -23,10 +23,10 @@ spec:
   rules:
     {% for domain in domains %}
     - host: "{{ domain }}"
-    {% endfor %}
       http:
         paths:
           - path: /
             backend:
               serviceName: refractr
               servicePort: 30592
+    {% endfor %}

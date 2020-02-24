@@ -773,256 +773,1762 @@ spec:
       secretName: cert-wwww-mozilla-it
   rules:
     - host: "*.malware-error.mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "*.phish-error.mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "*.phish-report.mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "*.start-prod.mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "*.start.mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "*.start2.mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "*.start3.mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "activations.mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "activations.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "addons.update.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "air.mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "air.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "airmo.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "ambassadors.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "apps.mozillalabs.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "arewefunyet.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "arewestableyet.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "ask.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "aurora.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "aus2.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "beta.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "boot2gecko.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "calendar.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "careers.mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "cleopatra.io"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "communitystore.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "confsurvey.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "content.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "contribute.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "contribute.testpilot.firefox.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "contributejson.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "creative.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "designlanguage.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "detodosparatodos.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "detodosparatodos.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "dev.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "devderby.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "developer.mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "discourse.mozilla-community.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "dnt.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "docs.pub.build.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "downloadmozillafirefox.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "events.mozspaces.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "extendfirefox.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "extensions.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "extensiontest.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "fashionyourfirefox.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "feedback.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "festival.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "firefox-downloaden.de"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "firefox-hacks.de"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "firefox.be"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "firefox.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "firefox.hu"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "firefox.lt"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "firefox.pt"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "firefox2.de"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "firefox4all.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "firefoxaddons.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "firefoxbrowser.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "firefoxbrowser.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "firefoxcup.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "firefoxcup2010.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "firefoxflicks.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "firefoxflicks.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "firefoxflicks.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "firefoxik.ru"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "firefoxquantum.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "firefoxsoftware.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "forums.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "friends.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "fsa.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "geckoview.dev"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "getfirefox.co.uk"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "getfirefox.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "getfirefox.de"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "getfirefox.net"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "getfirefox.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "getfirfox.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "git.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "guides.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "gv.dev"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "hub.mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "hub.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "impactmozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "input.mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "input.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "irccloud.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "jobs.mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "jobs.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "join.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "krakenbenchmark.mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "labs.mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "labs.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "leandatapractices.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "leandatapractices.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "library.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "lightning-project.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "lockbox.firefox.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "lockwise.firefox.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "m.allizom.org/*"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "m.input.mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "m.input.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "m.mozilla.org/*"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "malware-error.mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "masterfirefoxos.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "metricsgraphicsjs.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "mixedreality.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "mobilepartners.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "mozila.eu"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "mozilla-podcasts.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "mozilla-redirects.xyz"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "mozilla.at"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "mozilla.ca"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "mozilla.com.br"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "mozilla.com.ru"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "mozilla.eu"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "mozilla.fr"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "mozilla.frl"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "mozilla.hu"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "mozilla.it"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "mozilla.nl"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "mozilla.org.uk"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "mozillactf.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "mozillaecuador.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "mozillafirefox.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "mozillafirefox.pl"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "mozillafoundation.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "mozillafoundation.net"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "mozillaservice.net"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "mozillausa.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "mozsecworld.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "moztrap.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "mpl.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "nightly.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "onemozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "open.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "openinnovation.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "openwebgames.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "operationfirefox.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "pastebin.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "phish-error.mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "phish-report.mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "phonebook.mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "phonebook.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "pontoon.mozillalabs.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "popcornjs.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "print.mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "public.etherpad-mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "redirect-san.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "redirects-http-only.external.zlb.scl3.mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "refractr.allizom.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "refractr1.allizom.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "refractr2.allizom.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "releases.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "reports.telemetry.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "sendto.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "smartdogz.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "spark.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "spidermonkey.dev"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "srihash.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "start-prod.mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "start.mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "store.mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "store.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "students.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "talkback-public.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "talkback-reports.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "talkback.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "taskcluster.net"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "techspeakers.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "thehub.mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "themes.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "trackingprotection.info"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "treestatus.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "triagebot.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "update-firefox.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "update.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "updates.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "use-application-dns.net"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "videos-cdn.mozilla.net"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "videos-ssl-cdn.mozilla.net"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "videos.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "virtual-redirect-mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "virtual-redirect-mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "voice.mozilla.frl"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "webdev.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "webfwd.net"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "webfwd.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "website-beta.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "webwewant.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "wiki.mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "wildcard.start.mozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.arewefunyet.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.boot2gecko.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.detodosparatodos.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.detodosparatodos.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.extendfirefox.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.fashionyourfirefox.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.firefox-hacks.de"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.firefox.be"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.firefox.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.firefox.hu"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.firefox.lt"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.firefox.pt"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.firefox2.de"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.firefox4all.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.firefoxaddons.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.firefoxbrowser.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.firefoxbrowser.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.firefoxcup.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.firefoxcup2010.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.firefoxflicks.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.firefoxflicks.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.firefoxik.ru"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.firefoxsoftware.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.getfirefox.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.getfirefox.de"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.getfirefox.net"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.getfirefox.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.getfirfox.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.impactmozilla.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.leandatapractices.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.leandatapractices.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.lightning-project.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.mozila.eu"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.mozilla.at"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.mozilla.ca"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.mozilla.com.ru"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.mozilla.eu"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.mozilla.fr"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.mozilla.frl"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.mozilla.hu"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.mozilla.net"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.mozilla.nl"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.mozilla.org.uk"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.mozillactf.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.mozillaecuador.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.mozillafirefox.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.mozillafirefox.pl"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.mozillaservice.net"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.mozsecworld.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.onemozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.operationfirefox.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.popcornjs.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.store.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.support.mozilla.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.trackingprotection.info"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.update-firefox.com"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.webfwd.net"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "www.webfwd.org"
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: refractr
+              servicePort: 30592
     - host: "wwww.mozilla.it"
       http:
         paths:

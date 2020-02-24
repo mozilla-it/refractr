@@ -289,6 +289,11 @@ refracts:
     - redirect-san.mozilla.org
     status: 307
 
+   # NOTE: changed from http->https after verifying
+   # FIXME: how is this zeus stuff going to work going forward?
+   - https://mozilla.org/: redirects-http-only.external.zlb.scl3.mozilla.com
+     status: 307
+
   # bug 688019, 1427843
   - https://www.mozilla.org/firefox/new/?utm_source=getfirefox-org&utm_medium=referral:
     - getfirefox.org

@@ -1,0 +1,55 @@
+apiVersion: helm.fluxcd.io/v1
+kind: HelmRelease
+metadata:
+  name: refractr
+  annotations:
+    fluxcd.io/automated: "true"
+    filter.fluxcd.io/chart-image: glob:dev-*
+spec:
+  releaseName: refractr
+  chart:
+    repository: https://mozilla-it.github.io/helm-charts/
+    name: refractr
+    version: 0.1.1
+  values:
+    #namespace: refractr-stage2
+    #image:
+      #repository: mozilla-it/refractr
+      #      tag: dev-kb9lm91e
+    replicaCount: 1
+    refractr:
+      # Customize deployment name per environment to make hostnames differents,
+      # allowing us to segregate logs in Papertrail
+      deployment_name: refractr-stage
+      image: itsre/refractr:latest
+
+      ingress:
+        enabled: true
+
+#      use_secrets_file: true
+#      use_default_secrets_file: false
+
+#      config:
+  #        redis_url: "redis://dev-voice-eks-001.dev-voice-eks.cljunw.usw2.cache.amazonaws.com"
+  #      mysql:
+    #        host: "voice-eks-dev.cd5od9qtbvp0.us-west-2.rds.amazonaws.com"
+    #      root_user: "voice"
+
+#      extra_volumes:
+  #      - name: papertrail-conf
+  #      secret:
+    #        secretName: papertrail-secrets
+    #
+    #  extra_containers:
+      #  - name: logs-to-papertrail
+      #  image: itsre/remote_syslog2:0.2
+      #  imagePullPolicy: IfNotPresent
+      #  volumeMounts:
+        #  - mountPath: /logs
+        #  name: logs
+        #- mountPath: /etc/rs2
+        #  name: papertrail-conf
+
+#    new_relic:
+  #      enabled: true
+  #    app_name: voice-dev

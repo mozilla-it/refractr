@@ -3,6 +3,8 @@ ARG NGINX_VERSION=1.17.6
 
 FROM nginx:alpine AS builder
 
+ENV NGINX_VERSION 1.17.6
+
 # Download sources
 RUN wget "http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz"
 

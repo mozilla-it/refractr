@@ -1,8 +1,14 @@
 #!/usr/bin/env python3
 
+import os
+
 from doit.tools import LongRunning
 from subprocess import check_output
 
+DIR = os.path.abspath(os.path.dirname(__file__))
+CWD = os.path.abspath(os.getcwd())
+REL = os.path.relpath(DIR, CWD)
+SRC = f"{DIR}/refractr"
 IMAGE = 'itsre/refractr'
 CONTAINER = 'refractr-test'
 VERSION = check_output('git describe --match "v*" --abbrev=7', shell=True).decode('utf-8').strip()
@@ -15,7 +21,7 @@ DOIT_CONFIG = {
 def task_nginx():
     return {
         'actions': [
-            'bin/refractr > etc/nginx/conf.d/refractr.conf',
+            'bin/refractr > refractr/etc/nginx/conf.d/refractr.conf',
         ],
     }
 
@@ -32,7 +38,7 @@ def task_build():
             'nginx',
         ],
         'actions': [
-            f'docker build . -t {IMAGE}:{VERSION}',
+            f'docker build refractr -t {IMAGE}:{VERSION}',
         ],
     }
 
@@ -66,6 +72,6 @@ def task_test():
         ],
         'actions': [
             'sleep 1',
-            'PYTHONPATH=./src python3 -m pytest -vv -q -s',
+            'PYTHONPATH=./refractr python3 -m pytest -vv -q -s',
         ],
     }

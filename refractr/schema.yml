@@ -1,0 +1,129 @@
+$schema: http://json-schema.org/draft-08/schema
+title: refractr
+type: object
+required:
+- refracts
+additionalProperties: false
+properties:
+  refracts:
+    $id: '#/properties/refracts'
+    default: []
+    title: refracts
+    type: array
+    items:
+      oneOf:
+      - $ref: '#/defs/simple-refract'
+      - $ref: '#/defs/complex-refract'
+defs:
+  if-predicate:
+    default: ''
+    title: if-predicate
+    type: string
+    pattern: '^(^|$).*$'
+  url:
+    default: ''
+    title: url
+    type: string
+    pattern: '^https?://[^\s/.?#].[^\s]*$'
+  urls:
+    default: []
+    title: urls
+    type: array
+    items:
+      $ref: '#/defs/url'
+  domain:
+    default: ''
+    title: domain
+    type: string
+    pattern: '^(?!:\/\/)((\*|[a-zA-Z0-9-]+)\.){0,5}[a-zA-Z0-9-][a-zA-Z0-9-]+\.[a-zA-Z]{2,64}?$'
+  domains:
+    default: []
+    title: domains
+    type: array
+    items:
+      $ref: '#/defs/domain'
+  dst-redirect:
+    default: {}
+    title: dst-redirect
+    type: object
+    minProperties: 1
+    additionalProperties: false
+    patternProperties:
+      '^\/([A-z0-9-_+]+\/)*((\*|[A-z0-9-_+]+(\.[A-z0-9]+)?))?$':
+        $ref: '#/defs/url'
+  dst-rewrite:
+    default: {}
+    title: dst-rewrite
+    type: object
+    minProperties: 1
+    additionalProperties: false
+    properties:
+      if:
+        $ref: '#/defs/if-predicate'
+      redirect:
+        $ref: '#/defs/url'
+    patternProperties:
+      '^\^.*$':
+        $ref: '#/defs/url'
+  dsts:
+    type: array
+    items:
+      oneOf:
+      - $ref: '#/defs/dst-redirect'
+      - $ref: '#/defs/dst-rewrite'
+  test:
+    default: {}
+    title: test
+    type: object
+    minProperties: 1
+    maxProperties: 1
+    additionalProperties: false
+    patternProperties:
+      '^https?://[^\s/$.?#].[^\s]*$':
+        $ref: '#/defs/url'
+  tests:
+    default: []
+    title: tests
+    type: array
+    items:
+      $ref: '#/defs/test'
+  simple-refract:
+    default: {}
+    title: simple-refract
+    type: object
+    minProperties: 1
+    maxProperties: 2
+    additionalProperties: false
+    properties:
+      status:
+        type: integer
+    patternProperties:
+      '^https?://[^\s/$.?#].[^\s]*$':
+        oneOf:
+        - $ref: '#/defs/domain'
+        - $ref: '#/defs/domains'
+      '^(?!:\/\/)((\*|[a-zA-Z0-9-]+)\.){0,5}[a-zA-Z0-9-][a-zA-Z0-9-]+\.[a-zA-Z]{2,64}?$':
+        oneOf:
+        - $ref: '#/defs/domain'
+        - $ref: '#/defs/domains'
+  complex-refract:
+    default: {}
+    title: complex-refract
+    type: object
+    minProperties: 2
+    maxProperties: 4
+    required:
+    - srcs
+    - dst
+    additionalProperties: false
+    properties:
+      srcs:
+        oneOf:
+        - $ref: '#/defs/domain'
+        - $ref: '#/defs/domains'
+      dst:
+        $ref: '#/defs/dsts'
+      status:
+        type: integer
+      tests:
+        $ref: '#/defs/tests'

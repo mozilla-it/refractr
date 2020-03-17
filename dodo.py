@@ -6,11 +6,16 @@ import json
 
 from doit.tools import LongRunning
 from subprocess import check_output, CalledProcessError, PIPE
+from ruamel.yaml import safe_load
+from jsonschema import validate
+from jsonschema.exceptions import ValidationError
 
 DIR = os.path.abspath(os.path.dirname(__file__))
 CWD = os.path.abspath(os.getcwd())
 REL = os.path.relpath(DIR, CWD)
 REFRACTR = f'{REL}/refractr'
+REFRACTR_YML = f'{REFRACTR}/refractr.yml'
+SCHEMA_YML = f'{REFRACTR}/schema.yml'
 NGINX = f'{REFRACTR}/nginx'
 IMAGE = 'itsre/refractr'
 CREDENTIALS_MESSAGE = 'Unable to locate credentials. You can configure credentials by running "aws configure".'
@@ -97,12 +102,41 @@ def task_creds():
         'uptodate': [check_creds],
     }
 
+def task_schema():
+    '''
+    test refractr.yml against schema.yml using jsonschema
+    '''
+    def schema():
+        assert os.path.isfile(REFRACTR_YML)
+        assert os.path.isfile(SCHEMA_YML)
+        print(f'validating {REFRACTR_YML} against {SCHEMA_YML} =>', end=' ')
+        refractr_yml = safe_load(open(REFRACTR_YML))
+        schema_yml = safe_load(open(SCHEMA_YML))
+        try:
+            validate(refractr_yml, schema_yml)
+            print('SUCCESS')
+            return True
+        except ValidationError as ve:
+            print('FAILURE')
+            print(ve)
+            return False
+    return {
+        'task_dep': [
+        ],
+        'actions': [
+            schema,
+        ]
+    }
+
 def task_nginx():
     '''
     generate nginx.conf files from refractr.yml
     '''
     cmd = f'bin/refractr > {NGINX}/conf.d/refractr.conf'
     return {
+        'task_dep': [
+            'schema',
+        ],
         'actions': [
             cmd,
             f'echo "{cmd}"',
@@ -115,6 +149,9 @@ def task_ingress():
     '''
     cmd  = f'bin/refractr --ingress-template {INGRESS_YAML_TEMPLATE} > {INGRESS_YAML_TEMPLATE.replace(".template", "")}'
     return {
+        'task_dep': [
+            'schema',
+        ],
         'actions': [
             cmd,
             f'echo "{cmd}"',

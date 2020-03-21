@@ -8,7 +8,8 @@ from subprocess import check_output
 DIR = os.path.abspath(os.path.dirname(__file__))
 CWD = os.path.abspath(os.getcwd())
 REL = os.path.relpath(DIR, CWD)
-SRC = f"{DIR}/refractr"
+REFRACTR = f'{DIR}/refractr'
+NGINX = f'{REFRACTR}/nginx'
 IMAGE = 'itsre/refractr'
 CONTAINER = 'refractr-test'
 VERSION = check_output('git describe --match "v*" --abbrev=7', shell=True).decode('utf-8').strip()
@@ -18,10 +19,10 @@ DOIT_CONFIG = {
     'verbosity': 2,
 }
 
-def task_nginx():
+def task_generate():
     return {
         'actions': [
-            'bin/refractr > refractr/etc/nginx/conf.d/refractr.conf',
+            f'bin/refractr > {NGINX}/conf.d/refractr.conf',
         ],
     }
 
@@ -35,7 +36,7 @@ def task_domains():
 def task_build():
     return {
         'task_dep': [
-            'nginx',
+            'generate',
         ],
         'actions': [
             f'docker build refractr -t {IMAGE}:{VERSION}',

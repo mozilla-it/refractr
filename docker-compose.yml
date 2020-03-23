@@ -7,3 +7,10 @@ services:
     build: ./refractr
     ports:
     - 80:80
+  telegraf:
+    image: telegraf:latest
+    container_name: telegraf
+    volumes:
+    - telegraf:/etc/telegraf:ro
+volumes:
+  telegraf:

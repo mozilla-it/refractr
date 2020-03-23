@@ -2,12 +2,8 @@ version: "3.7"
 
 services:
   refractr:
-    build:
-      context: refractr
-      dockerfile: Dockerfile
-  remote-logger:
-    image: itsre/remote_syslog2:0.2
-    volumes:
-      - /refractr/logs:/logs
-      - /refractr/remote-logger:/etc/rs2
-
+    image: itsre/refractr:${REFRACTR_VERSION}
+    container_name: refractr
+    build: ./refractr
+    ports:
+    - 80:80

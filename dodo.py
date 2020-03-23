@@ -11,13 +11,20 @@ REL = os.path.relpath(DIR, CWD)
 REFRACTR = f'{DIR}/refractr'
 NGINX = f'{REFRACTR}/nginx'
 IMAGE = 'itsre/refractr'
-CONTAINER = 'refractr-test'
-VERSION = check_output('git describe --match "v*" --abbrev=7', shell=True).decode('utf-8').strip()
+REFRACTR_VERSION = check_output('git describe --match "v*" --abbrev=7', shell=True).decode('utf-8').strip()
 
 DOIT_CONFIG = {
     'default_tasks': ['test'],
     'verbosity': 2,
 }
+
+def envs(sep=' ', **kwargs):
+    envs = dict(
+        REFRACTR_VERSION=REFRACTR_VERSION
+    )
+    return sep.join(
+        [f'{key}={value}' for key, value in sorted(dict(envs, **kwargs).items())]
+    )
 
 def task_generate():
     return {
@@ -39,7 +46,7 @@ def task_build():
             'generate',
         ],
         'actions': [
-            f'docker build refractr -t {IMAGE}:{VERSION}',
+            f'env {envs()} docker-compose build'
         ],
     }
 
@@ -49,7 +56,7 @@ def task_check():
             'build',
         ],
         'actions': [
-            f'docker run {IMAGE}:{VERSION} nginx -t',
+            f'docker run {IMAGE}:{REFRACTR_VERSION} nginx -t',
         ],
     }
 
@@ -59,9 +66,8 @@ def task_drun():
             'check',
         ],
         'actions': [
-            f'[ "$(docker ps -a | grep {CONTAINER})" ] && docker rm -f {CONTAINER} || true',
             LongRunning(
-                f'nohup docker run -d -p 80:80 -p 443:443 --name {CONTAINER} {IMAGE}:{VERSION} > /dev/null &'),
+                f'nohup env {envs()} docker-compose up -d --force-recreate >/dev/null &'),
         ],
     }
 

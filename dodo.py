@@ -46,7 +46,8 @@ def task_build():
             'generate',
         ],
         'actions': [
-            f'env {envs()} docker-compose build'
+            f'env {envs()} docker-compose build',
+            f'env {envs()} docker image prune -f --filter label=stage=intermediate',
         ],
     }
 

@@ -2,6 +2,7 @@
 ARG NGINX_VERSION=1.17.6
 
 FROM nginx:alpine AS builder
+LABEL stage=intermediate
 
 ENV NGINX_VERSION 1.17.6
 

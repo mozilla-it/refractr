@@ -56,7 +56,7 @@ def task_check():
             'build',
         ],
         'actions': [
-            f'docker run {IMAGE}:{REFRACTR_VERSION} nginx -t',
+            f'env {envs()} docker-compose run refractr nginx -t',
         ],
     }
 
@@ -66,8 +66,10 @@ def task_drun():
             'check',
         ],
         'actions': [
+            # https://github.com/docker/compose/issues/1113#issuecomment-185466449
+            f'env {envs()} docker-compose rm --force refractr',
             LongRunning(
-                f'nohup env {envs()} docker-compose up -d --force-recreate >/dev/null &'),
+                f'nohup env {envs()} docker-compose up -d --remove-orphans refractr >/dev/null &'),
         ],
     }
 

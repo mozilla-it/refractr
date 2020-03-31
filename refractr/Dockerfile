@@ -1,10 +1,11 @@
 # nginx:alpine contains NGINX_VERSION environment variable, like so:
 ARG NGINX_VERSION=1.17.6
 
-FROM nginx:alpine AS builder
+FROM nginx:${NGINX_VERSION}-alpine AS builder
 LABEL stage=intermediate
 
-ENV NGINX_VERSION 1.17.6
+# required after the FROM statement to pass through
+ARG NGINX_VERSION
 
 # Download sources
 RUN wget "http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz"
@@ -37,6 +38,7 @@ RUN CONFARGS=$(nginx -V 2>&1 | sed -n -e 's/^.*arguments: //p') \
   make && make install
 
 FROM nginx:${NGINX_VERSION}-alpine
+
 # Extract the dynamic module influxdb from the builder image
 COPY --from=builder /usr/local/nginx/modules/ngx_http_influxdb_module.so /usr/local/nginx/modules/ngx_http_influxdb_module.so
 RUN rm /etc/nginx/conf.d/default.conf

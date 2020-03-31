@@ -140,3 +140,7 @@ domains.yml
 
 # ignore doit db
 .doit.db
+
+# ignore terraform files
+.terraform
+terraform.tfstate*

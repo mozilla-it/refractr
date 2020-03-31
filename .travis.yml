@@ -1,23 +1,24 @@
 language: python
 python:
- - "3.7"
+- '3.7'
 service:
- - docker
+- docker
 branches:
   except:
   - flux-sync-refractr-prod
   - flux-sync-refractr-stage
+before_install:
+- pip install awscli
 install:
-  - git fetch --unshallow --tags
-  - VERSION=$(git describe --match "v*" --abbrev=7)
-  - pip install doit
-  - pip install -r requirements.txt
+- git fetch --unshallow --tags
+- VERSION=$(git describe --match "v*" --abbrev=7)
+- pip install doit
+- pip install -r requirements.txt
 script:
-  - doit test
-  - echo test
-  - echo "${DOCKER_PASSWORD}" | docker login --username "${DOCKER_USER}" --password-stdin
-  - docker push "itsre/refractr:$VERSION"
+- doit test
+- echo test
+- doit publish
 env:
   global:
-  - secure: WzfRonZ0EGZRZR16C5KTuJgzbW3fFjAPYW5H9bTIAgM3pfVFNKP7hbTvL7lcpEzEuixjmqNPH59Q4jJi1qtgqHXZj9I4+xhd2/FskwWukg/Am5TQy1fr6WcbEkit97vZokDfaCanmL9RR0IXEdhkf2QmM5Uy2CoyXqmJCi3IxXu+cpTjW53rxW2eFmpE0CrQo/Jgu+wqr25SiCvTjqMInDYxK1vHwocN3zGQ1iEZlwfbTqi6bYCSQBhqeTBmOpEA2N3SOspRalFotqRAyaOarqgBlgPPfe9xs8wwxdO6sp30K3w3rm2gCCVrNbkgkIzDr1pFVIR6s1GLhdESGNIMBu1mNJA0DBxcCCYBGTWIGI/mdO9/Mz0csO8xadI4TU3dNAJcppZfnXbAPT40M628YuZbkNd7kfnGP9rq6Evc/2cMSVG63ud0L9w/Z3Xf+HiseLwp2m8QWU7JEbHKu84NjBdj9mmJyu/zkf2J8iUZXffIvSjR4LLR731ODCfKdZqzzjhxk6SzarwHSk6lCJE0Ul/FF4CZ5feRiRnKipFWnah3UOsi4nDpX34hXueQPfS/GPBRUNfQvCs9XOzug79nUxyqpF0Qx/pt8rRjXlklb1Kunc3hH8y6uQSRORwJ11zFy2ABVcWnQBHEaBkBlv4GFP4Ins/tT02YnTJTpluWbHM=
-  - secure: fPj0l8UMYt8eUK7xeqt9jjYBEKUdazPAiYtf8cupjlyHcqWr0wFLvQdzAyFmiGG7uWWeNuIZT+f4KTBjeQnV6I2tfge+t/4lrY+w9nnTNttGtZz6L3EI6sdqYj3hkH/RDapr7VTvGj0CCnq2dzmrxvi0mVuEN4OWFyAhCZOJQ6I/6GVfn7zoN+cFTUQtYvcWLZj0bxR3F+ctJECuCKgYlpqPRI1MpBeslv6uMK0lpju8/yIXPnIKTMf5p44vkS5Uy4ZlfNSpJoBLXsAdwVvCoob/JuAbE2ji7w3YbiNuUfL71hFrzluSZN/04r67Hp6anQGbSiwNErLO7t0ZRetEG3nw+VUWN2kkaIkNg4gP42v2DQWyTo0NWiZfu/WtK1sCHNlH/7K1NoapNukzXZ9IMvhzZ3SiB2HMQt2fS84OG9lwuxs+sxPa+W63nury/vVVYhliRc7XAXA61jp+Qa8xNPFMjza1R6F7YtxP7wBUMGOILiAZ7p4x/hucWKXsVmcALqslY1mr/mrP7KHNGptWfdNQfTDUsPSn7w5+pFQnCc+DOofw0CUSC9EAtC29BeKA27sCThGWqK5fiJ+V0wledifxfOsItWosBHobzvKL2KUfOOepzrf8ui2AJ+3r2KzH4WQrstMXOnIN7uEySFxg54X5xIljtQfovtxxhRchdHQ=
+  - secure: N9mMBcKRn+UjpvBD86Cfw2pxNO0B0l3ThAwIUOXaj5MBt3SFZYaFYlQXcYkI12nh55WH45gn3VaCpJyj4vVJR+aLwQqlsSZuyB3sq9WXAcb0Kpzz/J6SyNEqZZyRF9s6D3EHcmGlKE6b4azyM4xeiEDllyKzA7CPm17xSUcqglZYUJZGiOYT9+EZrf+VFI1E54S2ovAFHX5Wy83bb8Ct62vv8/lXaoL2AeAz12CR0w11PvDtKBRBBc8GrW1HUCVN9TN2+3UOPp4ErZTjIsVh6guYZvVDUVbaak19FeVTU9EpmC+Xvp8udmyz3E09jUXs5C3GzVNGG8IW3VEZueYY0yyl0eS1lij+bmjowJGpaKU9nuqwOCf0cz8pD6GK3Ecfw1Kz1mxUiAmmPL1wcb+pEIEOFruRgXshN2dh/H2N+6Cqjk3Q3r9nawH56gqbb4EswPNYpuVXtfM159/S79LKGfdYuelGBesXyUxOTa8Q6kVn6oXIMftZ27Nd10VeGnrcbe3TkW4tb5UXd6fsw4g3vxaRJVxZ7uS9TR+iQJZmz28Lav88gR5S+XMoEpuFpE1I5/J6rog+hfUqGAmF6cLxIutYmDS6TtK7H+3CcQcmeatxqmp8PXuPltcqiOTcd4O5x0Ji0MURzinUJcjodR3DR9Sfb8tbVyPFfJHtj1NYlRs=
+  - secure: wavItUHlf+/WRif2+pCkcrqXHnn3lG9FHs2Pjts2TFzG9pbUQy4fszRgdEudhvN2r2gyQ48FGuTfI0+xtFoBVveduWaNELJrXAYAiSn3HMgFIn40hQQ7hajHyXF8wIsWHLtw/J1FGCNbZTQlXMPFXOJcDKwymPNCoT0bLjr9BzoQBSdHX4ElmDfoERrVOt8KcMFvFpMxD7agaSYOAXLHvX95BQO3oUxwyf6BKFawVnMklzOkJ0MHCKJ8fkeeQ6GLiUhBRP9unTEUP38+jdrQhkJNkBXnSROPmvmK7MQmngrAFYsYEEcEBlzs/qzNeOf3+g86NTSdVO8SzPGkSwfpzQWiPvPPMlEUTXecRJiywljyUvlOqrhunvdoKEBS1NO/6KjBxr0NaO+5HpEFgmSnQHb8Zd7kmDjrWXCFlRHja2tESAmuE4dDZyQMtHVHDlMUIHlh61Dsq6rV1iv2XDbQm6QHnY4tgZjHxfuJIs2+Gdq/+/ognF97OqzC0oxWA6QHrO0MjEqXOv57ywoAHB/WbT60KchxKHbw7NDRoEw7EGVC00F+TBF2QhfG1ZeBTWwnLcUBMDa0PNEDT5UayPzsUcCApr3B+fNOHdDY5bOJdaE3skWxq7zB+2cz1gv5V4t+WJ+hV/1p1OAlxmGc+asn5y1psapxhc0Uf1WPSN1/vKU=

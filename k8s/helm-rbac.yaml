@@ -1,8 +1,9 @@
+---
+# Create refractr service account, roles and rolebinding so helm cart can run
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: refractr
-
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
@@ -57,7 +58,6 @@ rules:
       - patch
       - delete
       - watch
-
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1

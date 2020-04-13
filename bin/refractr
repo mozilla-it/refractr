@@ -56,9 +56,10 @@ def main(args):
     parser.add_argument(
         '-i',
         '--ingress-template',
+        metavar='FILE',
         const=f'{DIR}/refractr-cd/ingress.yaml.template',
         nargs='?',
-        help='default="%(default)s"; const="%(const)s"; toggle creating ingress.yml from template'
+        help='const="%(const)s"; toggle creating ingress.yml from template'
     )
     parser.add_argument(
         "refractr_pns",

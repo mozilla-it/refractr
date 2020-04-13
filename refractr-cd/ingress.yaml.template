@@ -14,18 +14,18 @@ metadata:
   name: refractr
 spec:
   tls:
-    {% for domain in domains %}
-    - hosts:
-        - "{{ domain }}"
-      secretName: cert-{{ domain | replace(".", "-") | replace("*", "wildcard")}}
+  {% for domain in domains %}
+  - hosts:
+    - "{{ domain }}"
+    secretName: cert-{{ domain | replace(".", "-") | replace("*", "wildcard")}}
     {% endfor %}
   rules:
-    {% for domain in domains %}
-    - host: {{ domain }}
-      http:
-        paths:
-        - backend:
-            serviceName: refractr
-            servicePort: 80
-          path: /
-    {% endfor %}
+  {% for domain in domains %}
+  - host: {{ domain }}
+    http:
+      paths:
+      - backend:
+          serviceName: refractr
+          servicePort: 80
+        path: /
+  {% endfor %}

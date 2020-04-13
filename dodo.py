@@ -14,6 +14,7 @@ NGINX = f'{REFRACTR}/nginx'
 IMAGE = 'itsre/refractr'
 REFRACTR_VERSION = check_output('git describe --match "v*" --abbrev=7', shell=True).decode('utf-8').strip()
 CREDENTIALS_MESSAGE = 'Unable to locate credentials. You can configure credentials by running "aws configure".'
+INGRESS_YAML_TEMPLATE = f'{DIR}/refractr-cd/ingress.yaml.template'
 
 DOIT_CONFIG = {
     'default_tasks': ['test'],
@@ -97,7 +98,19 @@ def task_domains():
     return {
         'actions': [
             'bin/refractr --domains-only > domains.yml',
-        ]
+        ],
+    }
+
+def task_ingress():
+    '''
+    create ingress.yaml from refractr.yml domains and ingress.yaml.template
+    '''
+    cmd  = f'bin/refractr --ingress-template {INGRESS_YAML_TEMPLATE} > {INGRESS_YAML_TEMPLATE.replace(".template", "")}'
+    return {
+        'actions': [
+            cmd,
+            f'echo "{cmd}"',
+        ],
     }
 
 def task_build():
@@ -162,6 +175,9 @@ def task_test():
     }
 
 def task_login():
+    '''
+    perform ECR docker login via AWS perms
+    '''
     cmd = f'aws ecr get-login-password --region {AWS_REGION} | docker login --username AWS --password-stdin {REPOURL}'
     return {
         'task_dep': [

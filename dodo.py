@@ -9,12 +9,12 @@ from subprocess import check_output, CalledProcessError, PIPE
 DIR = os.path.abspath(os.path.dirname(__file__))
 CWD = os.path.abspath(os.getcwd())
 REL = os.path.relpath(DIR, CWD)
-REFRACTR = f'{DIR}/refractr'
+REFRACTR = f'{REL}/refractr'
 NGINX = f'{REFRACTR}/nginx'
 IMAGE = 'itsre/refractr'
 REFRACTR_VERSION = check_output('git describe --match "v*" --abbrev=7', shell=True).decode('utf-8').strip()
 CREDENTIALS_MESSAGE = 'Unable to locate credentials. You can configure credentials by running "aws configure".'
-INGRESS_YAML_TEMPLATE = f'{DIR}/refractr-cd/ingress.yaml.template'
+INGRESS_YAML_TEMPLATE = f'{REL}/refractr-cd/ingress.yaml.template'
 
 DOIT_CONFIG = {
     'default_tasks': ['test'],
@@ -42,7 +42,7 @@ def aws_account():
 
 def reponame():
     cmd = 'basename $(git rev-parse --show-toplevel)'
-    result = call(cmd, cwd=DIR)
+    result = call(cmd, cwd=REL)
     return result
 
 AWS_REGION = os.environ.get('AWS_REGION', 'us-west-2')

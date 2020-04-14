@@ -47,7 +47,7 @@ def main(args):
         '-i',
         '--ingress-template',
         metavar='FILE',
-        const=f'{DIR}/refractr-cd/ingress.yaml.template',
+        const=f'{REL}/refractr-cd/ingress.yaml.template',
         nargs='?',
         help='const="%(const)s"; toggle creating ingress.yml from template'
     )

@@ -81,23 +81,15 @@ def task_creds():
         'uptodate': [check_creds],
     }
 
-def task_generate():
+def task_nginx():
     '''
     generate nginx.conf files from refractr.yml
     '''
+    cmd = f'bin/refractr > {NGINX}/conf.d/refractr.conf'
     return {
         'actions': [
-            f'bin/refractr > {NGINX}/conf.d/refractr.conf',
-        ],
-    }
-
-def task_domains():
-    '''
-    create list of domains in domains.yml
-    '''
-    return {
-        'actions': [
-            'bin/refractr --domains-only > domains.yml',
+            cmd,
+            f'echo "{cmd}"',
         ],
     }
 
@@ -120,7 +112,7 @@ def task_build():
     return {
         'task_dep': [
             'creds',
-            'generate',
+            'nginx',
         ],
         'actions': [
             f'env {envs()} docker-compose build',

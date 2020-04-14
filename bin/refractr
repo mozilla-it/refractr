@@ -38,12 +38,6 @@ def main(args):
         help='default="%(default)s"; toggle validate-only option'
     )
     parser.add_argument(
-        '-d',
-        '--domains-only',
-        action='store_true',
-        help='default="%(default)s"; toggle domains-only option'
-    )
-    parser.add_argument(
         '-i',
         '--ingress-template',
         metavar='FILE',
@@ -61,8 +55,6 @@ def main(args):
     refractr = load_refractr(**ns.__dict__)
     if ns.validate_only:
         yaml_print(refractr.validate())
-    elif ns.domains_only:
-        yaml_print(refractr.domains())
     elif ns.load_only:
         print(refractr)
     elif ns.ingress_template:

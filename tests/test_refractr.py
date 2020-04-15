@@ -10,7 +10,7 @@ from leatherman.dictionary import head_body
 
 NL_TAB = '\n  '
 LOCALHOST = '127.0.0.1'
-REFRACTR_YML = os.environ.get('REFRACTR_YML', './refractr.yml')
+REFRACTR_YML = os.environ.get('REFRACTR_YML', 'refractr/refractr.yml')
 
 refractr = load_refractr(REFRACTR_YML)
 

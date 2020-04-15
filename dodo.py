@@ -14,7 +14,7 @@ NGINX = f'{REFRACTR}/nginx'
 IMAGE = 'itsre/refractr'
 REFRACTR_VERSION = check_output('git describe --match "v*" --abbrev=7', shell=True).decode('utf-8').strip()
 CREDENTIALS_MESSAGE = 'Unable to locate credentials. You can configure credentials by running "aws configure".'
-INGRESS_YAML_TEMPLATE = f'{REL}/refractr-cd/ingress.yaml.template'
+INGRESS_YAML_TEMPLATE = f'{REFRACTR}/ingress.yaml.template'
 
 DOIT_CONFIG = {
     'default_tasks': ['test'],
@@ -113,9 +113,10 @@ def task_build():
         'task_dep': [
             'creds',
             'nginx',
+            'ingress',
         ],
         'actions': [
-            f'env {envs()} docker-compose build',
+            f'env {envs()} docker-compose build refractr',
             f'env {envs()} docker image prune -f --filter label=stage=intermediate',
         ],
     }
@@ -130,7 +131,7 @@ def task_check():
             'build',
         ],
         'actions': [
-            f'env {envs()} docker-compose run refractr nginx -t',
+            f'env {envs()} docker-compose run refractr check',
         ],
     }
 

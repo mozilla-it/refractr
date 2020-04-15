@@ -1,10 +1,3 @@
-headers:
-- for: /*
-  values:
-    Strict-Transport-Security: max-age=800
-    X-Frame-Options: DENY
-    X-From: Netlify
-    X-XSS-Protection: 1; mode=block
 refracts:
 - src:
   - firefox.com

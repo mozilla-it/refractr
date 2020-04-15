@@ -135,11 +135,8 @@ redirects.yml
 # ignore generated refractr.conf
 refractr/nginx/conf.d/refractr.conf
 
-# ignore generated domains.yml
-domains.yml
-
 # ignore generated ingress.yaml
-refractr-cd/ingress.yaml
+refractr/ingress.yaml
 
 # ignore doit db
 .doit.db

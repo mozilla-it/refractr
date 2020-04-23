@@ -21,7 +21,7 @@ spec:
     {% endfor %}
   rules:
   {% for domain in domains %}
-  - host: {{ domain }}
+  - host: '{{ domain }}'
     http:
       paths:
       - backend:

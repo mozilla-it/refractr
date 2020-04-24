@@ -485,12 +485,6 @@ refracts:
 # bug 1396954
 - https://research.mozilla.org/mixed-reality: mixedreality.mozilla.org
 
-# TODO: make sure this works as expected
-- https://mana.mozilla.org/wiki/display/NAGIOS/*:
-  - m.mozilla.org/*
-  - m.allizom.org/*
-  status: 307
-
 # bug 1414285, 1429854
 - https://onlinexperiences.com/scripts/Server.nxp?LASCmd=L:0&AI=1&InitialDisplay=1&ClientBrowser=0&ShowKey=44908: airmo.mozilla.org
 

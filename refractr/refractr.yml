@@ -602,6 +602,7 @@ refracts:
 
 # Test domains
 - https://www.mozilla.org/:
+  - '*.mozilla-redirects.xyz'
   - mozilla-redirects.xyz
   - refractr.allizom.org
   - refractr1.allizom.org

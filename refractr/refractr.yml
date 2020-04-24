@@ -606,7 +606,6 @@ refracts:
   - mozilla-redirects.xyz
   - refractr.allizom.org
   - refractr1.allizom.org
-  - refractr2.allizom.org
 
 # bug 149411
 # NOTE: changed from http->https after verifying

@@ -29,7 +29,9 @@ deploy:
   script:
     - doit publish
   on:
-    branch: master
+    # This is a cheat, set to all branches and do a check
+    all_branches: true
+    condition: $TRAVIS_TAG != "" || $TRAVIS_BRANCH =~ ^(master|prod)$
 
 env:
   global:

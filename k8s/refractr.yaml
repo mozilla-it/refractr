@@ -4,7 +4,7 @@ metadata:
   name: refractr
   annotations:
     fluxcd.io/automated: "true"
-    filter.fluxcd.io/chart-image: glob:dev-*
+    filter.fluxcd.io/refractr: glob:dev-*
 spec:
   releaseName: refractr
   chart:

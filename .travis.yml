@@ -1,23 +1,36 @@
 language: python
+
 python:
 - '3.7'
+
 service:
 - docker
+
 branches:
   except:
   - flux-sync-refractr-prod
   - flux-sync-refractr-stage
+
 before_install:
 - pip install awscli
+
 install:
 - git fetch --unshallow --tags
 - VERSION=$(git describe --match "v*" --abbrev=7)
 - pip install doit
 - pip install -r requirements.txt
+
 script:
 - doit test
 - echo test
-- doit publish
+
+deploy:
+  provider: script
+  script:
+    - doit publish
+  on:
+    branch: master
+
 env:
   global:
   - secure: N9mMBcKRn+UjpvBD86Cfw2pxNO0B0l3ThAwIUOXaj5MBt3SFZYaFYlQXcYkI12nh55WH45gn3VaCpJyj4vVJR+aLwQqlsSZuyB3sq9WXAcb0Kpzz/J6SyNEqZZyRF9s6D3EHcmGlKE6b4azyM4xeiEDllyKzA7CPm17xSUcqglZYUJZGiOYT9+EZrf+VFI1E54S2ovAFHX5Wy83bb8Ct62vv8/lXaoL2AeAz12CR0w11PvDtKBRBBc8GrW1HUCVN9TN2+3UOPp4ErZTjIsVh6guYZvVDUVbaak19FeVTU9EpmC+Xvp8udmyz3E09jUXs5C3GzVNGG8IW3VEZueYY0yyl0eS1lij+bmjowJGpaKU9nuqwOCf0cz8pD6GK3Ecfw1Kz1mxUiAmmPL1wcb+pEIEOFruRgXshN2dh/H2N+6Cqjk3Q3r9nawH56gqbb4EswPNYpuVXtfM159/S79LKGfdYuelGBesXyUxOTa8Q6kVn6oXIMftZ27Nd10VeGnrcbe3TkW4tb5UXd6fsw4g3vxaRJVxZ7uS9TR+iQJZmz28Lav88gR5S+XMoEpuFpE1I5/J6rog+hfUqGAmF6cLxIutYmDS6TtK7H+3CcQcmeatxqmp8PXuPltcqiOTcd4O5x0Ji0MURzinUJcjodR3DR9Sfb8tbVyPFfJHtj1NYlRs=

@@ -187,6 +187,7 @@ def task_publish():
     '''
     return {
         'task_dep': [
+            'build',
             'creds',
             'login',
         ],

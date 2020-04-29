@@ -614,7 +614,6 @@ refracts:
   - start-prod.mozilla.com
 
 - src:
-  - wildcard.start.mozilla.com
   - '*.start.mozilla.com'
   - '*.start2.mozilla.com'
   - '*.start3.mozilla.com'
@@ -627,7 +626,6 @@ refracts:
   - http://ca.start.mozilla.com: https://start.mozilla.org/ca/
   - http://en-us.start.mozilla.com: https://start.mozilla.org/en-us/
   - http://en-uk.start.mozilla.com: https://start.mozilla.org/en-uk/
-  - http://wildcard.start.mozilla.com: https://start.mozilla.org/
 
 - src:
   - malware-error.mozilla.com

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import re
 import json
 
 from doit.tools import LongRunning
@@ -15,12 +16,19 @@ IMAGE = 'itsre/refractr'
 REFRACTR_VERSION = check_output('git describe --match "v*" --abbrev=7', shell=True).decode('utf-8').strip()
 CREDENTIALS_MESSAGE = 'Unable to locate credentials. You can configure credentials by running "aws configure".'
 INGRESS_YAML_TEMPLATE = f'{REFRACTR}/ingress.yaml.template'
+PROD_TAG_PN = '$(v[0-9]+.[0-9]+.[0-9]+)$'
+TRAVIS = os.environ.get('TRAVIS', False)
+TRAVIS_TAG = os.environ.get('TRAVIS_TAG', None)
+TRAVIS_BRANCH = os.environ.get('TRAVIS_BRANCH', None)
+PUBLISH_BRANCHES = [
+    'master',
+    'publish-test',
+]
 
 DOIT_CONFIG = {
     'default_tasks': ['test'],
     'verbosity': 2,
 }
-
 
 def call(cmd, stderr=PIPE, shell=True, **kwargs):
     result = check_output(
@@ -29,6 +37,20 @@ def call(cmd, stderr=PIPE, shell=True, **kwargs):
         shell=shell,
         **kwargs).decode('utf-8').strip()
     return result
+
+def branch_contains(tag, approved):
+    '''
+    determine if tag points to ref on one of approved branches
+    '''
+    cmd = f'git branch --contains {tag}'
+    try:
+        branches = [
+            line[2:] for line in
+            call(cmd).split('\n')
+        ]
+        return not set(branches).isdisjoint(approved)
+    except CalledProcessError as cpe:
+        return False
 
 def aws_account():
     cmd = 'aws sts get-caller-identity'
@@ -185,6 +207,18 @@ def task_publish():
     '''
     publish docker image to aws ECR
     '''
+    def should_publish():
+        publish = False
+        if TRAVIS:
+            if TRAVIS_TAG and branch_contains(TRAVIS_TAG, PUBLISH_BRANCHES):
+                publish = True
+            elif TRAVIS_BRANCH and TRAVIS_BRANCH in PUBLISH_BRANCHES:
+                publish = True
+        elif not re.search(PROD_TAG_PN, REFRACTR_VERSION):
+            publish = True
+        print(f'publishing {REFRACTR_VERSION if publish else "skipped"}')
+        return publish
+
     return {
         'task_dep': [
             'build',
@@ -194,4 +228,6 @@ def task_publish():
         'actions': [
             f'env {envs()} docker-compose push refractr',
         ],
+        # inverse to tell doit task not uptodate, therefore publish
+        'uptodate': [lambda: not should_publish()],
     }

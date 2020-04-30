@@ -31,7 +31,7 @@ deploy:
   on:
     # This is a cheat, set to all branches and do a check
     all_branches: true
-    condition: $TRAVIS_TAG != "" || $TRAVIS_BRANCH =~ ^(master|prod)$
+    condition: $TRAVIS_TAG != "" || $TRAVIS_BRANCH =~ ^(master|tagging)$
 
 env:
   global:

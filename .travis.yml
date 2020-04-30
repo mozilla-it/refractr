@@ -16,22 +16,12 @@ before_install:
 
 install:
 - git fetch --unshallow --tags
-- VERSION=$(git describe --match "v*" --abbrev=7)
 - pip install doit
 - pip install -r requirements.txt
 
 script:
 - doit test
-- echo test
-
-deploy:
-  provider: script
-  script:
-    - doit publish
-  on:
-    # This is a cheat, set to all branches and do a check
-    all_branches: true
-    condition: $TRAVIS_TAG != "" || $TRAVIS_BRANCH =~ ^(master|tagging)$
+- doit publish
 
 env:
   global:

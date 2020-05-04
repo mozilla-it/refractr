@@ -702,15 +702,14 @@ refracts:
 - https://support.mozilla.org/: www.support.mozilla.org
 
 # bug 1618512, 1627952
-- src:
-    events.mozilla.org
-- dst:
-    - /firefoxvoicecampaign: https://community.mozilla.org/activities/test-firefox-voice/
-    - ^/respond_campaign: https://community.mozilla.org/campaigns/respond-campaign/
-    - /firefoxforgood-surfacingqualitycontentandconversat: https://community.mozilla.org/campaigns/
-    - /becomeabetatestingbughunter: https://community.mozilla.org/campaigns/become-a-beta-testing-bughunter/
-    - /commonvoice100: https://community.mozilla.org/campaigns/common-voice-100-hours-sprint/
-    - /firefox66supportsprint: https://community.mozilla.org/groups/support-mozilla-sumo/?view=events
-    - /firefoxfightsforyoucampaign: https://community.mozilla.org/campaigns/firefoxfightsforyoucampaign/
-    - /darkfunnelEN: https://community.mozilla.org/campaigns/become-a-dark-funnel-detective/
-    - /*: https://community.mozilla.org/events/
+- src: events.mozilla.org
+  dst:
+  - /firefoxvoicecampaign: https://community.mozilla.org/activities/test-firefox-voice/
+  - /respond_campaign: https://community.mozilla.org/campaigns/respond-campaign/
+  - /firefoxforgood-surfacingqualitycontentandconversat: https://community.mozilla.org/campaigns/
+  - /becomeabetatestingbughunter: https://community.mozilla.org/campaigns/become-a-beta-testing-bughunter/
+  - /commonvoice100: https://community.mozilla.org/campaigns/common-voice-100-hours-sprint/
+  - /firefox66supportsprint: https://community.mozilla.org/groups/support-mozilla-sumo/?view=events
+  - /firefoxfightsforyoucampaign: https://community.mozilla.org/campaigns/firefoxfightsforyoucampaign/
+  - /darkfunnelEN: https://community.mozilla.org/campaigns/become-a-dark-funnel-detective/
+  - /*: https://community.mozilla.org/events/

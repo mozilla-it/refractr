@@ -1,4 +1,116 @@
 refracts:
+# 'status' will default to 301, if unspecified
+# 'tests' will be generated except the rewrite case (Ex4)
+#
+# Ex1 One Source
+#   - destination(dst): source(srcs)
+#
+#   - https://wiki.mozilla.org: wiki.mozilla.com
+#
+#   The loaded data structure will be this:
+#
+#   - srcs:
+#     - wiki.mozilla.com
+#     dst: https://wiki.mozilla.org/
+#     status: 301
+#     tests:
+#     - http://wiki.mozilla.com: https://wiki.mozilla.org/
+#
+#   Note: remember the status and tests are defaults if unspecified.
+#
+# Ex2 Multiple Sources
+#   - destination(dst):
+#     - source1
+#     - source2
+#
+#   - https://www.mozillalabs.com/:
+#     - labs.mozilla.org
+#     - labs.mozilla.com
+#
+#   The loaded data structure will be this:
+#
+#   - srcs:
+#     - labs.mozilla.org
+#     - labs.mozilla.com
+#     dst: https://www.mozillalabs.com/
+#     status: 301
+#     tests:
+#     - http://labs.mozilla.com: https://www.mozillalabs.com/
+#
+#   Note: remember the status and tests are defaults if unspecified.
+#
+# Ex3 Redirect, Paths -> Destinations
+#   - src: src(s)
+#     dst:
+#       path1: dst1
+#       path2: dst2
+#
+#   - src: lockwise.firefox.com
+#     dst:
+#     - /faq.html: https://support.mozilla.org/products/firefox-lockwise/
+#     - /addon/updates.json: https://mozilla-lockwise.github.io/addon/updates.json
+#     - /: https://www.mozilla.org/firefox/lockwise/
+#
+#   The loaded data structure will be this:
+#
+#   - srcs:
+#     - lockwise.firefox.com
+#     dst:
+#     - /faq.html: https://support.mozilla.org/products/firefox-lockwise/
+#     - /addon/updates.json: https://mozilla-lockwise.github.io/addon/updates.json
+#     - /: https://www.mozilla.org/firefox/lockwise/
+#     status: 301
+#     tests:
+#     - http://lockwise.firefox.com/faq.html: https://support.mozilla.org/products/firefox-lockwise/
+#     - http://lockwise.firefox.com/addon/updates.json: https://mozilla-lockwise.github.io/addon/updates.json
+#     - http://lockwise.firefox.com/: https://www.mozilla.org/firefox/lockwise/
+#
+#   Note: Remember the status and tests are defaults if unspecified. Here you
+#				  can see how the tests specify src: dst incorporating the path fragments.
+#
+# Ex4 Rewrite with If and Redirect Directives
+#   - src: src(s)
+#     dst:
+#     - if <some-valid-nginx-predicate>
+#       ^: <rewrite>
+#     - redirect: (optional) <catchall-redirect> (used when the 'if' condtional fails)
+#
+#   - src:
+#     - '*.start.mozilla.com'
+#     - '*.start2.mozilla.com'
+#     - '*.start3.mozilla.com'
+#     - '*.start-prod.mozilla.com'
+#     dst:
+#     - if: '$http_host ~ "^(?<lang>[a-z]{2,3}(-[a-z]{2})?)?\.(start.*)$"'
+#       ^: https://start.mozilla.org/$lang$request_uri
+#     - redirect: https://start.mozilla.org/
+#     tests:
+#     - http://ca.start.mozilla.com: https://start.mozilla.org/ca/
+#     - http://en-us.start.mozilla.com: https://start.mozilla.org/en-us/
+#     - http://en-uk.start.mozilla.com: https://start.mozilla.org/en-uk/
+#
+#   The loaded data structure will be this:
+#
+#   - srcs:
+#     - '*.start.mozilla.com'
+#     - '*.start2.mozilla.com'
+#     - '*.start3.mozilla.com'
+#     - '*.start-prod.mozilla.com'
+#     dst:
+#     - ^: https://start.mozilla.org/$lang$request_uri
+#       if: $http_host ~ "^(?<lang>[a-z]{2,3}(-[a-z]{2})?)?\.(start.*)$"
+#     - redirect: https://start.mozilla.org/
+#     status: 301
+#     tests:
+#     - http://ca.start.mozilla.com: https://start.mozilla.org/ca/
+#     - http://en-us.start.mozilla.com: https://start.mozilla.org/en-us/
+#     - http://en-uk.start.mozilla.com: https://start.mozilla.org/en-uk/
+#
+#   Note: In the complex(native) case the 'src' and 'dst' keys match
+#				  exactly. As before, 'status' will default to 301 if not
+#				  specified. However, the 'tests' must be specified for rewrites
+#				  such as this.
+
 - src:
   - firefox.com
   - www.firefox.com
@@ -621,7 +733,7 @@ refracts:
   dst:
   - if: '$http_host ~ "^(?<lang>[a-z]{2,3}(-[a-z]{2})?)?\.(start.*)$"'
     ^: https://start.mozilla.org/$lang$request_uri
-    redirect: https://start.mozilla.org/
+  - redirect: https://start.mozilla.org/
   tests:
   - http://ca.start.mozilla.com: https://start.mozilla.org/ca/
   - http://en-us.start.mozilla.com: https://start.mozilla.org/en-us/

@@ -40,12 +40,12 @@ refracts:
 #   Note: remember the status and tests are defaults if unspecified.
 #
 # Ex3 Redirect, Paths -> Destinations
-#   - src: src(s)
+#   - srcs: src(s)
 #     dst:
 #       path1: dst1
 #       path2: dst2
 #
-#   - src: lockwise.firefox.com
+#   - srcs: lockwise.firefox.com
 #     dst:
 #     - /faq.html: https://support.mozilla.org/products/firefox-lockwise/
 #     - /addon/updates.json: https://mozilla-lockwise.github.io/addon/updates.json
@@ -69,13 +69,13 @@ refracts:
 #				  can see how the tests specify src: dst incorporating the path fragments.
 #
 # Ex4 Rewrite with If and Redirect Directives
-#   - src: src(s)
+#   - srcs: src(s)
 #     dst:
 #     - if <some-valid-nginx-predicate>
 #       ^: <rewrite>
 #     - redirect: (optional) <catchall-redirect> (used when the 'if' condtional fails)
 #
-#   - src:
+#   - srcs:
 #     - '*.start.mozilla.com'
 #     - '*.start2.mozilla.com'
 #     - '*.start3.mozilla.com'
@@ -111,7 +111,7 @@ refracts:
 #				  specified. However, the 'tests' must be specified for rewrites
 #				  such as this.
 
-- src:
+- srcs:
   - firefox.com
   - www.firefox.com
   dst:
@@ -496,7 +496,7 @@ refracts:
 
 # bug 1119912, 1165757, 1213900, 1200359
 # TODO: verify this works as expected / previously
-- src: content.mozilla.org
+- srcs: content.mozilla.org
   dst:
   - /dmexco: https://www.mozilla.org/about/partnerships/contentservices/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team
   - /*: https://www.mozilla.org/about/partnerships/contentservices/:splat/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team
@@ -504,7 +504,7 @@ refracts:
 
 # bug 756358
 # TODO: verify this works as expected
-- src: dnt.mozilla.org
+- srcs: dnt.mozilla.org
   dst:
   # NOTE: changed from http->https after verifying
   - /dnt-enabler.tpl: https://www.mozilla.org/media/dnt/dnt-enabler.tpl
@@ -685,7 +685,7 @@ refracts:
 # bug 1304806
 - https://phonebook.mozilla.org/: phonebook.mozilla.com
 # bug 1566155
-- src: phonebook.mozilla.org
+- srcs: phonebook.mozilla.org
   dst:
   - /tree.php: https://people.mozilla.org/o
   - /*: https://people.mozilla.org/s?query=:*&who=staff
@@ -701,7 +701,7 @@ refracts:
 
 # bug 1587941
 # TODO: test this works as before
-- src: lockwise.firefox.com
+- srcs: lockwise.firefox.com
   dst:
   - /faq.html: https://support.mozilla.org/products/firefox-lockwise/
   - /addon/updates.json: https://mozilla-lockwise.github.io/addon/updates.json
@@ -725,7 +725,7 @@ refracts:
   - start.mozilla.com
   - start-prod.mozilla.com
 
-- src:
+- srcs:
   - '*.start.mozilla.com'
   - '*.start2.mozilla.com'
   - '*.start3.mozilla.com'
@@ -739,7 +739,7 @@ refracts:
   - http://en-us.start.mozilla.com: https://start.mozilla.org/en-us/
   - http://en-uk.start.mozilla.com: https://start.mozilla.org/en-uk/
 
-- src:
+- srcs:
   - malware-error.mozilla.com
   - '*.malware-error.mozilla.com'
   dst:
@@ -753,7 +753,7 @@ refracts:
   - http://malware-error.mozilla.com?url=path: 'https://www.stopbadware.org/firefox?url=path'
   - http://malware-error.mozilla.com: https://malware-error.mozilla.com/
 
-- src:
+- srcs:
   - phish-error.mozilla.com
   - '*.phish-error.mozilla.com'
   dst:
@@ -767,7 +767,7 @@ refracts:
   - http://phish-error.mozilla.com?url=path: 'https://safebrowsing.google.com/safebrowsing/report_error/?tpl=mozilla&url=path'
   - http://phish-error.mozilla.com: https://phish-error.mozilla.com/
 
-- src:
+- srcs:
   - phish-report.mozilla.com
   - '*.phish-report.mozilla.com'
   dst:
@@ -814,7 +814,7 @@ refracts:
 - https://support.mozilla.org/: www.support.mozilla.org
 
 # bug 1618512, 1627952
-- src: events.mozilla.org
+- srcs: events.mozilla.org
   dst:
   - /firefoxvoicecampaign: https://community.mozilla.org/activities/test-firefox-voice/
   - /respond_campaign: https://community.mozilla.org/campaigns/respond-campaign/

@@ -62,11 +62,6 @@ class Refract:
         self.status = status
 
     @property
-    def src(self):
-        if self.srcs:
-            return self.srcs[0]
-
-    @property
     def server_name(self):
         return join(domains(self.srcs))
 
@@ -196,13 +191,13 @@ class Refract:
 
 def load_refract(spec):
     dst = spec.pop('dst', None)
-    src = spec.pop('src', None)
+    srcs = spec.pop('srcs', None)
     nginx = spec.pop('nginx', None)
     tests = spec.pop('tests', None)
     status = spec.pop('status', 301)
     if len(spec) == 1:
-        dst, src = list(spec.items())[0]
-    srcs = listify(src)
+        dst, srcs = list(spec.items())[0]
+    srcs = listify(srcs)
     return dict(dst=dst, srcs=srcs, nginx=nginx, tests=tests, status=status)
 
 def load_refractr(config=None, refractr_pns=None, **kwargs):

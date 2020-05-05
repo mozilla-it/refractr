@@ -17,9 +17,10 @@ REFRACTR_VERSION = check_output('git describe --match "v*" --abbrev=7', shell=Tr
 CREDENTIALS_MESSAGE = 'Unable to locate credentials. You can configure credentials by running "aws configure".'
 INGRESS_YAML_TEMPLATE = f'{REFRACTR}/ingress.yaml.template'
 PROD_TAG_PN = '$(v[0-9]+.[0-9]+.[0-9]+)$'
-TRAVIS = os.environ.get('TRAVIS', False)
-TRAVIS_TAG = os.environ.get('TRAVIS_TAG', None)
-TRAVIS_BRANCH = os.environ.get('TRAVIS_BRANCH', None)
+TRAVIS = os.getenv('TRAVIS')
+TRAVIS_TAG = os.getenv('TRAVIS_TAG')
+TRAVIS_BRANCH = os.getenv('TRAVIS_BRANCH')
+TRAVIS_PULL_REQUEST = os.getenv('TRAVIS_PULL_REQUEST')
 PUBLISH_BRANCHES = [
     'master',
     'publish-test',
@@ -209,11 +210,19 @@ def task_publish():
     '''
     def should_publish():
         publish = False
+        print(' '.join([
+            f'TRAVIS={TRAVIS}',
+            f'TRAVIS_TAG={TRAVIS_TAG}',
+            f'TRAVIS_BRANCH={TRAVIS_BRANCH}',
+            f'TRAVIS_PULL_REQUEST={TRAVIS_PULL_REQUEST}',
+            f'branch_contains={branch_contains(TRAVIS_TAG, PUBLISH_BRANCHES)}',
+        ]))
         if TRAVIS:
-            if TRAVIS_TAG and branch_contains(TRAVIS_TAG, PUBLISH_BRANCHES):
-                publish = True
-            elif TRAVIS_BRANCH and TRAVIS_BRANCH in PUBLISH_BRANCHES:
-                publish = True
+            if not TRAVIS_PULL_REQUEST:
+                if TRAVIS_TAG and branch_contains(TRAVIS_TAG, PUBLISH_BRANCHES):
+                    publish = True
+                elif TRAVIS_BRANCH and TRAVIS_BRANCH in PUBLISH_BRANCHES:
+                    publish = True
         elif not re.search(PROD_TAG_PN, REFRACTR_VERSION):
             publish = True
         print(f'publishing {REFRACTR_VERSION if publish else "skipped"}')

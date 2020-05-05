@@ -20,7 +20,8 @@ install:
 - pip install -r requirements.txt
 
 script:
-- doit test
+  # this step will build, test and publish (if appropriate)
+  # publish will only push to ECR once merged to master
 - doit publish
 
 env:

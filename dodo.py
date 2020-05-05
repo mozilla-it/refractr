@@ -218,7 +218,7 @@ def task_publish():
             f'branch_contains={branch_contains(TRAVIS_TAG, PUBLISH_BRANCHES)}',
         ]))
         if TRAVIS:
-            if TRAVIS_PULL_REQUEST != "false":
+            if TRAVIS_PULL_REQUEST == "false":
                 if TRAVIS_TAG and branch_contains(TRAVIS_TAG, PUBLISH_BRANCHES):
                     publish = True
                 elif TRAVIS_BRANCH and TRAVIS_BRANCH in PUBLISH_BRANCHES:

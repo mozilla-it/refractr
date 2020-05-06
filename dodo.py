@@ -44,7 +44,7 @@ def branch_contains(tag, approved):
     determine if tag points to ref on one of approved branches
     '''
     print(f'tag={tag}, approved={approved}')
-    cmd = f'git branch --contains {tag}'
+    cmd = f'git branch --contains "{tag}"'
     try:
         lines = call(cmd).split('\n')
         print(f'lines={lines}')

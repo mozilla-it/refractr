@@ -202,6 +202,10 @@ def task_login():
             'creds',
         ],
         'actions': [
+            # FIXME: these three commands are for debug and will be removed
+            'git status',
+            'git tag --list',
+            'git rev-parse HEAD',
             cmd,
         ],
     }

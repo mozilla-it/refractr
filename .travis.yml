@@ -14,7 +14,13 @@ branches:
 before_install:
 - pip install awscli
 
+git:
+  clone: false
+
 install:
+- git clone https://github.com/$TRAVIS_REPO_SLUG $TRAVIS_REPO_SLUG
+- cd $TRAVIS_REPO_SLUG
+- git checkout -qf $TRAVIS_COMMIT
 - git fetch --unshallow --tags
 - pip install doit
 - pip install -r requirements.txt

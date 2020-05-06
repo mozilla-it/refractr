@@ -36,21 +36,23 @@ def call(cmd, stderr=PIPE, shell=True, **kwargs):
         cmd,
         stderr=stderr,
         shell=shell,
-        **kwargs).decode('utf-8').strip()
+        **kwargs).decode('utf-8').rstrip()
     return result
 
 def branch_contains(tag, approved):
     '''
     determine if tag points to ref on one of approved branches
     '''
+    print(f'tag={tag}, approved={approved}')
     cmd = f'git branch --contains {tag}'
     try:
-        branches = [
-            line[2:] for line in
-            call(cmd).split('\n')
-        ]
+        lines = call(cmd).split('\n')
+        print(f'lines={lines}')
+        branches = [line[2:] for line in lines]
+        print(f'branches={branches}')
         return not set(branches).isdisjoint(approved)
     except CalledProcessError as cpe:
+        print(cpe)
         return False
 
 def aws_account():

@@ -13,7 +13,6 @@ REL = os.path.relpath(DIR, CWD)
 REFRACTR = f'{REL}/refractr'
 NGINX = f'{REFRACTR}/nginx'
 IMAGE = 'itsre/refractr'
-REFRACTR_VERSION = check_output('git describe --match "v*" --abbrev=7', shell=True).decode('utf-8').strip()
 CREDENTIALS_MESSAGE = 'Unable to locate credentials. You can configure credentials by running "aws configure".'
 INGRESS_YAML_TEMPLATE = f'{REFRACTR}/ingress.yaml.template'
 PROD_TAG_PN = '$(v[0-9]+.[0-9]+.[0-9]+)$'
@@ -23,7 +22,6 @@ TRAVIS_BRANCH = os.getenv('TRAVIS_BRANCH')
 TRAVIS_PULL_REQUEST = os.getenv('TRAVIS_PULL_REQUEST')
 PUBLISH_BRANCHES = [
     'master',
-    'publish-test',
 ]
 
 DOIT_CONFIG = {
@@ -43,37 +41,30 @@ def branch_contains(tag, approved):
     '''
     determine if tag points to ref on one of approved branches
     '''
-    print(f'tag={tag}, approved={approved}')
     cmd = f'git branch --contains "{tag}"'
     try:
         lines = call(cmd).split('\n')
-        print(f'lines={lines}')
         branches = [line[2:] for line in lines]
-        print(f'branches={branches}')
         return not set(branches).isdisjoint(approved)
     except CalledProcessError as cpe:
-        print(cpe)
         return False
 
 def aws_account():
     cmd = 'aws sts get-caller-identity'
-    try:
-        result = call(cmd)
-        obj = json.loads(result)
-        return obj['Account']
-    except CalledProcessError as cpe:
-        if CREDENTIALS_MESSAGE in cpe.stderr.decode():
-            return 'MISSING_CREDENTIALS'
+    result = call(cmd)
+    obj = json.loads(result)
+    return obj['Account']
 
 def reponame():
     cmd = 'basename $(git rev-parse --show-toplevel)'
     result = call(cmd, cwd=REL)
     return result
 
-AWS_REGION = os.environ.get('AWS_REGION', 'us-west-2')
-AWS_ACCOUNT = os.environ.get('AWS_ACCOUNT', aws_account())
-REPONAME = os.environ.get('REPONAME', reponame())
+AWS_REGION = os.getenv('AWS_REGION', 'us-west-2')
+AWS_ACCOUNT = os.getenv('AWS_ACCOUNT', aws_account())
+REPONAME = os.getenv('REPONAME', reponame())
 REPOURL = f'{AWS_ACCOUNT}.dkr.ecr.{AWS_REGION}.amazonaws.com/{REPONAME}'
+REFRACTR_VERSION = call('git describe --match "v*" --abbrev=7')
 
 def envs(sep=' ', **kwargs):
     envs = dict(
@@ -142,7 +133,6 @@ def task_build():
         ],
         'actions': [
             f'env {envs()} docker-compose build refractr',
-            f'env {envs()} docker image prune -f --filter label=stage=intermediate',
         ],
     }
 

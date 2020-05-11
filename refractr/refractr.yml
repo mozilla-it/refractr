@@ -206,8 +206,8 @@ refracts:
 
 - https://blog.mozilla.org/blog/2010/07/15/thanks-for-an-exciting-firefox-cup/:
   - firefoxcup.com
-  - www.firefoxcup.com
-  - www.firefoxcup2010.com
+    #- www.firefoxcup.com
+    #- www.firefoxcup2010.com
   - firefoxcup2010.com
 
 # bug 613649
@@ -377,7 +377,7 @@ refracts:
 # bug 1334200
 - https://github.com/mozilla/popcorn-js/:
   - popcornjs.org
-  - www.popcornjs.org
+    #- www.popcornjs.org
 
 # bug 1342698
 # NOTE: changed from http->https after verifying
@@ -560,6 +560,7 @@ refracts:
   - www.leandatapractices.org
   - leandatapractices.com
   - www.leandatapractices.com
+  status: 302
 
 # bug 1306375
 - https://wiki.mozilla.org/TestEngineering/Testrail: moztrap.mozilla.org

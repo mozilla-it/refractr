@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
+'''
+refractr
+'''
+
 import os
 import sys
+sys.dont_write_bytecode = True
 
 from argparse import ArgumentParser
 from jinja2 import Environment, FileSystemLoader
@@ -15,38 +20,17 @@ REFRACTR = f'{REL}/refractr'
 REFRACTR_YML = f'{REFRACTR}/refractr.yml'
 INGRESS_YAML_TEMPLATE = f'{REFRACTR}/ingress.yaml.template'
 
-sys.path.insert(0, SRC)
+sys.path.insert(0, DIR)
 
-from refractr import load_refractr
+from refractr.generate import load_refractr
+from refractr.validate import RefractrValidator
 
-def main(args):
-    parser = ArgumentParser()
+def add_subparser(subparsers, action, **kwargs):
+    parser = subparsers.add_parser(action, **kwargs)
     parser.add_argument(
-        "-c",
-        "--config",
-        metavar="CFG",
-        default=REFRACTR_YML,
-        help='default="%(default)s"; specify the config yaml to use',
-    )
-    parser.add_argument(
-        '-l',
-        '--load-only',
+        '-v', '--verbose',
         action='store_true',
-        help='default="%(default)s"; toggle load-only option'
-    )
-    parser.add_argument(
-        '-v',
-        '--validate-only',
-        action='store_true',
-        help='default="%(default)s"; toggle validate-only option'
-    )
-    parser.add_argument(
-        '-i',
-        '--ingress-template',
-        metavar='FILE',
-        const=INGRESS_YAML_TEMPLATE,
-        nargs='?',
-        help='const="%(const)s"; toggle creating ingress.yml from template'
+        help='turn up verbosity'
     )
     parser.add_argument(
         "refractr_pns",
@@ -54,13 +38,62 @@ def main(args):
         default=["*"],
         help='default="%(default)s"; patterns to limit refracts',
     )
-    ns = parser.parse_args(args)
+    return parser
+
+def main(args):
+    main_parser = ArgumentParser(description=__doc__)
+    main_parser.add_argument(
+        "-c",
+        "--config",
+        metavar="CFG",
+        default=REFRACTR_YML,
+        help='default="%(default)s"; specify the config yaml to use',
+    )
+    subparsers = main_parser.add_subparsers(
+        dest='action',
+        title='action',
+        help='actions')
+    nginx_parser = add_subparser(
+        subparsers,
+        'nginx',
+        aliases=['ngx'],
+        help='generate nginx')
+    ingress_parser = add_subparser(
+        subparsers,
+        'ingress',
+        aliases=['ing'],
+        help='generate ingress')
+    ingress_parser.add_argument(
+        '-i', '--ingress-template',
+        metavar='FILE',
+        default=INGRESS_YAML_TEMPLATE,
+        nargs='?',
+        help='default="%(default)s"; path to ingress template'
+    )
+    load_parser = add_subparser(
+        subparsers,
+        'show',
+        aliases=['sh'],
+        help='show data transformed by loading')
+    validate_parser = add_subparser(
+        subparsers,
+        'validate',
+        aliases=['val'],
+        help='validate refracts public|stage|localhost')
+    validate_parser.add_argument(
+        '-n', '--netloc',
+        nargs='?',
+        const='localhost:80',
+        help='default="public"; const="%(const)s"; select netloc to use')
+    ns = main_parser.parse_args(args)
     refractr = load_refractr(**ns.__dict__)
-    if ns.validate_only:
-        yaml_print(refractr.validate())
-    elif ns.load_only:
+
+    if ns.action in ('val', 'validate'):
+        validator = RefractrValidator(netloc=ns.netloc, verbose=ns.verbose)
+        validator.validate(refractr)
+    elif ns.action in ('sh', 'show'):
         print(refractr)
-    elif ns.ingress_template:
+    elif ns.action in ('ing', 'ingress'):
         domains = refractr.domains()
         env = Environment(
             loader=FileSystemLoader(os.path.dirname(ns.ingress_template)),
@@ -69,8 +102,10 @@ def main(args):
         template = env.get_template(os.path.basename(ns.ingress_template))
         ingress = template.render(domains)
         print(ingress)
-    else:
+    elif ns.action in ('ngx', 'nginx'):
         print(refractr.render())
+    else:
+        raise Exception(f'should not happen: {ns.action}')
 
 if __name__ == '__main__':
     main(sys.argv[1:])

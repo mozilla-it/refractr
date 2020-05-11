@@ -110,8 +110,10 @@ def task_schema():
         assert os.path.isfile(REFRACTR_YML)
         assert os.path.isfile(SCHEMA_YML)
         print(f'validating {REFRACTR_YML} against {SCHEMA_YML} =>', end=' ')
-        refractr_yml = safe_load(open(REFRACTR_YML))
-        schema_yml = safe_load(open(SCHEMA_YML))
+        with open(REFRACTR_YML, 'r') as f:
+            refractr_yml = safe_load(f)
+        with open(SCHEMA_YML, 'r') as f:
+            schema_yml = safe_load(f)
         try:
             validate(refractr_yml, schema_yml)
             print('SUCCESS')
@@ -132,7 +134,7 @@ def task_nginx():
     '''
     generate nginx.conf files from refractr.yml
     '''
-    cmd = f'bin/refractr > {NGINX}/conf.d/refractr.conf'
+    cmd = f'bin/refractr nginx > {NGINX}/conf.d/refractr.conf'
     return {
         'task_dep': [
             'schema',
@@ -147,7 +149,7 @@ def task_ingress():
     '''
     create ingress.yaml from refractr.yml domains and ingress.yaml.template
     '''
-    cmd  = f'bin/refractr --ingress-template {INGRESS_YAML_TEMPLATE} > {INGRESS_YAML_TEMPLATE.replace(".template", "")}'
+    cmd = f'bin/refractr ingress --ingress-template {INGRESS_YAML_TEMPLATE} > {INGRESS_YAML_TEMPLATE.replace(".template", "")}'
     return {
         'task_dep': [
             'schema',
@@ -215,7 +217,7 @@ def task_test():
         ],
         'actions': [
             'sleep 1',
-            'PYTHONPATH=./refractr python3 -m pytest -vv -q -s',
+            'PYTHONPATH=. python3 -m pytest -vv -q -s',
         ],
     }
 

@@ -14,7 +14,7 @@ from leatherman.dictionary import head, body, head_body
 from leatherman.repr import __repr__
 from leatherman.dbg import dbg
 
-from utils import *
+from refractr.utils import *
 
 setup_yaml()
 
@@ -46,9 +46,6 @@ class RefractrConfig:
     def render(self):
         stanzas = list(chain(*[refract.render() for refract in self.refracts]))
         return '\n'.join([repr(stanza) for stanza in stanzas if stanza])
-
-    def validate(self):
-        return dict(refracts=[refract.validate() for refract in self.refracts])
 
     def domains(self):
         return dict(domains=sorted(list(chain(*[refract.srcs for refract in self.refracts]))))
@@ -95,7 +92,7 @@ class Refract:
                         except:
                             continue
                 elif is_scalar(self.dst):
-                    tests = [{given: self.dst}]
+                    tests += [{given: self.dst}]
                 else:
                     raise LoadRefractError(self.dst)
         return tests
@@ -172,20 +169,8 @@ class Refract:
 
     def render(self):
         return [
-            #self.render_http_to_https(),
             self.render_refract(),
         ]
-
-    def validate(self):
-        tests = []
-        for test in self.tests:
-            src, dst = head_body(test)
-            given = urlparse(src)
-            expect = urlparse(dst)
-            results = follow_hops(given, expect)
-            test.update(results=results)
-            tests += [test]
-        return self.json(tests=tests)
 
     __repr__ = __repr__
 
@@ -203,7 +188,8 @@ def load_refract(spec):
 def load_refractr(config=None, refractr_pns=None, **kwargs):
     if refractr_pns == None:
         refractr_pns = ["*"]
-    spec = yaml.safe_load(open(config))
+    with open(config, 'r') as f:
+        spec = yaml.safe_load(f)
     refracts = [load_refract(refract) for refract in spec['refracts']]
     spec['refracts'] = [refract for refract in refracts if fuzzy(refract['srcs']).include(*refractr_pns)]
     return RefractrConfig(spec)

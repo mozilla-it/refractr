@@ -11,6 +11,7 @@ from refractr.utils import *
 from leatherman.dictionary import head_body
 from leatherman.dbg import dbg
 
+
 # makes visualizing as string easier to read
 ParseResult.__repr__ = lambda self: self.geturl()
 
@@ -22,6 +23,20 @@ def replace(pr, **kwargs):
         params=kwargs.get('params', pr.params),
         query=kwargs.get('query', pr.query),
         fragment=kwargs.get('fragment', pr.fragment))
+
+class Hop:
+    def __init__(self, src, dst=None, status=None, match=None, ex=None):
+        self.src = src
+        self.dst = dst
+        self.status = status
+        self.match = match
+        self.ex = ex
+
+    def __str__(self):
+        if isinstance(self.ex, Exception):
+            return f'{self.src} => {self.ex.__class__.__name__}'
+        return f'{self.status} {self.src} -> {self.dst}' + (f' {self.match}' if self.match else '')
+
 
 class RefractrValidator:
     def __init__(self, early=False, netloc=None, verbose=False):
@@ -52,19 +67,31 @@ class RefractrValidator:
                 dst = replace(dst, netloc=src.netloc)
         return dst, response.status_code
 
-    def follow_hops(self, given_src, expect_dst):
-        results = []
+    def follow_hops(self, given_src, expect_dst, expect_status):
         netloc = self.netloc
         src = given_src
+        result = None
+        hops = []
         while src:
-            dst, status = self.hop(src, netloc)
+            dst = None
+            try:
+                dst, status = self.hop(src, netloc)
+            except Exception as ex:
+                hop = Hop(src, ex=ex)
+                hops += [hop]
+                break
             if dst:
-                if self.verbose:
-                    print(f'  {netloc or "public"} | {status} {src} -> {dst}')
-                matched = dst == expect_dst
-                result = (src, dst, status, matched)
-                results += [result]
-                if matched:
+                match = None
+                if dst == expect_dst:
+                    if status == expect_status:
+                        match = 'MATCHED'
+                    else:
+                        match = 'STATUS!'
+                hop = Hop(src, dst, status, match)
+                hops += [hop]
+                if match:
+                    result = match
+                if match == 'MATCHED':
                     # bail early if we have met our expectation
                     if self.early:
                         break
@@ -73,26 +100,25 @@ class RefractrValidator:
                 src = dst
                 continue
             break
-        return results
-
-    def validate_test(self, given_src, expect_dst, expect_status):
-        if self.verbose:
-            print(f'validate: {given_src} -> {expect_dst} => {expect_status}')
-        results = self.follow_hops(given_src, expect_dst)
-        assert results, '!hops {given_src} -> {expect_dst} => {expect_status}'
-        for src, dst, status, match_ in reversed(results):
-            if match_:
-                assert status == expect_status, f'{src} -> {dst} | {status} != {expect_status}'
-                return
-        assert results[-1][1] == expect_dst, f'{results[-1][1]} != {expect_dst}'
+        return hops, result
 
     def validate_refract(self, refract):
-        if self.verbose:
-            print(refract, end='\n\n')
+        tests = []
         for test in refract.tests:
             src, dst = head_body(test)
-            self.validate_test(urlparse(src), urlparse(dst), refract.status)
+            hops, result = self.follow_hops(urlparse(src), urlparse(dst), refract.status)
+            tests += [{f'{src} -> {dst}': dict(
+                hops=[
+                    str(hop)
+                    for hop
+                    in hops
+                ],
+                result=result,
+            )}]
+        return dict(netloc=self.netloc or 'public', tests=tests)
 
     def validate(self, refractr):
         for refract in refractr.refracts:
-            self.validate_refract(refract)
+            results = self.validate_refract(refract)
+            refract.results = results
+        return refractr

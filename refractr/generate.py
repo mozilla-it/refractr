@@ -57,6 +57,7 @@ class Refract:
         self.nginx = nginx
         self._tests = tests
         self.status = status
+        self.results = None
 
     @property
     def server_name(self):
@@ -106,6 +107,9 @@ class Refract:
                 srcs=self.srcs,
                 dst=self.dst,
                 status=self.status))
+        if self.results:
+            json.pop('tests')
+            json.update(validation=self.results)
         json.update(**kwargs)
         return json
 

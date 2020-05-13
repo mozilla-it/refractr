@@ -9,7 +9,6 @@ sys.dont_write_bytecode = True
 
 from argparse import ArgumentParser
 from jinja2 import Environment, FileSystemLoader
-from leatherman.yaml import yaml_print
 from leatherman.dbg import dbg
 
 DIR = os.path.abspath(os.path.dirname(__file__) + "/..")
@@ -53,6 +52,11 @@ def main(args):
         dest='action',
         title='action',
         help='actions')
+    load_parser = add_subparser(
+        subparsers,
+        'show',
+        aliases=['sh'],
+        help='show data transformed by loading')
     nginx_parser = add_subparser(
         subparsers,
         'nginx',
@@ -70,27 +74,25 @@ def main(args):
         nargs='?',
         help='default="%(default)s"; path to ingress template'
     )
-    load_parser = add_subparser(
-        subparsers,
-        'show',
-        aliases=['sh'],
-        help='show data transformed by loading')
     validate_parser = add_subparser(
         subparsers,
         'validate',
         aliases=['val'],
-        help='validate refracts public|stage|localhost')
+        help='validate refracts public|stage|localhost'
+    )
     validate_parser.add_argument(
         '-n', '--netloc',
         nargs='?',
         const='localhost:80',
-        help='default="public"; const="%(const)s"; select netloc to use')
+        help='default="public"; const="%(const)s"; select netloc to use'
+    )
     ns = main_parser.parse_args(args)
     refractr = load_refractr(**ns.__dict__)
 
     if ns.action in ('val', 'validate'):
         validator = RefractrValidator(netloc=ns.netloc, verbose=ns.verbose)
-        validator.validate(refractr)
+        refractr = validator.validate(refractr)
+        print(refractr)
     elif ns.action in ('sh', 'show'):
         print(refractr)
     elif ns.action in ('ing', 'ingress'):

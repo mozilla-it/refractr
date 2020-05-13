@@ -206,9 +206,9 @@ refracts:
 
 - https://blog.mozilla.org/blog/2010/07/15/thanks-for-an-exciting-firefox-cup/:
   - firefoxcup.com
-    #- www.firefoxcup.com
-    #- www.firefoxcup2010.com
   - firefoxcup2010.com
+#  - www.firefoxcup.com
+  - www.firefoxcup2010.com
 
 # bug 613649
 - https://krakenbenchmark.mozilla.org/: krakenbenchmark.mozilla.com

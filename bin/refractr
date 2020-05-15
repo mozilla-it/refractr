@@ -9,9 +9,19 @@ sys.dont_write_bytecode = True
 
 from argparse import ArgumentParser
 from jinja2 import Environment, FileSystemLoader
+
+from leatherman.yaml import yaml_print
 from leatherman.dbg import dbg
 
-DIR = os.path.abspath(os.path.dirname(__file__) + "/..")
+REAL_FILE = os.path.abspath(__file__)
+REAL_NAME = os.path.basename(REAL_FILE)
+REAL_PATH = os.path.dirname(REAL_FILE)
+if os.path.islink(__file__):
+    LINK_FILE = REAL_FILE; REAL_FILE = os.path.abspath(os.readlink(__file__))
+    LINK_NAME = REAL_NAME; REAL_NAME = os.path.basename(REAL_FILE)
+    LINK_PATH = REAL_PATH; REAL_PATH = os.path.dirname(REAL_FILE)
+
+DIR = os.path.abspath(REAL_PATH + "/..")
 CWD = os.path.abspath(os.getcwd())
 REL = os.path.relpath(DIR, CWD)
 SRC = f"{DIR}/refractr"
@@ -19,24 +29,74 @@ REFRACTR = f'{REL}/refractr'
 REFRACTR_YML = f'{REFRACTR}/refractr.yml'
 INGRESS_YAML_TEMPLATE = f'{REFRACTR}/ingress.yaml.template'
 
+ONLY = [
+    'nginx',
+    'simple',
+    'redirect',
+    'rewrite',
+]
+
+ONE = [
+    'first',
+    'last',
+]
+
 sys.path.insert(0, DIR)
 
-from refractr.generate import load_refractr
-from refractr.validate import RefractrValidator
+from refractr.refractr import Refractr
 
 def add_subparser(subparsers, action, **kwargs):
     parser = subparsers.add_parser(action, **kwargs)
     parser.add_argument(
         '-v', '--verbose',
         action='store_true',
-        help='turn up verbosity'
-    )
+        help='turn up verbosity')
     parser.add_argument(
-        "refractr_pns",
+        '-n', '--nginx',
+        dest='only',
+        const='nginx',
+        action='store_const',
+        help='limit to only NginxRefract')
+    parser.add_argument(
+        '-s', '--simple',
+        dest='only',
+        const='simple',
+        action='store_const',
+        help='limit to only SimpleRefract')
+    parser.add_argument(
+        '-r', '--redirect',
+        dest='only',
+        const='redirect',
+        action='store_const',
+        help='limit to only RedirectRefract')
+    parser.add_argument(
+        '-R', '--rewrite',
+        dest='only',
+        const='rewrite',
+        action='store_const',
+        help='limit to only RewriteRefract')
+    parser.add_argument(
+        '-f', '--first',
+        dest='count',
+        const=1,
+        action='store_const',
+        help='shorthand for "-c|--count 1"')
+    parser.add_argument(
+        '-l', '--last',
+        dest='count',
+        const=-1,
+        action='store_const',
+        help='shorthand for "-c|--count -1"')
+    parser.add_argument(
+        '-c', '--count',
+        metavar='INT',
+        type=int,
+        help='positive integer? N items from top; negative? N items from back')
+    parser.add_argument(
+        "patterns",
         nargs="*",
         default=["*"],
-        help='default="%(default)s"; patterns to limit refracts',
-    )
+        help='default="%(default)s"; patterns to limit refracts')
     return parser
 
 def main(args):
@@ -46,17 +106,21 @@ def main(args):
         "--config",
         metavar="CFG",
         default=REFRACTR_YML,
-        help='default="%(default)s"; specify the config yaml to use',
-    )
+        help='default="%(default)s"; specify the config yaml to use')
     subparsers = main_parser.add_subparsers(
         dest='action',
         title='action',
         help='actions')
-    load_parser = add_subparser(
+    show_parser = add_subparser(
         subparsers,
         'show',
         aliases=['sh'],
         help='show data transformed by loading')
+    domains_parser = add_subparser(
+        subparsers,
+        'domains',
+        aliases=['do'],
+        help='show domains in selected spec')
     nginx_parser = add_subparser(
         subparsers,
         'nginx',
@@ -72,42 +136,69 @@ def main(args):
         metavar='FILE',
         default=INGRESS_YAML_TEMPLATE,
         nargs='?',
-        help='default="%(default)s"; path to ingress template'
-    )
+        help='default="%(default)s"; path to ingress template')
     validate_parser = add_subparser(
         subparsers,
         'validate',
         aliases=['val'],
-        help='validate refracts public|stage|localhost'
-    )
+        help='validate refracts <public|stage|localhost>')
     validate_parser.add_argument(
-        '-n', '--netloc',
-        nargs='?',
-        const='localhost:80',
-        help='default="public"; const="%(const)s"; select netloc to use'
-    )
-    ns = main_parser.parse_args(args)
-    refractr = load_refractr(**ns.__dict__)
-
-    if ns.action in ('val', 'validate'):
-        validator = RefractrValidator(netloc=ns.netloc, verbose=ns.verbose)
-        refractr = validator.validate(refractr)
-        print(refractr)
-    elif ns.action in ('sh', 'show'):
-        print(refractr)
-    elif ns.action in ('ing', 'ingress'):
-        domains = refractr.domains()
+        '-N', '--netloc',
+        help='default="public"; select netloc to use <localhost|stage>')
+    validate_parser.add_argument(
+        '-L', '--localhost',
+        dest='netloc',
+        const='localhost',
+        action='store_const',
+        help='shorthand for "-n|--netloc localhost"')
+    validate_parser.add_argument(
+        '-S', '--stage',
+        dest='netloc',
+        const='refractr.allizom.org',
+        action='store_const',
+        help='shorthand for "-n|--netloc refractr.allizom.org"')
+    validate_parser.add_argument(
+        '-e', '--early',
+        action='store_true',
+        help='toggle early exit')
+    parsed = main_parser.parse_args(args)
+    refractr = Refractr(**parsed.__dict__)
+    if parsed.action in ('sh', 'show'):
+        output =refractr.show(
+            parsed.patterns,
+            parsed.only,
+            parsed.count)
+        yaml_print(output)
+    elif parsed.action in ('do', 'domains'):
+        domains = refractr.domains(
+            parsed.patterns,
+            parsed.only,
+            parsed.count)
+        yaml_print(domains)
+    elif parsed.action in ('ngx', 'nginx'):
+        output = refractr.render(
+            parsed.patterns,
+            parsed.only,
+            parsed.count)
+        print(output)
+    elif parsed.action in ('ing', 'ingress'):
+        domains = refractr.domains(
+            parsed.patterns,
+            parsed.only,
+            parsed.count)
         env = Environment(
-            loader=FileSystemLoader(os.path.dirname(ns.ingress_template)),
+            loader=FileSystemLoader(os.path.dirname(parsed.ingress_template)),
             trim_blocks=True,
             lstrip_blocks=True)
-        template = env.get_template(os.path.basename(ns.ingress_template))
+        template = env.get_template(os.path.basename(parsed.ingress_template))
         ingress = template.render(domains)
         print(ingress)
-    elif ns.action in ('ngx', 'nginx'):
-        print(refractr.render())
-    else:
-        raise Exception(f'should not happen: {ns.action}')
+    elif parsed.action in ('val', 'validate'):
+        validated = refractr.validate(
+            parsed.patterns,
+            parsed.only,
+            parsed.count)
+        yaml_print(validated)
 
 if __name__ == '__main__':
     main(sys.argv[1:])

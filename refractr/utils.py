@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import sys
 
 from ruamel import yaml
 from itertools import product
@@ -17,6 +18,9 @@ def setup_yaml():
         "tag:yaml.org,2002:map", data.items()
     )
     yaml.add_representer(OrderedDict, represent_dict_order)
+
+def eprint(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
 
 def startswith(s, *tests):
     result = any([s.startswith(test) for test in tests])
@@ -45,7 +49,7 @@ def kmvo(*args):
 def status_to_word(status):
     return {
         301: 'permanent',
-        302: 'temporary',
+        302: 'redirect', # this is what is used for 'temporary'
     }[status]
 
 def is_scalar(obj):
@@ -65,14 +69,3 @@ def urlparse(url):
         return parse.urlparse(url)
     return parse.urlparse(f'http://{url}')
 
-def domains(urls):
-    return [urlparse(url)[1] for url in urls]
-
-def domains_paths(urls):
-    pairs = [urlparse(url)[1:3] for url in urls]
-    domains, paths = zip(*pairs)
-    domains = tuple(set(domains))
-    paths = tuple(set(paths))
-    if sorted(pairs) == sorted(product(domains, paths)):
-        return domains, paths
-    raise DomainPathMismatchError(domains, paths)

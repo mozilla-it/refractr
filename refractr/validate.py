@@ -29,13 +29,19 @@ class Hop:
         self.src = src
         self.dst = dst
         self.status = status
-        self.match = match
+        self._match = match
         self.ex = ex
+
+    @property
+    def match(self):
+        if self.ex:
+            return self.ex.__class__.__name__
+        return self._match if self._match else ''
 
     def __str__(self):
         if isinstance(self.ex, Exception):
-            return f'{self.src} => {self.ex.__class__.__name__}'
-        return f'{self.status} {self.src} -> {self.dst}' + (f' {self.match}' if self.match else '')
+            return f'{self.src} => {self.match}'
+        return f'{self.status} {self.src} -> {self.dst} {self.match}'.rstrip()
 
 
 class RefractrValidator:
@@ -70,7 +76,7 @@ class RefractrValidator:
     def follow_hops(self, given_src, expect_dst, expect_status):
         netloc = self.netloc
         src = given_src
-        result = None
+        result = 'MISMATCHED'
         hops = []
         while src:
             dst = None
@@ -78,6 +84,7 @@ class RefractrValidator:
                 dst, status = self.hop(src, netloc)
             except Exception as ex:
                 hop = Hop(src, ex=ex)
+                result = hop.match
                 hops += [hop]
                 break
             if dst:
@@ -108,11 +115,7 @@ class RefractrValidator:
             src, dst = head_body(test)
             hops, result = self.follow_hops(urlparse(src), urlparse(dst), refract.status)
             tests += [{f'{src} -> {dst}': dict(
-                hops=[
-                    str(hop)
-                    for hop
-                    in hops
-                ],
+                hops=[str(hop) for hop in hops],
                 result=result,
             )}]
         return dict(netloc=self.netloc or 'public', tests=tests)

@@ -45,7 +45,7 @@ def kmvo(*args):
 def status_to_word(status):
     return {
         301: 'permanent',
-        302: 'temporary',
+        302: 'redirect', # this is what is used for 'temporary'
     }[status]
 
 def is_scalar(obj):

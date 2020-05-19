@@ -3,6 +3,8 @@
 import os
 import re
 import sys
+import aiohttp
+import asyncio
 import requests
 import warnings
 
@@ -36,6 +38,7 @@ class Hop:
 
 class RefractrValidator:
     def __init__(self, netloc=None, early=False, verbose=False):
+        self._loop = asyncio.get_event_loop()
         self.netloc = netloc
         self.early = early
         self.verbose = verbose
@@ -48,22 +51,22 @@ class RefractrValidator:
 
     __repr__ = __repr__
 
-    def hop(self, src, netloc, **kwargs):
-        headers = kwargs.get('headers', {})
+    async def _hop(self, src, netloc):
+        headers = {}
         if netloc:
             headers.update(Host=URL(src).netloc)
             src = URL(src, netloc=netloc).http # force to http for non-prod
-        response = requests.get(
-            src,
-            headers=headers,
-            allow_redirects=False,
-            verify=self.verify)
-        dst = response.headers.get('Location', None)
-        if dst and URL(dst).netloc == '':
-            dst = URL(dst, netloc=URL(src).netloc).url
-        return dst, response.status_code
 
-    def follow_hops(self, given_src, expect_dst, expect_status):
+        ctor = aiohttp.TCPConnector(verify_ssl=self.verify)
+        async with aiohttp.ClientSession(connector=ctor, loop=self._loop) as session:
+            async with session.request('GET', src, headers=headers, allow_redirects=False) as response:
+                headers = response.headers
+                dst = headers.get('Location', None)
+                if dst and URL(dst).netloc == '':
+                    dst = URL(dst, netloc=URL(src).netloc).url
+                return dst, response.status
+
+    async def _follow_hops(self, name, given_src, expect_dst, expect_status):
         netloc = self.netloc
         src = given_src
         test_result = 'MISMATCHED'
@@ -71,14 +74,18 @@ class RefractrValidator:
         while src:
             dst = None
             try:
-                dst, status = self.hop(src, netloc)
+                dst, status = await self._hop(src, netloc)
             except Exception as ex:
                 hop = Hop(src, ex=ex)
                 test_result = hop.match
                 hops += [hop]
                 break
             if dst:
-                assert src != dst, f'after hop: dst={dst} should not be src={src}; infinite loop!'
+                if src == dst:
+                    hop = Hop(src)
+                    test_result = 'InfiniteLoop'
+                    hops += [hop]
+                    break
                 match = None
                 if dst == expect_dst:
                     if status == expect_status:
@@ -98,38 +105,50 @@ class RefractrValidator:
                 src = dst
                 continue
             break
-        return hops, test_result
+        return name, hops, test_result
 
-    def validate_refract(self, refract):
-        validate_result = 'SUCCESS'
-        tests = []
+    async def _validate_refract(self, refract):
+        futures = []
         for test in refract.tests:
             src, dst = head_body(test)
             name = f'{src} -> {dst}'
-            hops, test_result = self.follow_hops(src, dst, refract.status)
+            futures += [
+                asyncio.ensure_future(
+                    self._follow_hops(name, src, dst, refract.status))
+            ]
+        results = await asyncio.gather(*futures)
+        validate_result = 'SUCCESS'
+        tests = []
+        for name, hops, test_result in results:
             if test_result != 'MATCHED':
-                validate_result = 'FAILURE'
+                validate_success = 'FAILURE'
             tests += [{
                 name: {
                     'hops': [str(hop) for hop in hops],
                     'test-result': test_result,
                 }
             }]
-        return {
-            'netloc': self.netloc or 'public',
-            'tests': tests,
-            'validate-result': validate_result
-        }
+        return refract, tests
 
-    def validate_refracts(self, refracts):
+    def validate_refract(self, refract):
+        return self._loop.run_until_complete(self._validate_refract(refract))
+
+    async def _validate_refracts(self, refracts):
+        futures = [
+            asyncio.ensure_future(self._validate_refract(refract))
+            for refract in refracts
+        ]
+        results = await asyncio.gather(*futures)
         validated = []
-        for refract in refracts:
-            validation = self.validate_refract(refract)
+        for refract, validation in results:
             json = refract.json()
             json.pop('tests')
-            json['validation']=validation
+            json['validation'] = validation
             validated += [json]
         return {
             'refracts': validated,
             'refracts-count': len(validated),
         }
+
+    def validate_refracts(self, refracts):
+        return self._loop.run_until_complete(self._validate_refracts(refracts))

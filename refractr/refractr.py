@@ -54,6 +54,13 @@ class Refractr:
         if refractr_pns == None:
             refractr_pns = ['*']
         if only:
+            # FIXME: filter on dst targets if nothing found
+            types = dict(
+                nginx=NginxRefract,
+                simple=SimpleRefract,
+                redirect=RedirectRefract,
+                rewrite=RewriteRefract,
+            )
             filtered = [
                 refract
                 for refract
@@ -68,13 +75,6 @@ class Refractr:
             in filtered
             if fuzzy(refract.srcs).include(*refractr_pns)
         ]
-        # FIXME: filter on dst targets if nothing found
-        types = dict(
-            nginx=NginxRefract,
-            simple=SimpleRefract,
-            redirect=RedirectRefract,
-            rewrite=RewriteRefract,
-        )
         if filtered and one:
             if one == 'first':
                 return [filtered[0]]

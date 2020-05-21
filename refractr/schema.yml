@@ -12,6 +12,7 @@ properties:
     type: array
     items:
       oneOf:
+      - $ref: '#/defs/nginx-refract'
       - $ref: '#/defs/simple-refract'
       - $ref: '#/defs/complex-refract'
 defs:
@@ -91,17 +92,33 @@ defs:
     title: test
     type: object
     minProperties: 1
-    maxProperties: 1
+    maxProperties: 2
     additionalProperties: false
     patternProperties:
       '^(https?:\/\/)([A-z0-9]+([A-z0-9\.\-]+)\/)([A-z0-9\-_]+\/)*([A-z0-9$\/\.\-_:]+)?(\?[A-z0-9$\.\-:=]+(&[A-z0-9$\.\-:=]+)*)?(#[A-z0-9\-_]+)?$':
         $ref: '#/defs/test-url'
+    properties:
+      status:
+        type: integer
   tests:
     default: []
     title: tests
     type: array
     items:
       $ref: '#/defs/test'
+  nginx-refract:
+    default: {}
+    title: nginx-refract
+    type: object
+    minProperties: 1
+    maxProperties: 2
+    required:
+    - nginx
+    properties:
+      nginx:
+        type: string
+      tests:
+        $ref: '#/defs/tests'
   simple-refract:
     default: {}
     title: simple-refract

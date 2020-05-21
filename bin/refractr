@@ -26,7 +26,7 @@ CWD = os.path.abspath(os.getcwd())
 REL = os.path.relpath(DIR, CWD)
 SRC = f"{DIR}/refractr"
 REFRACTR = f'{REL}/refractr'
-REFRACTR_YML = f'{REFRACTR}/refractr.yml'
+REFRACTR_YML = os.getenv('REFRACTR_YML', f'{REFRACTR}/refractr.yml')
 INGRESS_YAML_TEMPLATE = f'{REFRACTR}/ingress.yaml.template'
 
 ONLY = [
@@ -64,17 +64,11 @@ def add_subparser(subparsers, action, **kwargs):
         action='store_const',
         help='limit to only SimpleRefract')
     parser.add_argument(
-        '-r', '--redirect',
+        '-x', '--complex',
         dest='only',
-        const='redirect',
+        const='complex',
         action='store_const',
-        help='limit to only RedirectRefract')
-    parser.add_argument(
-        '-R', '--rewrite',
-        dest='only',
-        const='rewrite',
-        action='store_const',
-        help='limit to only RewriteRefract')
+        help='limit to only ComplexRefract')
     parser.add_argument(
         '-f', '--first',
         dest='count',

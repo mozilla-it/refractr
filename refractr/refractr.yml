@@ -109,61 +109,60 @@
 #				  exactly. As before, 'status' will default to 301 if not
 #				  specified. However, the 'tests' must be specified for rewrites
 #				  such as this.
+#
+# Ex5 Raw Nginx can be specified.
+#
+#   The tests must be specified along with expected status codes.  Below
+#   are two examples of specifiying the raw nginx and tests that expect
+#   specified destinations and status code.
+#
+#   - nginx: |
+#       server {
+#           server_name phonebook.mozilla.org;
+#           location = /tree.php/ {
+#               return 302 https://people.mozilla.org/o;
+#           }
+#           rewrite /search/(.*) https://people.mozilla.org/s?query=$1&who=staff redirect;
+#           location = / {
+#               return 302 https://people.mozilla.org/;
+#           }
+#       }
+#     tests:
+#     - http://phonebook.mozilla.org/tree.php/: https://people.mozilla.org/o
+#       status: 302
+#     - http://phonebook.mozilla.org/search/test: https://people.mozilla.org/s?query=test&who=staff
+#       status: 302
+#     - http://phonebook.mozilla.org/: https://people.mozilla.org/
+#       status: 302
+#
+#   - nginx: |
+#       server {
+#           server_name content.mozilla.org;
+#           location = /dmexco {
+#               return 302 https://www.mozilla.org/about/partnerships/contentservices/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team;
+#           }
+#           rewrite /(.*) https://www.mozilla.org/about/partnerships/contentservices/$1/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team redirect;
+#           location = / {
+#               return 302 https://www.mozilla.org/about/partnerships/contentservices/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team;
+#           }
+#       }
+#     tests:
+#     - http://content.mozilla.org/dmexco: 'https://www.mozilla.org/about/partnerships/contentservices/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team'
+#       status: 302
+#     - http://content.mozilla.org/test: 'https://www.mozilla.org/about/partnerships/contentservices/test/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team'
+#       status: 302
+#     - http://content.mozilla.org/: 'https://www.mozilla.org/about/partnerships/contentservices/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team'
+#       status: 302
 
 refracts:
 
-- srcs:
-  - firefox.com
-  - www.firefox.com
-  dst:
-    # bug 1485429, 1432228
-  - /switch: www.mozilla.org/firefox/switch/?redirect_source=firefox-com
-
-  - /mobile: www.mozilla.org/firefox/new/?redirect_source=firefox-com
-
-  - /beta: www.mozilla.org/firefox/new/?redirect_source=firefox-com
-
-  - /aurora: www.mozilla.org/firefox/new/?redirect_source=firefox-com
-
-  - /nightly: www.mozilla.org/firefox/new/?redirect_source=firefox-com
-
-  - /m: www.mozilla.org/firefox/new/?redirect_source=firefox-com
-
-  - /tour: www.mozilla.org/firefox/new/?redirect_source=firefox-com
-
-    # bug 870410
-  - /universityambassadors: www.mozilla.org/contribute/universityambassadors/?redirect_source=firefox-com
-
-  - /os: www.mozilla.org/firefox/os/?redirect_source=firefox-com
-
-    # bug 1004274
-  - /desktop: www.mozilla.org/firefox/desktop/?redirect_source=firefox-com
-
-    # bug 1053356
-  - /android: www.mozilla.org/firefox/android/?redirect_source=firefox-com
-
-    # bug 1091132
-  - /developer: www.mozilla.org/firefox/developer/?redirect_source=firefox-com
-
-    # bug 1091891
-  - /10: www.mozilla.org/firefox/independent/?redirect_source=firefox-com
-
-  - /independant: www.mozilla.org/firefox/new/?redirect_source=firefox-com
-
-    # bug 1098044
-  - /hello: www.mozilla.org/firefox/hello/?redirect_source=firefox-com
-
-    # bug 1159397
-  - /personal: www.mozilla.org/firefox/personal/?redirect_source=firefox-com
-
-    # FIXME: handle '*' correctly
-  - /personal/*: www.mozilla.org/firefox/new/:splat?redirect_source=firefox-com
-
-    # bug 1219380
-  - /choose: www.mozilla.org/firefox/choose/?redirect_source=firefox-com
-
-    # bug 896570, 1427843
-  - /: www.mozilla.org/firefox/new/?redirect_source=firefox-com
+  # Test domains
+  # FIXME: these do not currently exist in prod
+  #- www.mozilla.org/:
+  #  - '*.mozilla-redirects.xyz'
+  #  - mozilla-redirects.xyz
+  #  - refractr.allizom.org
+  #  - refractr1.allizom.org
 
   # bug 537925
   # NOTE: simplified this after testing, this simple redirect is all that is needed
@@ -327,7 +326,6 @@ refracts:
   # FIXME: this commented out redirect is incorrect, added correct one below
   #- www.mozilla.org/firefox/new/?utm_source=getfirefox-co-uk&utm_medium=referral: getfirefox.co.uk
 - www.mozilla.org/en-GB/firefox/new/: getfirefox.co.uk
-
 
   # bug 1212612, 1212612
   # FIXME: this commented out redirect is incorrect, added correct one below
@@ -528,24 +526,6 @@ refracts:
 - careers.mozilla.org/: careers.mozilla.com
   status: 302
 
-  # bug 1119912, 1165757, 1213900, 1200359
-  # TODO: verify this works as expected / previously
-- srcs: content.mozilla.org
-  dst:
-  - /dmexco: www.mozilla.org/about/partnerships/contentservices/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team
-    # FIXME: fix handling of '*'
-  - /*: www.mozilla.org/about/partnerships/contentservices/:splat?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team
-  - /: www.mozilla.org/about/partnerships/contentservices/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team
-  status: 302
-
-  # bug 756358
-  # TODO: verify this works as expected
-- srcs: dnt.mozilla.org
-  dst:
-  # NOTE: changed from http->https after verifying
-  - /dnt-enabler.tpl: www.mozilla.org/media/dnt/dnt-enabler.tpl
-  - /: www.mozilla.org/firefox/dnt/
-
   # bug 1185027
 - www.contributejson.org/: contributejson.org
   status: 302
@@ -727,69 +707,48 @@ refracts:
 - phonebook.mozilla.org/: phonebook.mozilla.com
   status: 302
 
-  # bug 1566155
-- srcs: phonebook.mozilla.org
-  dst:
-  - /tree.php/: people.mozilla.org/o
-    # FIXME: fix handling of '*'
-  - /*: people.mozilla.org/s?query=:splat&who=staff
-  - /: people.mozilla.org/
-  status: 302
-
 - pad.mozilla.org/: public.etherpad-mozilla.org
 
   # bug 1538932
 - mozilla.report/: reports.telemetry.mozilla.org
-
-  # bug 1587941
-  # TODO: test this works as before
-#- dst:
-#  - /faq.html/: support.mozilla.org/products/firefox-lockwise/
-#  - /addon/updates.json/: mozilla-lockwise.github.io/addon/updates.json
-#  - /: www.mozilla.org/firefox/lockwise/
-#  srcs: [lockwise.firefox.com]
-#  status: 301
-#  validation:
-#    netloc: public
-#    tests:
-#    - http://lockwise.firefox.com/faq.html/ -> support.mozilla.org/products/firefox-lockwise/:
-#        hops:
-#        - 301 http://lockwise.firefox.com/faq.html/ -> https://lockwise.firefox.com/faq.html/
-#        - 301 https://lockwise.firefox.com/faq.html/ -> https://support.mozilla.org/products/firefox-lockwise//
-#        - 302 https://support.mozilla.org/products/firefox-lockwise// -> http://support.mozilla.org/en-US/products/firefox-lockwise//
-#        - 301 http://support.mozilla.org/en-US/products/firefox-lockwise// -> https://support.mozilla.org/en-US/products/firefox-lockwise//
-#        result: MISMATCHED
-#    - http://lockwise.firefox.com/addon/updates.json/ -> mozilla-lockwise.github.io/addon/updates.json:
-#        hops:
-#        - 301 http://lockwise.firefox.com/addon/updates.json/ -> https://lockwise.firefox.com/addon/updates.json/
-#        - 301 https://lockwise.firefox.com/addon/updates.json/ -> https://mozilla-lockwise.github.io/addon/updates.json/
-#        result: MISMATCHED
-#    - http://lockwise.firefox.com/ -> www.mozilla.org/firefox/lockwise/:
-#        hops:
-#        - 301 http://lockwise.firefox.com/ -> https://lockwise.firefox.com/
-#        - 301 https://lockwise.firefox.com/ -> https://www.mozilla.org/firefox/lockwise/
-#        - 301 https://www.mozilla.org/firefox/lockwise/ -> http://www.mozilla.org/en-US/firefox/lockwise/
-#        - 301 http://www.mozilla.org/en-US/firefox/lockwise/ -> https://www.mozilla.org/en-US/firefox/lockwise/
-#        result: MISMATCHED
-
-- srcs: lockwise.firefox.com
-  dst:
-  - /faq.html/: support.mozilla.org/products/firefox-lockwise//
-  - /addon/updates.json/: mozilla-lockwise.github.io/addon/updates.json/
-  - /: www.mozilla.org/firefox/lockwise/
 
 - www.mozilla.org/firefox/lockwise/: lockbox.firefox.com
 
   # bug 1440375
 - www.mozilla.org/pt-BR/: mozilla.com.br
 
-  # Test domains
-  # FIXME: these do not currently exist in prod
-#- www.mozilla.org/:
-#  - '*.mozilla-redirects.xyz'
-#  - mozilla-redirects.xyz
-#  - refractr.allizom.org
-#  - refractr1.allizom.org
+- mozilla.github.io/oi-website/: openinnovation.mozilla.org
+
+  # bug 617681
+  # NOTE: changed from http->https after verifying
+- blog.mozilla.org/operationfx/2007/12/14/declassified-information-and-the-winner-is/:
+  - operationfirefox.com
+  - www.operationfirefox.com
+
+  # bug 1596457
+- mozilla-spidermonkey.github.io/: spidermonkey.dev
+
+  # bug 1614193
+- voice.mozilla.org/fy-NL/: voice.mozilla.frl
+  status: 302
+
+  # bug 835529
+- support.mozilla.org/: www.support.mozilla.org
+
+  # bug 1502902
+  # FIXME: valid anymore, considering the redirects below?
+- events.mozilla.org/techspeakers/: techspeakers.mozilla.org
+
+- community.mozilla.org/campaigns/help-firefox-win-on-android-support-users-in-your-language: supportsprint.mozilla.community
+
+  # bug 1627952
+- community.mozilla.org/campaigns/common-voice-sprint: voice-sprint.mozilla.community
+
+  # bug 1627952
+- community.mozilla.org/campaigns/new-firefox/: newfirefox.mozilla.community
+
+  # bug 1627952
+- community.mozilla.org/campaigns/firefox-quantum-sprint/: firefoxsprint.mozilla.community
 
   # bug 149411
   # NOTE: changed from http->https after verifying
@@ -816,6 +775,156 @@ refracts:
 - start.mozilla.org/:
   - start.mozilla.com
   - start-prod.mozilla.com
+
+  # bug 1587941
+  # TODO: test this works as before
+  #- dst:
+  #  - /faq.html/: support.mozilla.org/products/firefox-lockwise/
+  #  - /addon/updates.json/: mozilla-lockwise.github.io/addon/updates.json
+  #  - /: www.mozilla.org/firefox/lockwise/
+  #  srcs: [lockwise.firefox.com]
+  #  status: 301
+  #  validation:
+  #    netloc: public
+  #    tests:
+  #    - http://lockwise.firefox.com/faq.html/ -> support.mozilla.org/products/firefox-lockwise/:
+  #        hops:
+  #        - 301 http://lockwise.firefox.com/faq.html/ -> https://lockwise.firefox.com/faq.html/
+  #        - 301 https://lockwise.firefox.com/faq.html/ -> https://support.mozilla.org/products/firefox-lockwise//
+  #        - 302 https://support.mozilla.org/products/firefox-lockwise// -> http://support.mozilla.org/en-US/products/firefox-lockwise//
+  #        - 301 http://support.mozilla.org/en-US/products/firefox-lockwise// -> https://support.mozilla.org/en-US/products/firefox-lockwise//
+  #        result: MISMATCHED
+  #    - http://lockwise.firefox.com/addon/updates.json/ -> mozilla-lockwise.github.io/addon/updates.json:
+  #        hops:
+  #        - 301 http://lockwise.firefox.com/addon/updates.json/ -> https://lockwise.firefox.com/addon/updates.json/
+  #        - 301 https://lockwise.firefox.com/addon/updates.json/ -> https://mozilla-lockwise.github.io/addon/updates.json/
+  #        result: MISMATCHED
+  #    - http://lockwise.firefox.com/ -> www.mozilla.org/firefox/lockwise/:
+  #        hops:
+  #        - 301 http://lockwise.firefox.com/ -> https://lockwise.firefox.com/
+  #        - 301 https://lockwise.firefox.com/ -> https://www.mozilla.org/firefox/lockwise/
+  #        - 301 https://www.mozilla.org/firefox/lockwise/ -> http://www.mozilla.org/en-US/firefox/lockwise/
+  #        - 301 http://www.mozilla.org/en-US/firefox/lockwise/ -> https://www.mozilla.org/en-US/firefox/lockwise/
+  #        result: MISMATCHED
+- srcs: lockwise.firefox.com
+  dst:
+  - /faq.html/: support.mozilla.org/products/firefox-lockwise//
+  - /addon/updates.json/: mozilla-lockwise.github.io/addon/updates.json/
+  - /: www.mozilla.org/firefox/lockwise/
+
+  # bug 1627952
+- srcs: mozilla.github.io
+  dst:
+  - /firefox-accounts-campaign: community.mozilla.org/campaigns/join-firefox-campaign/
+
+  # bug 756358
+  # TODO: verify this works as expected
+- srcs: dnt.mozilla.org
+  dst:
+  # NOTE: changed from http->https after verifying
+  - /dnt-enabler.tpl: www.mozilla.org/media/dnt/dnt-enabler.tpl
+  - /: www.mozilla.org/firefox/dnt/
+
+  # bug 1119912, 1165757, 1213900, 1200359
+  # TODO: verify this works as expected / previously
+- srcs: content.mozilla.org
+  dst:
+  - /dmexco: 'www.mozilla.org/about/partnerships/contentservices/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team'
+  - ^/(.+): 'www.mozilla.org/about/partnerships/contentservices/$1/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team'
+  - /: 'www.mozilla.org/about/partnerships/contentservices/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team'
+  status: 302
+  tests:
+    # this test must be specified because rewrites `^/(.+)` will not generate a test
+  - http://content.mozilla.org/test: 'https://www.mozilla.org/about/partnerships/contentservices/test/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team'
+
+  # bug 1566155
+- srcs: phonebook.mozilla.org
+  dst:
+  - /tree.php/: people.mozilla.org/o
+  - ^/search/(.*): 'people.mozilla.org/s?query=$1&who=staff'
+  - /: people.mozilla.org/
+  status: 302
+  tests:
+    # this test must be specified because rewrites `^/(.*)` will not generate a test
+  - http://phonebook.mozilla.org/search/test: https://people.mozilla.org/s?query=test&who=staff
+
+- srcs:
+  - firefox.com
+  - www.firefox.com
+  dst:
+    # bug 1485429, 1432228
+  - /switch: www.mozilla.org/firefox/switch/?redirect_source=firefox-com
+
+  - /mobile: www.mozilla.org/firefox/new/?redirect_source=firefox-com
+
+  - /beta: www.mozilla.org/firefox/new/?redirect_source=firefox-com
+
+  - /aurora: www.mozilla.org/firefox/new/?redirect_source=firefox-com
+
+  - /nightly: www.mozilla.org/firefox/new/?redirect_source=firefox-com
+
+  - /m: www.mozilla.org/firefox/new/?redirect_source=firefox-com
+
+  - /tour: www.mozilla.org/firefox/new/?redirect_source=firefox-com
+
+    # bug 870410
+  - /universityambassadors: www.mozilla.org/contribute/universityambassadors/?redirect_source=firefox-com
+
+  - /os: www.mozilla.org/firefox/os/?redirect_source=firefox-com
+
+    # bug 1004274
+  - /desktop: www.mozilla.org/firefox/desktop/?redirect_source=firefox-com
+
+    # bug 1053356
+  - /android: www.mozilla.org/firefox/android/?redirect_source=firefox-com
+
+    # bug 1091132
+  - /developer: www.mozilla.org/firefox/developer/?redirect_source=firefox-com
+
+    # bug 1091891
+  - /10: www.mozilla.org/firefox/independent/?redirect_source=firefox-com
+
+  - /independant: www.mozilla.org/firefox/new/?redirect_source=firefox-com
+
+    # bug 1098044
+  - /hello: www.mozilla.org/firefox/hello/?redirect_source=firefox-com
+
+    # bug 1159397
+  - /personal: www.mozilla.org/firefox/personal/?redirect_source=firefox-com
+
+    # FIXME: handle '*' correctly
+  - ^/personal/(.*): www.mozilla.org/firefox/new/$1?redirect_source=firefox-com
+
+    # bug 1219380
+  - /choose: www.mozilla.org/firefox/choose/?redirect_source=firefox-com
+
+    # bug 896570, 1427843
+  - /: www.mozilla.org/firefox/new/?redirect_source=firefox-com
+
+  # bug 1627952
+- srcs: activate.mozilla.community
+  dst:
+  - /campaigns: community.mozilla.org/campaigns/
+  - /commonvoice: community.mozilla.org/activities/contributing-to-common-voice/
+  - /en-US/nightly: community.mozilla.org/activities/
+  - /webextensions: community.mozilla.org/activities/
+  - /rust-hack: community.mozilla.org/activities/
+  - /webvr-camp: community.mozilla.org/activities/
+  - /webcompat-sprint: community.mozilla.org/activities/
+  - /: community.mozilla.org/
+
+  # bug 1618512, 1627952
+- srcs: events.mozilla.org
+  dst:
+  - /firefoxvoicecampaign: community.mozilla.org/activities/test-firefox-voice/
+  - /respond_campaign: community.mozilla.org/campaigns/respond-campaign/
+  - /firefoxforgood-surfacingqualitycontentandconversat: community.mozilla.org/campaigns/
+  - /becomeabetatestingbughunter: community.mozilla.org/campaigns/become-a-beta-testing-bughunter/
+  - /commonvoice100: community.mozilla.org/campaigns/common-voice-100-hours-sprint/
+  - /firefox66supportsprint: community.mozilla.org/groups/support-mozilla-sumo/?view=events
+  - /firefoxfightsforyoucampaign: community.mozilla.org/campaigns/firefoxfightsforyoucampaign/
+  - /darkfunnelEN: community.mozilla.org/campaigns/become-a-dark-funnel-detective/
+  - /: community.mozilla.org/events/
 
 - srcs:
   - '*.start.mozilla.com'
@@ -889,66 +998,3 @@ refracts:
   - http://phish-report.mozilla.com/?url=foobar: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&url=foobar'
   - http://phish-report.mozilla.com/foobar: https://www.mozilla.org/
   status: 302
-
-- mozilla.github.io/oi-website/: openinnovation.mozilla.org
-
-  # bug 617681
-  # NOTE: changed from http->https after verifying
-- blog.mozilla.org/operationfx/2007/12/14/declassified-information-and-the-winner-is/:
-  - operationfirefox.com
-  - www.operationfirefox.com
-
-  # bug 1596457
-- mozilla-spidermonkey.github.io/: spidermonkey.dev
-
-  # bug 1614193
-- voice.mozilla.org/fy-NL/: voice.mozilla.frl
-  status: 302
-
-  # bug 835529
-- support.mozilla.org/: www.support.mozilla.org
-
-  # bug 1627952
-- srcs: activate.mozilla.community
-  dst:
-  - /campaigns: community.mozilla.org/campaigns/
-  - /commonvoice: community.mozilla.org/activities/contributing-to-common-voice/
-  - /en-US/nightly: community.mozilla.org/activities/
-  - /webextensions: community.mozilla.org/activities/
-  - /rust-hack: community.mozilla.org/activities/
-  - /webvr-camp: community.mozilla.org/activities/
-  - /webcompat-sprint: community.mozilla.org/activities/
-  - /*: community.mozilla.org/
-
-  # bug 1502902
-  # FIXME: valid anymore, considering the redirects below?
-- events.mozilla.org/techspeakers/: techspeakers.mozilla.org
-
-  # bug 1618512, 1627952
-- srcs: events.mozilla.org
-  dst:
-  - /firefoxvoicecampaign: community.mozilla.org/activities/test-firefox-voice/
-  - /respond_campaign: community.mozilla.org/campaigns/respond-campaign/
-  - /firefoxforgood-surfacingqualitycontentandconversat: community.mozilla.org/campaigns/
-  - /becomeabetatestingbughunter: community.mozilla.org/campaigns/become-a-beta-testing-bughunter/
-  - /commonvoice100: community.mozilla.org/campaigns/common-voice-100-hours-sprint/
-  - /firefox66supportsprint: community.mozilla.org/groups/support-mozilla-sumo/?view=events
-  - /firefoxfightsforyoucampaign: community.mozilla.org/campaigns/firefoxfightsforyoucampaign/
-  - /darkfunnelEN: community.mozilla.org/campaigns/become-a-dark-funnel-detective/
-  - /*: community.mozilla.org/events/
-
-- community.mozilla.org/campaigns/help-firefox-win-on-android-support-users-in-your-language: supportsprint.mozilla.community
-
-  # bug 1627952
-- community.mozilla.org/campaigns/common-voice-sprint: voice-sprint.mozilla.community
-
-  # bug 1627952
-- community.mozilla.org/campaigns/new-firefox/: newfirefox.mozilla.community
-
-  # bug 1627952
-- srcs: mozilla.github.io
-  dst:
-  - /firefox-accounts-campaign: community.mozilla.org/campaigns/join-firefox-campaign/
-
-  # bug 1627952
-- community.mozilla.org/campaigns/firefox-quantum-sprint/: firefoxsprint.mozilla.community

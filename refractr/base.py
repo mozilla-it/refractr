@@ -17,6 +17,16 @@ class BaseRefract:
 
     __repr__ = __repr__
 
+    @property
+    def balance(self):
+        '''
+        generated tests will always match location redirects
+        rewrites do no generate tests; so this is to help identify that
+        '''
+        dst_count = len(self.dst) if isinstance(self.dst, list) else 1
+        test_count = len(self.tests)
+        return test_count - dst_count
+
     def json(self):
         return dict(
             dst=self.dst,
@@ -30,6 +40,4 @@ class BaseRefract:
         return join([URL(src).netloc for src in self.srcs])
 
     def render(self):
-        return [
-            self.render_refract()
-        ]
+        raise NotImplementedError

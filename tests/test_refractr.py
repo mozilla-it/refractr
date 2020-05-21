@@ -12,7 +12,7 @@ from refractr.refractr import Refractr
 from refractr.validate import RefractrValidator
 
 NL_TAB = '\n  '
-REFRACTR_YML = os.environ.get('REFRACTR_YML', 'refractr/refractr.yml')
+REFRACTR_YML = os.getenv('REFRACTR_YML', 'refractr/refractr.yml')
 LOCALHOST = '127.0.0.1'
 LOCALHOST80 = f'{LOCALHOST}:80'
 
@@ -25,5 +25,5 @@ def test_refract(refract):
     assert isinstance(refract, BaseRefract)
     validator = RefractrValidator(netloc='localhost', early=True, verbose=False)
     validation = validator.validate_refract(refract)
-    assert validation['validate-result'] == 'SUCCESS'
     yaml_print(dict(validation=validation))
+    assert validation['validate-result'] == 'SUCCESS'

@@ -6,6 +6,7 @@ import sys
 import aiohttp
 import asyncio
 
+from refractr.exceptions import InsufficientAmountOfTestsError
 from refractr.utils import *
 from refractr.url import URL
 from leatherman.dictionary import head_body
@@ -50,7 +51,6 @@ class RefractrValidator:
         if netloc:
             headers.update(Host=URL(src).netloc)
             src = URL(src, netloc=netloc).http # force to http for non-prod
-
         ctor = aiohttp.TCPConnector(ssl=self.ssl)
         async with aiohttp.ClientSession(connector=ctor, loop=self._loop) as session:
             async with session.request('GET', src, headers=headers, allow_redirects=False) as response:
@@ -58,7 +58,7 @@ class RefractrValidator:
                 dst = headers.get('Location', None)
                 if dst and URL(dst).netloc == '':
                     dst = URL(dst, netloc=URL(src).netloc).url
-                return dst, response.status
+                return dst, response.status, response.reason
 
     async def _follow_hops(self, given_src, expect_dst, expect_status):
         netloc = self.netloc
@@ -68,11 +68,14 @@ class RefractrValidator:
         while src:
             dst = None
             try:
-                dst, status = await self._hop(src, netloc)
+                dst, status, reason = await self._hop(src, netloc)
             except Exception as ex:
                 hop = Hop(src, ex=ex)
                 test_result = hop.match
                 hops += [hop]
+                break
+            if status > 400:
+                test_result = reason
                 break
             if dst:
                 if src == dst:
@@ -82,6 +85,9 @@ class RefractrValidator:
                     break
                 match = None
                 if dst == expect_dst:
+                    if expect_status == None:
+                        test_result = 'ExpectStatusNotSpecified'
+                        break
                     if status == expect_status:
                         match = 'MATCHED'
                     else:
@@ -105,14 +111,17 @@ class RefractrValidator:
         validate_result = 'SUCCESS'
         names = []
         futures = []
+        if refract.balance < 0:
+            raise InsufficientAmountOfTestsError(refract.balance)
         for test in refract.tests:
+            status = test.pop('status', refract.status)
             src, dst = head_body(test)
             names += [
                 f'{src} -> {dst}'
             ]
             futures += [
                 asyncio.ensure_future(
-                    self._follow_hops(src, dst, refract.status))
+                    self._follow_hops(src, dst, status))
             ]
         results = await asyncio.gather(*futures)
         tests = []

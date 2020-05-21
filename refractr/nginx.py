@@ -5,5 +5,5 @@ class NginxRefract(BaseRefract):
         self.nginx = nginx
         super().__init__(tests=tests)
 
-    def render_refract(self):
-        return self.nginx
+    def render(self):
+        return [self.nginx]

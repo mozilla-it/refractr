@@ -532,10 +532,9 @@ refracts:
   # TODO: verify this works as expected / previously
 - srcs: content.mozilla.org
   dst:
-  - /dmexco: www.mozilla.org/about/partnerships/contentservices/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team
-    # FIXME: fix handling of '*'
-  - /*: www.mozilla.org/about/partnerships/contentservices/:splat?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team
-  - /: www.mozilla.org/about/partnerships/contentservices/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team
+  - /dmexco: 'www.mozilla.org/about/partnerships/contentservices/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team'
+  - /*: 'www.mozilla.org/about/partnerships/contentservices/$splat/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team'
+  - /: 'www.mozilla.org/about/partnerships/contentservices/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team'
   status: 302
 
   # bug 756358
@@ -731,8 +730,7 @@ refracts:
 - srcs: phonebook.mozilla.org
   dst:
   - /tree.php/: people.mozilla.org/o
-    # FIXME: fix handling of '*'
-  - /*: people.mozilla.org/s?query=:splat&who=staff
+  - /search/*: 'people.mozilla.org/s?query=$splat&who=staff'
   - /: people.mozilla.org/
   status: 302
 

@@ -30,6 +30,4 @@ class BaseRefract:
         return join([URL(src).netloc for src in self.srcs])
 
     def render(self):
-        return [
-            self.render_refract()
-        ]
+        raise NotImplementedError

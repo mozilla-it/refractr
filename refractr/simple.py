@@ -14,9 +14,9 @@ class SimpleRefract(BaseRefract):
         ]
         super().__init__(dst, srcs, status, tests)
 
-    def render_refract(self):
+    def render(self):
         server_name = KeyValueOption('server_name', self.server_name)
-        return Section(
+        return [Section(
             'server',
             server_name,
             KeyMultiValueOption(
@@ -25,4 +25,4 @@ class SimpleRefract(BaseRefract):
                     URL(self.dst).https
                 ]
             )
-        )
+        )]

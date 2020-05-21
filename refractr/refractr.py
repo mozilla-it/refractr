@@ -8,8 +8,7 @@ from leatherman.dbg import dbg
 from refractr.exceptions import *
 from refractr.nginx import NginxRefract
 from refractr.simple import SimpleRefract
-from refractr.redirect import RedirectRefract
-from refractr.rewrite import RewriteRefract
+from refractr.complex import ComplexRefract
 from refractr.validate import RefractrValidator
 from refractr.utils import *
 
@@ -45,9 +44,7 @@ class Refractr:
             dst, srcs = head_body(spec)
         srcs = listify(srcs)
         if isinstance(dst, list):
-            if any([startswith(k, '^', 'if') for item in dst for k, v in item.items()]):
-                return RewriteRefract(dst, srcs, status, tests)
-            return RedirectRefract(dst, srcs, status, tests)
+            return ComplexRefract(dst, srcs, status, tests)
         return SimpleRefract(dst, srcs, status)
 
     def _filter(self, patterns=None, only=None, count=None):
@@ -55,11 +52,11 @@ class Refractr:
             patterns = ['*']
         if only:
             # FIXME: filter on dst targets if nothing found
-            types = dict(
-                nginx=NginxRefract,
-                simple=SimpleRefract,
-                redirect=RedirectRefract,
-                rewrite=RewriteRefract)
+            types = {
+                'nginx': NginxRefract,
+                'simple': SimpleRefract,
+                'complex': ComplexRefract,
+            }
             filtered = [
                 refract
                 for refract

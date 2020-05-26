@@ -13,27 +13,60 @@ from leatherman.dictionary import head_body
 from leatherman.repr import __repr__
 from leatherman.dbg import dbg
 
+LOOP_RESULT = 'LOOP!'
+STATUS_RESULT = 'STATUS!'
+MATCHED_RESULT = 'MATCHED'
+MISMATCH_RESULT = 'MISMATCH'
+SUCCESS_RESULT = 'SUCCESS'
+FAILURE_RESULT = 'FAILURE'
+
 class Hop:
-    def __init__(self, src, dst=None, status=None, match=None, ex=None):
+    def __init__(self, test, src, dst=None, status=None, ex=None):
+        assert isinstance(test, Test)
+        self.test = test #ref to test instance
         self.src = src
         self.dst = dst
         self.status = status
-        self._match = match
         self.ex = ex
 
     __repr__ = __repr__
 
+    def __str__(self):
+        result = self.result or ''
+        if isinstance(self.ex, Exception):
+            return f'{self.src} => {result}'
+        return f'{self.status} {self.src} -> {self.dst} {result}'.rstrip()
+
     @property
-    def match(self):
+    def result(self):
         if self.ex:
             return self.ex.__class__.__name__
-        return self._match if self._match else ''
+        elif self.src == self.dst:
+            return LOOP_RESULT
+        elif self.dst and self.dst == self.test.expect_dst:
+            if self.status and self.status == self.test.expect_status:
+                return MATCHED_RESULT
+            return STATUS_RESULT
+        return None
 
-    def __str__(self):
-        if isinstance(self.ex, Exception):
-            return f'{self.src} => {self.match}'
-        return f'{self.status} {self.src} -> {self.dst} {self.match}'.rstrip()
+class Test:
+    def __init__(self, expect_dst, expect_status):
+        self.expect_dst = expect_dst
+        self.expect_status = expect_status
+        self.hops = []
+        self._result = None
 
+    __repr__ = __repr__
+
+    @property
+    def result(self):
+        return self._result or MISMATCH_RESULT
+
+    def add_hop(self, src, dst=None, status=None, ex=None):
+        hop = Hop(self, src, dst, status, ex)
+        if self._result == None:
+            self._result = hop.result
+        self.hops += [hop]
 
 class RefractrValidator:
     def __init__(self, netloc=None, early=False, verbose=False):
@@ -50,7 +83,7 @@ class RefractrValidator:
         headers = {}
         if netloc:
             headers.update(Host=URL(src).netloc)
-            src = URL(src, netloc=netloc).http # force to http for non-prod
+            src = URL(src, netloc=netloc).http # force to http for non-public
         ctor = aiohttp.TCPConnector(ssl=self.ssl)
         async with aiohttp.ClientSession(connector=ctor, loop=self._loop) as session:
             async with session.request('GET', src, headers=headers, allow_redirects=False) as response:
@@ -63,41 +96,26 @@ class RefractrValidator:
     async def _follow_hops(self, given_src, expect_dst, expect_status):
         netloc = self.netloc
         src = given_src
-        test_result = 'MISMATCHED'
         hops = []
+        if expect_status == None:
+            test_result = 'ExpectStatusNotSpecified'
+            return hops, test_result
+        test = Test(expect_dst, expect_status)
         while src:
             dst = None
             try:
                 dst, status, reason = await self._hop(src, netloc)
             except Exception as ex:
-                hop = Hop(src, ex=ex)
-                test_result = hop.match
-                hops += [hop]
+                test.add_hop(src, ex=ex)
                 break
-            if status > 400:
-                test_result = reason
+            if status >= 400:
+                test.add_hop(src, dst, status)
                 break
             if dst:
-                if src == dst:
-                    hop = Hop(src)
-                    test_result = 'InfiniteLoop'
-                    hops += [hop]
+                test.add_hop(src, dst, status)
+                if test.result == LOOP_RESULT:
                     break
-                match = None
-                if dst == expect_dst:
-                    if expect_status == None:
-                        test_result = 'ExpectStatusNotSpecified'
-                        break
-                    if status == expect_status:
-                        match = 'MATCHED'
-                    else:
-                        match = 'STATUS!'
-                hop = Hop(src, dst, status, match)
-                hops += [hop]
-                if match:
-                    test_result = match
-                if match == 'MATCHED':
-                    # bail early if we have met our expectation
+                if test.result == MATCHED_RESULT:
                     if self.early:
                         break
                     # we can't do netloc override outside of our refractr nginx
@@ -105,10 +123,10 @@ class RefractrValidator:
                 src = dst
                 continue
             break
-        return hops, test_result
+        return test
 
     async def _validate_refract(self, refract):
-        validate_result = 'SUCCESS'
+        validate_result = SUCCESS_RESULT
         names = []
         futures = []
         if refract.balance < 0:
@@ -125,13 +143,13 @@ class RefractrValidator:
             ]
         results = await asyncio.gather(*futures)
         tests = []
-        for name, (hops, test_result) in zip(names, results):
-            if test_result != 'MATCHED':
-                validate_result = 'FAILURE'
+        for name, test in zip(names, results):
+            if test.result != MATCHED_RESULT:
+                validate_result = FAILURE_RESULT
             tests += [{
                 name: {
-                    'hops': [str(hop) for hop in hops],
-                    'test-result': test_result,
+                    'hops': [str(hop) for hop in test.hops],
+                    'test-result': test.result,
                 }
             }]
         return {

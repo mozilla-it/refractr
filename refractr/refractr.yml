@@ -156,13 +156,12 @@
 
 refracts:
 
-  # Test domains
-  # FIXME: these do not currently exist in prod
-  #- www.mozilla.org/:
-  #  - '*.mozilla-redirects.xyz'
-  #  - mozilla-redirects.xyz
-  #  - refractr.allizom.org
-  #  - refractr1.allizom.org
+# FIXME: these do not currently exist in prod
+- www.mozilla.org/:
+  - '*.mozilla-redirects.xyz'
+  - mozilla-redirects.xyz
+  - refractr.allizom.org
+  - refractr1.allizom.org
 
   # bug 537925
   # NOTE: simplified this after testing, this simple redirect is all that is needed

@@ -232,9 +232,6 @@ refracts:
 - mozillafestival.org/: festival.mozilla.org
   status: 302
 
-  # bug 1490779 FIXME: NXDOMAIN
-  #- aus4.mozilla.org/: aus2.mozilla.org
-
   # bug 692904
   # FIXME: apache points to http; this will go to https
 - www.mozilla-russia.org/:

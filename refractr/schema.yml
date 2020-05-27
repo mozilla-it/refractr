@@ -143,14 +143,14 @@ defs:
     maxProperties: 4
     required:
     - srcs
-    - dst
+    - dsts
     additionalProperties: false
     properties:
       srcs:
         oneOf:
         - $ref: '#/defs/src-url'
         - $ref: '#/defs/src-urls'
-      dst:
+      dsts:
         $ref: '#/defs/dsts'
       status:
         type: integer

@@ -37,21 +37,21 @@ class Refractr:
         nginx = spec.pop('nginx', None)
         if nginx:
             return NginxRefract(nginx, tests)
-        dst = spec.pop('dst', None)
+        dsts = spec.pop('dsts', None)
         srcs = spec.pop('srcs', None)
         status = spec.pop('status', 301)
         if len(spec) == 1:
-            dst, srcs = head_body(spec)
+            dsts, srcs = head_body(spec)
         srcs = listify(srcs)
-        if isinstance(dst, list):
-            return ComplexRefract(dst, srcs, status, tests)
-        return SimpleRefract(dst, srcs, status)
+        if isinstance(dsts, list):
+            return ComplexRefract(dsts, srcs, status, tests)
+        return SimpleRefract(dsts, srcs, status)
 
     def _filter(self, patterns=None, only=None, count=None):
         if patterns == None:
             patterns = ['*']
         if only:
-            # FIXME: filter on dst targets if nothing found
+            # FIXME: filter on dsts targets if nothing found
             types = {
                 'nginx': NginxRefract,
                 'simple': SimpleRefract,

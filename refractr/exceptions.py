@@ -3,9 +3,9 @@ class URLError(Exception):
         msg = f'error: with url={url}'
         super().__init__(msg)
 
-class NonIfDstFoundError(Exception):
-    def __init__(self, dst, status):
-        msg = f'error: non-if dst found; dst={dst} status={status}'
+class NonIfDstsFoundError(Exception):
+    def __init__(self, dsts, status):
+        msg = f'error: non-if dsts found; dsts={dsts} status={status}'
         super().__init__(msg)
 
 class LocationNotFoundInRewriteMatchError(Exception):

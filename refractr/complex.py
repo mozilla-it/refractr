@@ -5,7 +5,7 @@ from nginx.config.api import KeyMultiValueOption
 from nginx.config.api import Section, Location
 from leatherman.dictionary import head, head_body
 
-from refractr.exceptions import NonIfDstFoundError
+from refractr.exceptions import NonIfDstsFoundError
 from refractr.base import BaseRefract
 from refractr.url import URL
 
@@ -40,18 +40,18 @@ def create_test(src, path, target):
     }
 
 class ComplexRefract(BaseRefract):
-    def __init__(self, dst, srcs, status, tests=None):
-        assert dst and isinstance(dst, list)
+    def __init__(self, dsts, srcs, status, tests=None):
+        assert dsts and isinstance(dsts, list)
         tests = tests or []
         for src in srcs:
-            for item in dst:
+            for dst in dsts:
                 try:
-                    path, target = head_body(item)
+                    path, target = head_body(dst)
                     if path.startswith('/'):
                         tests += [create_test(src, path, target)]
                 except:
                     continue
-        super().__init__(dst, srcs, status, tests)
+        super().__init__(dsts, srcs, status, tests)
 
     def render_redirect(self, path, target, status=None, location=False):
         redirect = KeyMultiValueOption(
@@ -83,12 +83,12 @@ class ComplexRefract(BaseRefract):
             )
         return rewrite
 
-    def render_if(self, dst, status):
+    def render_if(self, dsts, status):
         sections = []
-        if_ = dst.pop('if', None)
-        redirect = dst.pop('redirect', None)
+        if_ = dsts.pop('if', None)
+        redirect = dsts.pop('redirect', None)
         try:
-            match, target = head_body(dst)
+            match, target = head_body(dsts)
             rewrite = self.render_rewrite(match, target, status)
             if if_:
                 rewrite = Section(f'if ({if_})', rewrite)
@@ -103,7 +103,7 @@ class ComplexRefract(BaseRefract):
     def render(self):
         server_name = KeyValueOption('server_name', self.server_name)
         sections = []
-        for dst in self.dst:
+        for dst in self.dsts:
             if isinstance(dst, str):
                 sections += [self.render_redirect(None, dst)]
             status = dst.pop('status', self.status)
@@ -113,7 +113,7 @@ class ComplexRefract(BaseRefract):
             try:
                 key, value = head_body(dst)
             except:
-                raise NonIfDstFoundError(dst, status)
+                raise NonIfDstsFoundError(dst, status)
             if key.startswith('/'):
                 sections += [self.render_redirect(key, value, status, location=True)]
             elif key.startswith('^/'):

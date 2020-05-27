@@ -2,7 +2,7 @@
 # 'tests' will be generated except the rewrite case (Ex4)
 #
 # Ex1 One Source
-#   - destination(dst): source(srcs)
+#   - destination(dsts): source(srcs)
 #
 #   - wiki.mozilla.org: wiki.mozilla.com
 #
@@ -10,7 +10,7 @@
 #
 #   - srcs:
 #     - wiki.mozilla.com
-#     dst: wiki.mozilla.org/
+#     dsts: wiki.mozilla.org/
 #     status: 301
 #     tests:
 #     - http://wiki.mozilla.com: https://wiki.mozilla.org/
@@ -18,7 +18,7 @@
 #   Note: remember the status and tests are defaults if unspecified.
 #
 # Ex2 Multiple Sources
-#   - destination(dst):
+#   - destination(dsts):
 #     - source1
 #     - source2
 #
@@ -31,7 +31,7 @@
 #   - srcs:
 #     - labs.mozilla.org
 #     - labs.mozilla.com
-#     dst: www.mozillalabs.com/
+#     dsts: www.mozillalabs.com/
 #     status: 301
 #     tests:
 #     - http://labs.mozilla.com: https://www.mozillalabs.com/
@@ -40,12 +40,12 @@
 #
 # Ex3 Redirect, Paths -> Destinations
 #   - srcs: src(s)
-#     dst:
+#     dsts:
 #       path1: dst1
 #       path2: dst2
 #
 #   - srcs: lockwise.firefox.com
-#     dst:
+#     dsts:
 #     - /faq.html: support.mozilla.org/products/firefox-lockwise/
 #     - /addon/updates.json: mozilla-lockwise.github.io/addon/updates.json
 #     - /: www.mozilla.org/firefox/lockwise/
@@ -54,7 +54,7 @@
 #
 #   - srcs:
 #     - lockwise.firefox.com
-#     dst:
+#     dsts:
 #     - /faq.html: support.mozilla.org/products/firefox-lockwise/
 #     - /addon/updates.json: mozilla-lockwise.github.io/addon/updates.json
 #     - /: www.mozilla.org/firefox/lockwise/
@@ -69,7 +69,7 @@
 #
 # Ex4 Rewrite with If and Redirect Directives
 #   - srcs: src(s)
-#     dst:
+#     dsts:
 #     - if <some-valid-nginx-predicate>
 #       ^: <rewrite>
 #     - redirect: (optional) <catchall-redirect> (used when the 'if' condtional fails)
@@ -79,7 +79,7 @@
 #     - '*.start2.mozilla.com'
 #     - '*.start3.mozilla.com'
 #     - '*.start-prod.mozilla.com'
-#     dst:
+#     dsts:
 #     - if: '$http_host ~ "^(?<lang>[a-z]{2,3}(-[a-z]{2})?)?\.(start.*)$"'
 #       ^: start.mozilla.org/$lang$request_uri
 #     - redirect: start.mozilla.org/
@@ -95,7 +95,7 @@
 #     - '*.start2.mozilla.com'
 #     - '*.start3.mozilla.com'
 #     - '*.start-prod.mozilla.com'
-#     dst:
+#     dsts:
 #     - ^: start.mozilla.org/$lang$request_uri
 #       if: $http_host ~ "^(?<lang>[a-z]{2,3}(-[a-z]{2})?)?\.(start.*)$"
 #     - redirect: start.mozilla.org/
@@ -778,7 +778,7 @@ refracts:
 
   # bug 1587941
   # TODO: test this works as before
-  #- dst:
+  #- dsts:
   #  - /faq.html/: support.mozilla.org/products/firefox-lockwise/
   #  - /addon/updates.json/: mozilla-lockwise.github.io/addon/updates.json
   #  - /: www.mozilla.org/firefox/lockwise/
@@ -807,20 +807,20 @@ refracts:
   #        - 301 http://www.mozilla.org/en-US/firefox/lockwise/ -> https://www.mozilla.org/en-US/firefox/lockwise/
   #        result: MISMATCHED
 - srcs: lockwise.firefox.com
-  dst:
+  dsts:
   - /faq.html/: support.mozilla.org/products/firefox-lockwise//
   - /addon/updates.json/: mozilla-lockwise.github.io/addon/updates.json/
   - /: www.mozilla.org/firefox/lockwise/
 
   # bug 1627952
 - srcs: mozilla.github.io
-  dst:
+  dsts:
   - /firefox-accounts-campaign: community.mozilla.org/campaigns/join-firefox-campaign/
 
   # bug 756358
   # TODO: verify this works as expected
 - srcs: dnt.mozilla.org
-  dst:
+  dsts:
   # NOTE: changed from http->https after verifying
   - /dnt-enabler.tpl: www.mozilla.org/media/dnt/dnt-enabler.tpl
   - /: www.mozilla.org/firefox/dnt/
@@ -828,7 +828,7 @@ refracts:
   # bug 1119912, 1165757, 1213900, 1200359
   # TODO: verify this works as expected / previously
 - srcs: content.mozilla.org
-  dst:
+  dsts:
   - /dmexco: 'www.mozilla.org/about/partnerships/contentservices/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team'
   - ^/(.+): 'www.mozilla.org/about/partnerships/contentservices/$1/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team'
   - /: 'www.mozilla.org/about/partnerships/contentservices/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team'
@@ -839,7 +839,7 @@ refracts:
 
   # bug 1566155
 - srcs: phonebook.mozilla.org
-  dst:
+  dsts:
   - /tree.php/: people.mozilla.org/o
   - ^/search/(.*): 'people.mozilla.org/s?query=$1&who=staff'
   - /: people.mozilla.org/
@@ -851,7 +851,7 @@ refracts:
 - srcs:
   - firefox.com
   - www.firefox.com
-  dst:
+  dsts:
     # bug 1485429, 1432228
   - /switch: www.mozilla.org/firefox/switch/?redirect_source=firefox-com
 
@@ -903,7 +903,7 @@ refracts:
 
   # bug 1627952
 - srcs: activate.mozilla.community
-  dst:
+  dsts:
   - /campaigns: community.mozilla.org/campaigns/
   - /commonvoice: community.mozilla.org/activities/contributing-to-common-voice/
   - /en-US/nightly: community.mozilla.org/activities/
@@ -915,7 +915,7 @@ refracts:
 
   # bug 1618512, 1627952
 - srcs: events.mozilla.org
-  dst:
+  dsts:
   - /firefoxvoicecampaign: community.mozilla.org/activities/test-firefox-voice/
   - /respond_campaign: community.mozilla.org/campaigns/respond-campaign/
   - /firefoxforgood-surfacingqualitycontentandconversat: community.mozilla.org/campaigns/
@@ -931,7 +931,7 @@ refracts:
   - '*.start2.mozilla.com'
   - '*.start3.mozilla.com'
   - '*.start-prod.mozilla.com'
-  dst:
+  dsts:
   - if: '$http_host ~ "^(?<lang>[a-z]{2,3}(-[a-z]{2})?)?\.(start.*)$"'
     ^: start.mozilla.org/$lang$request_uri
   - redirect: start.mozilla.org/
@@ -943,7 +943,7 @@ refracts:
 - srcs:
   - malware-error.mozilla.com
   - '*.malware-error.mozilla.com'
-  dst:
+  dsts:
   - if: '$query_string ~ "^hl=(?<hl>[^&]+)&url=(?<url>[^&]+)"'
     ^/$: 'www.stopbadware.org/firefox?hl=$hl&url=$url?'
   - if: '$query_string ~ "^url=(?<url>[^&]+)"'
@@ -958,7 +958,7 @@ refracts:
 - srcs:
   - phish-error.mozilla.com
   - '*.phish-error.mozilla.com'
-  dst:
+  dsts:
   - if: '$query_string ~ "^hl=(?<hl>[^&]+)&url=(?<url>[^&]+)"'
     ^/$: 'safebrowsing.google.com/safebrowsing/report_error/?tpl=mozilla&hl=$hl&url=$url?'
   - if: '$query_string ~ "^url=(?<url>[^&]+)"'
@@ -973,7 +973,7 @@ refracts:
 - srcs:
   - phish-report.mozilla.com
   - '*.phish-report.mozilla.com'
-  dst:
+  dsts:
   - if: '$query_string ~ "^hl=(?<hl>es)(?:-ES|-AR)&url=(?<url>[^&]+)"'
     ^/$: 'safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=$hl&url=$url?'
   - if: '$query_string ~ "^hl=(?:nb|nn)-NO&url=(?<url>[^&]+)"'

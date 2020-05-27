@@ -6,8 +6,8 @@ from refractr.url import URL
 from refractr.utils import *
 
 class BaseRefract:
-    def __init__(self, dst=None, srcs=None, status=None, tests=None):
-        self.dst = dst
+    def __init__(self, dsts=None, srcs=None, status=None, tests=None):
+        self.dsts = dsts
         self.srcs = srcs
         self.status = status
         self.tests = tests
@@ -23,13 +23,13 @@ class BaseRefract:
         generated tests will always match location redirects
         rewrites do no generate tests; so this is to help identify that
         '''
-        dst_count = len(self.dst) if isinstance(self.dst, list) else 1
+        dst_count = len(self.dsts) if isinstance(self.dsts, list) else 1
         test_count = len(self.tests)
         return test_count - dst_count
 
     def json(self):
         return dict(
-            dst=self.dst,
+            dsts=self.dsts,
             srcs=self.srcs,
             status=self.status,
             tests=self.tests

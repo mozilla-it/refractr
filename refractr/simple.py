@@ -6,13 +6,13 @@ from refractr.base import BaseRefract
 from refractr.url import URL
 
 class SimpleRefract(BaseRefract):
-    def __init__(self, dst, srcs, status):
+    def __init__(self, dsts, srcs, status):
         tests = [
-            {URL(src).http: URL(dst).https}
+            {URL(src).http: URL(dsts).https}
             for src
             in srcs
         ]
-        super().__init__(dst, srcs, status, tests)
+        super().__init__(dsts, srcs, status, tests)
 
     def render(self):
         server_name = KeyValueOption('server_name', self.server_name)
@@ -22,7 +22,7 @@ class SimpleRefract(BaseRefract):
             KeyMultiValueOption(
                 'return', [
                     self.status,
-                    URL(self.dst).https
+                    URL(self.dsts).https
                 ]
             )
         )]

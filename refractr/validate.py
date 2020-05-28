@@ -83,7 +83,10 @@ class RefractrValidator:
         headers = {}
         if netloc:
             headers.update(Host=URL(src).netloc)
-            src = URL(src, netloc=netloc).http # force to http for non-public
+            src = URL(src, netloc=netloc).url
+            # force to http for localhost
+            if netloc == 'localhost':
+                src = URL(src).http
         ctor = aiohttp.TCPConnector(ssl=self.ssl)
         async with aiohttp.ClientSession(connector=ctor, loop=self._loop) as session:
             async with session.request('GET', src, headers=headers, allow_redirects=False) as response:

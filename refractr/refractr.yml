@@ -802,52 +802,49 @@ refracts:
   #        - 301 https://www.mozilla.org/firefox/lockwise/ -> http://www.mozilla.org/en-US/firefox/lockwise/
   #        - 301 http://www.mozilla.org/en-US/firefox/lockwise/ -> https://www.mozilla.org/en-US/firefox/lockwise/
   #        result: MISMATCHED
-- srcs: lockwise.firefox.com
-  dsts:
+- dsts:
   - /faq.html/: support.mozilla.org/products/firefox-lockwise//
   - /addon/updates.json/: mozilla-lockwise.github.io/addon/updates.json/
   - /: www.mozilla.org/firefox/lockwise/
+  srcs: lockwise.firefox.com
 
   # bug 1627952
-- srcs: mozilla.github.io
-  dsts:
+- dsts:
   - /firefox-accounts-campaign: community.mozilla.org/campaigns/join-firefox-campaign/
+  srcs: mozilla.github.io
 
   # bug 756358
   # TODO: verify this works as expected
-- srcs: dnt.mozilla.org
-  dsts:
+- dsts:
   # NOTE: changed from http->https after verifying
   - /dnt-enabler.tpl: www.mozilla.org/media/dnt/dnt-enabler.tpl
   - /: www.mozilla.org/firefox/dnt/
+  srcs: dnt.mozilla.org
 
   # bug 1119912, 1165757, 1213900, 1200359
   # TODO: verify this works as expected / previously
-- srcs: content.mozilla.org
-  dsts:
+- dsts:
   - /dmexco: 'www.mozilla.org/about/partnerships/contentservices/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team'
   - ^/(.+): 'www.mozilla.org/about/partnerships/contentservices/$1/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team'
   - /: 'www.mozilla.org/about/partnerships/contentservices/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team'
+  srcs: content.mozilla.org
   status: 302
   tests:
     # this test must be specified because rewrites `^/(.+)` will not generate a test
   - http://content.mozilla.org/test: 'https://www.mozilla.org/about/partnerships/contentservices/test/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team'
 
   # bug 1566155
-- srcs: phonebook.mozilla.org
-  dsts:
+- dsts:
   - /tree.php/: people.mozilla.org/o
   - ^/search/(.*): 'people.mozilla.org/s?query=$1&who=staff'
   - /: people.mozilla.org/
+  srcs: phonebook.mozilla.org
   status: 302
   tests:
     # this test must be specified because rewrites `^/(.*)` will not generate a test
   - http://phonebook.mozilla.org/search/test: https://people.mozilla.org/s?query=test&who=staff
 
-- srcs:
-  - firefox.com
-  - www.firefox.com
-  dsts:
+- dsts:
     # bug 1485429, 1432228
   - /switch: www.mozilla.org/firefox/switch/?redirect_source=firefox-com
 
@@ -896,10 +893,12 @@ refracts:
 
     # bug 896570, 1427843
   - /: www.mozilla.org/firefox/new/?redirect_source=firefox-com
+  srcs:
+  - firefox.com
+  - www.firefox.com
 
   # bug 1627952
-- srcs: activate.mozilla.community
-  dsts:
+- dsts:
   - /campaigns: community.mozilla.org/campaigns/
   - /commonvoice: community.mozilla.org/activities/contributing-to-common-voice/
   - /en-US/nightly: community.mozilla.org/activities/
@@ -908,10 +907,10 @@ refracts:
   - /webvr-camp: community.mozilla.org/activities/
   - /webcompat-sprint: community.mozilla.org/activities/
   - /: community.mozilla.org/
+  srcs: activate.mozilla.community
 
   # bug 1618512, 1627952
-- srcs: events.mozilla.org
-  dsts:
+- dsts:
   - /firefoxvoicecampaign: community.mozilla.org/activities/test-firefox-voice/
   - /respond_campaign: community.mozilla.org/campaigns/respond-campaign/
   - /firefoxforgood-surfacingqualitycontentandconversat: community.mozilla.org/campaigns/
@@ -921,55 +920,53 @@ refracts:
   - /firefoxfightsforyoucampaign: community.mozilla.org/campaigns/firefoxfightsforyoucampaign/
   - /darkfunnelEN: community.mozilla.org/campaigns/become-a-dark-funnel-detective/
   - /: community.mozilla.org/events/
+  srcs: events.mozilla.org
 
-- srcs:
+- dsts:
+  - if: '$http_host ~ "^(?<lang>[a-z]{2,3}(-[a-z]{2})?)?\.(start.*)$"'
+    ^: start.mozilla.org/$lang$request_uri
+  - redirect: start.mozilla.org/
+  srcs:
   - '*.start.mozilla.com'
   - '*.start2.mozilla.com'
   - '*.start3.mozilla.com'
   - '*.start-prod.mozilla.com'
-  dsts:
-  - if: '$http_host ~ "^(?<lang>[a-z]{2,3}(-[a-z]{2})?)?\.(start.*)$"'
-    ^: start.mozilla.org/$lang$request_uri
-  - redirect: start.mozilla.org/
   tests:
   - http://ca.start.mozilla.com/: https://start.mozilla.org/ca/
   - http://en-us.start.mozilla.com/: https://start.mozilla.org/en-us/ # FIXME: note, these don't match current prod
   - http://en-uk.start.mozilla.com/: https://start.mozilla.org/en-uk/
 
-- srcs:
-  - malware-error.mozilla.com
-  - '*.malware-error.mozilla.com'
-  dsts:
+- dsts:
   - if: '$query_string ~ "^hl=(?<hl>[^&]+)&url=(?<url>[^&]+)"'
     ^/$: 'www.stopbadware.org/firefox?hl=$hl&url=$url?'
   - if: '$query_string ~ "^url=(?<url>[^&]+)"'
     ^/$: 'www.stopbadware.org/firefox?url=$url?'
   - redirect: $host$request_uri
+  srcs:
+  - malware-error.mozilla.com
+  - '*.malware-error.mozilla.com'
   tests:
   - http://malware-error.mozilla.com/?hl=en&url=path: 'https://www.stopbadware.org/firefox?hl=en&url=path'
   - http://malware-error.mozilla.com/?url=path: 'https://www.stopbadware.org/firefox?url=path'
   - http://malware-error.mozilla.com/: https://malware-error.mozilla.com/
 #  status: 307
 
-- srcs:
-  - phish-error.mozilla.com
-  - '*.phish-error.mozilla.com'
-  dsts:
+- dsts:
   - if: '$query_string ~ "^hl=(?<hl>[^&]+)&url=(?<url>[^&]+)"'
     ^/$: 'safebrowsing.google.com/safebrowsing/report_error/?tpl=mozilla&hl=$hl&url=$url?'
   - if: '$query_string ~ "^url=(?<url>[^&]+)"'
     ^/$: 'safebrowsing.google.com/safebrowsing/report_error/?tpl=mozilla&url=$url?'
   - redirect: $host$request_uri
+  srcs:
+  - phish-error.mozilla.com
+  - '*.phish-error.mozilla.com'
   tests:
   - http://phish-error.mozilla.com/?hl=en&url=path: 'https://safebrowsing.google.com/safebrowsing/report_error/?tpl=mozilla&hl=en&url=path'
   - http://phish-error.mozilla.com/?url=path: 'https://safebrowsing.google.com/safebrowsing/report_error/?tpl=mozilla&url=path'
   - http://phish-error.mozilla.com/: https://phish-error.mozilla.com/
 #  status: 307
 
-- srcs:
-  - phish-report.mozilla.com
-  - '*.phish-report.mozilla.com'
-  dsts:
+- dsts:
   - if: '$query_string ~ "^hl=(?<hl>es)(?:-ES|-AR)&url=(?<url>[^&]+)"'
     ^/$: 'safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=$hl&url=$url?'
   - if: '$query_string ~ "^hl=(?:nb|nn)-NO&url=(?<url>[^&]+)"'
@@ -984,6 +981,9 @@ refracts:
   - if: '$query_string ~ "url=(?<url>[^&]+)"'
     ^/$: 'safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&url=$url?'
   - redirect: www.mozilla.org/
+  srcs:
+  - phish-report.mozilla.com
+  - '*.phish-report.mozilla.com'
   tests:
   - http://phish-report.mozilla.com/?hl=es&url=path: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=es&url=path'
   - http://phish-report.mozilla.com/?hl=nb-NO&url=path: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=no&url=path'

@@ -1,0 +1,62 @@
+refracts:
+
+- dsts:
+  - /faq.html: support.mozilla.org/products/firefox-lockwise/
+  - /addon/updates.json: mozilla-lockwise.github.io/addon/updates.json
+  - /: www.mozilla.org/firefox/lockwise/
+  srcs: lockwise.firefox.com
+
+show:
+
+- dsts:
+  - /faq.html/: support.mozilla.org/products/firefox-lockwise/
+  - /addon/updates.json/: mozilla-lockwise.github.io/addon/updates.json/
+  - /: www.mozilla.org/firefox/lockwise/
+  srcs: [lockwise.firefox.com]
+  status: 301
+  tests:
+  - http://lockwise.firefox.com/faq.html/: https://support.mozilla.org/products/firefox-lockwise/
+  - http://lockwise.firefox.com/addon/updates.json/: https://mozilla-lockwise.github.io/addon/updates.json/
+  - http://lockwise.firefox.com/: https://www.mozilla.org/firefox/lockwise/
+
+nginx:
+
+- |
+  server {
+      server_name lockwise.firefox.com;
+      location = /faq.html/ {
+          return 301 https://support.mozilla.org/products/firefox-lockwise//;
+      }
+      location = /addon/updates.json/ {
+          return 301 https://mozilla-lockwise.github.io/addon/updates.json/;
+      }
+      location = / {
+          return 301 https://www.mozilla.org/firefox/lockwise/;
+      }
+  }
+
+validate:
+
+- dsts:
+  - /faq.html/: support.mozilla.org/products/firefox-lockwise/
+  - /addon/updates.json/: mozilla-lockwise.github.io/addon/updates.json/
+  - /: www.mozilla.org/firefox/lockwise/
+  srcs: [lockwise.firefox.com]
+  status: 301
+  validation:
+    netloc: localhost
+    tests:
+    - http://lockwise.firefox.com/faq.html/ -> https://support.mozilla.org/products/firefox-lockwise/:
+        hops:
+        - 301 http://lockwise.firefox.com/faq.html/ -> https://support.mozilla.org/products/firefox-lockwise/ MATCHED
+        test-result: MATCHED
+    - http://lockwise.firefox.com/addon/updates.json/ -> https://mozilla-lockwise.github.io/addon/updates.json/:
+        hops:
+        - 301 http://lockwise.firefox.com/addon/updates.json/ -> https://mozilla-lockwise.github.io/addon/updates.json/ MATCHED
+        test-result: MATCHED
+    - http://lockwise.firefox.com/ -> https://www.mozilla.org/firefox/lockwise/:
+        hops:
+        - 301 http://lockwise.firefox.com/ -> https://www.mozilla.org/firefox/lockwise/ MATCHED
+        test-result: MATCHED
+    validate-result: SUCCESS
+

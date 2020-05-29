@@ -13,17 +13,17 @@ See the [helm chart](https://github.com/mozilla-it/helm-charts/tree/master/chart
 This is the refractr (redirects|rewrites) spec file. First let's talk about
 the values that do not have to be specified and have sane defaults.
 
-### `srcs` key:
-This is the list of domains that requests will be redirected or rewritten
-from. By default these never have the `http(s)://` schemes. In the simple
-case (Ex1) they can be single scalar string value. But they can also be
-an array of strings as well (Ex2).
-
 ### `dsts` key:
 This is the destination that the redirect or rewrite will send the request.
-In most cases this is a single `https://` prefixed url.  But in the
-more complicated redirects (Ex3) and rewrites (Ex4) it can have path
+In most cases this is a single url.  These never have `http(s)://` schemes.
+But in the more complicated redirects (Ex3) and rewrites (Ex4) it can have path
 logic or rewrite condtinals, respectively.
+
+### `srcs` key:
+This is the list of domains that requests will be redirected or rewritten
+from. These never have the `http(s)://` schemes. In the simple case (Ex1)
+they can be single scalar string value. But they can also be
+an array of strings as well (Ex2).
 
 ### `status` key:
 One thing to remember all refractr entires is that they default to:
@@ -45,60 +45,49 @@ There are several ways to input a refractr. All entries will be preceeded
 with `-` because they are items in the `refractr` list (top level key).
 
 ### Simple:
-Often the need is a simple redirect from one domain to another.
-A simple refract can be specified as single `key: value` pair item
-in the refracts list of items. The `key: value` pair in this case is:
-`destination: source(s)`. The destination is a single web url complete
-with the https:// scheme. Whereas the source(s) can be a single source
-domain or list of multiples.
+Often the need is a simple redirect from one domain to another. A simple
+refract can be specified as single `key: value` pair item in the refracts
+list of items. The `key: value` pair in this case is: `destination: source(s)`.
+The destination is a single web url complete with the `https://` scheme.
+Note that `http://` are _not_ valid desitinations. Whereas the source(s)
+can be a single source domain or list of multiples.
 
-- Ex1 One Source
+- [Ex1 Simple: One Domain](examples/simple-http-to-https.md)
+
+spec:
+```
+- destination(dsts)|sources(srcs)
+```
+example:
+```
+- developer.mozilla.com
+```
+
+- [Ex2 Simple: Single Source](examples/simple-single-source.md)
+
+spec:
 ```
 - destination(dsts): source(srcs)
 ```
+example:
 ```
-- https://wiki.mozilla.org: wiki.mozilla.com
+- wiki.mozilla.org/: wiki.mozilla.com
 ```
 
-Here any requests that go to wiki.mozilla.com will be redirected to
-https://wiki.mozilla.org.
+- [Ex3 Simple: Multiple Sources](examples/simple-multiple-sources.md)
 
-The loaded data structure will be this:
-```
-- srcs:
-  - wiki.mozilla.com
-  dsts: https://wiki.mozilla.org/
-  status: 301
-  tests:
-  - http://wiki.mozilla.com: https://wiki.mozilla.org/
-```
-Note: remember the status and tests are defaults if unspecified.
-
-- Ex2 Multiple Sources
+spec:
 ```
 - destination(dsts):
   - source1
   - source2
 ```
+example:
 ```
-- https://www.mozillalabs.com/:
+- www.mozillalabs.com/:
   - labs.mozilla.org
   - labs.mozilla.com
 ```
-Here is the use case when you need to supply more than one source domain.
-
-The loaded data structure will be this:
-```
-- srcs:
-  - labs.mozilla.org
-  - labs.mozilla.com
-  dsts: https://www.mozillalabs.com/
-  status: 301
-  tests:
-  - http://labs.mozilla.com: https://www.mozillalabs.com/
-```
-Note: remember the status and tests are defaults if unspecified.
-
 ### Complex(Native):
 
 Sometimes the refract requires more control and input, especially
@@ -111,77 +100,100 @@ Sometimes for a redirect, you want to redirect paths on the domain to different
 destinations.  This is done via key: value `path: dst` under the `dsts` key. The
 sources will be the product of paths * srcs
 
-- Ex3 Redirect, Paths -> Destinations
+- [Ex4 Complex: Redirect, Paths -> Destinations](examples/complex-redirect.md)
+
+spec:
 ```
-- srcs: src(s)
-  dsts:
+- dsts:
     path1: dst1
     path2: dst2
+  srcs: src(s)
 ```
+example:
 ```
-- srcs: lockwise.firefox.com
-  dsts:
+- dsts:
   - /faq.html: https://support.mozilla.org/products/firefox-lockwise/
   - /addon/updates.json: https://mozilla-lockwise.github.io/addon/updates.json
   - /: https://www.mozilla.org/firefox/lockwise/
+  srcs: lockwise.firefox.com
 ```
-The loaded data structure will be this:
-```
-- srcs:
-  - lockwise.firefox.com
-  dsts:
-  - /faq.html: https://support.mozilla.org/products/firefox-lockwise/
-  - /addon/updates.json: https://mozilla-lockwise.github.io/addon/updates.json
-  - /: https://www.mozilla.org/firefox/lockwise/
-  status: 301
-  tests:
-  - http://lockwise.firefox.com/faq.html: https://support.mozilla.org/products/firefox-lockwise/
-  - http://lockwise.firefox.com/addon/updates.json: https://mozilla-lockwise.github.io/addon/updates.json
-  - http://lockwise.firefox.com/: https://www.mozilla.org/firefox/lockwise/
-```
-Note: remember the status and tests are defaults if unspecified. Here you
-can see how the tests specify `src: dst` incorporating the path fragments.
+Note: redirects (Ex4) and rewrites (Ex5) can and often are combined in a refract spec.
 
-- Ex4 Rewrite with If and Redirect Directives
+- [Ex5 Complex: Rewrite](examples/complex-rewrite.md)
+
+spec:
 ```
-- srcs: src(s)
-  dsts:
+- dsts:
+  - match1: dst1
+  - match2: dst2
+  srcs: src(s)
+  tests:
+    # must specify tests for each rewrite, because they won't be generated
+  - src1: dst1
+  - src2: dst2
+```
+example:
+```
+ - dsts:
+  - /tree.php/: people.mozilla.org/o
+  - ^/search/(.*): 'people.mozilla.org/s?query=$1&who=staff'
+  - /: people.mozilla.org/
+  srcs: phonebook.mozilla.org
+  status: 302
+  tests:
+    # this test must be specified because rewrites `^/(.*)` will not generate a test
+  - http://phonebook.mozilla.org/search/test: https://people.mozilla.org/s?query=test&who=staff
+```
+
+Note: redirects (Ex4) and rewrites (Ex5) can and often are combined in a refract spec.
+
+- [Ex6 Complex: Rewrite with If and Redirect Directives](examples/complex-with-if-and-redirect.md)
+
+spec:
+```
+- dsts:
   - if <some-valid-nginx-predicate>
     ^: <rewrite>
   - redirect: (optional) <catchall-redirect> (used when the 'if' condtional fails)
+  srcs: src(s)
 ```
+example:
 ```
-- srcs:
-  - '*.start.mozilla.com'
-  - '*.start2.mozilla.com'
-  - '*.start3.mozilla.com'
-  - '*.start-prod.mozilla.com'
-  dsts:
+- dsts:
   - if: '$http_host ~ "^(?<lang>[a-z]{2,3}(-[a-z]{2})?)?\.(start.*)$"'
     ^: https://start.mozilla.org/$lang$request_uri
   - redirect: https://start.mozilla.org/
-  tests:
-  - http://ca.start.mozilla.com: https://start.mozilla.org/ca/
-  - http://en-us.start.mozilla.com: https://start.mozilla.org/en-us/
-  - http://en-uk.start.mozilla.com: https://start.mozilla.org/en-uk/
-```
-The loaded data structure will be this:
-```
-- srcs:
+  srcs:
   - '*.start.mozilla.com'
   - '*.start2.mozilla.com'
   - '*.start3.mozilla.com'
   - '*.start-prod.mozilla.com'
-  dsts:
-  - ^: https://start.mozilla.org/$lang$request_uri
-    if: $http_host ~ "^(?<lang>[a-z]{2,3}(-[a-z]{2})?)?\.(start.*)$"
-  - redirect: https://start.mozilla.org/
-  status: 301
   tests:
   - http://ca.start.mozilla.com: https://start.mozilla.org/ca/
   - http://en-us.start.mozilla.com: https://start.mozilla.org/en-us/
   - http://en-uk.start.mozilla.com: https://start.mozilla.org/en-uk/
 ```
-Note: In the complex(native) case the `srcs` and `dsts` keys match
-exactly. As before, `status` will default to 301 if not specified.
-However, the `tests` must be specified for rewrites such as this.
+
+- [Ex7 Raw Nginx](examples/raw-nginx.md)
+
+spec:
+```
+- nginx: |
+    server {
+        server_name name1 name2;
+
+        etc
+    }
+  tests:
+  - src: dst
+```
+example:
+```
+- nginx: |
+    server {
+        server_name example.com;
+        return 301 https://www.example.com;
+    }
+  tests:
+  - http://example.com: https://www.example.com/
+```

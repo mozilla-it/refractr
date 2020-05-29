@@ -1,0 +1,65 @@
+refracts:
+
+- dsts:
+  - /tree.php/: people.mozilla.org/o
+  - ^/search/(.*): 'people.mozilla.org/s?query=$1&who=staff'
+  - /: people.mozilla.org/
+  srcs: phonebook.mozilla.org
+  status: 302
+  tests:
+    # this test must be specified because rewrites `^/(.*)` will not generate a test
+  - http://phonebook.mozilla.org/search/test: https://people.mozilla.org/s?query=test&who=staff
+
+show:
+
+- dsts:
+  - /tree.php/: people.mozilla.org/o
+  - ^/search/(.*): people.mozilla.org/s?query=$1&who=staff
+  - /: people.mozilla.org/
+  srcs: [phonebook.mozilla.org]
+  status: 302
+  tests:
+  - http://phonebook.mozilla.org/search/test: https://people.mozilla.org/s?query=test&who=staff
+  - http://phonebook.mozilla.org/tree.php/: https://people.mozilla.org/o
+  - http://phonebook.mozilla.org/: https://people.mozilla.org/
+
+nginx:
+
+- |
+  server {
+      server_name phonebook.mozilla.org;
+      location = /tree.php/ {
+          return 302 https://people.mozilla.org/o;
+      }
+      location /search/ {
+          rewrite ^/search/(.*) https://people.mozilla.org/s?query=$1&who=staff redirect;
+      }
+      location = / {
+          return 302 https://people.mozilla.org/;
+      }
+  }
+
+validate:
+
+- dsts:
+  - /tree.php/: people.mozilla.org/o
+  - ^/search/(.*): people.mozilla.org/s?query=$1&who=staff
+  - /: people.mozilla.org/
+  srcs: [phonebook.mozilla.org]
+  status: 302
+  validation:
+    netloc: localhost
+    tests:
+    - http://phonebook.mozilla.org/search/test -> https://people.mozilla.org/s?query=test&who=staff:
+        hops:
+        - 302 http://phonebook.mozilla.org/search/test -> https://people.mozilla.org/s?query=test&who=staff MATCHED
+        test-result: MATCHED
+    - http://phonebook.mozilla.org/tree.php/ -> https://people.mozilla.org/o:
+        hops:
+        - 302 http://phonebook.mozilla.org/tree.php/ -> https://people.mozilla.org/o MATCHED
+        test-result: MATCHED
+    - http://phonebook.mozilla.org/ -> https://people.mozilla.org/:
+        hops:
+        - 302 http://phonebook.mozilla.org/ -> https://people.mozilla.org/ MATCHED
+        test-result: MATCHED
+    validate-result: SUCCESS

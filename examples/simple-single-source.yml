@@ -1,0 +1,34 @@
+refracts:
+
+- wiki.mozilla.org/: wiki.mozilla.com
+
+show:
+
+- dsts: wiki.mozilla.org/
+  srcs: [wiki.mozilla.com]
+  status: 301
+  tests:
+  - http://wiki.mozilla.com: https://wiki.mozilla.org/
+
+nginx:
+
+- |
+  server {
+      server_name wiki.mozilla.com;
+      return 301 https://wiki.mozilla.org/;
+  }
+
+validate:
+
+- dsts: wiki.mozilla.org/
+  srcs: [wiki.mozilla.com]
+  status: 301
+  validation:
+    netloc: localhost
+    tests:
+    - http://wiki.mozilla.com -> https://wiki.mozilla.org/:
+        hops:
+        - 301 http://wiki.mozilla.com -> https://wiki.mozilla.org/ MATCHED
+        test-result: MATCHED
+    validate-result: SUCCESS
+

@@ -1,0 +1,71 @@
+refracts:
+
+- srcs:
+  - '*.start.mozilla.com'
+  - '*.start2.mozilla.com'
+  - '*.start3.mozilla.com'
+  - '*.start-prod.mozilla.com'
+  dsts:
+  - if: '$http_host ~ "^(?<lang>[a-z]{2,3}(-[a-z]{2})?)?\.(start.*)$"'
+    ^: start.mozilla.org/$lang$request_uri
+  - redirect: start.mozilla.org/
+  tests:
+  - http://ca.start.mozilla.com/: https://start.mozilla.org/ca/
+  - http://en-us.start.mozilla.com/: https://start.mozilla.org/en-us/
+  - http://en-uk.start.mozilla.com/: https://start.mozilla.org/en-uk/
+
+show:
+
+- dsts:
+  - ^: start.mozilla.org/$lang$request_uri
+    if: $http_host ~ "^(?<lang>[a-z]{2,3}(-[a-z]{2})?)?\.(start.*)$"
+  - redirect: start.mozilla.org/
+  srcs:
+  - '*.start.mozilla.com'
+  - '*.start2.mozilla.com'
+  - '*.start3.mozilla.com'
+  - '*.start-prod.mozilla.com'
+  status: 301
+  tests:
+  - http://ca.start.mozilla.com/: https://start.mozilla.org/ca/
+  - http://en-us.start.mozilla.com/: https://start.mozilla.org/en-us/
+  - http://en-uk.start.mozilla.com/: https://start.mozilla.org/en-uk/
+
+nginx:
+
+- |
+  server {
+      server_name *.start.mozilla.com *.start2.mozilla.com *.start3.mozilla.com *.start-prod.mozilla.com;
+      if ($http_host ~ "^(?<lang>[a-z]{2,3}(-[a-z]{2})?)?\.(start.*)$") {
+          rewrite ^ https://start.mozilla.org/$lang$request_uri permanent;
+      }
+      return 301 https://start.mozilla.org/;
+  }
+
+validate:
+- dsts:
+  - ^: start.mozilla.org/$lang$request_uri
+    if: $http_host ~ "^(?<lang>[a-z]{2,3}(-[a-z]{2})?)?\.(start.*)$"
+  - redirect: start.mozilla.org/
+  srcs:
+  - '*.start.mozilla.com'
+  - '*.start2.mozilla.com'
+  - '*.start3.mozilla.com'
+  - '*.start-prod.mozilla.com'
+  status: 301
+  validation:
+    netloc: localhost
+    tests:
+    - http://ca.start.mozilla.com/ -> https://start.mozilla.org/ca/:
+        hops:
+        - 301 http://ca.start.mozilla.com/ -> https://start.mozilla.org/ca/ MATCHED
+        test-result: MATCHED
+    - http://en-us.start.mozilla.com/ -> https://start.mozilla.org/en-us/:
+        hops:
+        - 301 http://en-us.start.mozilla.com/ -> https://start.mozilla.org/en-us/ MATCHED
+        test-result: MATCHED
+    - http://en-uk.start.mozilla.com/ -> https://start.mozilla.org/en-uk/:
+        hops:
+        - 301 http://en-uk.start.mozilla.com/ -> https://start.mozilla.org/en-uk/ MATCHED
+        test-result: MATCHED
+

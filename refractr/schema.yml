@@ -13,6 +13,7 @@ properties:
     items:
       oneOf:
       - $ref: '#/defs/nginx-refract'
+      - $ref: '#/defs/simple-http-to-https-refract'
       - $ref: '#/defs/simple-refract'
       - $ref: '#/defs/complex-refract'
 defs:
@@ -119,6 +120,10 @@ defs:
         type: string
       tests:
         $ref: '#/defs/tests'
+  simple-http-to-https-refract:
+    default: ''
+    title: simple-http-to-https-refract
+    type: string
   simple-refract:
     default: {}
     title: simple-refract

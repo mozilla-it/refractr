@@ -1,0 +1,44 @@
+refracts:
+
+- labs.mozilla.org/:
+  - labs.mozilla.org
+  - labs.mozilla.com
+
+show:
+
+- dsts: labs.mozilla.org/
+  srcs:
+  - labs.mozilla.org
+  - labs.mozilla.com
+  status: 301
+  tests:
+  - http://labs.mozilla.org: https://labs.mozilla.org/
+  - http://labs.mozilla.com: https://labs.mozilla.org/
+
+nginx:
+
+-|
+  server {
+      server_name labs.mozilla.org labs.mozilla.com;
+      return 301 https://labs.mozilla.org/;
+  }
+
+validate:
+- dsts: labs.mozilla.org/
+  srcs:
+  - labs.mozilla.org
+  - labs.mozilla.com
+  status: 301
+  validation:
+    netloc: localhost
+    tests:
+    - http://labs.mozilla.org -> https://labs.mozilla.org/:
+        hops:
+        - 301 http://labs.mozilla.org -> https://labs.mozilla.org/ MATCHED
+        test-result: MATCHED
+    - http://labs.mozilla.com -> https://labs.mozilla.org/:
+        hops:
+        - 301 http://labs.mozilla.com -> https://labs.mozilla.org/ MATCHED
+        test-result: MATCHED
+    validate-result: SUCCESS
+

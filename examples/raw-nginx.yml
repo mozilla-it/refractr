@@ -1,0 +1,33 @@
+refracts:
+
+- nginx: |
+    server {
+        server_name example.com;
+        return 301 https://www.example.com;
+    }
+  tests:
+  - http://example.com: https://www.example.com/
+    status: 301
+
+show:
+
+- nginx: |
+    server {
+        server_name example.com;
+        return 301 https://www.example.com;
+    }
+  tests:
+  - http://example.com: https://www.example.com/
+    status: 301
+
+nginx:
+
+- nginx: |
+    server {
+        server_name example.com;
+        return 301 https://www.example.com;
+    }
+
+validate:
+
+- something # FIXME: added validate example

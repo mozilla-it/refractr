@@ -64,6 +64,8 @@ class Test:
 
     def add_hop(self, src, dst=None, status=None, ex=None):
         hop = Hop(self, src, dst, status, ex)
+        if hop.result == LOOP_RESULT:
+            self._result = LOOP_RESULT
         if self._result == None:
             self._result = hop.result
         self.hops += [hop]

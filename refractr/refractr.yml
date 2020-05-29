@@ -30,7 +30,7 @@ refracts:
   # FIXME: currently both  are valid
   # but going to simplyfly with a redirect from both
   # going to .org
-- labs.mozilla.org/:
+- www.mozillalabs.com/:
   - labs.mozilla.org
   - labs.mozilla.com
 

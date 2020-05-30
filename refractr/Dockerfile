@@ -21,12 +21,11 @@ FROM nginx:${NGINX_VERSION}-alpine
 COPY --from=builder ./kubectl /usr/local/bin/kubectl
 
 RUN rm /etc/nginx/conf.d/default.conf
+COPY image/ /refractr
 COPY nginx/ /etc/nginx/
-COPY ingress.yaml /etc/ingress.yaml
-COPY refractr.sh /usr/local/bin/refractr.sh
 
 EXPOSE 80
 STOPSIGNAL SIGTERM
 
-ENTRYPOINT ["/usr/local/bin/refractr.sh"]
+ENTRYPOINT ["/refractr/refractr.sh"]
 CMD ["nginx"]

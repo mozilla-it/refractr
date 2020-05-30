@@ -136,7 +136,11 @@ redirects.yml
 refractr/nginx/conf.d/refractr.conf
 
 # ignore generated ingress.yaml
-refractr/ingress.yaml
+refractr/image/ingress.yaml
+
+# ignore generated deployed and version
+refractr/image/deployed
+refractr/image/version
 
 # ignore doit db
 .doit.db

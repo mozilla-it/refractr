@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   refractr:
-    image: ${AWS_ACCOUNT}.dkr.ecr.${AWS_REGION}.amazonaws.com/refractr:${REFRACTR_VERSION}
+    image: refractr:${REFRACTR_VERSION}
     container_name: refractr
     build: ./refractr
     ports:

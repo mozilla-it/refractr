@@ -52,18 +52,7 @@ The destination is a single web url complete with the `https://` scheme.
 Note that `http://` are _not_ valid desitinations. Whereas the source(s)
 can be a single source domain or list of multiples.
 
-- [Ex1 Simple: One Domain](examples/simple-http-to-https.md)
-
-spec:
-```
-- destination(dsts)|sources(srcs)
-```
-example:
-```
-- developer.mozilla.com
-```
-
-- [Ex2 Simple: Single Source](examples/simple-single-source.md)
+- [Ex1 Simple: Single Source](examples/simple-single-source.md)
 
 spec:
 ```
@@ -74,7 +63,7 @@ example:
 - wiki.mozilla.org/: wiki.mozilla.com
 ```
 
-- [Ex3 Simple: Multiple Sources](examples/simple-multiple-sources.md)
+- [Ex2 Simple: Multiple Sources](examples/simple-multiple-sources.md)
 
 spec:
 ```
@@ -100,7 +89,7 @@ Sometimes for a redirect, you want to redirect paths on the domain to different
 destinations.  This is done via key: value `path: dst` under the `dsts` key. The
 sources will be the product of paths * srcs
 
-- [Ex4 Complex: Redirect, Paths -> Destinations](examples/complex-redirect.md)
+- [Ex3 Complex: Redirect, Paths -> Destinations](examples/complex-redirect.md)
 
 spec:
 ```
@@ -119,7 +108,7 @@ example:
 ```
 Note: redirects (Ex4) and rewrites (Ex5) can and often are combined in a refract spec.
 
-- [Ex5 Complex: Rewrite](examples/complex-rewrite.md)
+- [Ex4 Complex: Rewrite](examples/complex-rewrite.md)
 
 spec:
 ```
@@ -147,7 +136,7 @@ example:
 
 Note: redirects (Ex4) and rewrites (Ex5) can and often are combined in a refract spec.
 
-- [Ex6 Complex: Rewrite with If and Redirect Directives](examples/complex-with-if-and-redirect.md)
+- [Ex5 Complex: Rewrite with If and Redirect Directives](examples/complex-with-if-and-redirect.md)
 
 spec:
 ```
@@ -174,7 +163,7 @@ example:
   - http://en-uk.start.mozilla.com: https://start.mozilla.org/en-uk/
 ```
 
-- [Ex7 Raw Nginx](examples/raw-nginx.md)
+- [Ex6 Raw Nginx](examples/raw-nginx.md)
 
 spec:
 ```

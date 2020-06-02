@@ -1,8 +1,6 @@
 refracts:
 
-- developer.mozilla.com
-
-- developer.mozilla.org
+- developer.mozilla.org/: developer.mozilla.com
 
 # FIXME: these do not currently exist in prod
 - www.mozilla.org/:

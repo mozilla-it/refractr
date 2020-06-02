@@ -107,7 +107,7 @@ class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
     @property
     @lru_cache()
     def IMAGE_NAME_AND_TAG(self):
-        return self('IMAGE_NAME_AND_TAG', f'{self.ECR_REPOURL}/{self.REPONAME}:{self.VERSION}')
+        return self('IMAGE_NAME_AND_TAG', f'{self.ECR_REPOURL}:{self.VERSION}')
 
     @property
     @lru_cache()

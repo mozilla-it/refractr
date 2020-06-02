@@ -240,8 +240,7 @@ def task_publish():
             f'DEPLOYED_ENV={CFG.DEPLOYED_ENV}',
             f'branch_contains={branch_contains(CFG.TRAVIS_TAG, CFG.PUBLISH_BRANCHES)}',
         ]))
-        if CFG.SHOULD_PUBLISH:
-            print(f'publishing {CFG.VERSION if publish else "skipped"}')
+        print(f'publishing {CFG.VERSION if CFG.SHOULD_PUBLISH else "skipped"}')
         return CFG.SHOULD_PUBLISH
     return {
         'task_dep': [

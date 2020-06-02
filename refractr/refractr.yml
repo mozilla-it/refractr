@@ -8,7 +8,6 @@ refracts:
 - www.mozilla.org/:
   - '*.mozilla-redirects.xyz'
   - mozilla-redirects.xyz
-  - refractr.allizom.org
   - refractr1.allizom.org
 
   # bug 537925

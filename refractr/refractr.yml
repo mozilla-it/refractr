@@ -4,7 +4,6 @@ refracts:
 
 # FIXME: these do not currently exist in prod
 - www.mozilla.org/:
-  - '*.mozilla-redirects.xyz'
   - mozilla-redirects.xyz
   - refractr1.allizom.org
 

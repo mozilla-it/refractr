@@ -10,7 +10,7 @@ from ruamel.yaml import safe_load
 from jsonschema import validate
 from jsonschema.exceptions import ValidationError
 
-from refractr.cfg import CFG, git, call, CalledProcessError
+from refractr.cfg import CFG, git, call, branch_contains, CalledProcessError
 
 IMAGE = 'itsre/refractr'
 CREDENTIALS_MESSAGE = 'Unable to locate credentials. You can configure credentials by running "aws configure".'
@@ -19,19 +19,6 @@ DOIT_CONFIG = {
     'default_tasks': ['test'],
     'verbosity': 2,
 }
-
-def branch_contains(tag, approved):
-    '''
-    determine if tag points to ref on one of approved branches
-    '''
-    cmd = f'git branch --contains "{tag}"'
-    try:
-        _, stdout, _ =  call(cmd)
-        lines = stdout.split('\n')
-        branches = [line[2:] for line in lines]
-        return not set(branches).isdisjoint(approved)
-    except CalledProcessError as cpe:
-        return False
 
 @lru_cache()
 def envs(sep=' ', **kwargs):

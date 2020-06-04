@@ -67,6 +67,19 @@ def git(args, strip=True, **kwargs):
     except CalledProcessError as ex:
         raise ex
 
+def branch_contains(tag, approved):
+    '''
+    determine if tag points to ref on one of approved branches
+    '''
+    cmd = f'git branch --contains "{tag}"'
+    try:
+        _, stdout, _ =  call(cmd)
+        lines = stdout.split('\n')
+        branches = [line[2:] for line in lines]
+        return not set(branches).isdisjoint(approved)
+    except CalledProcessError as cpe:
+        return False
+
 
 class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
 

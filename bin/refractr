@@ -135,7 +135,7 @@ def main(args):
         subparsers,
         'validate',
         aliases=['val'],
-        help='validate refracts <public|stage|localhost>')
+        help='validate refracts <public|localhost|stage>')
     validate_parser.add_argument(
         '-N', '--netloc',
         help='default="public"; select netloc to use <localhost|stage>')

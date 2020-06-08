@@ -87,6 +87,10 @@ def add_subparser(subparsers, action, **kwargs):
         type=int,
         help='positive integer? N items from top; negative? N items from back')
     parser.add_argument(
+        '-a', '--all-sources',
+        action='store_true',
+        help='toggle search for all sources instead of just first')
+    parser.add_argument(
         "patterns",
         nargs="*",
         default=["*"],
@@ -161,25 +165,29 @@ def main(args):
         output =refractr.show(
             parsed.patterns,
             parsed.only,
-            parsed.count)
+            parsed.count,
+            parsed.all_sources)
         yaml_print(output)
     elif parsed.action in ('do', 'domains'):
         domains = refractr.domains(
             parsed.patterns,
             parsed.only,
-            parsed.count)
+            parsed.count,
+            parsed.all_sources)
         yaml_print(domains)
     elif parsed.action in ('ngx', 'nginx'):
         output = refractr.render(
             parsed.patterns,
             parsed.only,
-            parsed.count)
+            parsed.count,
+            parsed.all_sources)
         print(output)
     elif parsed.action in ('ing', 'ingress'):
         domains = refractr.domains(
             parsed.patterns,
             parsed.only,
-            parsed.count)
+            parsed.count,
+            parsed.all_sources)
         env = Environment(
             loader=FileSystemLoader(os.path.dirname(parsed.ingress_template)),
             trim_blocks=True,
@@ -191,7 +199,8 @@ def main(args):
         validated = refractr.validate(
             parsed.patterns,
             parsed.only,
-            parsed.count)
+            parsed.count,
+            parsed.all_sources)
         yaml_print(validated)
 
 if __name__ == '__main__':

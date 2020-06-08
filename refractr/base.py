@@ -5,17 +5,38 @@ from leatherman.yaml import yaml_format
 from refractr.url import URL
 from refractr.utils import *
 
+def tuplify(value):
+    if isinstance(value, dict):
+        return value
+    elif isinstance(value, (list, tuple)):
+        return tuple(value)
+    elif value != None:
+        return (value,)
+    return value
+
+def listify(obj):
+    if isinstance(obj, tuple):
+        return list(obj)
+    return obj
+
 class BaseRefract:
     def __init__(self, dsts=None, srcs=None, status=None, tests=None):
-        self.dsts = dsts
-        self.srcs = srcs
+        self.dsts = tuplify(dsts)
+        self.srcs = tuplify(srcs)
         self.status = status
-        self.tests = tests
+        self.tests = tuplify((tests or []) + self.generate_tests())
 
     def __str__(self):
         return yaml_format(self.json())
 
     __repr__ = __repr__
+
+    @property
+    def src(self):
+        if self.srcs:
+            assert isinstance(self.srcs, tuple) and len(self.srcs) > 0
+            return self.srcs[0]
+        return None
 
     @property
     def balance(self):
@@ -29,10 +50,10 @@ class BaseRefract:
 
     def json(self):
         return dict(
-            dsts=self.dsts,
-            srcs=self.srcs,
+            dsts=listify(self.dsts),
+            srcs=listify(self.srcs),
             status=self.status,
-            tests=self.tests
+            tests=listify(self.tests),
         )
 
     @property

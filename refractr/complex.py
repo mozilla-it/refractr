@@ -41,17 +41,20 @@ def create_test(src, path, target):
 
 class ComplexRefract(BaseRefract):
     def __init__(self, dsts, srcs, status, tests=None):
-        assert dsts and isinstance(dsts, list)
-        tests = tests or []
-        for src in srcs:
-            for dst in dsts:
+        super().__init__(dsts, srcs, status, tests)
+
+    def generate_tests(self):
+        assert self.dsts and isinstance(self.dsts, tuple), f'self.dsts={self.dsts}'
+        tests = []
+        for src in self.srcs:
+            for dst in self.dsts:
                 try:
                     path, target = head_body(dst)
                     if path.startswith('/'):
                         tests += [create_test(src, path, target)]
                 except:
                     continue
-        super().__init__(dsts, srcs, status, tests)
+        return tests
 
     def render_redirect(self, path, target, status=None, location=False):
         redirect = KeyMultiValueOption(

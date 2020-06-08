@@ -7,12 +7,19 @@ from refractr.url import URL
 
 class SimpleRefract(BaseRefract):
     def __init__(self, dsts, srcs, status):
-        tests = [
-            {URL(src).http: URL(dsts).https}
+        super().__init__(dsts, srcs, status)
+
+    @property
+    def dst(self):
+        assert self.dsts and len(self.dsts) == 1, f'self.dsts={self.dsts}'
+        return self.dsts[0]
+
+    def generate_tests(self):
+        return [
+            {URL(src).http: URL(self.dst).https}
             for src
-            in srcs
+            in self.srcs
         ]
-        super().__init__(dsts, srcs, status, tests)
 
     def render(self):
         server_name = KeyValueOption('server_name', self.server_name)
@@ -22,7 +29,7 @@ class SimpleRefract(BaseRefract):
             KeyMultiValueOption(
                 'return', [
                     self.status,
-                    URL(self.dsts).https
+                    URL(self.dst).https
                 ]
             )
         )]

@@ -21,15 +21,6 @@ def startswith(s, *tests):
     result = any([s.startswith(test) for test in tests])
     return result
 
-def listify(value):
-    if isinstance(value, dict):
-        return value
-    elif isinstance(value, (list, tuple)):
-        return list(value)
-    elif value != None:
-        return [value]
-    return value
-
 def join(items, sep=' '):
     return sep.join(items)
 

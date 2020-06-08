@@ -1,6 +1,7 @@
 from urllib.parse import urlparse, ParseResult
 from collections import UserString
 from refractr.exceptions import URLError
+from refractr.utils import *
 
 # makes visualizing as string easier to read
 ParseResult.__repr__ = lambda self: self.geturl()

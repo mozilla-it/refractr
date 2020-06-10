@@ -263,10 +263,6 @@ refracts:
 - www.mozilla.org/: redirect-san.mozilla.org
   status: 307
 
-  # NOTE: changed from http->https after verifying
-  # FIXME: how is this zeus stuff going to work going forward?
-- mozilla.org/: redirects-http-only.external.zlb.scl3.mozilla.com
-
   # bug 688019, 1427843
 - www.mozilla.org/firefox/new/?utm_source=getfirefox-org&utm_medium=referral:
   - getfirefox.org
@@ -383,10 +379,12 @@ refracts:
 - www.mozilla.org/contribute/friends/: friends.mozilla.org
   status: 302
 
-  # bug 896570, 1427843, 1485429, 1297860
-- www.mozilla.org/firefox/new/?redirect_source=getfirefox-com:
-  - getfirefox.com
-  - www.getfirefox.com
+# FIXME: commenting out LE Blacklisted items for now
+# https://mana.mozilla.org/wiki/display/SECURITY/Certificate+Authority+Authorization+CAA+including+Let%27s+Encrypt
+#  # bug 896570, 1427843, 1485429, 1297860
+#- www.mozilla.org/firefox/new/?redirect_source=getfirefox-com:
+#  - getfirefox.com
+#  - www.getfirefox.com
 
   # bug 896570
 - www.mozilla.org/firefox/?redirect_source=getfirefox-com:
@@ -683,58 +681,60 @@ refracts:
     # this test must be specified because rewrites `^/(.*)` will not generate a test
   - http://phonebook.mozilla.org/search/test: https://people.mozilla.org/s?query=test&who=staff
 
-- dsts:
-    # bug 1485429, 1432228
-  - /switch: www.mozilla.org/firefox/switch/?redirect_source=firefox-com
-
-  - /mobile: www.mozilla.org/firefox/new/?redirect_source=firefox-com
-
-  - /beta: www.mozilla.org/firefox/new/?redirect_source=firefox-com
-
-  - /aurora: www.mozilla.org/firefox/new/?redirect_source=firefox-com
-
-  - /nightly: www.mozilla.org/firefox/new/?redirect_source=firefox-com
-
-  - /m: www.mozilla.org/firefox/new/?redirect_source=firefox-com
-
-  - /tour: www.mozilla.org/firefox/new/?redirect_source=firefox-com
-
-    # bug 870410
-  - /universityambassadors: www.mozilla.org/contribute/universityambassadors/?redirect_source=firefox-com
-
-  - /os: www.mozilla.org/firefox/os/?redirect_source=firefox-com
-
-    # bug 1004274
-  - /desktop: www.mozilla.org/firefox/desktop/?redirect_source=firefox-com
-
-    # bug 1053356
-  - /android: www.mozilla.org/firefox/android/?redirect_source=firefox-com
-
-    # bug 1091132
-  - /developer: www.mozilla.org/firefox/developer/?redirect_source=firefox-com
-
-    # bug 1091891
-  - /10: www.mozilla.org/firefox/independent/?redirect_source=firefox-com
-
-  - /independant: www.mozilla.org/firefox/new/?redirect_source=firefox-com
-
-    # bug 1098044
-  - /hello: www.mozilla.org/firefox/hello/?redirect_source=firefox-com
-
-    # bug 1159397
-  - /personal: www.mozilla.org/firefox/personal/?redirect_source=firefox-com
-
-    # FIXME: handle '*' correctly
-  - ^/personal/(.*): www.mozilla.org/firefox/new/$1?redirect_source=firefox-com
-
-    # bug 1219380
-  - /choose: www.mozilla.org/firefox/choose/?redirect_source=firefox-com
-
-    # bug 896570, 1427843
-  - /: www.mozilla.org/firefox/new/?redirect_source=firefox-com
-  srcs:
-  - firefox.com
-  - www.firefox.com
+# FIXME: commenting out LE Blacklisted items for now
+# https://mana.mozilla.org/wiki/display/SECURITY/Certificate+Authority+Authorization+CAA+including+Let%27s+Encrypt
+#- dsts:
+#    # bug 1485429, 1432228
+#  - /switch: www.mozilla.org/firefox/switch/?redirect_source=firefox-com
+#
+#  - /mobile: www.mozilla.org/firefox/new/?redirect_source=firefox-com
+#
+#  - /beta: www.mozilla.org/firefox/new/?redirect_source=firefox-com
+#
+#  - /aurora: www.mozilla.org/firefox/new/?redirect_source=firefox-com
+#
+#  - /nightly: www.mozilla.org/firefox/new/?redirect_source=firefox-com
+#
+#  - /m: www.mozilla.org/firefox/new/?redirect_source=firefox-com
+#
+#  - /tour: www.mozilla.org/firefox/new/?redirect_source=firefox-com
+#
+#    # bug 870410
+#  - /universityambassadors: www.mozilla.org/contribute/universityambassadors/?redirect_source=firefox-com
+#
+#  - /os: www.mozilla.org/firefox/os/?redirect_source=firefox-com
+#
+#    # bug 1004274
+#  - /desktop: www.mozilla.org/firefox/desktop/?redirect_source=firefox-com
+#
+#    # bug 1053356
+#  - /android: www.mozilla.org/firefox/android/?redirect_source=firefox-com
+#
+#    # bug 1091132
+#  - /developer: www.mozilla.org/firefox/developer/?redirect_source=firefox-com
+#
+#    # bug 1091891
+#  - /10: www.mozilla.org/firefox/independent/?redirect_source=firefox-com
+#
+#  - /independant: www.mozilla.org/firefox/new/?redirect_source=firefox-com
+#
+#    # bug 1098044
+#  - /hello: www.mozilla.org/firefox/hello/?redirect_source=firefox-com
+#
+#    # bug 1159397
+#  - /personal: www.mozilla.org/firefox/personal/?redirect_source=firefox-com
+#
+#    # FIXME: handle '*' correctly
+#  - ^/personal/(.*): www.mozilla.org/firefox/new/$1?redirect_source=firefox-com
+#
+#    # bug 1219380
+#  - /choose: www.mozilla.org/firefox/choose/?redirect_source=firefox-com
+#
+#    # bug 896570, 1427843
+#  - /: www.mozilla.org/firefox/new/?redirect_source=firefox-com
+#  srcs:
+#  - firefox.com
+#  - www.firefox.com
 
   # bug 1627952
 - dsts:

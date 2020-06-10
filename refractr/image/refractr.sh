@@ -28,6 +28,10 @@ case "$ACTION" in
         echo "nginx: nginx -g daemon off;"
         exec nginx -g "daemon off;"
         ;;
+    nginx-logs)
+        echo "nginx: nginx -g daemon off; 2>&1 | tee /logs/nginx.log"
+        exec nginx -g "daemon off;"
+        ;;
     ingress)
         echo "ingress: kubectl apply -f $DIR/ingress.yaml"
         exec kubectl apply -f $DIR/ingress.yaml

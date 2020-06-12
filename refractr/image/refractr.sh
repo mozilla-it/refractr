@@ -1,5 +1,5 @@
 #!/bin/sh
-
+SCRIPT=$(basename $0)
 ACTION=$1
 # Note: this is not bash, but sh instead
 # POSIX "oneliner" to get script's directory
@@ -8,7 +8,7 @@ a="/$0"; a=${a%/*}; a=${a#/}; a=${a:-.}; DIR=$(cd "$a"; pwd)
 
 usage() {
     cat <<EOF
-usage: $(basename $0) [-h] {check,nginx,ingress,deployed,version,/bin/sh}
+usage: $SCRIPT [-h] {check,nginx,ingress,deployed,version,/bin/sh}
 
 positional arguments:
   {check,nginx,ingress,deployed,version,/bin/sh}
@@ -19,12 +19,23 @@ optional arguments:
 EOF
 }
 
+hydrate() {
+    if [ -z "$PAPERTRAIL_URL" ]; then
+        echo "$SCRIPT ERROR: PAPERTRAIL_URL env var must be set!"
+        exit 1
+    fi
+    echo "hydrating nginx.conf.template"
+    envsubst '\$PAPERTRAIL_URL' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
+}
+
 case "$ACTION" in
     check)
+        hydrate
         echo "check: nginx -t"
         exec nginx -t
         ;;
     nginx)
+        hydrate
         echo "nginx: nginx -g daemon off;"
         exec nginx -g "daemon off;"
         ;;

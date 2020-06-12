@@ -101,6 +101,11 @@ class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
 
     @property
     @lru_cache()
+    def PAPERTRAIL_URL(self):
+        return self('PAPERTRAIL_URL')
+
+    @property
+    @lru_cache()
     def AWS_ACCOUNT(self):
         _, stdout, _ = call('aws sts get-caller-identity')
         obj = json.loads(stdout)

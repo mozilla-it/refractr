@@ -87,6 +87,13 @@ class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
 
     @property
     @lru_cache()
+    def PAPERTRAIL_URL(self):
+        # NOTE this is a ugly hack to give a fake url when this env var is
+        # not supplied. During travisci is a perfect example
+        return self('PAPERTRAIL_URL', 'refractr.allizom.org')
+
+    @property
+    @lru_cache()
     def AWS_ACCOUNT(self):
         _, stdout, _ = call('aws sts get-caller-identity')
         obj = json.loads(stdout)

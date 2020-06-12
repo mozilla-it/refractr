@@ -24,6 +24,8 @@ http {
 
     access_log /var/log/nginx/access.log main if=$log_agent;
 
+    access_log syslog:server=$PAPERTRAIL_URL main if=$log_agent;
+
     sendfile on;
 
     server_tokens off;

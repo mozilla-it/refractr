@@ -26,6 +26,7 @@ def envs(sep=' ', **kwargs):
         REFRACTR_VERSION=CFG.VERSION,
         AWS_REGION=CFG.AWS_REGION,
         AWS_ACCOUNT=CFG.AWS_ACCOUNT,
+        PAPERTRAIL_URL=CFG.PAPERTRAIL_URL,
     )
     return sep.join(
         [f'{key}={value}' for key, value in sorted(dict(envs, **kwargs).items())]

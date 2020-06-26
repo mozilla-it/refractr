@@ -10,7 +10,7 @@ from ruamel.yaml import safe_load
 from jsonschema import validate
 from jsonschema.exceptions import ValidationError
 
-from refractr.cfg import CFG, git, call, branch_contains, CalledProcessError
+from refractr.cfg import CFG, git, call, CalledProcessError
 
 IMAGE = 'itsre/refractr'
 CREDENTIALS_MESSAGE = 'Unable to locate credentials. You can configure credentials by running "aws configure".'
@@ -225,7 +225,7 @@ def task_publish():
             f'TRAVIS_BRANCH={CFG.TRAVIS_BRANCH}',
             f'TRAVIS_PULL_REQUEST={CFG.TRAVIS_PULL_REQUEST}',
             f'DEPLOYED_ENV={CFG.DEPLOYED_ENV}',
-            f'branch_contains={branch_contains(CFG.TRAVIS_TAG, CFG.PUBLISH_BRANCHES)}',
+            f'BRANCH_CONTAINS_TRAVIS_TAG={CFG.BRANCH_CONTAINS_TRAVIS_TAG}',
         ]))
         print(f'publishing {CFG.VERSION if CFG.SHOULD_PUBLISH else "skipped"}')
         return CFG.SHOULD_PUBLISH

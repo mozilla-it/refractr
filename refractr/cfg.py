@@ -67,20 +67,6 @@ def git(args, strip=True, **kwargs):
     except CalledProcessError as ex:
         raise ex
 
-def branch_contains(tag, approved):
-    '''
-    determine if tag points to ref on one of approved branches
-    '''
-    cmd = f'git branch --contains "{tag}"'
-    try:
-        _, stdout, _ =  call(cmd)
-        lines = stdout.split('\n')
-        branches = [line[2:] for line in lines]
-        return not set(branches).isdisjoint(approved)
-    except CalledProcessError as cpe:
-        return False
-
-
 class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
 
     @property
@@ -194,7 +180,21 @@ class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
         branches = self('PUBLISH_BRANCHES', None)
         if branches:
             return branches.split(',')
-        return ['master']
+        return ['main']
+
+    @property
+    @lru_cache()
+    def BRANCH_CONTAINS_TRAVIS_TAG(self):
+        if self.TRAVIS_TAG:
+            cmd = f'git branch --contains "{self.TRAVIS_TAG}"'
+            try:
+                _, stdout, _ = call(cmd)
+                lines = stdout.split('\n')
+                branches = [line[2:] for line in lines]
+                return not set(branches).isdisjoint(self.PUBLISH_BRANCHES)
+            except CalledProcessError as cpe:
+                return False
+        return False
 
     @property
     @lru_cache()
@@ -202,7 +202,7 @@ class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
         publish = False
         if self.TRAVIS:
             if self.TRAVIS_PULL_REQUEST == "false":
-                if self.TRAVIS_TAG and branch_contains(self.TRAVIS_TAG, self.PUBLISH_BRANCHES):
+                if self.BRANCH_CONTAINS_TRAVIS_TAG:
                     publish = True
                 elif self.TRAVIS_BRANCH and self.TRAVIS_BRANCH in self.PUBLISH_BRANCHES:
                     publish = True

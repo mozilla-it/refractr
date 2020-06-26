@@ -169,6 +169,8 @@ class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
     @property
     @lru_cache()
     def BRANCH(self):
+        if self.TRAVIS:
+            return self.TRAVIS_BRANCH
         try:
             return git("rev-parse --abbrev-ref HEAD")
         except (NotGitRepoError, GitCommandNotFoundError):

@@ -129,7 +129,6 @@ class Refractr:
             for refract
             in refracts
         ]))
-        [type(stanza) for stanza in stanzas]
         return '\n'.join([
             stanza if isinstance(stanza, str) else repr(stanza)
             for stanza

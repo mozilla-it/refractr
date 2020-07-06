@@ -19,13 +19,13 @@ CREDENTIALS_MESSAGE = 'Unable to locate credentials. You can configure credentia
 
 class NotGitRepoError(Exception):
     def __init__(self, cwd=os.getcwd()):
-        msg = f"not a git repository error cwd={cwd}"
+        msg = f'not a git repository error cwd={cwd}'
         super().__init__(msg)
 
 
 class GitCommandNotFoundError(Exception):
     def __init__(self):
-        msg = "git: command not found"
+        msg = 'git: command not found'
         super().__init__(msg)
 
 def call(
@@ -38,34 +38,44 @@ def call(
     verbose=False):
 
     if nerf:
-        return (None, "nerfed", "nerfed")
+        return (None, 'nerfed', 'nerfed')
     process = Popen(cmd, stdout=stdout, stderr=stderr, shell=shell)  # nosec
     _stdout, _stderr = [
-        stream.decode("utf-8") if stream is not None else None
+        stream.decode('utf-8') if stream is not None else None
         for stream in process.communicate()
     ]
     exitcode = process.poll()
     if throw and exitcode:
         raise CalledProcessError(
-            exitcode, f"cmd={cmd}; stdout={_stdout}; stderr={_stderr}"
+            exitcode, f'cmd={cmd}; stdout={_stdout}; stderr={_stderr}'
         )
     return exitcode, _stdout, _stderr
 
 def git(args, strip=True, **kwargs):
     try:
-        _, stdout, stderr = call("git rev-parse --is-inside-work-tree")
+        _, stdout, stderr = call('git rev-parse --is-inside-work-tree')
     except CalledProcessError as ex:
-        if "not a git repository" in str(ex):
+        if 'not a git repository' in str(ex):
             raise NotGitRepoError
-        elif "git: command not found" in str(ex):
+        elif 'git: command not found' in str(ex):
             raise GitCommandNotFoundError
     try:
-        _, result, _ = call(f"git {args}", **kwargs)
+        _, result, _ = call(f'git {args}', **kwargs)
         if result:
             result = result.strip()
         return result
     except CalledProcessError as ex:
         raise ex
+
+def branches_contain_ref(ref):
+    cmd = f'git branch --contains "{ref}"'
+    try:
+        _, stdout, _ = call(cmd)
+        lines = stdout.strip().split('\n')
+        branches = [line[2:] for line in lines if '(' not in line]
+        return branches
+    except CalledProcessError as cpe:
+        return []
 
 class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
 
@@ -169,19 +179,23 @@ class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
     @lru_cache()
     def VERSION(self):
         try:
-            return git("describe --abbrev=7 --always")
+            return git('describe --abbrev=7 --always')
         except (NotGitRepoError, GitCommandNotFoundError):
-            return self("VERSION")
+            return self('VERSION')
 
     @property
     @lru_cache()
     def BRANCH(self):
         if self.TRAVIS:
+            if self.TRAVIS_TAG:
+                branches = branches_contain_ref(self.TRAVIS_TAG)
+                if 'main' in branches:
+                    return 'main'
             return self.TRAVIS_BRANCH
         try:
-            return git("rev-parse --abbrev-ref HEAD")
+            return git('rev-parse --abbrev-ref HEAD')
         except (NotGitRepoError, GitCommandNotFoundError):
-            return self("BRANCH")
+            return self('BRANCH')
 
     @property
     @lru_cache()
@@ -195,14 +209,8 @@ class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
     @lru_cache()
     def BRANCH_CONTAINS_TRAVIS_TAG(self):
         if self.TRAVIS_TAG:
-            cmd = f'git branch --contains "{self.TRAVIS_TAG}"'
-            try:
-                _, stdout, _ = call(cmd)
-                lines = stdout.split('\n')
-                branches = [line[2:] for line in lines]
-                return not set(branches).isdisjoint(self.PUBLISH_BRANCHES)
-            except CalledProcessError as cpe:
-                return False
+            branches = branches_contain_ref(self.TRAVIS_TAG)
+            return not set(branches).isdisjoint(self.PUBLISH_BRANCHES)
         return False
 
     @property
@@ -210,7 +218,7 @@ class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
     def SHOULD_PUBLISH(self):
         publish = False
         if self.TRAVIS:
-            if self.TRAVIS_PULL_REQUEST == "false":
+            if self.TRAVIS_PULL_REQUEST == 'false':
                 if self.BRANCH_CONTAINS_TRAVIS_TAG:
                     publish = True
                 elif self.TRAVIS_BRANCH and self.TRAVIS_BRANCH in self.PUBLISH_BRANCHES:
@@ -272,14 +280,14 @@ class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
     @property
     @lru_cache()
     def DEPLOYED_WHEN(self):
-        return self("DEPLOYED_WHEN", datetime.utcnow().isoformat())
+        return self('DEPLOYED_WHEN', datetime.utcnow().isoformat())
 
     @property
     @lru_cache()
     def REVISION(self):
         try:
-            return git("rev-parse HEAD")
+            return git('rev-parse HEAD')
         except (NotGitRepoError, GitCommandNotFoundError):
-            return self("REVISION")
+            return self('REVISION')
 
 CFG = AutoConfigPlus()

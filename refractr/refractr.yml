@@ -1,11 +1,12 @@
 refracts:
 
-- developer.mozilla.org/: developer.mozilla.com
+  # FIXME: this is a stage only tests
+- mozilla.com/: refractr1.allizom.org
 
-# FIXME: these do not currently exist in prod
-- www.mozilla.org/:
-  - mozilla-redirects.xyz
-  - refractr1.allizom.org
+  # FIXME: this is a stage only tests
+- mozilla.org/: refractr2.allizom.org
+
+- developer.mozilla.org/: developer.mozilla.com
 
   # bug 537925
   # NOTE: simplified this after testing, this simple redirect is all that is needed

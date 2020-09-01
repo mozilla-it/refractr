@@ -13,17 +13,15 @@ from refractr.validate import RefractrValidator, SUCCESS_RESULT
 
 NL_TAB = '\n  '
 REFRACTR_YML = os.getenv('REFRACTR_YML', 'refractr/refractr.yml')
-LOCALHOST = '127.0.0.1'
-LOCALHOST80 = f'{LOCALHOST}:80'
 
 refractr = Refractr(REFRACTR_YML, netloc='localhost', early=True, vebose=False)
+validator = RefractrValidator(netloc='localhost', early=True, verbose=False)
 
 @pytest.mark.parametrize('refract', refractr.refracts)
 def test_refract(refract):
     print()
     print(refract)
     assert isinstance(refract, BaseRefract)
-    validator = RefractrValidator(netloc='localhost', early=True, verbose=False)
     validation = validator.validate_refract(refract)
     yaml_print(dict(validation=validation))
     assert validation['validate-result'] == SUCCESS_RESULT

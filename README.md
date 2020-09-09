@@ -3,6 +3,10 @@ Containerized HTTP redirect and rewrite service with automatic Let's Encrypt SSL
 
 [![Build Status](https://travis-ci.com/mozilla-it/refractr.svg?branch=main)](https://travis-ci.com/mozilla-it/refractr)
 
+# Links
+* [SRE_INFO](SRE_INFO.md)
+* [Refractr Architecture](docs/refractr-architecture.md)
+
 # Refractr at Mozilla
 Refractr at Mozilla runs in our itse-apps cluster and is installed via a HelmRelease in the it-sre-apps github repo.
 

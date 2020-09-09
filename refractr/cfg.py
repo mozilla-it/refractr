@@ -8,7 +8,7 @@ import json
 
 from datetime import datetime
 from functools import lru_cache
-from decouple import UndefinedValueError, AutoConfig, config
+from decouple import AutoConfig, config
 from subprocess import Popen, CalledProcessError, PIPE  # nosec
 
 DIR = os.path.abspath(os.path.dirname(__file__))

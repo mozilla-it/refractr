@@ -62,6 +62,7 @@ class Refractr:
         self.validator = RefractrValidator(netloc, early, verbose)
         with open(config, 'r') as f:
             cfg = yaml.safe_load(f)
+        self.default_domains = cfg.get('default-domains', [])
         self.refracts = [
             Refractr.load_refract(spec)
             for spec
@@ -116,7 +117,7 @@ class Refractr:
             refract.srcs
             for refract
             in refracts
-        ]))))
+        ])))) + self.default_domains
         return {
             'domains': domains,
             'domains-count': len(domains),

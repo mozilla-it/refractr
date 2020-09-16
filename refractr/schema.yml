@@ -5,6 +5,13 @@ required:
 - refracts
 additionalProperties: false
 properties:
+  default-domains:
+    $id: '#/properties/default-domains'
+    default: []
+    title: default-domains
+    type: array
+    items:
+      $ref: '#/defs/domain'
   refracts:
     $id: '#/properties/refracts'
     default: []
@@ -16,6 +23,10 @@ properties:
       - $ref: '#/defs/simple-refract'
       - $ref: '#/defs/complex-refract'
 defs:
+  domain:
+    default: ''
+    title: domain
+    type: string
   if-predicate:
     default: ''
     title: if-predicate

@@ -18,24 +18,17 @@ spec:
   - hosts:
     - "{{ domain }}"
     secretName: cert-{{ domain | replace(".", "-") | replace("*", "wildcard")}}
-    {% endfor %}
+  {% endfor %}
+  # refractr.allizom.org cert
+  - hosts:
+    - "refractr.allizom.org"
+    secretName: cert-refractr-allizom-org
+  # refractr.mozilla.org cert
+  - hosts:
+    - "refractr.mozilla.org"
+    secretName: cert-refractr-mozilla-org
+
   rules:
-  # refractr.allizom.org name for testing stage backend with the default nginx server block
-  - host: 'refractr.allizom.org'
-    http:
-      paths:
-      - backend:
-          serviceName: refractr
-          servicePort: 80
-        path: /
-  # refractr.mozilla.org name for testing prod backend with the default nginx server block
-  - host: 'refractr.mozilla.org'
-    http:
-      paths:
-      - backend:
-          serviceName: refractr
-          servicePort: 80
-        path: /
   {% for domain in domains %}
   - host: '{{ domain }}'
     http:
@@ -45,3 +38,19 @@ spec:
           servicePort: 80
         path: /
   {% endfor %}
+  # refractr.allizom.org rule
+  - host: 'refractr.allizom.org'
+    http:
+      paths:
+      - backend:
+          serviceName: refractr
+          servicePort: 80
+        path: /
+  # refractr.mozilla.org rule
+  - host: 'refractr.mozilla.org'
+    http:
+      paths:
+      - backend:
+          serviceName: refractr
+          servicePort: 80
+        path: /

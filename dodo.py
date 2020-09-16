@@ -23,7 +23,6 @@ DOIT_CONFIG = {
 @lru_cache()
 def envs(sep=' ', **kwargs):
     envs = dict(
-        REFRACTR_VERSION=CFG.VERSION,
         AWS_REGION=CFG.AWS_REGION,
         AWS_ACCOUNT=CFG.AWS_ACCOUNT,
         PAPERTRAIL_URL=CFG.PAPERTRAIL_URL,
@@ -140,7 +139,7 @@ def task_ingress():
 
 def task_build():
     '''
-    run docker-compose build for refractr
+    run docker build for refractr
     '''
     return {
         'task_dep': [
@@ -151,7 +150,7 @@ def task_build():
             'ingress',
         ],
         'actions': [
-            f'env {envs()} docker-compose build refractr',
+            f'env {envs()} docker build refractr -t refractr:{CFG.VERSION}',
         ],
     }
 
@@ -165,13 +164,13 @@ def task_check():
             'build',
         ],
         'actions': [
-            f'env {envs()} docker-compose run refractr check',
+            f'docker run -e{envs(sep=" -e ")} refractr:{CFG.VERSION} check',
         ],
     }
 
 def task_drun():
     '''
-    run refractr container via docker-compose up -d
+    run refractr container via docker run -p 80:80
     '''
     return {
         'task_dep': [
@@ -179,10 +178,8 @@ def task_drun():
             'check',
         ],
         'actions': [
-            # https://github.com/docker/compose/issues/1113#issuecomment-185466449
-            f'env {envs()} docker-compose rm --force refractr',
             LongRunning(
-                f'nohup env {envs()} docker-compose up -d --remove-orphans refractr >/dev/null &'),
+                f'nohup docker run -e {envs(sep=" -e" )} -p 80:80 -d refractr:{CFG.VERSION} >/dev/null &')
         ],
     }
 

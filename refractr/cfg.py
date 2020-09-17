@@ -90,9 +90,14 @@ class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
 
     @property
     @lru_cache()
+    def REPOROOT(self):
+        reporoot = git('rev-parse --show-toplevel')
+        return self('REPOROOT', reporoot)
+
+    @property
+    @lru_cache()
     def REPONAME(self):
-        result = git('rev-parse --show-toplevel')
-        reponame = os.path.basename(result)
+        reponame = os.path.basename(self.REPOROOT)
         return self('REPONAME', reponame)
 
     @property
@@ -153,7 +158,7 @@ class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
     @property
     @lru_cache()
     def REFRACTR_YML(self):
-        return self('REFRACTR_YML', f'{self.REFRACTR}/refractr.yml')
+        return self('REFRACTR_YML', f'{self.REPOROOT}/{self.DEPLOYED_ENV}-refractr.yml')
 
     @property
     @lru_cache()

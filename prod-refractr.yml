@@ -3,17 +3,15 @@
 # output from refractr.py
 default-domains:
   - prod.mozilla-redirects.xyz
-  - stage.mozilla-redirects.xyz
   - refractr.mozilla.org
-  - refractr.allizom.org
 
 refracts:
 
-  # FIXME: this is a stage only tests
-- mozilla.com/: refractr1.allizom.org
+  # FIXME: this is a prod test to ensure certs get requested
+- mozilla.com/: refractr1.mozilla.org
 
-  # FIXME: this is a stage only tests
-- mozilla.org/: refractr2.allizom.org
+  # FIXME: this is a prod test to ensure certs get requested
+- mozilla.org/: refractr2.mozilla.org
 
 - developer.mozilla.org/: developer.mozilla.com
 

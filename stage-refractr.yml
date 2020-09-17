@@ -2,9 +2,7 @@
 # the ingress.yaml.template by being added to the domains
 # output from refractr.py
 default-domains:
-  - prod.mozilla-redirects.xyz
   - stage.mozilla-redirects.xyz
-  - refractr.mozilla.org
   - refractr.allizom.org
 
 refracts:

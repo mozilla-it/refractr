@@ -24,11 +24,8 @@ if os.path.islink(__file__):
 DIR = os.path.abspath(REAL_PATH + "/..")
 CWD = os.path.abspath(os.getcwd())
 REL = os.path.relpath(DIR, CWD)
-SRC = f"{DIR}/refractr"
-REFRACTR = f'{REL}/refractr'
-REFRACTR_YML = os.getenv('REFRACTR_YML', f'{REFRACTR}/refractr.yml')
-INGRESS_YAML_TEMPLATE = f'{REFRACTR}/ingress.yaml.template'
-STAGE_URL='refractr.allizom.org'
+
+STAGE_URL = 'refractr.allizom.org'
 
 ONLY = [
     'nginx',
@@ -45,6 +42,7 @@ ONE = [
 sys.path.insert(0, DIR)
 
 from refractr.refractr import Refractr
+from refractr.cfg import CFG
 
 def add_subparser(subparsers, action, **kwargs):
     parser = subparsers.add_parser(action, **kwargs)
@@ -104,7 +102,7 @@ def main(args):
         "-c",
         "--config",
         metavar="CFG",
-        default=REFRACTR_YML,
+        default=CFG.REFRACTR_YML,
         help='default="%(default)s"; specify the config yaml to use')
     subparsers = main_parser.add_subparsers(
         dest='action',
@@ -133,7 +131,7 @@ def main(args):
     ingress_parser.add_argument(
         '-i', '--ingress-template',
         metavar='FILE',
-        default=INGRESS_YAML_TEMPLATE,
+        default=CFG.INGRESS_YAML_TEMPLATE,
         nargs='?',
         help='default="%(default)s"; path to ingress template')
     validate_parser = add_subparser(

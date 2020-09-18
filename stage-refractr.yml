@@ -6,6 +6,7 @@ default-domains:
   - stage.mozilla-redirects.xyz
   - refractr.mozilla.org
   - refractr.allizom.org
+  - test.mozilla-redirects.xyz
 
 refracts:
 

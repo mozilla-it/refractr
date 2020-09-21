@@ -47,7 +47,10 @@ def call(
     exitcode = process.poll()
     if throw and exitcode:
         raise CalledProcessError(
-            exitcode, f'cmd={cmd}; stdout={_stdout}; stderr={_stderr}'
+            exitcode,
+            f'cmd={cmd}; stdout={_stdout}; stderr={_stderr}',
+            output=_stdout,
+            stderr=_stderr,
         )
     return exitcode, _stdout, _stderr
 
@@ -84,7 +87,7 @@ class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
         try:
             call('aws sts get-caller-identity')
         except CalledProcessError as cpe:
-            if CREDENTIALS_MESSAGE in cpe.stderr.decode():
+            if CREDENTIALS_MESSAGE in cpe.stderr:
                 return False
             raise cpe
 

@@ -24,8 +24,6 @@ DOIT_CONFIG = {
 def envs(sep=' ', **kwargs):
     envs = dict(
         REFRACTR_VERSION=CFG.VERSION,
-        AWS_REGION=CFG.AWS_REGION,
-        AWS_ACCOUNT=CFG.AWS_ACCOUNT,
         PAPERTRAIL_URL=CFG.PAPERTRAIL_URL,
     )
     return sep.join(
@@ -205,13 +203,20 @@ def task_login():
     '''
     perform ECR docker login via AWS perms
     '''
-    cmd = f'aws ecr get-login-password --region {CFG.AWS_REGION} | docker login --username AWS --password-stdin {CFG.ECR_REPOURL}'
+
+    def login():
+        ENVS = envs(
+            AWS_REGION=CFG.AWS_REGION,
+            AWS_ACCOUNT=CFG.AWS_ACCOUNT,
+        )
+        cmd = f'env {ENVS} aws ecr get-login-password --region {CFG.AWS_REGION} | env {ENVS} docker login --username AWS --password-stdin {CFG.ECR_REPOURL}'
+        call(cmd)
     return {
         'task_dep': [
             'creds',
         ],
         'actions': [
-            cmd,
+            login,
         ],
     }
 
@@ -219,6 +224,11 @@ def task_publish():
     '''
     publish docker image to aws ECR
     '''
+
+    def publish():
+        call(f'docker tag refractr:{CFG.VERSION} {CFG.IMAGE_NAME_AND_TAG}')
+        call(f'docker push {CFG.IMAGE_NAME_AND_TAG}')
+
     def should_publish():
         print(' '.join([
             f'TRAVIS={CFG.TRAVIS}',
@@ -237,8 +247,7 @@ def task_publish():
             'login',
         ],
         'actions': [
-            f'docker tag refractr:{CFG.VERSION} {CFG.IMAGE_NAME_AND_TAG}',
-            f'docker push {CFG.IMAGE_NAME_AND_TAG}',
+            publish,
         ],
         # inverse to tell doit task not uptodate, therefore publish
         'uptodate': [lambda: not should_publish()],

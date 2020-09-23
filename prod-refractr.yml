@@ -5,4 +5,11 @@ default-domains:
   - prod.mozilla-redirects.xyz
   - refractr.mozilla.org
 
-refracts: []
+refracts:
+
+- blog.mozilla.org/blog/2010/07/15/thanks-for-an-exciting-firefox-cup/:
+  - firefoxcup.com
+  - firefoxcup2010.com
+ #- www.firefoxcup.com #FIXME: this is not currently implemented; should it?
+  - www.firefoxcup2010.com
+

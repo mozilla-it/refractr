@@ -13,3 +13,12 @@ refracts:
  #- www.firefoxcup.com #FIXME: this is not currently implemented; should it?
   - www.firefoxcup2010.com
 
+  # bug 695084
+- developer.mozilla.org/: dev.mozilla.org
+
+  # bug 1461516
+- www.mozilla.org/: smartdogz.org
+  status: 302
+
+- www.mozilla.org/: www.smartdogz.org
+  status: 307

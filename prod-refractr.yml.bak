@@ -66,12 +66,6 @@ refracts:
   - talkback-public.mozilla.org
   - talkback-reports.mozilla.org
 
-- blog.mozilla.org/blog/2010/07/15/thanks-for-an-exciting-firefox-cup/:
-  - firefoxcup.com
-  - firefoxcup2010.com
-  #- www.firefoxcup.com
-  - www.firefoxcup2010.com
-
   # bug 613649
 - krakenbenchmark.mozilla.org/: krakenbenchmark.mozilla.com
 
@@ -95,9 +89,6 @@ refracts:
   - mozillactf.org
   #- www.mozillactf.org FIXME: NXDOMAIN
   status: 302
-
-  # bug 695084
-- developer.mozilla.org/: dev.mozilla.org
 
   # bug 749836
 - www.mozilla.org/firefox/new/?utm_source=firefox-pt&utm_medium=referral:
@@ -473,10 +464,6 @@ refracts:
 
   # bug 1459170
 - perf-html.io/: cleopatra.io
-  status: 302
-
-  # bug 1461516
-- www.mozilla.org/: smartdogz.org
   status: 302
 
   # bug 1169224, 1473015

@@ -19,10 +19,6 @@ refracts:
   # NOTE: simplified this after testing, this simple redirect is all that is needed
 - www.mozilla.org/contribute/: contribute.mozilla.org
 
-  # bug 1263033
-- donate.mozilla.org/: join.mozilla.org
-  status: 307
-
   # bug 20170327
 - videos.cdn.mozilla.net/:
   - videos-cdn.mozilla.net
@@ -435,10 +431,6 @@ refracts:
 
 - www.mozilla.org/: mozilla-podcasts.org
 
-  # bug 1384357
-- www.extensiontest.com/: extensiontest.com
-  status: 302
-
   # bug 1396954
   # FIXME: this commented out redirect is incorrect, added correct one below
   #- research.mozilla.org/mixed-reality: mixedreality.mozilla.org
@@ -455,22 +447,8 @@ refracts:
 - medium.com/mozilla-open-innovation/: open.mozilla.org
   status: 302
 
-  # bug 1441865
-- mozilla-releng.net/treestatus/: treestatus.mozilla.org
-  status: 302
-
   # bug 1330438
 - moz-releng-docs.readthedocs.io/en/latest/: docs.pub.build.mozilla.org
-
-  # bug 1459170
-- perf-html.io/: cleopatra.io
-  status: 302
-
-  # bug 1169224, 1473015
-- www.mozilla.org/:
-  - mozilla.org.uk
-  - www.mozilla.org.uk
-  status: 302
 
   # bug 1485991
   # FIXME: previous redirect is not valid
@@ -486,15 +464,6 @@ refracts:
   - webfwd.net
   - www.webfwd.net
   status: 307
-
-  # bug 1462137
-- hubs.mozilla.com/:
-  - hub.mozilla.com
-  - hub.mozilla.org
-
-  # bug 1293353
-- mozilla.service-now.com/: thehub.mozilla.com
-  status: 302
 
   # bug 1492531
 - wiki.mozilla.org/Pastebin/: pastebin.mozilla.org
@@ -527,8 +496,6 @@ refracts:
 
   # bug 1543423
 - discourse.mozilla.org/: discourse.mozilla-community.org
-
-- www.mozilla.org/: triagebot.mozilla.org
 
   # TODO: test this works as before
   # bug 1304806

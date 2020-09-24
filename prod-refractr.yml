@@ -16,9 +16,44 @@ refracts:
   # bug 695084
 - developer.mozilla.org/: dev.mozilla.org
 
+  # bug 1263033
+- donate.mozilla.org/: join.mozilla.org
+  status: 307
+
+  # bug 1462137
+- hubs.mozilla.com/:
+  - hub.mozilla.com
+  - hub.mozilla.org
+
+  # bug 1293353
+- mozilla.service-now.com/: thehub.mozilla.com
+  status: 302
+
+  # bug 1459170
+- perf-html.io/: cleopatra.io
+  status: 302
+
+  # bug 1441865
+- mozilla-releng.net/treestatus/: treestatus.mozilla.org
+  status: 302
+
+  # bug 1384357
+- www.extensiontest.com/: extensiontest.com
+  status: 302
+
+  # bug 1169224, 1473015
+- www.mozilla.org/:
+  - mozilla.org.uk
+  - www.mozilla.org.uk
+  status: 302
+
   # bug 1461516
 - www.mozilla.org/: smartdogz.org
   status: 302
 
+  # FIXME: does this really have to be 307 different from 302 above?
 - www.mozilla.org/: www.smartdogz.org
   status: 307
+
+- www.mozilla.org/: triagebot.mozilla.org
+

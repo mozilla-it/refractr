@@ -1,0 +1,6 @@
+bloxtool: ~/bin/bloxtool
+ips:
+  - 44.236.48.31
+  - 44.235.246.155
+  - 44.236.72.93
+target: prod.refractr.mozit.cloud

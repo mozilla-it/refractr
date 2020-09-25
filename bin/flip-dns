@@ -29,6 +29,8 @@ from tld import get_fld
 from subprocess import Popen, PIPE, CalledProcessError
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 
+from leatherman.output import yaml_print
+from leatherman.repr import __repr__
 from leatherman.dbg import dbg
 
 class BloxtoolRequiredError(Exception):
@@ -55,6 +57,8 @@ def call(
     throw=True,
     verbose=False):
 
+    if verbose or nerf:
+        print(cmd)
     if nerf:
         return (None, 'nerfed', 'nerfed')
     process = Popen(cmd, stdout=stdout, stderr=stderr, shell=shell)  # nosec
@@ -63,6 +67,11 @@ def call(
         for stream in process.communicate()
     ]
     exitcode = process.poll()
+    if verbose:
+        if _stdout:
+            print(_stdout)
+        if _stderr:
+            print(_stderr)
     if throw and exitcode:
         raise CalledProcessError(
             exitcode,
@@ -82,6 +91,11 @@ class Flipper():
         self.target = target
         self.views = ['Public', 'Private'] if view == 'Both' else [view]
         self.verbose = verbose
+
+    __repr__ = __repr__
+
+    def get(self, record, view):
+        return self.bt(f'record:{record} get {self.domain} {view}')
 
     def exists(self, record, view):
         result = self.bt(f'record:{record} get {self.domain} {view}')
@@ -122,7 +136,28 @@ class Flipper():
     def is_apex(self):
         return self.tld == self.domain
 
-    def flip(self, domain):
+    def show(self):
+        output = {
+            'Public' :{},
+            'Private': {}
+        }
+        for view in self.views:
+            if self.is_apex:
+                if self.exists('host', view):
+                    output[view]['apex'] = {
+                        'host': self.get('host', view).replace(' ', '\n'),
+                    }
+                else:
+                    output[view]['apex'] = {
+                        'A': self.get('a', view).replace(' ', '\n'),
+                    }
+            else:
+                output[view]['non-apex'] = {
+                    'cname': self.get('cname', view).replace(' ', '\n'),
+                }
+        yaml_print(output)
+
+    def flip(self):
         results = []
         for view in self.views:
             if self.is_apex:
@@ -136,8 +171,16 @@ class Flipper():
             else:
                 if self.exists('cname', view):
                     self.delete('cname', view)
-                result += self.create('cname', self.target, view)
-        return all(results)
+                results += self.create('cname', self.target, view)
+        if all(results):
+            if self.is_apex:
+                for ip in self.ips:
+                    print(f'{self.domain} -> {ip} {self.views}')
+            else:
+                print(f'{self.domain} -> {self.target}, {self.views}')
+            print('FLIPPED!')
+        else:
+            print('FLOPPED!')
 
 def main(args=None):
     status, stdout, stderr = call('which bloxtool')
@@ -176,6 +219,10 @@ def main(args=None):
         choices=VIEWS,
         help='default="%(default)s"; view to be used')
     parser.add_argument(
+        '-s',  '--show',
+        action='store_true',
+        help='toggle show output')
+    parser.add_argument(
         '-V',  '--verbose',
         action='store_true',
         help='toggle verbose output')
@@ -184,11 +231,10 @@ def main(args=None):
         help='domain name')
     ns = parser.parse_args(rem)
     flipper = Flipper(**ns.__dict__)
-    result = flipper.flip(ns.domain)
-    if result:
-        print('FLIPPED!')
-    else:
-        print('FLOPPED!')
+    if ns.show:
+        flipper.show()
+        return
+    flipper.flip()
 
 if __name__ == '__main__':
     main(sys.argv[1:])

@@ -3,9 +3,11 @@
 # output from refractr.py
 default-domains:
   - stage.mozilla-redirects.xyz
-  - refractr.allizom.org
+  - stage.refractr.mozit.cloud
 
 refracts:
+
+- mozilla.org/: refractr.allizom.org
 
   # FIXME: this is a stage only tests
 - mozilla.com/: refractr1.allizom.org

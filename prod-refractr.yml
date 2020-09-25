@@ -3,6 +3,7 @@
 # output from refractr.py
 default-domains:
   - prod.mozilla-redirects.xyz
+  - prod.refractr.mozit.cloud
   - refractr.mozilla.org
 
 refracts:

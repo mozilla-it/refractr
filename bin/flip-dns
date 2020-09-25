@@ -136,6 +136,12 @@ class Flipper():
     def is_apex(self):
         return self.tld == self.domain
 
+    @property
+    def views_str(self):
+        if len(self.views) == 2:
+            return f'{self.views[0]}|{self.views[1]}'
+        return self.views[0]
+
     def show(self):
         output = {
             'Public' :{},
@@ -175,9 +181,9 @@ class Flipper():
         if all(results):
             if self.is_apex:
                 for ip in self.ips:
-                    print(f'{self.domain} -> {ip} {self.views}')
+                    print(f'{self.domain} -> {ip} {self.views_str}')
             else:
-                print(f'{self.domain} -> {self.target}, {self.views}')
+                print(f'{self.domain} -> {self.target}, {self.views_str}')
             print('FLIPPED!')
         else:
             print('FLOPPED!')

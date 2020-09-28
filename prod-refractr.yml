@@ -58,12 +58,6 @@ refracts:
   # bug 613649
 - krakenbenchmark.mozilla.org/: krakenbenchmark.mozilla.com
 
-  # bug 1340330
-  # FIXME: removed www as current redirect goes to the apex
-- metricsgraphicsjs.org/:
-  - metricsgraphicsjs.org
-  - www.metricsgraphicsjs.org
-
   # bug 681943
 - mozillafestival.org/: festival.mozilla.org
   status: 302

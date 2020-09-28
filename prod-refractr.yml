@@ -180,8 +180,11 @@ refracts:
 - perf-html.io/: cleopatra.io
   status: 302
 
-  # bug 985510
-- pontoon.mozilla.org/: pontoon.mozillalabs.com
+- pontoon.mozilla.org/:
+    # bug 985510
+  - pontoon.mozillalabs.com
+    # bug 1666547
+  - l10n.mozilla.org
 
   # bug 1315316
 - qsurvey.mozilla.com/s3/FirefoxInput/:

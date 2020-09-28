@@ -8,14 +8,43 @@ default-domains:
 
 refracts:
 
+  # bug 614684
+- blog.mozilla.org/blog/2008/12/22/congratulations-fox-for-all-wins-impact-mozilla/:
+  - impactmozilla.com
+  - www.impactmozilla.com
+
 - blog.mozilla.org/blog/2010/07/15/thanks-for-an-exciting-firefox-cup/:
   - firefoxcup.com
   - firefoxcup2010.com
  #- www.firefoxcup.com #FIXME: this is not currently implemented; should it?
   - www.firefoxcup2010.com
 
+  # bug 1214568
+- blog.mozilla.org/creative/: creative.mozilla.org
+  status: 302
+
+  # bug 908234
+- blog.mozilla.org/webdev/: webdev.mozilla.org
+
+  # bug 572191
+  # NOTE: changed from http->https after verifying
+- crash-stats.mozilla.com/:
+  - talkback.mozilla.org
+  - talkback-public.mozilla.org
+  - talkback-reports.mozilla.org
+
   # bug 695084
 - developer.mozilla.org/: dev.mozilla.org
+
+  # bug 1290923
+- disconnect.me/trackerprotection/:
+  - trackingprotection.info
+  #- www.trackingprotection.info FIXME: NXDOMAIN
+  status: 302
+
+  # bug 1274647
+- discourse.mozilla-community.org/c/firefox-development/: ask.mozilla.org
+  status: 307
 
   # bug 1263033
 - donate.mozilla.org/: join.mozilla.org
@@ -26,6 +55,23 @@ refracts:
   - hub.mozilla.com
   - hub.mozilla.org
 
+  # bug 613649
+- krakenbenchmark.mozilla.org/: krakenbenchmark.mozilla.com
+
+  # bug 1340330
+  # FIXME: removed www as current redirect goes to the apex
+- metricsgraphicsjs.org/:
+  - metricsgraphicsjs.org
+  - www.metricsgraphicsjs.org
+
+  # bug 681943
+- mozillafestival.org/: festival.mozilla.org
+  status: 302
+
+  # bug 1441865
+- mozilla-releng.net/treestatus/: treestatus.mozilla.org
+  status: 302
+
   # bug 1293353
 - mozilla.service-now.com/: thehub.mozilla.com
   status: 302
@@ -34,12 +80,18 @@ refracts:
 - perf-html.io/: cleopatra.io
   status: 302
 
-  # bug 1441865
-- mozilla-releng.net/treestatus/: treestatus.mozilla.org
-  status: 302
-
   # bug 1384357
 - www.extensiontest.com/: extensiontest.com
+  status: 302
+
+  # bug 510914
+  # NOTE: changed from http->https after verifying
+- m.wiki.mozilla.org/Main_Page/: library.mozilla.org
+
+  # bug 722504
+- wiki.mozilla.org/Security/Events/CTF/:
+  - mozillactf.org
+  #- www.mozillactf.org FIXME: NXDOMAIN
   status: 302
 
   # bug 1169224, 1473015
@@ -57,4 +109,72 @@ refracts:
   status: 307
 
 - www.mozilla.org/: triagebot.mozilla.org
+
+  # bug 537925
+  # NOTE: simplified this after testing, this simple redirect is all that is needed
+- www.mozilla.org/contribute/: contribute.mozilla.org
+  # bug 1274647
+- discourse.mozilla-community.org/c/firefox-development/: ask.mozilla.org
+  status: 307
+
+
+  # bug 1212612, 1212612
+  # FIXME: this commented out redirect is incorrect, added correct one below
+  #- www.mozilla.org/firefox/new/?utm_source=getfirefox-de&utm_medium=referral:
+- www.mozilla.org/de/firefox/new/:
+  - getfirefox.de
+  #- www.getfirefox.de FIXME: NXDOMAIN
+  - firefox-hacks.de
+  - www.firefox-hacks.de
+  - firefox2.de
+  - www.firefox2.de
+
+  # bug 1243355
+- www.mozilla.org/fy-NL/:
+  - mozilla.frl
+  #- www.mozilla.frl FIXME: NXDOMAIN
+  status: 302
+
+  # bug 1268570, 1427843
+  # FIXME: this commented out redirect is incorrect, added correct one below
+  #- www.mozilla.org/firefox/new/?utm_source=firefox-lt&utm_medium=referral:
+- www.mozilla.org/lt/firefox/:
+  - firefox.lt
+  #- www.firefox.lt FIXME: NXDOMAIN
+
+  # bug 1311392
+- www.mozilla.org/pl/firefox/new/:
+  - mozillafirefox.pl
+  - www.mozillafirefox.pl
+  status: 302
+
+  # bug 1427843
+- www.mozilla.org/firefox/new/?utm_source=firefox-be&utm_medium=referral:
+  - firefox.be
+  - www.firefox.be
+
+  # bug 688019, 1427843
+- www.mozilla.org/firefox/new/?utm_source=getfirefox-org&utm_medium=referral:
+  - getfirefox.org
+  - www.getfirefox.org
+
+  # bug 1262196, 1427843
+- www.mozilla.org/firefox/new/?utm_source=firefox-hu&utm_medium=referral:
+  - firefox.hu
+  - www.firefox.hu
+
+  # bug 749836
+- www.mozilla.org/firefox/new/?utm_source=firefox-pt&utm_medium=referral:
+  - firefox.pt
+  - www.firefox.pt
+
+  # bug 1255190
+- www.openwebgames.com/: openwebgames.com
+  status: 302
+
+  # NOTE: changed from http->https after verifying
+  #- www.thunderbird.net/:
+- www.thunderbird.net/calendar/:
+  - lightning-project.org
+  #- www.lightning-project.org FIXME: NXDOMAIN
 

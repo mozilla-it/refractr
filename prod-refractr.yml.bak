@@ -44,10 +44,6 @@ refracts:
   # FIXME: redirect doesnt currently exist but should work
 - download.cdn.mozilla.net/: releases.mozilla.org
 
-  # bug 1259820
-- air.mozilla.org/: air.mozilla.com
-  status: 302
-
   # FIXME: change to www subdomain to match prod
 - www.mozilla.org/: redirect-san.mozilla.org
   status: 307
@@ -67,15 +63,6 @@ refracts:
 #- www.mozilla.org/firefox/new/?redirect_source=getfirefox-com:
 #  - getfirefox.com
 #  - www.getfirefox.com
-
-  # bug 1414285, 1429854
-- onlinexperiences.com/scripts/Server.nxp?LASCmd=L:0&AI=1&InitialDisplay=1&ClientBrowser=0&ShowKey=44908: airmo.mozilla.org
-
-  # bug 1485991
-  # FIXME: previous redirect is not valid
-  #- onlinexperiences.com/scripts/Server.nxp?LASCmd=L:0&AI=1&InitialDisplay=1&ClientBrowser=0&ShowKey=44908: air.mozilla.org
-- air.mozilla.org/: air.mozilla.org
-  status: 308
 
   # bug 1543423
 - discourse.mozilla.org/: discourse.mozilla-community.org

@@ -19,8 +19,8 @@ refracts:
 
 - blog.mozilla.org/blog/2010/07/15/thanks-for-an-exciting-firefox-cup/:
   - firefoxcup.com
+  - www.firefoxcup.com
   - firefoxcup2010.com
- #- www.firefoxcup.com #FIXME: this is not currently implemented; should it?
   - www.firefoxcup2010.com
 
   # bug 617681
@@ -70,7 +70,7 @@ refracts:
   # bug 1290923
 - disconnect.me/trackerprotection/:
   - trackingprotection.info
-  #- www.trackingprotection.info FIXME: NXDOMAIN
+  - www.trackingprotection.info
   status: 302
 
   # bug 1200302
@@ -143,7 +143,7 @@ refracts:
   # TODO: figure out why this won't pass tests.  It works for me in curl
 - mozilla.ec/:
   - mozillaecuador.org
-  #- www.mozillaecuador.org FIXME: NXDOMAIN
+  - www.mozillaecuador.org
 
   # bug 1533035
 - mozilla.github.io/geckoview/:
@@ -204,7 +204,7 @@ refracts:
   # TODO: verify this works as before
 - web.archive.org/web/20180106223649/https://webfwd.org/:
   - webfwd.org
-  #- www.webfwd.org FIXME: gives SSL Cert Error
+  - www.webfwd.org
   - webfwd.net
   - www.webfwd.net
   status: 307
@@ -219,7 +219,7 @@ refracts:
   # bug 1203755
 - wiki.mozilla.org/B2G/:
   - boot2gecko.org
-  #- www.boot2gecko.org FIXME: NXDOMAIN
+  - www.boot2gecko.org
   status: 307
 
   # bug 1290260
@@ -232,12 +232,12 @@ refracts:
   # bug 804895
 - wiki.mozilla.org/Platform/AreWeFunYet/:
   - arewefunyet.com
-  #- www.arewefunyet.com FIXME: NXDOMAIN
+  - www.arewefunyet.com
 
   # bug 722504
 - wiki.mozilla.org/Security/Events/CTF/:
   - mozillactf.org
-  #- www.mozillactf.org FIXME: NXDOMAIN
+  - www.mozillactf.org
   status: 302
 
   # bug 1185027
@@ -252,7 +252,7 @@ refracts:
   # NOTE: changed from http->https after verifying
 - www.mozilla.de/:
   - mozilla.at
-  #- www.mozilla.at FIXME: NXDOMAIN
+  - www.mozilla.at
 
 - www.mozilla.org/: mozilla-podcasts.org
 
@@ -296,7 +296,7 @@ refracts:
   #- www.mozilla.org/firefox/new/?utm_source=getfirefox-de&utm_medium=referral:
 - www.mozilla.org/de/firefox/new/:
   - getfirefox.de
-  #- www.getfirefox.de FIXME: NXDOMAIN
+  - www.getfirefox.de
   - firefox-hacks.de
   - www.firefox-hacks.de
   - firefox2.de
@@ -334,7 +334,7 @@ refracts:
   # bug 1025191
 - www.mozilla.org/en-US/:
   - mozilla.ca
-  #- www.mozilla.ca FIXME: NXDOMAIN
+  - www.mozilla.ca
 
   # bug 941881
   # NOTE: changed from http->https after verifying
@@ -354,7 +354,7 @@ refracts:
   # bug 1056359
 - www.mozilla.org/en-US/firefox/new/:
   - mozilla.it
-  #- wwww.mozilla.it FIXME: NXDOMAIN
+  - wwww.mozilla.it
 
 - www.mozilla.org/firefox/:
   # bug 838939
@@ -377,7 +377,7 @@ refracts:
   # bug 1212612, 1427843
 - www.mozilla.org/firefox/new/?utm_source=getfirefox-net&utm_medium=referral:
   - getfirefox.net
-  #- www.getfirefox.net FIXME: NXDOMAIN
+  - www.getfirefox.net
 
   # bug 688019, 1427843
 - www.mozilla.org/firefox/new/?utm_source=getfirefox-org&utm_medium=referral:
@@ -397,7 +397,7 @@ refracts:
   # bug 1243355
 - www.mozilla.org/fy-NL/:
   - mozilla.frl
-  #- www.mozilla.frl FIXME: NXDOMAIN
+  - www.mozilla.frl
   status: 302
 
   # bug 1268570, 1427843
@@ -405,7 +405,7 @@ refracts:
   #- www.mozilla.org/firefox/new/?utm_source=firefox-lt&utm_medium=referral:
 - www.mozilla.org/lt/firefox/:
   - firefox.lt
-  #- www.firefox.lt FIXME: NXDOMAIN
+  - www.firefox.lt
 
 - www.mozilla.org/MPL/: mpl.mozilla.org
 
@@ -421,7 +421,7 @@ refracts:
   # bug 971390
 - www.mozilla.org/ru/firefox/new/:
   - firefoxik.ru
-  #- www.firefoxik.ru FIXME: NXDOMAIN
+  - www.firefoxik.ru
 
   # bug 1427843
 - www.mozilla.org/firefox/new/?utm_source=firefox-be&utm_medium=referral:
@@ -442,4 +442,4 @@ refracts:
   #- www.thunderbird.net/:
 - www.thunderbird.net/calendar/:
   - lightning-project.org
-  #- www.lightning-project.org FIXME: NXDOMAIN
+  - www.lightning-project.org

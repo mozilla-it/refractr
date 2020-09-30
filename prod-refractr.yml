@@ -66,7 +66,6 @@ refracts:
 - developer.mozilla.org/: dev.mozilla.org
 
   # bug 811323
-  # TODO: switch all HTTP sources to use HTTP and HTTPS, currently tests won't pass that way but once they are on Netlify they will
 - developer.mozilla.org/demos/devderby/: devderby.mozilla.org
 
   # bug 1290923
@@ -145,7 +144,6 @@ refracts:
 - mozilla.design/: designlanguage.mozilla.org
 
   # bug 855746
-  # TODO: figure out why this won't pass tests.  It works for me in curl
 - mozilla.ec/:
   - mozillaecuador.org
   - www.mozillaecuador.org
@@ -194,7 +192,6 @@ refracts:
     # bug 1666547
   - l10n.mozilla.org
 
-  # TODO: test this works as before
   # bug 1304806
 - phonebook.mozilla.org/: phonebook.mozilla.com
   status: 302
@@ -206,6 +203,10 @@ refracts:
   - feedback.mozilla.org
   status: 302
 
+- start.mozilla.org/:
+  - start.mozilla.com
+  - start-prod.mozilla.com
+
   # bug 1522224
 - testpilot.firefox.com/: contribute.testpilot.firefox.com
 
@@ -214,7 +215,6 @@ refracts:
   status: 302
 
   # bug 1419948
-  # TODO: verify this works as before
 - web.archive.org/web/20180106223649/https://webfwd.org/:
   - webfwd.org
   - www.webfwd.org
@@ -527,3 +527,44 @@ refracts:
 - www.thunderbird.net/calendar/:
   - lightning-project.org
   - www.lightning-project.org
+
+- dsts:
+  - /faq.html/: support.mozilla.org/products/firefox-lockwise//
+  - /addon/updates.json/: mozilla-lockwise.github.io/addon/updates.json/
+  - /: www.mozilla.org/firefox/lockwise/
+  srcs: lockwise.firefox.com
+
+  # bug 1627952
+- dsts:
+  - /firefox-accounts-campaign: community.mozilla.org/campaigns/join-firefox-campaign/
+  srcs: mozilla.github.io
+
+  # bug 756358
+- dsts:
+  # NOTE: changed from http->https after verifying
+  - /dnt-enabler.tpl: www.mozilla.org/media/dnt/dnt-enabler.tpl
+  - /: www.mozilla.org/firefox/dnt/
+  srcs: dnt.mozilla.org
+
+  # bug 1119912, 1165757, 1213900, 1200359
+- dsts:
+  - /dmexco: 'www.mozilla.org/about/partnerships/contentservices/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team'
+  - ^/(.+): 'www.mozilla.org/about/partnerships/contentservices/$1/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team'
+  - /: 'www.mozilla.org/about/partnerships/contentservices/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team'
+  srcs: content.mozilla.org
+  status: 302
+  tests:
+    # this test must be specified because rewrites `^/(.+)` will not generate a test
+  - http://content.mozilla.org/test: 'https://www.mozilla.org/about/partnerships/contentservices/test/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team'
+
+  # bug 1566155
+- dsts:
+  - /tree.php/: people.mozilla.org/o
+  - ^/search/(.*): 'people.mozilla.org/s?query=$1&who=staff'
+  - /: people.mozilla.org/
+  srcs: phonebook.mozilla.org
+  status: 302
+  tests:
+    # this test must be specified because rewrites `^/(.*)` will not generate a test
+  - http://phonebook.mozilla.org/search/test: https://people.mozilla.org/s?query=test&who=staff
+

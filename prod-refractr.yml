@@ -184,8 +184,6 @@ refracts:
   # bug 1596457
 - mozilla-spidermonkey.github.io/: spidermonkey.dev
 
-- pad.mozilla.org/: public.etherpad-mozilla.org
-
   # bug 1459170
 - perf-html.io/: cleopatra.io
   status: 302

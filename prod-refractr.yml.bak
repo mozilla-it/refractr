@@ -53,28 +53,12 @@ refracts:
   - activations.mozilla.com
   - activations.mozilla.org
 
-  # bug 1246674
-- careers.mozilla.org/: careers.mozilla.com
-  status: 302
-
 # FIXME: commenting out LE Blacklisted items for now
 # https://mana.mozilla.org/wiki/display/SECURITY/Certificate+Authority+Authorization+CAA+including+Let%27s+Encrypt
 #  # bug 896570, 1427843, 1485429, 1297860
 #- www.mozilla.org/firefox/new/?redirect_source=getfirefox-com:
 #  - getfirefox.com
 #  - www.getfirefox.com
-
-  # bug 1543423
-- discourse.mozilla.org/: discourse.mozilla-community.org
-
-  # TODO: test this works as before
-  # bug 1304806
-- phonebook.mozilla.org/: phonebook.mozilla.com
-  status: 302
-
-- pad.mozilla.org/: public.etherpad-mozilla.org
-
-- www.mozilla.org/firefox/lockwise/: lockbox.firefox.com
 
   # bug 835529
 - support.mozilla.org/: www.support.mozilla.org

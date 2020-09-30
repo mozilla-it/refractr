@@ -36,8 +36,10 @@ refracts:
   # bug 908234
 - blog.mozilla.org/webdev/: webdev.mozilla.org
 
-  # bug 1243236
 - careers.mozilla.org/:
+  # bug 1246674
+  - careers.mozilla.com
+  # bug 1243236
   - jobs.mozilla.org
   - jobs.mozilla.com
   status: 302
@@ -72,6 +74,9 @@ refracts:
   - trackingprotection.info
   - www.trackingprotection.info
   status: 302
+
+  # bug 1543423
+- discourse.mozilla.org/: discourse.mozilla-community.org
 
   # bug 1200302
 - discourse.mozilla.org/c/add-ons/: forums.mozilla.org
@@ -159,6 +164,8 @@ refracts:
   - air.mozilla.com
   - airmo.mozilla.org
 
+- www.mozilla.org/firefox/lockwise/: lockbox.firefox.com
+
   # bug 1538932
 - mozilla.report/: reports.telemetry.mozilla.org
 
@@ -177,6 +184,8 @@ refracts:
   # bug 1596457
 - mozilla-spidermonkey.github.io/: spidermonkey.dev
 
+- pad.mozilla.org/: public.etherpad-mozilla.org
+
   # bug 1459170
 - perf-html.io/: cleopatra.io
   status: 302
@@ -186,6 +195,11 @@ refracts:
   - pontoon.mozillalabs.com
     # bug 1666547
   - l10n.mozilla.org
+
+  # TODO: test this works as before
+  # bug 1304806
+- phonebook.mozilla.org/: phonebook.mozilla.com
+  status: 302
 
   # bug 1315316
 - qsurvey.mozilla.com/s3/FirefoxInput/:

@@ -8,13 +8,6 @@ default-domains:
 
 refracts:
 
-  # bug 1259820
-- air.mozilla.org/: air.mozilla.com
-  status: 302
-
-  # bug 1414285, 1429854
-- onlinexperiences.com/scripts/Server.nxp?LASCmd=L:0&AI=1&InitialDisplay=1&ClientBrowser=0&ShowKey=44908: airmo.mozilla.org
-
   # bug 1342698
   # NOTE: changed from http->https after verifying
 - blog.mozilla.org/: mozillausa.org
@@ -159,6 +152,12 @@ refracts:
   status: 302
 
 - mozilla.github.io/oi-website/: openinnovation.mozilla.org
+
+  # jira SE-1295
+- mozilla.hosted.panopto.com/:
+  - air.mozilla.org
+  - air.mozilla.com
+  - airmo.mozilla.org
 
   # bug 1538932
 - mozilla.report/: reports.telemetry.mozilla.org

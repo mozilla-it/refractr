@@ -534,11 +534,6 @@ refracts:
   - /: www.mozilla.org/firefox/lockwise/
   srcs: lockwise.firefox.com
 
-  # bug 1627952
-- dsts:
-  - /firefox-accounts-campaign: community.mozilla.org/campaigns/join-firefox-campaign/
-  srcs: mozilla.github.io
-
   # bug 756358
 - dsts:
   # NOTE: changed from http->https after verifying

@@ -13,6 +13,16 @@ refracts:
   - activations.mozilla.com
   - activations.mozilla.org
 
+  # bug 503731, 528747, 537144
+- addons.mozilla.org/:
+  - extensions.mozilla.org
+  - themes.mozilla.org
+  - update.mozilla.org
+  - updates.mozilla.org
+  - addons.update.mozilla.org
+  - firefoxaddons.com
+  - www.firefoxaddons.com
+
   # bug 1342698
   # NOTE: changed from http->https after verifying
 - blog.mozilla.org/: mozillausa.org

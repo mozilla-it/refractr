@@ -23,16 +23,6 @@ refracts:
 #  - labs.mozilla.org
 #  - labs.mozilla.com
 
-  # bug 503731, 528747, 537144
-- addons.mozilla.org/:
-  - extensions.mozilla.org
-  - themes.mozilla.org
-  - update.mozilla.org
-  - updates.mozilla.org
-  - addons.update.mozilla.org
-  - firefoxaddons.com
-  - www.firefoxaddons.com
-
   # bug 850584
   # NOTE: changed from http->https after verifying
   # FIXME: redirect doesnt currently exist but should work

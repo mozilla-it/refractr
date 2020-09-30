@@ -170,31 +170,6 @@ refracts:
 #  - firefox.com
 #  - www.firefox.com
 
-  # bug 1627952
-- dsts:
-  - /campaigns: community.mozilla.org/campaigns/
-  - /commonvoice: community.mozilla.org/activities/contributing-to-common-voice/
-  - /en-US/nightly: community.mozilla.org/activities/
-  - /webextensions: community.mozilla.org/activities/
-  - /rust-hack: community.mozilla.org/activities/
-  - /webvr-camp: community.mozilla.org/activities/
-  - /webcompat-sprint: community.mozilla.org/activities/
-  - /: community.mozilla.org/
-  srcs: activate.mozilla.community
-
-  # bug 1618512, 1627952
-- dsts:
-  - /firefoxvoicecampaign: community.mozilla.org/activities/test-firefox-voice/
-  - /respond_campaign: community.mozilla.org/campaigns/respond-campaign/
-  - /firefoxforgood-surfacingqualitycontentandconversat: community.mozilla.org/campaigns/
-  - /becomeabetatestingbughunter: community.mozilla.org/campaigns/become-a-beta-testing-bughunter/
-  - /commonvoice100: community.mozilla.org/campaigns/common-voice-100-hours-sprint/
-  - /firefox66supportsprint: community.mozilla.org/groups/support-mozilla-sumo/?view=events
-  - /firefoxfightsforyoucampaign: community.mozilla.org/campaigns/firefoxfightsforyoucampaign/
-  - /darkfunnelEN: community.mozilla.org/campaigns/become-a-dark-funnel-detective/
-  - /: community.mozilla.org/events/
-  srcs: events.mozilla.org
-
 #- dsts:
 #  - if: '$http_host ~ "^(?<lang>[a-z]{2,3}(-[a-z]{2})?)?\.(start.*)$"'
 #    ^: start.mozilla.org/$lang$request_uri

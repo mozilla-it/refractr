@@ -8,6 +8,11 @@ default-domains:
 
 refracts:
 
+  # bug 998357
+- activations.cdn.mozilla.net/:
+  - activations.mozilla.com
+  - activations.mozilla.org
+
   # bug 1342698
   # NOTE: changed from http->https after verifying
 - blog.mozilla.org/: mozillausa.org
@@ -209,6 +214,11 @@ refracts:
 
   # bug 1522224
 - testpilot.firefox.com/: contribute.testpilot.firefox.com
+
+  # bug 20170327
+- videos.cdn.mozilla.net/:
+  - videos-cdn.mozilla.net
+  - videos.mozilla.org
 
   # bug 1614193
 - voice.mozilla.org/fy-NL/: voice.mozilla.frl

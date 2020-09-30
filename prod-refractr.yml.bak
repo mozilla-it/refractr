@@ -13,12 +13,6 @@ refracts:
   # FIXME: this is a prod test to ensure certs get requested
 - mozilla.org/: refractr2.mozilla.org
 
-  # bug 20170327
-- videos.cdn.mozilla.net/:
-  - videos-cdn.mozilla.net
-  - videos.mozilla.org
-  - videos-ssl-cdn.mozilla.net # FIXME: gives access denied; ok?
-
   # NOTE: changed from http->https after verifying
   #- www.mozillalabs.com/:
   # FIXME: currently both  are valid
@@ -47,11 +41,6 @@ refracts:
   # FIXME: change to www subdomain to match prod
 - www.mozilla.org/: redirect-san.mozilla.org
   status: 307
-
-  # bug 998357
-- activations.cdn.mozilla.net/:
-  - activations.mozilla.com
-  - activations.mozilla.org
 
 # FIXME: commenting out LE Blacklisted items for now
 # https://mana.mozilla.org/wiki/display/SECURITY/Certificate+Authority+Authorization+CAA+including+Let%27s+Encrypt

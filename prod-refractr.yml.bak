@@ -7,12 +7,6 @@ default-domains:
 
 refracts:
 
-  # FIXME: this is a prod test to ensure certs get requested
-- mozilla.com/: refractr1.mozilla.org
-
-  # FIXME: this is a prod test to ensure certs get requested
-- mozilla.org/: refractr2.mozilla.org
-
   # NOTE: changed from http->https after verifying
   #- www.mozillalabs.com/:
   # FIXME: currently both  are valid
@@ -23,21 +17,6 @@ refracts:
 #  - labs.mozilla.org
 #  - labs.mozilla.com
 
-  # bug 503731, 528747, 537144
-- addons.mozilla.org/:
-  - extensions.mozilla.org
-  - themes.mozilla.org
-  - update.mozilla.org
-  - updates.mozilla.org
-  - addons.update.mozilla.org
-  - firefoxaddons.com
-  - www.firefoxaddons.com
->>>>>>> a6e0d17... removed the releases redirect as it has As and CNAME to CDN
-
-  # FIXME: change to www subdomain to match prod
-- www.mozilla.org/: redirect-san.mozilla.org
-  status: 307
-
 # FIXME: commenting out LE Blacklisted items for now
 # https://mana.mozilla.org/wiki/display/SECURITY/Certificate+Authority+Authorization+CAA+including+Let%27s+Encrypt
 #  # bug 896570, 1427843, 1485429, 1297860
@@ -45,8 +24,6 @@ refracts:
 #  - getfirefox.com
 #  - www.getfirefox.com
 
-  # bug 835529
-- support.mozilla.org/: www.support.mozilla.org
   # bug 149411
   # NOTE: changed from http->https after verifying
   # FIXME: these currently fail due to the complicated mess

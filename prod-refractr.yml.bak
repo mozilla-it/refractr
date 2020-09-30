@@ -84,9 +84,6 @@ refracts:
   #       - 301 https://start.mozilla.org/en-US/ -> http://start.mozilla.org/en-us/
   #       - 301 http://start.mozilla.org/en-us/ -> https://start.mozilla.org/en-us/
   #       result: MISMATCHED
-- start.mozilla.org/:
-  - start.mozilla.com
-  - start-prod.mozilla.com
 
   # bug 1587941
   # TODO: test this works as before
@@ -118,48 +115,6 @@ refracts:
   #        - 301 https://www.mozilla.org/firefox/lockwise/ -> http://www.mozilla.org/en-US/firefox/lockwise/
   #        - 301 http://www.mozilla.org/en-US/firefox/lockwise/ -> https://www.mozilla.org/en-US/firefox/lockwise/
   #        result: MISMATCHED
-- dsts:
-  - /faq.html/: support.mozilla.org/products/firefox-lockwise//
-  - /addon/updates.json/: mozilla-lockwise.github.io/addon/updates.json/
-  - /: www.mozilla.org/firefox/lockwise/
-  srcs: lockwise.firefox.com
-
-  # bug 1627952
-- dsts:
-  - /firefox-accounts-campaign: community.mozilla.org/campaigns/join-firefox-campaign/
-  srcs: mozilla.github.io
-
-  # bug 756358
-  # TODO: verify this works as expected
-- dsts:
-  # NOTE: changed from http->https after verifying
-  - /dnt-enabler.tpl: www.mozilla.org/media/dnt/dnt-enabler.tpl
-  - /: www.mozilla.org/firefox/dnt/
-  srcs: dnt.mozilla.org
-
-  # bug 1119912, 1165757, 1213900, 1200359
-  # TODO: verify this works as expected / previously
-- dsts:
-  - /dmexco: 'www.mozilla.org/about/partnerships/contentservices/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team'
-  - ^/(.+): 'www.mozilla.org/about/partnerships/contentservices/$1/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team'
-  - /: 'www.mozilla.org/about/partnerships/contentservices/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team'
-  srcs: content.mozilla.org
-  status: 302
-  tests:
-    # this test must be specified because rewrites `^/(.+)` will not generate a test
-  - http://content.mozilla.org/test: 'https://www.mozilla.org/about/partnerships/contentservices/test/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team'
-
-  # bug 1566155
-- dsts:
-  - /tree.php/: people.mozilla.org/o
-  - ^/search/(.*): 'people.mozilla.org/s?query=$1&who=staff'
-  - /: people.mozilla.org/
-  srcs: phonebook.mozilla.org
-  status: 302
-  tests:
-    # this test must be specified because rewrites `^/(.*)` will not generate a test
-  - http://phonebook.mozilla.org/search/test: https://people.mozilla.org/s?query=test&who=staff
-
 # FIXME: commenting out LE Blacklisted items for now
 # https://mana.mozilla.org/wiki/display/SECURITY/Certificate+Authority+Authorization+CAA+including+Let%27s+Encrypt
 #- dsts:

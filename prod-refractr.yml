@@ -103,10 +103,6 @@ refracts:
   # bug 998526, 20170328
 - docs.google.com/forms/d/1VSlo6TZ5p42LyTx2q7Wd5vQ5hZHvWtA9JN6JWicXmBM/viewform/: confsurvey.mozilla.org
 
-  # bug 1225273, 1359534
-- docs.taskcluster.net/: taskcluster.net
-  status: 302
-
   # bug 1263033
 - donate.mozilla.org/: join.mozilla.org
   status: 307

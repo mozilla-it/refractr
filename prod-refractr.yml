@@ -607,3 +607,9 @@ refracts:
   - /: community.mozilla.org/events/
   srcs: events.mozilla.org
 
+- dsts:
+  - /people: community.mozilla.org/groups/mozilla-reps/?view=people
+  - /events: community.mozilla.org/groups/mozilla-reps/?view=events
+  - /: community.mozilla.org/groups/mozilla-reps/
+  srcs: reps.mozilla.org
+  status: 307

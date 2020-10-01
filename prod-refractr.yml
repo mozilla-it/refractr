@@ -257,9 +257,6 @@ refracts:
   # bug 835529
 - support.mozilla.org/: www.support.mozilla.org
 
-  # bug 1522224
-- testpilot.firefox.com/: contribute.testpilot.firefox.com
-
   # bug 20170327
 - videos.cdn.mozilla.net/:
   - videos-cdn.mozilla.net

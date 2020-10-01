@@ -23,6 +23,13 @@ refracts:
   - firefoxaddons.com
   - www.firefoxaddons.com
 
+- affiliates.mozilla.org/:
+  - firefoxparty.com
+  - www.firefoxparty.com
+  # bug 499384
+  - mozillaparty.com
+  - www.mozillaparty.com
+
   # bug 1342698
   # NOTE: changed from http->https after verifying
 - blog.mozilla.org/: mozillausa.org
@@ -37,6 +44,9 @@ refracts:
   - www.firefoxcup.com
   - firefoxcup2010.com
   - www.firefoxcup2010.com
+
+  # bug 655911
+- blog.mozilla.org/website-archive/2010/12/08/mozilla-uninstall-survey/: survey.mozilla.com
 
 - blog.mozilla.org/website-archive/2011/11/15/webify-me/:
   - webifyme.org
@@ -66,6 +76,13 @@ refracts:
   - jobs.mozilla.org
   - jobs.mozilla.com
   status: 302
+
+- careers.mozilla.org/university/:
+  - college.mozilla.org
+  - college.mozilla.com
+  - interns.mozilla.com
+  - university.mozilla.org
+  - university.mozilla.com
 
   # bug 1627952
 - community.mozilla.org/campaigns/common-voice-sprint: voice-sprint.mozilla.community
@@ -146,6 +163,11 @@ refracts:
   # bug 784556, 880423
 - mana.mozilla.org/wiki/display/SD/print.mozilla.com/: print.mozilla.com
 
+  # bug 731317m 730102
+- marketplace.mozilla.org/:
+  - apps.mozilla.com
+  - market.mozilla.org
+
   # bug 1421587
 - medium.com/mozilla-open-innovation/: open.mozilla.org
   status: 302
@@ -175,13 +197,13 @@ refracts:
 
 - mozilla.github.io/oi-website/: openinnovation.mozilla.org
 
+- mozilla.grouphub.com/: extranet.mozilla.org
+
   # jira SE-1295
 - mozilla.hosted.panopto.com/:
   - air.mozilla.org
   - air.mozilla.com
   - airmo.mozilla.org
-
-- www.mozilla.org/firefox/lockwise/: lockbox.firefox.com
 
   # bug 1538932
 - mozilla.report/: reports.telemetry.mozilla.org
@@ -216,6 +238,13 @@ refracts:
   # bug 1304806
 - phonebook.mozilla.org/: phonebook.mozilla.com
   status: 302
+
+  # bug 1234248
+- planet.firefox.com/ux/: ux.firefox.com
+  status: 302
+
+  # bug 1220879
+- prs.mozilla.io/: prs.paas.allizom.org
 
   # bug 1315316
 - qsurvey.mozilla.com/s3/FirefoxInput/:
@@ -252,6 +281,10 @@ refracts:
   - webfwd.net
   - www.webfwd.net
   status: 307
+
+  # bug 1220879
+- whatsdeployed.io/: whatsdeployed.paas.allizom.org
+  status: 302
 
   # bug 1035550
 - wiki.mozilla.org/: wiki.mozilla.com
@@ -410,6 +443,8 @@ refracts:
 
   # bug 1597866
 - www.mozilla.org/firefox/developer/: firefox.dev
+
+- www.mozilla.org/firefox/lockwise/: lockbox.firefox.com
 
   # This is LE Blacklisted and needs to be removed
 - www.mozilla.org/firefox/new/?redirect_source=getfirefox-com:

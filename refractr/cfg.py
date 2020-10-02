@@ -161,7 +161,7 @@ class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
     @property
     @lru_cache()
     def REFRACTR_YML(self):
-        return self('REFRACTR_YML', f'{self.REPOROOT}/{self.DEPLOYED_ENV}-refractr.yml')
+        return self('REFRACTR_YML', os.path.relpath(f'{REL}/../{self.DEPLOYED_ENV}-refractr.yml'))
 
     @property
     @lru_cache()

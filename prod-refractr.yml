@@ -150,7 +150,7 @@ refracts:
   # bug 1334200
 - github.com/mozilla/popcorn-js/:
   - popcornjs.org
-    #- www.popcornjs.org
+  - www.popcornjs.org
 
   # bug 1462137
 - hubs.mozilla.com/:

@@ -166,6 +166,7 @@ refracts:
   # bug 731317m 730102
 - marketplace.mozilla.org/:
   - apps.mozilla.com
+  - apps.mozilla.org
   - market.mozilla.org
 
   # bug 1421587

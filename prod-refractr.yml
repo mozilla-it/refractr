@@ -23,13 +23,6 @@ refracts:
   - firefoxaddons.com
   - www.firefoxaddons.com
 
-- affiliates.mozilla.org/:
-  - firefoxparty.com
-  - www.firefoxparty.com
-  # bug 499384
-  - mozillaparty.com
-  - www.mozillaparty.com
-
   # bug 1342698
   # NOTE: changed from http->https after verifying
 - blog.mozilla.org/: mozillausa.org
@@ -39,28 +32,8 @@ refracts:
   - impactmozilla.com
   - www.impactmozilla.com
 
-- blog.mozilla.org/blog/2010/07/15/thanks-for-an-exciting-firefox-cup/:
-  - firefoxcup.com
-  - www.firefoxcup.com
-  - firefoxcup2010.com
-  - www.firefoxcup2010.com
-
   # bug 655911
 - blog.mozilla.org/website-archive/2010/12/08/mozilla-uninstall-survey/: survey.mozilla.com
-
-- blog.mozilla.org/website-archive/2011/11/15/webify-me/:
-  - webifyme.org
-  - www.webifyme.org
-
-- blog.mozilla.org/website-archive/2012/10/03/keep-on-rockin/:
-  - rockyourfirefox.com
-  - www.rockyourfirefox.com
-
-  # bug 617681
-  # NOTE: changed from http->https after verifying
-- blog.mozilla.org/operationfx/2007/12/14/declassified-information-and-the-winner-is/:
-  - operationfirefox.com
-  - www.operationfirefox.com
 
   # bug 1214568
 - blog.mozilla.org/creative/: creative.mozilla.org
@@ -204,10 +177,6 @@ refracts:
   # bug 1538932
 - mozilla.report/: reports.telemetry.mozilla.org
 
-  # bug 681943
-- mozillafestival.org/: festival.mozilla.org
-  status: 302
-
   # bug 1441865
 - mozilla-releng.net/treestatus/: treestatus.mozilla.org
   status: 302
@@ -282,12 +251,6 @@ refracts:
   # bug 1035550
 - wiki.mozilla.org/: wiki.mozilla.com
 
-  # bug 1203755
-- wiki.mozilla.org/B2G/:
-  - boot2gecko.org
-  - www.boot2gecko.org
-  status: 307
-
   # bug 1290260
 - wiki.mozilla.org/DeveloperServices/HistoricalVCS/: git.mozilla.org
   status: 302
@@ -306,12 +269,6 @@ refracts:
 - wiki.mozilla.org/Platform/AreWeFunYet/:
   - arewefunyet.com
   - www.arewefunyet.com
-
-  # bug 722504
-- wiki.mozilla.org/Security/Events/CTF/:
-  - mozillactf.org
-  - www.mozillactf.org
-  status: 302
 
   # bug 1320683
 - www.arewestableyet.com/: arewestableyet.com
@@ -346,16 +303,10 @@ refracts:
   #- virtual-redirect-mozilla.com FIXME: NXDOMAIN
   - mozillaservice.net
   - www.mozillaservice.net
-  - firefox4all.com
-  - www.firefox4all.com
-  - firefoxsoftware.com
-  - www.firefoxsoftware.com
   #- getfirfox.com FIXME: valid ip, but MarkMonitor page
   #- www.getfirfox.com FIXME: valid ip, but MarkMonitor page
   - update-firefox.com
   - www.update-firefox.com
-  - extendfirefox.com
-  - www.extendfirefox.com
   - onemozilla.org
   - www.onemozilla.org
   # bug 1234360
@@ -365,14 +316,6 @@ refracts:
   - www.mozilla.hu
   # bug 1331870
   - events.mozspaces.org
-  # bug 710695, 708705
-  - firefoxflicks.com
-  - firefoxflicks.org
-  - www.firefoxflicks.com
-  - www.firefoxflicks.org
-  # fashionyourfirefox.com - Modified as per bug 614412
-  - fashionyourfirefox.com
-  - www.fashionyourfirefox.com
   # We're not using website-beta right now.
   - website-beta.mozilla.org
   # split out store.mozilla.org|com as per bug 1142629
@@ -382,14 +325,6 @@ refracts:
   - store.mozilla.com
   # bug 619759
   - www.mozilla.net
-  # bug 870904
-  - mozsecworld.org
-  - www.mozsecworld.org
-  # bug 841514
-  - detodosparatodos.org
-  - www.detodosparatodos.org
-  #- detodosparatodos.com FIXME: broken but not NXDOMAIN
-  #- www.detodosparatodos.com FIXME: broken but not NXDOMAIN
   # bug 1268570
   - firefox-downloaden.de
   # bug 830904
@@ -402,10 +337,6 @@ refracts:
   status: 302
 
 - www.mozilla.org/: mozilla-podcasts.org
-
-  # FIXME: redirect below didnt work; replaced with what is on prod
-  #- marketplace.firefox.com/: apps.mozillalabs.com
-- www.mozilla.org/: apps.mozillalabs.com
 
   # bug 1361114
 - www.mozilla.org/: webwewant.mozilla.org
@@ -459,10 +390,6 @@ refracts:
 - www.mozilla.org/de/firefox/new/:
   - getfirefox.de
   - www.getfirefox.de
-  - firefox-hacks.de
-  - www.firefox-hacks.de
-  - firefox2.de
-  - www.firefox2.de
 
   # bug 896570
 - www.mozilla.org/firefox/?redirect_source=getfirefox-com:
@@ -579,11 +506,6 @@ refracts:
 
   # bug 1440375
 - www.mozilla.org/pt-BR/: mozilla.com.br
-
-  # bug 971390
-- www.mozilla.org/ru/firefox/new/:
-  - firefoxik.ru
-  - www.firefoxik.ru
 
   # bug 1427843
 - www.mozilla.org/firefox/new/?utm_source=firefox-be&utm_medium=referral:

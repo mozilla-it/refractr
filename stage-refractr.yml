@@ -7,10 +7,10 @@ default-domains:
 
 refracts:
 
-- mozilla.org/: refractr.allizom.org
+- mozilla.org/:
+  - refractr.allizom.org
+  - '*.refractr.allizom.org'
 
-  # FIXME: this is a stage only tests
 - mozilla.com/: refractr1.allizom.org
 
-  # FIXME: this is a stage only tests
 - mozilla.org/: refractr2.allizom.org

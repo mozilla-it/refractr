@@ -40,8 +40,8 @@ def create_test(src, path, target):
     }
 
 class ComplexRefract(BaseRefract):
-    def __init__(self, dsts, srcs, status, tests=None):
-        super().__init__(dsts, srcs, status, tests)
+    def __init__(self, dsts, srcs, status, preserve_path, tests=None):
+        super().__init__(dsts, srcs, status, preserve_path, tests)
 
     def generate_tests(self):
         assert self.dsts and isinstance(self.dsts, tuple), f'self.dsts={self.dsts}'
@@ -60,7 +60,8 @@ class ComplexRefract(BaseRefract):
         redirect = KeyMultiValueOption(
             'return', [
                 status or self.status,
-                URL(target),
+                # NOTE: this wasn't suffixed with .https; adding that now
+                URL(target).https,
             ]
         )
         if location:
@@ -74,7 +75,7 @@ class ComplexRefract(BaseRefract):
         rewrite = KeyMultiValueOption(
             'rewrite', [
                 match,
-                URL(target).https,
+                URL(target, self.preserve_path).https,
                 status_to_word(status or self.status),
             ]
         )

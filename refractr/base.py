@@ -20,10 +20,11 @@ def listify(obj):
     return obj
 
 class BaseRefract:
-    def __init__(self, dsts=None, srcs=None, status=None, tests=None):
+    def __init__(self, dsts=None, srcs=None, status=None, preserve_path=False, tests=None):
         self.dsts = tuplify(dsts)
         self.srcs = tuplify(srcs)
         self.status = status
+        self.preserve_path = preserve_path
         self.tests = tuplify((tests or []) + self.generate_tests())
 
     def __str__(self):
@@ -53,6 +54,7 @@ class BaseRefract:
             dsts=listify(self.dsts),
             srcs=listify(self.srcs),
             status=self.status,
+            preserve_path=self.preserve_path,
             tests=listify(self.tests),
         )
 

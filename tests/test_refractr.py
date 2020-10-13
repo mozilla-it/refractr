@@ -24,4 +24,4 @@ def test_refract(refract):
     assert isinstance(refract, BaseRefract)
     validation = validator.validate_refract(refract)
     yaml_print(dict(validation=validation))
-    assert validation['validate-result'] == SUCCESS_RESULT
+    assert validation['validate-result'] == SUCCESS_RESULT, validation

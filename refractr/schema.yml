@@ -103,7 +103,7 @@ defs:
     title: test
     type: object
     minProperties: 1
-    maxProperties: 2
+    maxProperties: 3
     additionalProperties: false
     patternProperties:
       '^(https?:\/\/)([A-z0-9]+([A-z0-9\.\-]+)\/)([A-z0-9\-_]+\/)*([A-z0-9$\/\.\-_:]+)?(\?[A-z0-9$\.\-:=]+(&[A-z0-9$\.\-:=]+)*)?(#[A-z0-9\-_]+)?$':
@@ -111,6 +111,8 @@ defs:
     properties:
       status:
         type: integer
+      preserve_path:
+        type: boolean
   tests:
     default: []
     title: tests
@@ -135,11 +137,13 @@ defs:
     title: simple-refract
     type: object
     minProperties: 1
-    maxProperties: 2
+    maxProperties: 3
     additionalProperties: false
     properties:
       status:
         type: integer
+      preserve_path:
+        type: boolean
     patternProperties:
       # same as #/defs/dst-url
       '^(?!https?:\/\/)([A-z0-9]+([A-z0-9\.\-]+)\/)([A-z0-9\-_]+\/)*([A-z0-9$\/\.\-_:]+)?(\?[A-z0-9$\.\-:=]+(&[A-z0-9$\.\-:=]+)*)?(#[A-z0-9\-_]+)?$':
@@ -165,5 +169,7 @@ defs:
         $ref: '#/defs/dsts'
       status:
         type: integer
+      preserve_path:
+        type: boolean
       tests:
         $ref: '#/defs/tests'

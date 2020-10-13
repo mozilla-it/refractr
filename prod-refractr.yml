@@ -284,6 +284,7 @@ refracts:
   # Jira SE-1258 "Setup firefox.com to redirect to www.firefox.com"
   # This is LE Blacklisted; needs to be removed
 - www.firefox.com/: firefox.com
+  preserve_path: true
 
   # bug 1136318
   # NOTE: changed from http->https after verifying

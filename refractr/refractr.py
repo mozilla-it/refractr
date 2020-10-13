@@ -84,11 +84,12 @@ class Refractr:
         dsts = spec.pop('dsts', None)
         srcs = spec.pop('srcs', None)
         status = spec.pop('status', 301)
+        preserve_path = spec.pop('preserve_path', False)
         if len(spec) == 1:
             dsts, srcs = head_body(spec)
         if isinstance(dsts, list):
-            return ComplexRefract(dsts, srcs, status, tests)
-        return SimpleRefract(dsts, srcs, status)
+            return ComplexRefract(dsts, srcs, status, preserve_path, tests)
+        return SimpleRefract(dsts, srcs, status, preserve_path)
 
     def _filter(self, patterns=None, only=None, count=None, all_sources=False):
         if patterns == None:

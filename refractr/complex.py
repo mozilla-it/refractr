@@ -40,8 +40,8 @@ def create_test(src, path, target):
     }
 
 class ComplexRefract(BaseRefract):
-    def __init__(self, dsts, srcs, status, preserve_path, tests=None):
-        super().__init__(dsts, srcs, status, preserve_path, tests)
+    def __init__(self, dsts, srcs, status, preserve_path, wildcard_file=None, tests=None):
+        super().__init__(dsts, srcs, status, preserve_path, wildcard_file, tests)
 
     def generate_tests(self):
         assert self.dsts and isinstance(self.dsts, tuple), f'self.dsts={self.dsts}'

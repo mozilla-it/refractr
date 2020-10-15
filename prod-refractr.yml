@@ -595,3 +595,63 @@ refracts:
   - /: community.mozilla.org/groups/mozilla-reps/
   srcs: reps.mozilla.org
   status: 307
+
+- dsts:
+  - if: '$query_string ~ "^hl=(?<hl>[^&]+)&url=(?<url>[^&]+)"'
+    ^/$: 'www.stopbadware.org/firefox?hl=$hl&url=$url?'
+  - if: '$query_string ~ "^url=(?<url>[^&]+)"'
+    ^/$: 'www.stopbadware.org/firefox?url=$url?'
+  - redirect: $host$request_uri
+  srcs:
+  - malware-error.mozilla.com
+  - wildcard.malware-error.mozilla.com
+  wildcard_file: ./LOCALES
+  tests:
+  - http://malware-error.mozilla.com/?hl=en&url=path: 'https://www.stopbadware.org/firefox?hl=en&url=path'
+  - http://malware-error.mozilla.com/?url=path: 'https://www.stopbadware.org/firefox?url=path'
+  - http://malware-error.mozilla.com/: https://malware-error.mozilla.com/
+
+- dsts:
+  - if: '$query_string ~ "^hl=(?<hl>[^&]+)&url=(?<url>[^&]+)"'
+    ^/$: 'safebrowsing.google.com/safebrowsing/report_error/?tpl=mozilla&hl=$hl&url=$url?'
+  - if: '$query_string ~ "^url=(?<url>[^&]+)"'
+    ^/$: 'safebrowsing.google.com/safebrowsing/report_error/?tpl=mozilla&url=$url?'
+  - redirect: $host$request_uri
+  srcs:
+  - phish-error.mozilla.com
+  - wildcard.phish-error.mozilla.com
+  wildcard_file: ./LOCALES
+  tests:
+  - http://phish-error.mozilla.com/?hl=en&url=path: 'https://safebrowsing.google.com/safebrowsing/report_error/?tpl=mozilla&hl=en&url=path'
+  - http://phish-error.mozilla.com/?url=path: 'https://safebrowsing.google.com/safebrowsing/report_error/?tpl=mozilla&url=path'
+  - http://phish-error.mozilla.com/: https://phish-error.mozilla.com/
+
+- dsts:
+  - if: '$query_string ~ "^hl=(?<hl>es)(?:-ES|-AR)&url=(?<url>[^&]+)"'
+    ^/$: 'safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=$hl&url=$url?'
+  - if: '$query_string ~ "^hl=(?:nb|nn)-NO&url=(?<url>[^&]+)"'
+    ^/$: 'safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=no&url=$url?'
+  - if: '$query_string ~ "^hl=pt-PT&url=(?<url>[^&]+)"'
+    ^/$: 'safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=pt-BR&url=$url?'
+  - if: '$query_string ~ "^hl=(?<hl>ar|bg|cs|da|de|el|en|en-GB|es|fi|fr|hu|it|iw|ja|ko|nl|no|l|pt-BR|ru|sk|sv|tr|zh-CN|zh-TW)&url=(?<url>[^&]+)"'
+    ^/$: 'safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=$hl&url=$url?'
+  - if: '$query_string ~ "^hl=(?<hl>[^&]+)&url=(?<url>[^&]+)"'
+    ^/$: 'safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=$hl&url=$url?'
+  # bug 1387246, send lone url query strings to google safebrowsing
+  - if: '$query_string ~ "url=(?<url>[^&]+)"'
+    ^/$: 'safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&url=$url?'
+  - redirect: www.mozilla.org/
+  srcs:
+  - phish-report.mozilla.com
+  - wildcard.phish-report.mozilla.com
+  wildcard_file: ./LOCALES
+  tests:
+  - http://phish-report.mozilla.com/?hl=es&url=path: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=es&url=path'
+  - http://phish-report.mozilla.com/?hl=nb-NO&url=path: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=no&url=path'
+  - http://phish-report.mozilla.com/?hl=pt-PT&url=path: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=pt-BR&url=path'
+  - http://phish-report.mozilla.com/?hl=en-GB&url=path: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=en-GB&url=path'
+  - http://phish-report.mozilla.com/?hl=zh-TW&url=path: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=zh-TW&url=path'
+  - http://phish-report.mozilla.com/?hl=foo&url=bar: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=foo&url=bar'
+  - http://phish-report.mozilla.com/?url=foobar: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&url=foobar'
+  - http://phish-report.mozilla.com/foobar: https://www.mozilla.org/
+  status: 302

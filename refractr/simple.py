@@ -6,8 +6,8 @@ from refractr.base import BaseRefract
 from refractr.url import URL
 
 class SimpleRefract(BaseRefract):
-    def __init__(self, dsts, srcs, status, preserve_path):
-        super().__init__(dsts, srcs, status, preserve_path)
+    def __init__(self, dsts, srcs, status, preserve_path, wildcard_file):
+        super().__init__(dsts, srcs, status, preserve_path, wildcard_file)
 
     @property
     def dst(self):

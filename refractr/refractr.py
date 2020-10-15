@@ -1,3 +1,6 @@
+import os
+import tldextract
+
 from itertools import chain
 
 from leatherman.dictionary import head_body
@@ -12,6 +15,11 @@ from refractr.complex import ComplexRefract
 from refractr.validate import RefractrValidator
 from refractr.utils import *
 
+DIR = os.path.dirname(__file__)
+
+extract = tldextract.TLDExtract(
+    cache_file=f'{DIR}/.tld-cache'
+)
 
 setup_yaml()
 
@@ -85,11 +93,12 @@ class Refractr:
         srcs = spec.pop('srcs', None)
         status = spec.pop('status', 301)
         preserve_path = spec.pop('preserve_path', False)
+        wildcard_file = spec.pop('wildcard_file', None)
         if len(spec) == 1:
             dsts, srcs = head_body(spec)
         if isinstance(dsts, list):
-            return ComplexRefract(dsts, srcs, status, preserve_path, tests)
-        return SimpleRefract(dsts, srcs, status, preserve_path)
+            return ComplexRefract(dsts, srcs, status, preserve_path, wildcard_file, tests)
+        return SimpleRefract(dsts, srcs, status, preserve_path, wildcard_file)
 
     def _filter(self, patterns=None, only=None, count=None, all_sources=False):
         if patterns == None:
@@ -114,13 +123,19 @@ class Refractr:
 
     def domains(self, patterns=None, only=None, count=None, all_sources=False):
         refracts = self._filter(patterns, only, count, all_sources)
-        domains = sorted(list(set(chain(*[
+        domains = list(set(chain(*[
             refract.srcs
             for refract
             in refracts
-        ])))) + self.default_domains
+        ]))) + self.default_domains
+        def sorter(name):
+            subdomain, domain, suffix = extract(name)
+            sortkey = [domain, suffix]
+            #this sorts by domain+suffix then subdomain in reverse order
+            sortkey.append(list(reversed(subdomain.split('.'))))
+            return sortkey
         return {
-            'domains': domains,
+            'domains': sorted(domains, key=sorter),
             'domains-count': len(domains),
         }
 

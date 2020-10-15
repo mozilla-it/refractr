@@ -9,8 +9,10 @@ refracts:
 
 - mozilla.org/:
   - refractr.allizom.org
-  - '*.refractr.allizom.org'
+  - wildcard.refractr.allizom.org
+  #- '*.refractr.allizom.org'
 
 - mozilla.com/: refractr1.allizom.org
 
 - mozilla.org/: refractr2.allizom.org
+

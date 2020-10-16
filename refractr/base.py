@@ -7,19 +7,26 @@ from refractr.utils import *
 
 WILDCARD = 'wildcard'
 
-def tuplify(value):
-    if isinstance(value, dict):
-        return value
-    elif isinstance(value, (list, tuple)):
-        return tuple(value)
-    elif value != None:
-        return (value,)
-    return value
+def tuplify(obj):
+    if isinstance(obj, dict):
+        return obj
+    elif isinstance(obj, (list, tuple)):
+        return tuple(obj)
+    elif obj != None:
+        return (obj,)
+    return obj
 
 def listify(obj):
     if isinstance(obj, tuple):
         return list(obj)
     return obj
+
+def lowercase(items):
+    return [
+        item.lower()
+        for item
+        in items
+    ]
 
 class BaseRefract:
     def __init__(self, dsts=None, srcs=None, status=None, preserve_path=False, wildcard_file=None, tests=None):
@@ -53,8 +60,8 @@ class BaseRefract:
                         srcs.append(src1)
                 else:
                     srcs.append(src)
-            return tuple(srcs)
-        return self._srcs
+            return tuplify(lowercase(srcs))
+        return tuplify(lowercase(self._srcs))
 
     @property
     def balance(self):

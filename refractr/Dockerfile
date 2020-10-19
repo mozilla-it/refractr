@@ -1,5 +1,5 @@
 # nginx:alpine contains NGINX_VERSION environment variable, like so:
-ARG NGINX_VERSION=1.17.6
+ARG NGINX_VERSION=1.19.3
 ARG KUBECTL_VERSION=v1.15.11
 
 FROM nginx:${NGINX_VERSION}-alpine AS builder

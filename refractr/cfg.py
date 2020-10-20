@@ -5,6 +5,7 @@
 import os
 import re
 import json
+import contextlib
 
 from datetime import datetime
 from functools import lru_cache
@@ -27,6 +28,15 @@ class GitCommandNotFoundError(Exception):
     def __init__(self):
         msg = 'git: command not found'
         super().__init__(msg)
+
+@contextlib.contextmanager
+def cd(path):
+    prev = os.getcwd()
+    os.chdir(path)
+    try:
+        yield
+    finally:
+        os.chdir(prev)
 
 def call(
     cmd,
@@ -94,7 +104,8 @@ class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
     @property
     @lru_cache()
     def REPOROOT(self):
-        reporoot = git('rev-parse --show-toplevel')
+        with cd(os.path.dirname(__file__)):
+            reporoot = git('rev-parse --show-toplevel')
         return self('REPOROOT', reporoot)
 
     @property

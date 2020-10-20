@@ -15,18 +15,3 @@ refracts:
 - mozilla.com/: refractr1.allizom.org
 
 - mozilla.org/: refractr2.allizom.org
-
-- dsts:
-  - if: '$query_string ~ "^hl=(?<hl>[^&]+)&url=(?<url>[^&]+)"'
-    ^/$: 'www.stopbadware.org/firefox?hl=$hl&url=$url?'
-  - if: '$query_string ~ "^url=(?<url>[^&]+)"'
-    ^/$: 'www.stopbadware.org/firefox?url=$url?'
-  - redirect: $host$request_uri
-  srcs:
-  - malware-error.mozilla.com
-  - wildcard.malware-error.mozilla.com
-  wildcard_file: ./LOCALES
-  tests:
-  - http://malware-error.mozilla.com/?hl=en&url=path: 'https://www.stopbadware.org/firefox?hl=en&url=path'
-  - http://malware-error.mozilla.com/?url=path: 'https://www.stopbadware.org/firefox?url=path'
-  - http://malware-error.mozilla.com/: https://malware-error.mozilla.com/

@@ -4,6 +4,7 @@ from leatherman.yaml import yaml_format
 
 from refractr.url import URL
 from refractr.utils import *
+from refractr.cfg import CFG, cd
 
 WILDCARD = 'wildcard'
 
@@ -75,12 +76,13 @@ class BaseRefract:
 
     @property
     def wildcard_extrapolated_subdomains(self):
-        return [
-            line for
-            line in
-            open(self.wildcard_file).read().strip().split('\n')
-            if not line.startswith('#')
-        ]
+        with cd(CFG.REPOROOT):
+            return [
+                line for
+                line in
+                open(self.wildcard_file).read().strip().split('\n')
+                if not line.startswith('#')
+            ]
 
     def json(self):
         return dict(

@@ -9,4 +9,4 @@ jinja2==2.11.2
 pyyaml==5.3.1
 jsonschema==3.2.0
 python-decouple==3.3
-tldextract==2.2.3
+tldextract==3.0.0

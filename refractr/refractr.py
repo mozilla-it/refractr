@@ -18,7 +18,7 @@ from refractr.utils import *
 DIR = os.path.dirname(__file__)
 
 extract = tldextract.TLDExtract(
-    cache_file=f'{DIR}/.tld-cache'
+    cache_dir=f'{DIR}/.tld-cache'
 )
 
 setup_yaml()

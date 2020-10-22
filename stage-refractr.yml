@@ -15,3 +15,7 @@ refracts:
 - mozilla.com/: refractr1.allizom.org
 
 - mozilla.org/: refractr2.allizom.org
+
+- mozilla.org/:
+  - malware-error.allizom.org
+  - '*.malware-error.allizom.org'

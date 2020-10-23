@@ -604,8 +604,7 @@ refracts:
   - redirect: $host$request_uri
   srcs:
   - malware-error.mozilla.com
-  - wildcard.malware-error.mozilla.com
-  wildcard_file: ./LOCALES
+  - '*.malware-error.mozilla.com'
   tests:
   - http://malware-error.mozilla.com/?hl=en&url=path: 'https://www.stopbadware.org/firefox?hl=en&url=path'
   - http://malware-error.mozilla.com/?url=path: 'https://www.stopbadware.org/firefox?url=path'
@@ -619,8 +618,7 @@ refracts:
   - redirect: $host$request_uri
   srcs:
   - phish-error.mozilla.com
-  - wildcard.phish-error.mozilla.com
-  wildcard_file: ./LOCALES
+  - '*.phish-error.mozilla.com'
   tests:
   - http://phish-error.mozilla.com/?hl=en&url=path: 'https://safebrowsing.google.com/safebrowsing/report_error/?tpl=mozilla&hl=en&url=path'
   - http://phish-error.mozilla.com/?url=path: 'https://safebrowsing.google.com/safebrowsing/report_error/?tpl=mozilla&url=path'
@@ -643,8 +641,7 @@ refracts:
   - redirect: www.mozilla.org/
   srcs:
   - phish-report.mozilla.com
-  - wildcard.phish-report.mozilla.com
-  wildcard_file: ./LOCALES
+  - '*.phish-report.mozilla.com'
   tests:
   - http://phish-report.mozilla.com/?hl=es&url=path: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=es&url=path'
   - http://phish-report.mozilla.com/?hl=nb-NO&url=path: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=no&url=path'

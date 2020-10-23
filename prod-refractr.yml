@@ -608,7 +608,7 @@ refracts:
   tests:
   - http://malware-error.mozilla.com/?hl=en&url=path: 'https://www.stopbadware.org/firefox?hl=en&url=path'
   - http://malware-error.mozilla.com/?url=path: 'https://www.stopbadware.org/firefox?url=path'
-  - http://malware-error.mozilla.com/: https://malware-error.mozilla.com/
+  - http://malware-error.mozilla.com/: https://www.mozilla.org/
 
 - dsts:
   - if: '$query_string ~ "^hl=(?<hl>[^&]+)&url=(?<url>[^&]+)"'
@@ -622,7 +622,7 @@ refracts:
   tests:
   - http://phish-error.mozilla.com/?hl=en&url=path: 'https://safebrowsing.google.com/safebrowsing/report_error/?tpl=mozilla&hl=en&url=path'
   - http://phish-error.mozilla.com/?url=path: 'https://safebrowsing.google.com/safebrowsing/report_error/?tpl=mozilla&url=path'
-  - http://phish-error.mozilla.com/: https://phish-error.mozilla.com/
+  - http://phish-error.mozilla.com/: https://www.mozilla.org/
 
 - dsts:
   - if: '$query_string ~ "^hl=(?<hl>es)(?:-ES|-AR)&url=(?<url>[^&]+)"'

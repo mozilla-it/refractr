@@ -8,7 +8,7 @@ default-domains:
 
 refracts:
 
-- www.mozilla.org/: mozilla.com
+- www.mozilla.org/: hsts.mozilla-redirectx.xyz
   headers:
   - X-Backend-Server: TS
   - Strict-Transport-Security: max-age=31536000

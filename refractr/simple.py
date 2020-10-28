@@ -6,8 +6,8 @@ from refractr.base import BaseRefract
 from refractr.url import URL
 
 class SimpleRefract(BaseRefract):
-    def __init__(self, dsts, srcs, status, preserve_path, wildcard_file):
-        super().__init__(dsts, srcs, status, preserve_path, wildcard_file)
+    def __init__(self, dsts, srcs, status, headers, preserve_path, wildcard_file):
+        super().__init__(dsts, srcs, status, headers, preserve_path, wildcard_file)
 
     @property
     def dst(self):
@@ -31,13 +31,21 @@ class SimpleRefract(BaseRefract):
     def render(self):
         server_name = KeyValueOption('server_name', self.server_name)
         target = URL(self.dst)
+        redirect = KeyMultiValueOption(
+            'return', [
+                self.status,
+                URL(self.dst, self.preserve_path).https,
+            ]
+        )
+        if self.headers:
+            return [Section(
+                'server',
+                server_name,
+                self.render_headers(),
+                redirect,
+            )]
         return [Section(
             'server',
             server_name,
-            KeyMultiValueOption(
-                'return', [
-                    self.status,
-                    URL(self.dst, self.preserve_path).https,
-                ]
-            )
+            redirect,
         )]

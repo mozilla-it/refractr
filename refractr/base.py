@@ -1,3 +1,5 @@
+from nginx.config.helpers import duplicate_options
+
 from leatherman.dictionary import head_body
 from leatherman.repr import __repr__
 from leatherman.yaml import yaml_format
@@ -30,10 +32,11 @@ def lowercase(items):
     ]
 
 class BaseRefract:
-    def __init__(self, dsts=None, srcs=None, status=None, preserve_path=False, wildcard_file=None, tests=None):
+    def __init__(self, dsts=None, srcs=None, status=None, headers=None, preserve_path=False, wildcard_file=None, tests=None):
         self.dsts = tuplify(dsts)
         self._srcs = tuplify(srcs)
         self.status = status
+        self.headers = headers
         self.preserve_path = preserve_path
         self.wildcard_file = wildcard_file
         self.tests = tuplify((tests or []) + self.generate_tests())
@@ -89,9 +92,20 @@ class BaseRefract:
             dsts=listify(self.dsts),
             srcs=listify(self.srcs),
             status=self.status,
+            headers=self.headers,
             preserve_path=self.preserve_path,
             wildcard_file=self.wildcard_file,
             tests=listify(self.tests),
+        )
+
+    def render_headers(self):
+        return duplicate_options(
+            'add_header',
+            [
+                list(head_body(header))
+                for header
+                in self.headers
+            ],
         )
 
     @property

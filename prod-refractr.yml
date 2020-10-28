@@ -8,6 +8,12 @@ default-domains:
 
 refracts:
 
+- www.mozilla.org/: mozilla.com
+  headers:
+  - X-Backend-Server: TS
+  - Strict-Transport-Security: max-age=31536000
+  - Cache-Control: max-age=3600
+
   # bug 998357
 - activations.cdn.mozilla.net/:
   - activations.mozilla.com

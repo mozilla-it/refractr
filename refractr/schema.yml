@@ -23,6 +23,16 @@ properties:
       - $ref: '#/defs/simple-refract'
       - $ref: '#/defs/complex-refract'
 defs:
+  header:
+    default: {}
+    title: header
+    type: object
+  headers:
+    default: []
+    title: headers
+    type: array
+    items:
+      $ref: '#/defs/header'
   domain:
     default: ''
     title: domain
@@ -135,7 +145,7 @@ defs:
     title: simple-refract
     type: object
     minProperties: 1
-    maxProperties: 4
+    maxProperties: 5
     additionalProperties: false
     properties:
       status:
@@ -144,6 +154,8 @@ defs:
         type: boolean
       wildcard_file:
         type: string
+      headers:
+        $ref: '#/defs/headers'
     patternProperties:
       # same as #/defs/dst-url
       '^(?!https?:\/\/)([A-z0-9]+([A-z0-9\.\-]+)\/)([A-z0-9\-_]+\/)*([A-z0-9$\/\.\-_:]+)?(\?[A-z0-9$\.\-:=]+(&[A-z0-9$\.\-:=]+)*)?(#[A-z0-9\-_]+)?$':
@@ -155,7 +167,7 @@ defs:
     title: complex-refract
     type: object
     minProperties: 2
-    maxProperties: 5
+    maxProperties: 6
     required:
     - srcs
     - dsts
@@ -175,3 +187,5 @@ defs:
         type: string
       tests:
         $ref: '#/defs/tests'
+      headers:
+        $ref: '#/defs/headers'

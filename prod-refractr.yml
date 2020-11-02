@@ -293,7 +293,9 @@ refracts:
   - mozilla.at
   - www.mozilla.at
 
-- www.mozilla.org/: mozilla.com
+- www.mozilla.org/:
+  - mozilla.org
+  - mozilla.com
   headers:
   # This is enabled by default in the nginx helm chart in the cluster repo
   #- Strict-Transport-Security: '"max-age=31536000; includeSubDomains" always'

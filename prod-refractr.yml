@@ -282,7 +282,8 @@ refracts:
   status: 302
 
   # Jira SE-1258 "Setup firefox.com to redirect to www.firefox.com"
-  # This is LE Blacklisted; needs to be removed
+  # This redirects all firefox.com -> www.firefox.com including paths
+  # https://github.com/mozmeao/www.firefox.com/blob/master/nginx.conf
 - www.firefox.com/: firefox.com
   preserve_path: true
 

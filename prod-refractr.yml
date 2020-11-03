@@ -344,6 +344,7 @@ refracts:
   - mobilepartners.mozilla.org
   # bug 1329125
   - masterfirefoxos.mozilla.org
+  - mozilla-podcasts.org
   status: 302
 
 - www.mozilla.org/: mozilla-podcasts.org

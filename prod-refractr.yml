@@ -295,7 +295,6 @@ refracts:
 
 - www.mozilla.org/:
   - mozilla.org
-  - mozilla.com
   headers:
   # This is enabled by default in the nginx helm chart in the cluster repo
   #- Strict-Transport-Security: '"max-age=31536000; includeSubDomains" always'
@@ -562,6 +561,18 @@ refracts:
   tests:
     # this test must be specified because rewrites `^/(.+)` will not generate a test
   - http://content.mozilla.org/test: 'https://www.mozilla.org/about/partnerships/contentservices/test/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team'
+
+- dsts:
+  - /about: www.mozilla.org/firefox/about
+  - ^/([^\x00-\x1F]+): www.mozilla.org/$1
+  - /: www.mozilla.org/firefox
+  srcs:
+  - mozilla.com
+  - www.mozilla.com
+  tests:
+  - http://mozilla.com/: https://www.mozilla.org/firefox
+  - http://mozilla.com/about: https://www.mozilla.org/firefox/about
+  - http://mozilla.com/foo: https://www.mozilla.org/foo
 
   # bug 1566155
 - dsts:

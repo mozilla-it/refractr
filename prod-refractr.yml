@@ -149,6 +149,21 @@ refracts:
   # bug 1330438
 - moz-releng-docs.readthedocs.io/en/latest/: docs.pub.build.mozilla.org
 
+# mozdev.org legacy redirects. See https://jira.mozilla-community.org/browse/MCWS-55
+# and https://jira.mozilla.com/browse/CORE-1422
+- quickfilters.quickfolders.org/: quickfilters.mozdev.org
+- zombiekeys.quickfolders.org/: zombiekeys.mozdev.org
+- quickfolders.org/: quickfolders.mozdev.org
+- github.com/eyalroz/bidimailui/: bidiui.mozdev.org
+- wiki.mozilla.org/Consulting/: consultants.mozdev.org
+- www.amadzone.org/mozilla-archive-format/: maf.mozdev.org
+- smarttemplates.quickfolders.org/: smarttemplate4.mozdev.org
+- quickpasswords.quickfolders.org/: quickpasswords.mozdev.org
+- github.com/eyalroz/removedupes/: removedupes.mozdev.org
+- www.mozilla.org/:
+  - mozdev.org
+  - www.mozdev.org
+
   # bug 1335596
   # NOTE: changed redirect to its final destination
 - mozilla.design/: designlanguage.mozilla.org

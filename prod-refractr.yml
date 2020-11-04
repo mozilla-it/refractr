@@ -295,6 +295,7 @@ refracts:
 
 - www.mozilla.org/:
   - mozilla.org
+  preserve_path: true
   headers:
   # This is enabled by default in the nginx helm chart in the cluster repo
   #- Strict-Transport-Security: '"max-age=31536000; includeSubDomains" always'

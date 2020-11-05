@@ -585,10 +585,12 @@ refracts:
   srcs:
   - mozilla.com
   - www.mozilla.com
+  - '*.www.mozilla.com'
   tests:
   - http://mozilla.com/: https://www.mozilla.org/firefox
   - http://mozilla.com/about: https://www.mozilla.org/firefox/about
   - http://mozilla.com/foo: https://www.mozilla.org/foo
+  - http://en-US.www.mozilla.com/: https://www.mozilla.org/firefox
 
   # bug 1566155
 - dsts:

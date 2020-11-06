@@ -7,6 +7,7 @@ import os
 import sys
 sys.dont_write_bytecode = True
 
+from json import dumps
 from argparse import ArgumentParser
 from jinja2 import Environment, FileSystemLoader
 
@@ -39,10 +40,24 @@ ONE = [
     'last',
 ]
 
+OUTPUT = [
+    'json',
+    'yaml',
+]
+
 sys.path.insert(0, DIR)
 
 from refractr.refractr import Refractr
 from refractr.cfg import CFG
+
+def default_output():
+    return OUTPUT[int(sys.stdout.isatty())]
+
+def output_print(json, output):
+    if output == 'yaml':
+        yaml_print(json)
+    elif output == 'json':
+        print(dumps(json, indent=2))
 
 def add_subparser(subparsers, action, **kwargs):
     parser = subparsers.add_parser(action, **kwargs)
@@ -104,6 +119,12 @@ def main(args):
         metavar="CFG",
         default=CFG.REFRACTR_YML,
         help='default="%(default)s"; specify the config yaml to use')
+    main_parser.add_argument(
+        '-o', '--output',
+        metavar='OUPUT',
+        default=default_output(),
+        choices=OUTPUT,
+        help='default="%(default)s"; set the output type; choices=[%(choices)s]')
     subparsers = main_parser.add_subparsers(
         dest='action',
         title='action',
@@ -166,14 +187,14 @@ def main(args):
             parsed.only,
             parsed.count,
             parsed.all_sources)
-        yaml_print(output)
+        output_print(output, parsed.output)
     elif parsed.action in ('do', 'domains'):
         domains = refractr.domains(
             parsed.patterns,
             parsed.only,
             parsed.count,
             parsed.all_sources)
-        yaml_print(domains)
+        output_print(domains, parsed.output)
     elif parsed.action in ('ngx', 'nginx'):
         output = refractr.render(
             parsed.patterns,
@@ -200,7 +221,7 @@ def main(args):
             parsed.only,
             parsed.count,
             parsed.all_sources)
-        yaml_print(validated)
+        output_print(validated, parsed.output)
 
 if __name__ == '__main__':
     main(sys.argv[1:])

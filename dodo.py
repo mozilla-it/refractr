@@ -136,6 +136,21 @@ def task_ingress():
         ],
     }
 
+def task_refracts():
+    '''
+    create refracts.json from loading refractr.yml
+    '''
+    cmd = f'bin/refractr --output json show > {CFG.IMAGE}/refracts.json'
+    return {
+        'task_dep': [
+            'schema',
+        ],
+        'actions': [
+            cmd,
+            f'echo "{cmd}"',
+        ]
+    }
+
 def task_build():
     '''
     run docker-compose build for refractr
@@ -147,6 +162,7 @@ def task_build():
             'creds',
             'nginx',
             'ingress',
+            'refracts',
         ],
         'actions': [
             f'env {envs()} docker-compose build refractr',

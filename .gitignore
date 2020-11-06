@@ -138,6 +138,9 @@ refractr/nginx/conf.d/refractr.conf
 # ignore generated ingress.yaml
 refractr/image/ingress.yaml
 
+# ignore generated refracts.json
+refractr/image/refracts.json
+
 # ignore generated deployed and version
 refractr/image/deployed
 refractr/image/version

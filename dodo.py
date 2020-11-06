@@ -140,7 +140,7 @@ def task_refracts():
     '''
     create refracts.json from loading refractr.yml
     '''
-    cmd = f'bin/refractr --output json show > {CFG.IMAGE}/refracts.json'
+    cmd = f'bin/refractr --output json show > {CFG.IMAGE}/refracts'
     return {
         'task_dep': [
             'schema',

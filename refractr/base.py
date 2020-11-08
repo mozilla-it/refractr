@@ -9,6 +9,18 @@ from refractr.utils import *
 from refractr.cfg import CFG, cd
 
 WILDCARD = 'wildcard'
+REQUEST_URI = '$request_uri'
+
+def preserve(url):
+    if url.endswith('/'):
+        return url[0:-1] + REQUEST_URI
+    return url + REQUEST_URI
+
+def create_target(dst, preserve_path=True):
+    url = URL(dst).https
+    if preserve_path and URL(dst).path == '/':
+        return preserve(url)
+    return url
 
 def tuplify(obj):
     if isinstance(obj, dict):

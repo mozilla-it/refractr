@@ -3,8 +3,6 @@ from collections import UserString
 from refractr.exceptions import URLError
 from refractr.utils import *
 
-REQUEST_URI = '$request_uri'
-
 # makes visualizing as string easier to read
 ParseResult.__repr__ = lambda self: self.geturl()
 
@@ -19,13 +17,8 @@ def replace(pr, **kwargs):
             fragment=kwargs.get('fragment', pr.fragment))
     return pr
 
-def preserve(url):
-    if url.endswith('/'):
-        return url[0:-1] + REQUEST_URI
-    return url + REQUEST_URI
-
 class URL(UserString):
-    def __init__(self, url, preserve_path=False, **kwargs):
+    def __init__(self, url, **kwargs):
         if url:
             if url.startswith('http'):
                 self._pr = urlparse(url)
@@ -34,21 +27,14 @@ class URL(UserString):
             self._pr = replace(self._pr, **kwargs)
         else:
             raise URLError(url)
-        self.preserve_path = preserve_path
 
     @property
     def http(self):
-        url = replace(self._pr, scheme='http').geturl()
-        if self.preserve_path:
-            return preserve(url)
-        return url
+        return replace(self._pr, scheme='http').geturl()
 
     @property
     def https(self):
-        url = replace(self._pr, scheme='https').geturl()
-        if self.preserve_path:
-            return preserve(url)
-        return url
+        return replace(self._pr, scheme='https').geturl()
 
     @property
     def url(self):

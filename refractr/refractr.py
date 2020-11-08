@@ -93,8 +93,8 @@ class Refractr:
         srcs = spec.pop('srcs', None)
         status = spec.pop('status', 301)
         headers = spec.pop('headers', None)
-        preserve_path = spec.pop('preserve_path', False)
-        wildcard_file = spec.pop('wildcard_file', None)
+        preserve_path = spec.pop('preserve-path', True)
+        wildcard_file = spec.pop('wildcard-file', None)
         if len(spec) == 1:
             dsts, srcs = head_body(spec)
         if isinstance(dsts, list):

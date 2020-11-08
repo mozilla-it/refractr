@@ -150,9 +150,9 @@ defs:
     properties:
       status:
         type: integer
-      preserve_path:
+      preserve-path:
         type: boolean
-      wildcard_file:
+      wildcard-file:
         type: string
       headers:
         $ref: '#/defs/headers'
@@ -181,9 +181,9 @@ defs:
         $ref: '#/defs/dsts'
       status:
         type: integer
-      preserve_path:
+      preserve-path:
         type: boolean
-      wildcard_file:
+      wildcard-file:
         type: string
       tests:
         $ref: '#/defs/tests'

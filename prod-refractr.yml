@@ -12,6 +12,7 @@ refracts:
 - activations.cdn.mozilla.net/:
   - activations.mozilla.com
   - activations.mozilla.org
+  preserve-path: false
 
   # bug 503731, 528747, 537144
 - addons.mozilla.org/:
@@ -22,10 +23,12 @@ refracts:
   - addons.update.mozilla.org
   - firefoxaddons.com
   - www.firefoxaddons.com
+  preserve-path: false
 
   # bug 1342698
   # NOTE: changed from http->https after verifying
 - blog.mozilla.org/: mozillausa.org
+  preserve-path: false
 
   # bug 614684
 - blog.mozilla.org/blog/2008/12/22/congratulations-fox-for-all-wins-impact-mozilla/:
@@ -49,6 +52,7 @@ refracts:
   - jobs.mozilla.org
   - jobs.mozilla.com
   status: 302
+  preserve-path: false
 
 - careers.mozilla.org/university/:
   - college.mozilla.org
@@ -74,9 +78,11 @@ refracts:
   - talkback.mozilla.org
   - talkback-public.mozilla.org
   - talkback-reports.mozilla.org
+  preserve-path: false
 
   # bug 695084
 - developer.mozilla.org/: dev.mozilla.org
+  preserve-path: false
 
   # bug 811323
 - developer.mozilla.org/demos/devderby/: devderby.mozilla.org
@@ -89,6 +95,7 @@ refracts:
 
   # bug 1543423
 - discourse.mozilla.org/: discourse.mozilla-community.org
+  preserve-path: false
 
   # bug 1200302
 - discourse.mozilla.org/c/add-ons/: forums.mozilla.org
@@ -104,10 +111,12 @@ refracts:
   # bug 1263033
 - donate.mozilla.org/: join.mozilla.org
   status: 307
+  preserve-path: false
 
   # bug 1311146
 - donate.mozilla.org/: sendto.mozilla.org
   status: 307
+  preserve-path: false
 
   # bug 1502902
   # FIXME: valid anymore, considering the redirects below?
@@ -119,6 +128,7 @@ refracts:
 - foundation.mozilla.org/:
   - mozillafoundation.com
   - mozillafoundation.net
+  preserve-path: false
 
   # bug 1334200
 - github.com/mozilla/popcorn-js/:
@@ -129,9 +139,11 @@ refracts:
 - hubs.mozilla.com/:
   - hub.mozilla.com
   - hub.mozilla.org
+  preserve-path: false
 
   # bug 613649
 - krakenbenchmark.mozilla.org/: krakenbenchmark.mozilla.com
+  preserve-path: false
 
   # bug 784556, 880423
 - mana.mozilla.org/wiki/display/SD/print.mozilla.com/: print.mozilla.com
@@ -141,6 +153,7 @@ refracts:
   - apps.mozilla.com
   - apps.mozilla.org
   - market.mozilla.org
+  preserve-path: false
 
   # bug 1421587
 - medium.com/mozilla-open-innovation/: open.mozilla.org
@@ -152,26 +165,34 @@ refracts:
 # mozdev.org legacy redirects. See https://jira.mozilla-community.org/browse/MCWS-55
 # and https://jira.mozilla.com/browse/CORE-1422
 - quickfilters.quickfolders.org/: quickfilters.mozdev.org
+  preserve-path: false
 - zombiekeys.quickfolders.org/: zombiekeys.mozdev.org
+  preserve-path: false
 - quickfolders.org/: quickfolders.mozdev.org
+  preserve-path: false
 - github.com/eyalroz/bidimailui/: bidiui.mozdev.org
 - wiki.mozilla.org/Consulting/: consultants.mozdev.org
 - www.amadzone.org/mozilla-archive-format/: maf.mozdev.org
 - smarttemplates.quickfolders.org/: smarttemplate4.mozdev.org
+  preserve-path: false
 - quickpasswords.quickfolders.org/: quickpasswords.mozdev.org
+  preserve-path: false
 - github.com/eyalroz/removedupes/: removedupes.mozdev.org
 - www.mozilla.org/:
   - mozdev.org
   - www.mozdev.org
+  preserve-path: false
 
   # bug 1335596
   # NOTE: changed redirect to its final destination
 - mozilla.design/: designlanguage.mozilla.org
+  preserve-path: false
 
   # bug 855746
 - mozilla.ec/:
   - mozillaecuador.org
   - www.mozillaecuador.org
+  preserve-path: false
 
   # bug 1533035
 - mozilla.github.io/geckoview/:
@@ -182,15 +203,18 @@ refracts:
 - mozilla.github.io/oi-website/: openinnovation.mozilla.org
 
 - mozilla.grouphub.com/: extranet.mozilla.org
+  preserve-path: false
 
   # jira SE-1295
 - mozilla.hosted.panopto.com/:
   - air.mozilla.org
   - air.mozilla.com
   - airmo.mozilla.org
+  preserve-path: false
 
   # bug 1538932
 - mozilla.report/: reports.telemetry.mozilla.org
+  preserve-path: false
 
   # bug 1441865
 - mozilla-releng.net/treestatus/: treestatus.mozilla.org
@@ -199,11 +223,13 @@ refracts:
   # bug 1293353
 - mozilla.service-now.com/: thehub.mozilla.com
   status: 302
+  preserve-path: false
 
 - mozilla-services.readthedocs.io/en/latest/: docs.services.mozilla.com
 
   # bug 1596457
 - mozilla-spidermonkey.github.io/: spidermonkey.dev
+  preserve-path: false
 
   # Jira SE-1354
 - people.mozilla.org/: mozillians.org
@@ -211,16 +237,19 @@ refracts:
   # bug 1459170
 - perf-html.io/: cleopatra.io
   status: 302
+  preserve-path: false
 
 - pontoon.mozilla.org/:
     # bug 985510
   - pontoon.mozillalabs.com
     # bug 1666547
   - l10n.mozilla.org
+  preserve-path: false
 
   # bug 1304806
 - phonebook.mozilla.org/: phonebook.mozilla.com
   status: 302
+  preserve-path: false
 
   # bug 1234248
 - planet.firefox.com/ux/: ux.firefox.com
@@ -228,6 +257,7 @@ refracts:
 
   # bug 1220879
 - prs.mozilla.io/: prs.paas.allizom.org
+  preserve-path: false
 
   # bug 1315316
 - qsurvey.mozilla.com/s3/FirefoxInput/:
@@ -241,14 +271,17 @@ refracts:
 - start.mozilla.org/:
   - start.mozilla.com
   - start-prod.mozilla.com
+  preserve-path: false
 
   # bug 835529
 - support.mozilla.org/: www.support.mozilla.org
+  preserve-path: false
 
   # bug 20170327
 - videos.cdn.mozilla.net/:
   - videos-cdn.mozilla.net
   - videos.mozilla.org
+  preserve-path: false
 
   # bug 1614193
 - voice.mozilla.org/fy-NL/: voice.mozilla.frl
@@ -265,9 +298,11 @@ refracts:
   # bug 1220879
 - whatsdeployed.io/: whatsdeployed.paas.allizom.org
   status: 302
+  preserve-path: false
 
   # bug 1035550
 - wiki.mozilla.org/: wiki.mozilla.com
+  preserve-path: false
 
   # bug 1290260
 - wiki.mozilla.org/DeveloperServices/HistoricalVCS/: git.mozilla.org
@@ -290,35 +325,39 @@ refracts:
 
   # bug 1320683
 - www.arewestableyet.com/: arewestableyet.com
+  preserve-path: false
 
   # bug 1185027
 - www.contributejson.org/: contributejson.org
   status: 302
+  preserve-path: false
 
   # bug 1384357
 - www.extensiontest.com/: extensiontest.com
   status: 302
+  preserve-path: false
 
   # Jira SE-1258 "Setup firefox.com to redirect to www.firefox.com"
   # This redirects all firefox.com -> www.firefox.com including paths
   # https://github.com/mozmeao/www.firefox.com/blob/master/nginx.conf
 - www.firefox.com/: firefox.com
-  preserve_path: true
+  preserve-path: true
 
   # bug 1136318
   # NOTE: changed from http->https after verifying
 - www.mozilla.de/:
   - mozilla.at
   - www.mozilla.at
+  preserve-path: false
 
 - www.mozilla.org/:
   - mozilla.org
-  preserve_path: true
   headers:
   # This is enabled by default in the nginx helm chart in the cluster repo
   #- Strict-Transport-Security: '"max-age=31536000; includeSubDomains" always'
   - X-Backend-Server: TS
   - Cache-Control: max-age=3600
+  preserve-path: true
 
   # virtual-redirect-autogen.conf merged into virtual-redirect
   # this used to be generated by a script somehow, but not now.
@@ -364,27 +403,34 @@ refracts:
   # bug 1329125
   - masterfirefoxos.mozilla.org
   status: 302
+  preserve-path: false
 
 - www.mozilla.org/: mozilla-podcasts.org
+  preserve-path: false
 
   # bug 1361114
 - www.mozilla.org/: webwewant.mozilla.org
+  preserve-path: false
 
   # bug 1169224, 1473015
 - www.mozilla.org/:
   - mozilla.org.uk
   - www.mozilla.org.uk
   status: 302
+  preserve-path: false
 
   # bug 1461516
 - www.mozilla.org/: smartdogz.org
   status: 302
+  preserve-path: false
 
   # FIXME: does this really have to be 307 different from 302 above?
 - www.mozilla.org/: www.smartdogz.org
   status: 307
+  preserve-path: false
 
 - www.mozilla.org/: triagebot.mozilla.org
+  preserve-path: false
 
   # bug 537925
   # NOTE: simplified this after testing, this simple redirect is all that is needed
@@ -546,10 +592,12 @@ refracts:
 - www.mozilla-russia.org/:
   - mozilla.com.ru
   - www.mozilla.com.ru
+  preserve-path: false
 
   # bug 1255190
 - www.openwebgames.com/: openwebgames.com
   status: 302
+  preserve-path: false
 
   # NOTE: changed from http->https after verifying
   #- www.thunderbird.net/:
@@ -651,6 +699,7 @@ refracts:
   - http://malware-error.mozilla.com/?hl=en&url=path: 'https://www.stopbadware.org/firefox?hl=en&url=path'
   - http://malware-error.mozilla.com/?url=path: 'https://www.stopbadware.org/firefox?url=path'
   - http://malware-error.mozilla.com/: https://www.mozilla.org/
+  - http://malware-error.mozilla.com/foobar: https://www.mozilla.org/foobar
 
 - dsts:
   - if: '$query_string ~ "^hl=(?<hl>[^&]+)&url=(?<url>[^&]+)"'
@@ -665,6 +714,7 @@ refracts:
   - http://phish-error.mozilla.com/?hl=en&url=path: 'https://safebrowsing.google.com/safebrowsing/report_error/?tpl=mozilla&hl=en&url=path'
   - http://phish-error.mozilla.com/?url=path: 'https://safebrowsing.google.com/safebrowsing/report_error/?tpl=mozilla&url=path'
   - http://phish-error.mozilla.com/: https://www.mozilla.org/
+  - http://phish-error.mozilla.com/foobar: https://www.mozilla.org/foobar
 
 - dsts:
   - if: '$query_string ~ "^hl=(?<hl>es)(?:-ES|-AR)&url=(?<url>[^&]+)"'
@@ -692,5 +742,5 @@ refracts:
   - http://phish-report.mozilla.com/?hl=zh-TW&url=path: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=zh-TW&url=path'
   - http://phish-report.mozilla.com/?hl=foo&url=bar: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&hl=foo&url=bar'
   - http://phish-report.mozilla.com/?url=foobar: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&url=foobar'
-  - http://phish-report.mozilla.com/foobar: https://www.mozilla.org/
+  - http://phish-report.mozilla.com/foobar: https://www.mozilla.org/foobar
   status: 302

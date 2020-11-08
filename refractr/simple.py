@@ -2,7 +2,7 @@ from nginx.config.api import KeyValueOption
 from nginx.config.api import KeyMultiValueOption
 from nginx.config.api import Section
 
-from refractr.base import BaseRefract
+from refractr.base import BaseRefract, create_target
 from refractr.url import URL
 
 class SimpleRefract(BaseRefract):
@@ -20,7 +20,7 @@ class SimpleRefract(BaseRefract):
             for src
             in self.srcs
         ]
-        if self.preserve_path:
+        if self.preserve_path and URL(self.dst).path == '/':
             tests += [
                 {URL(src, path='path').http: URL(self.dst, path='path').https}
                 for src
@@ -30,11 +30,10 @@ class SimpleRefract(BaseRefract):
 
     def render(self):
         server_name = KeyValueOption('server_name', self.server_name)
-        target = URL(self.dst)
         redirect = KeyMultiValueOption(
             'return', [
                 self.status,
-                URL(self.dst, self.preserve_path).https,
+                create_target(self.dst, self.preserve_path),
             ]
         )
         if self.headers:

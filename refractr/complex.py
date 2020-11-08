@@ -6,7 +6,7 @@ from nginx.config.api import Section, Location
 from leatherman.dictionary import head, head_body
 
 from refractr.exceptions import NonIfDstsFoundError
-from refractr.base import BaseRefract
+from refractr.base import BaseRefract, create_target
 from refractr.url import URL
 
 def match_to_path(match):
@@ -60,8 +60,7 @@ class ComplexRefract(BaseRefract):
         redirect = KeyMultiValueOption(
             'return', [
                 status or self.status,
-                # NOTE: this wasn't suffixed with .https; adding that now
-                URL(target).https,
+                create_target(target, self.preserve_path),
             ]
         )
         if location:
@@ -75,7 +74,7 @@ class ComplexRefract(BaseRefract):
         rewrite = KeyMultiValueOption(
             'rewrite', [
                 match,
-                URL(target, self.preserve_path).https,
+                create_target(target),
                 status_to_word(status or self.status),
             ]
         )

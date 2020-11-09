@@ -204,6 +204,9 @@ refracts:
 
   # bug 1596457
 - mozilla-spidermonkey.github.io/: spidermonkey.dev
+  
+  # Jira SE-1354
+- people.mozilla.org/: mozillians.org
 
   # bug 1459170
 - perf-html.io/: cleopatra.io

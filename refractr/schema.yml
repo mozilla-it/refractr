@@ -12,6 +12,8 @@ properties:
     type: array
     items:
       $ref: '#/defs/domain'
+  default-headers:
+    $ref: '#/defs/headers'
   refracts:
     $id: '#/properties/refracts'
     default: []
@@ -23,16 +25,17 @@ properties:
       - $ref: '#/defs/simple-refract'
       - $ref: '#/defs/complex-refract'
 defs:
-  header:
-    default: {}
-    title: header
-    type: object
+#  header:
+#    default: {}
+#    title: header
+#    type: object
   headers:
     default: []
     title: headers
-    type: array
-    items:
-      $ref: '#/defs/header'
+    type: object
+#    type: array
+#    items:
+#      $ref: '#/defs/header'
   domain:
     default: ''
     title: domain
@@ -150,6 +153,8 @@ defs:
     properties:
       status:
         type: integer
+      hsts-img:
+        type: boolean
       preserve-path:
         type: boolean
       wildcard-file:
@@ -181,6 +186,8 @@ defs:
         $ref: '#/defs/dsts'
       status:
         type: integer
+      hsts-img:
+        type: boolean
       preserve-path:
         type: boolean
       wildcard-file:

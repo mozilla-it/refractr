@@ -40,8 +40,8 @@ def create_test(src, path, target):
     }
 
 class ComplexRefract(BaseRefract):
-    def __init__(self, dsts, srcs, status, headers, preserve_path, wildcard_file=None, tests=None):
-        super().__init__(dsts, srcs, status, headers, preserve_path, wildcard_file, tests)
+    def __init__(self, dsts, srcs, status, headers, hsts_img, preserve_path, wildcard_file=None, tests=None):
+        super().__init__(dsts, srcs, status, headers, hsts_img, preserve_path, wildcard_file, tests)
 
     def generate_tests(self):
         assert self.dsts and isinstance(self.dsts, tuple), f'self.dsts={self.dsts}'
@@ -105,34 +105,34 @@ class ComplexRefract(BaseRefract):
 
     def render(self):
         server_name = KeyValueOption('server_name', self.server_name)
-        sections = []
+        stmts = []
+        if self.headers:
+            stmts += [
+                self.render_headers(),
+            ]
+        if self.hsts_img:
+            stmts += [
+                self.render_hsts_img(),
+            ]
         for dst in self.dsts:
             if isinstance(dst, str):
-                sections += [self.render_redirect(None, dst)]
+                stmts += [self.render_redirect(None, dst)]
             status = dst.pop('status', self.status)
             if 'if' in dst:
-                sections += self.render_if(dst, status)
+                stmts += self.render_if(dst, status)
                 continue
             try:
                 key, value = head_body(dst)
             except:
                 raise NonIfDstsFoundError(dst, status)
             if key.startswith('/'):
-                sections += [self.render_redirect(key, value, status, location=True)]
+                stmts += [self.render_redirect(key, value, status, location=True)]
             elif key.startswith('^/'):
-                sections += [self.render_rewrite(key, value, status, location=True)]
+                stmts += [self.render_rewrite(key, value, status, location=True)]
             elif key == 'redirect':
-                sections += [self.render_redirect(None, value, status)]
-
-        if self.headers:
-            return [Section(
-                'server',
-                server_name,
-                self.render_headers(),
-                *sections,
-            )]
+                stmts += [self.render_redirect(None, value, status)]
         return [Section(
             'server',
             server_name,
-            *sections,
+            *stmts,
         )]

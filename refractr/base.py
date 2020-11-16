@@ -1,4 +1,6 @@
 from nginx.config.helpers import duplicate_options
+from nginx.config.api import KeyValueOption
+from nginx.config.api import Location
 
 from leatherman.dictionary import head_body
 from leatherman.repr import __repr__
@@ -44,11 +46,12 @@ def lowercase(items):
     ]
 
 class BaseRefract:
-    def __init__(self, dsts=None, srcs=None, status=None, headers=None, preserve_path=False, wildcard_file=None, tests=None):
+    def __init__(self, dsts=None, srcs=None, status=None, headers=None, hsts_img=False, preserve_path=False, wildcard_file=None, tests=None):
         self.dsts = tuplify(dsts)
         self._srcs = tuplify(srcs)
         self.status = status
         self.headers = headers
+        self.hsts_img = hsts_img
         self.preserve_path = preserve_path
         self.wildcard_file = wildcard_file
         self.tests = tuplify((tests or []) + self.generate_tests())
@@ -105,6 +108,7 @@ class BaseRefract:
             srcs=listify(self.srcs),
             status=self.status,
             headers=self.headers,
+            hsts_img=self.hsts_img,
             preserve_path=self.preserve_path,
             wildcard_file=self.wildcard_file,
             tests=listify(self.tests),
@@ -114,10 +118,18 @@ class BaseRefract:
         return duplicate_options(
             'add_header',
             [
-                list(head_body(header))
-                for header
-                in self.headers
+                list(item)
+                for item
+                in self.headers.items()
             ],
+        )
+
+    def render_hsts_img(self):
+        return Location(
+            '/set_hsts.gif',
+            KeyValueOption(
+                'return',
+                200)
         )
 
     @property

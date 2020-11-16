@@ -71,16 +71,26 @@ class Refractr:
         with open(config, 'r') as f:
             cfg = yaml.safe_load(f)
         self.default_domains = cfg.get('default-domains', [])
+        self.default_headers = cfg.get('default-headers', {})
         self.refracts = [
-            Refractr.load_refract(spec)
+            self.load_refract(spec)
             for spec
             in cfg['refracts']
         ]
 
     __repr__ = __repr__
 
-    @staticmethod
-    def load_refract(spec):
+    def set_headers(self, headers):
+        results = self.default_headers.copy()
+        if headers:
+            for key, value in headers.items():
+                if value == 'remove-header':
+                    results.pop(key)
+                    continue
+                results[key] = value
+        return results
+
+    def load_refract(self, spec):
         # this is a simple http->https redirect
         if isinstance(spec, str):
             # nginx ingress will give a 308 status code, not 301
@@ -92,14 +102,15 @@ class Refractr:
         dsts = spec.pop('dsts', None)
         srcs = spec.pop('srcs', None)
         status = spec.pop('status', 301)
-        headers = spec.pop('headers', None)
+        headers = self.set_headers(spec.pop('headers', None))
+        hsts_img = spec.pop('hsts-img', False)
         preserve_path = spec.pop('preserve-path', True)
         wildcard_file = spec.pop('wildcard-file', None)
         if len(spec) == 1:
             dsts, srcs = head_body(spec)
         if isinstance(dsts, list):
-            return ComplexRefract(dsts, srcs, status, headers, preserve_path, wildcard_file, tests)
-        return SimpleRefract(dsts, srcs, status, headers, preserve_path, wildcard_file)
+            return ComplexRefract(dsts, srcs, status, headers, hsts_img, preserve_path, wildcard_file, tests)
+        return SimpleRefract(dsts, srcs, status, headers, hsts_img, preserve_path, wildcard_file)
 
     def _filter(self, patterns=None, only=None, count=None, all_sources=False):
         if patterns == None:

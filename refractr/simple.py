@@ -1,13 +1,13 @@
 from nginx.config.api import KeyValueOption
 from nginx.config.api import KeyMultiValueOption
-from nginx.config.api import Section
+from nginx.config.api import Section, Location
 
 from refractr.base import BaseRefract, create_target
 from refractr.url import URL
 
 class SimpleRefract(BaseRefract):
-    def __init__(self, dsts, srcs, status, headers, preserve_path, wildcard_file):
-        super().__init__(dsts, srcs, status, headers, preserve_path, wildcard_file)
+    def __init__(self, dsts, srcs, status, headers, hsts_img, preserve_path, wildcard_file):
+        super().__init__(dsts, srcs, status, headers, hsts_img, preserve_path, wildcard_file)
 
     @property
     def dst(self):
@@ -36,15 +36,20 @@ class SimpleRefract(BaseRefract):
                 create_target(self.dst, self.preserve_path),
             ]
         )
+        stmts = []
         if self.headers:
-            return [Section(
-                'server',
-                server_name,
+            stmts += [
                 self.render_headers(),
-                redirect,
-            )]
+            ]
+        if self.hsts_img:
+            stmts += [
+                self.render_hsts_img(),
+            ]
+        stmts += [
+            redirect
+        ]
         return [Section(
             'server',
             server_name,
-            redirect,
+            *stmts,
         )]

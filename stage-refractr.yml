@@ -5,6 +5,9 @@ default-domains:
   - stage.mozilla-redirects.xyz
   - stage.refractr.mozit.cloud
 
+default-headers:
+  Strict-Transport-Security: '"max-age=31536000; includeSubDomains" always'
+
 refracts:
 
 - mozilla.org/:

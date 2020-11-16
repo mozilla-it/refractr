@@ -7,7 +7,7 @@ default-domains:
   - refractr.mozilla.org
 
 default-headers:
-  Strict-Transport-Security: '"max-age=31536000; includeSubDomains" always'
+  Strict-Transport-Security: '"max-age=60; includeSubDomains" always'
 
 refracts:
 

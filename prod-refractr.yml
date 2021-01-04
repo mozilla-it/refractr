@@ -112,6 +112,10 @@ refracts:
 - donate.mozilla.org/: sendto.mozilla.org
   status: 307
 
+  # SE-1371
+- searchfox.org/:
+  - dxr.mozilla.org
+
   # bug 1502902
   # FIXME: valid anymore, considering the redirects below?
 - events.mozilla.org/techspeakers/: techspeakers.mozilla.org

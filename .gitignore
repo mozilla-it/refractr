@@ -151,6 +151,7 @@ refractr/image/version
 # ignore terraform files
 .terraform
 terraform.tfstate*
+.terraform.lock.hcl
 
 # ignore the ./.tld-cache file that tldextract creates
 refractr/.tld-cache

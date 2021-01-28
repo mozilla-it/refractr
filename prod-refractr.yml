@@ -391,6 +391,8 @@ refracts:
 
 - www.mozilla.org/: triagebot.mozilla.org
 
+- www.mozilla.org/: send.firefox.com
+
   # bug 537925
   # NOTE: simplified this after testing, this simple redirect is all that is needed
 - www.mozilla.org/contribute/: contribute.mozilla.org

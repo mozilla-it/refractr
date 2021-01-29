@@ -126,6 +126,8 @@ refracts:
   - mozillafoundation.com
   - mozillafoundation.net
 
+- fpn.firefox.com/: testpilot.firefox.com
+
   # bug 1334200
 - github.com/mozilla/popcorn-js/:
   - popcornjs.org

@@ -259,7 +259,7 @@ refracts:
   - videos.mozilla.org
 
   # bug 1614193
-- voice.mozilla.org/fy-NL/: voice.mozilla.frl
+- commonvoice.mozilla.org/fy-NL/: voice.mozilla.frl
   status: 302
 
   # bug 1419948

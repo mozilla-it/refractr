@@ -253,6 +253,10 @@ refracts:
   # bug 835529
 - support.mozilla.org/: www.support.mozilla.org
 
+  # SE-1564
+- support.mozilla.org/en-US/kb/canary-domain-use-application-dnsnet:  use-application-dns.net
+
+
   # bug 20170327
 - videos.cdn.mozilla.net/:
   - videos-cdn.mozilla.net

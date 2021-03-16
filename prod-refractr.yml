@@ -71,6 +71,12 @@ refracts:
   # bug 1627952
 - community.mozilla.org/campaigns/firefox-quantum-sprint/: firefoxsprint.mozilla.community
 
+  # bug 1697571
+- community.mozilla.org/es/groups/mozilla-hispano/: mozilla-hispano.org
+
+  # bug 1697638
+- community.mozilla.org/es/groups/mozilla-venezuela/: mozillavenezuela.org
+
   # bug 572191
   # NOTE: changed from http->https after verifying
 - crash-stats.mozilla.com/:

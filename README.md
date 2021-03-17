@@ -8,7 +8,7 @@ Containerized HTTP redirect and rewrite service with automatic Let's Encrypt SSL
 * [Refractr Architecture](docs/refractr-architecture.md)
 
 # Refractr at Mozilla
-Refractr at Mozilla runs in our itse-apps cluster and is installed via a HelmRelease in the it-sre-apps github repo.
+Refractr at Mozilla runs in our itse-apps cluster. It is installed via a HelmRelease in the it-sre-apps github repo.
 
 # Installing refractr in Kubernetes outside Mozilla
 See the [helm chart](https://github.com/mozilla-it/helm-charts/tree/main/charts/refractr/README.md)

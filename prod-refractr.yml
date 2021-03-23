@@ -72,10 +72,14 @@ refracts:
 - community.mozilla.org/campaigns/firefox-quantum-sprint/: firefoxsprint.mozilla.community
 
   # bug 1697571
-- community.mozilla.org/es/groups/mozilla-hispano/: mozilla-hispano.org
+- community.mozilla.org/es/groups/mozilla-hispano/:
+  - mozilla-hispano.org
+  - www.mozilla-hispano.org
 
   # bug 1697638
-- community.mozilla.org/es/groups/mozilla-venezuela/: mozillavenezuela.org
+- community.mozilla.org/es/groups/mozilla-venezuela/: 
+  - mozillavenezuela.org
+  - www.mozillavenezuela.org
 
   # bug 572191
   # NOTE: changed from http->https after verifying

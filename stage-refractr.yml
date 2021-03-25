@@ -30,5 +30,5 @@ refracts:
   srcs: addons.mozilla.com
   status: 302
   tests:
-  - http://addons.mozilla.com/: 'https://addons.mozilla.org/'
-  - http://addons.mozilla.com/en-us/thunderbird/en/dictionaries/: 'https://addons.mozilla.org/thunderbird/dictionaries/?lang=en'
+  - http://addons.mozilla.com/: 'https://addons.mozilla.com/'
+  - http://addons.mozilla.com/en-us/thunderbird/en/dictionaries/: 'https://addons.mozilla.com/thunderbird/dictionaries/?lang=en'

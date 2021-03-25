@@ -630,25 +630,27 @@ refracts:
   - http://phonebook.mozilla.org/search/test: https://people.mozilla.org/s?query=test&who=staff
 
   # addons.mozilla.com import to refractr
-  - nginx: |
-    server {
-          server_name addons.mozilla.com;
-          location / {
-                  rewrite ^/ja(?:-JP-mac)?/(firefox)(.*)$ https://addons.mozilla.jp/$1$2 permanent;
-                  rewrite ^/(\w+(?:-\w+(?:-mac)?)?)/thunderbird/(.+?)/dictionaries/?$ https://addons.mozilla.org/thunderbird/dictionaries/?lang=$1 redirect;
-                  rewrite ^/(\w+(?:-\w+(?:-mac)?)?)/seamonkey/(.+?)/dictionaries/?$ https://addons.mozilla.org/$1/seamonkey/browse/type:3 redirect;
-                  rewrite ^/(\w+(?:-\w+(?:-mac)?)?)/(.+?)/(.+?)/dictionaries/?$ https://addons.mozilla.org/firefox/dictionaries/?lang=$1 redirect;
-                  rewrite ^/(ca|cs|da|de|en-US|el|es-ES|eu|fa|fi|fr|ga-IE|he|id|it|ja|ko|mn|nl|pl|pt-BR|pt-PT|ro|ru|sk|sq|sv-SE|uk|zh-CN|zh-TW|cy|tr|vi)/(.+?)/(\d.+?)/search-engines/?$ https://addons.mozilla.org/$1/firefox/browse/type:4/cat:all?sort=name redirect;
-                  rewrite ^/(\w+(-\w+(-mac)?)?)/(.+?)/(.+?)/search-engines/?$ https://addons.mozilla.org/en-US/firefox/browse/type:4/cat:all?sort=name redirect;
-                  rewrite ^/(ca|cs|da|de|en-US|el|es-ES|eu|fa|fi|fr|ga-IE|he|id|it|ja|ko|mn|nl|pl|pt-BR|pt-PT|ro|ru|sk|sq|sv-SE|uk|zh-CN|zh-TW|cy|tr|vi)/(.+?)/(\d.+?)/(.*)$ https://addons.mozilla.org/$1/$2/$4 redirect;
-                  rewrite ^/(ca|cs|da|de|en-US|el|es-ES|eu|fa|fi|fr|ga-IE|he|id|it|ja|ko|mn|nl|pl|pt-BR|pt-PT|ro|ru|sk|sq|sv-SE|uk|zh-CN|zh-TW|cy|tr|vi)(/.*)?$ https://addons.mozilla.org/$1$2 redirect;
-                  rewrite ^/(\w+(-\w+(-mac)?)?)/?$ https://addons.mozilla.org/ redirect;
-                  rewrite ^/(\w+(-\w+(-mac)?)?)/firefox/bookmarks/?$ https://addons.mozilla.org/firefox/bookmarks/ redirect;
-                  rewrite ^/(\w+(-\w+(-mac)?)?)/(.+?)/(.+?)/(.*)$ https://addons.mozilla.org/$4/$6 redirect;
-                  rewrite ^/(\w+(-\w+(-mac)?)?)/(.*)$ https://addons.mozilla.org/$4 redirect;
-          }
-  }
-  
+- dsts:
+  - ^/ja(?:-JP-mac)?/(firefox)(.*): 'https://addons.mozilla.jp/$1$2'
+  - ^/(\w{2,3}(?:-\w{2}(?:-mac)?)?)/thunderbird/(.+?)/dictionaries/?: 'https://addons.mozilla.org/thunderbird/dictionaries/?lang=$1'
+  - ^/(\w{2,3}(?:-\w{2}(?:-mac)?)?)/seamonkey/(.+?)/dictionaries/?: 'https://addons.mozilla.org/$1/seamonkey/browse/type:3'
+  - ^/(\w{2,3}(?:-\w{2}(?:-mac)?)?)/(.+?)/(.+?)/dictionaries/?: 'https://addons.mozilla.org/firefox/dictionaries/?lang=$1'
+  - ^/(ca|cs|da|de|en-US|el|es-ES|eu|fa|fi|fr|ga-IE|he|id|it|ja|ko|mn|nl|pl|pt-BR|pt-PT|ro|ru|sk|sq|sv-SE|uk|zh-CN|zh-TW|cy|tr|vi)/(.+?)/(\d.+?)/search-engines/?: 'https://addons.mozilla.org/$1/firefox/browse/type:4/cat:all?sort=name'
+  - ^/(\w{2,3}(-\w{2}(-mac)?)?)/(.+?)/(.+?)/search-engines/?: 'https://addons.mozilla.org/en-US/firefox/browse/type:4/cat:all?sort=name'
+  - ^/(ca|cs|da|de|en-US|el|es-ES|eu|fa|fi|fr|ga-IE|he|id|it|ja|ko|mn|nl|pl|pt-BR|pt-PT|ro|ru|sk|sq|sv-SE|uk|zh-CN|zh-TW|cy|tr|vi)/(.+?)/(\d.+?)/(.*): 'https://addons.mozilla.org/$1/$2/$4'
+  - ^/(ca|cs|da|de|en-US|el|es-ES|eu|fa|fi|fr|ga-IE|he|id|it|ja|ko|mn|nl|pl|pt-BR|pt-PT|ro|ru|sk|sq|sv-SE|uk|zh-CN|zh-TW|cy|tr|vi)(/.*)?: 'https://addons.mozilla.org/$1$2'
+  - ^/(\w{2,3}(-\w{2}(-mac)?)?)/?: 'https://addons.mozilla.org/'
+  - ^/(\w{2,3}(-\w{2}(-mac)?)?)/firefox/bookmarks/?: 'https://addons.mozilla.org/firefox/bookmarks/'
+  - ^/(\w{2,3}(-\w{2}(-mac)?)?)/(.+?)/(.+?)/(.*): 'https://addons.mozilla.org/$4/$6'
+  - ^/(\w{2,3}(-\w{2}(-mac)?)?)/(.*): 'https://addons.mozilla.org/$4'
+  - /: addons.mozilla.org/
+  srcs: addons.mozilla.com
+  status: 302
+  tests:
+    # this test must be specified because rewrites `^/(.*)` will not generate a test
+  - http://addons.mozilla.com/ja-JP-mac/firefox/: https://addons.mozilla.jp/ja-JP-mac/firefox/
+  #- http://addons.mozilla.com/en-us/seamonkey/: https://addons.mozilla.org/en-us/seamonkey/browse/type:3
+  - http://addons.mozilla.com/en-us/seamonkey/: https://addons.mozilla.org/test/should/fail
 
 #Redirect temp / https://addons.mozilla.org/
 

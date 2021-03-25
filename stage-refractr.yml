@@ -25,7 +25,6 @@ refracts:
 
 - dsts:
   - ^/ja(?:-JP-mac)?/(firefox)(.*): 'addons.mozilla.jp/$1$2'
-  - /: addons.mozilla.org/
   srcs: addons.mozilla.com
   status: 302
   tests:

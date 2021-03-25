@@ -24,7 +24,8 @@ refracts:
   - '*.malware-error.allizom.org'
 
 - dsts:
-  - ^/ja(?:-JP-mac)?/(firefox)(.*): 'https://addons.mozilla.jp/$1$2'
+  - ^/ja(?:-JP-mac)?/(firefox)(.*): 'addons.mozilla.jp/$1$2'
+  - ^/(.+): 'www.mozilla.org/about/partnerships/contentservices/$1/?utm_source=content-moz-org&utm_medium=referral&utm_content=content_team'
   - /: addons.mozilla.org/
   srcs: addons.mozilla.com
   status: 302

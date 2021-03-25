@@ -26,7 +26,7 @@ refracts:
 - dsts:
   #- ^/ja(?:-JP-mac)?/(firefox)(.*): 'addons.mozilla.jp/$1$2'
   - ^/(\w+(?:-\w+(?:-mac)?)?)/thunderbird/(.+?)/dictionaries/?: 'addons.mozilla.org/thunderbird/dictionaries/?lang=$1'
-  - /: addons.mozilla.org/
+  #- /: addons.mozilla.org/
   srcs: addons.mozilla.com
   status: 302
   tests:

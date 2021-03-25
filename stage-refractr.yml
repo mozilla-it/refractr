@@ -25,7 +25,10 @@ refracts:
 
 - dsts:
   #- ^/ja(?:-JP-mac)?/(firefox)(.*): 'addons.mozilla.jp/$1$2'
-  - ^/(\w+(?:-\w+(?:-mac)?)?)/thunderbird/(.+?)/dictionaries/?: 'addons.mozilla.org/thunderbird/dictionaries/?lang=$1'
+  #- ^/(\w+(?:-\w+(?:-mac)?)?)/thunderbird/(.+?)/dictionaries/?: 'addons.mozilla.org/thunderbird/dictionaries/?lang=$1'
   #- /: addons.mozilla.org/
-  srcs: addons.mozilla.com
+  - https://addons.mozilla.com/en-us/thunderbird/en/dictionaries/
+  srcs: https://addons.mozilla.org/thunderbird/dictionaries/?lang=en
   status: 302
+  tests:
+  - https://addons.mozilla.com/en-us/thunderbird/en/dictionaries/: 'https://addons.mozilla.org/thunderbird/dictionaries/?lang=en'

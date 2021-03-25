@@ -24,8 +24,8 @@ refracts:
   - '*.malware-error.allizom.org'
 
 - dsts:
-  - ^/ja(?:-JP-mac)?/(firefox)(.*): 'addons.mozilla.jp/$1$2'
-  - ^/(\w+(?:-\w+(?:-mac)?)?)/thunderbird/(.+?)/dictionaries/?: 'https://addons.mozilla.org/thunderbird/dictionaries/?lang=$1'
+  #- ^/ja(?:-JP-mac)?/(firefox)(.*): 'addons.mozilla.jp/$1$2'
+  - ^/(\w+(?:-\w+(?:-mac)?)?)/thunderbird/(.+?)/dictionaries/?: 'addons.mozilla.org/thunderbird/dictionaries/?lang=$1'
   - /: addons.mozilla.org/
   srcs: addons.mozilla.com
   status: 302

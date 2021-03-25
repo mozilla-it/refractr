@@ -198,7 +198,7 @@ class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
     @lru_cache()
     def VERSION(self):
         try:
-            return git('describe --abbrev=7 --always')
+            return git('describe --abbrev=7 --always --tags')
         except (NotGitRepoError, GitCommandNotFoundError):
             return self('VERSION')
 

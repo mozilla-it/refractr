@@ -5,7 +5,7 @@ from nginx.config.api import KeyMultiValueOption
 from nginx.config.api import Section, Location
 from leatherman.dictionary import head, head_body
 
-from refractr.exceptions import NonIfDstsFoundError
+from refractr.exceptions import NonIfDstsFoundError, LocationNotFoundInRewriteMatchError
 from refractr.base import BaseRefract, create_target
 from refractr.url import URL
 

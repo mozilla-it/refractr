@@ -24,12 +24,12 @@ refracts:
   - '*.malware-error.allizom.org'
 
 - dsts:
-  - /ja(?:-JP-mac)?/(firefox)(.*): 'addons.mozilla.jp/$1$2'
+  - ^/ja(?:-JP-mac)?/(firefox)(.*): 'addons.mozilla.jp/$1$2'
   - /: addons.mozilla.org/
   srcs: addons.mozilla.com
   status: 302
   tests:
     # this test must be specified because rewrites `^/(.*)` will not generate a test
-  - http://addons.mozilla.com/ja-JP-mac/firefox/: https://addons.mozilla.jp/ja-JP-mac/firefox/
+  - http://addons.mozilla.com/ja-JP-mac/firefox/: https://addons.mozilla.jp/firefox/
   #- http://addons.mozilla.com/en-us/seamonkey/: https://addons.mozilla.org/en-us/seamonkey/browse/type:3
 #  - http://addons.mozilla.com/en-us/seamonkey/: https://addons.mozilla.org/test/should/fail

@@ -223,9 +223,6 @@ refracts:
 
 - mozilla-services.readthedocs.io/en/latest/: docs.services.mozilla.com
 
-  # bug 1596457
-- mozilla-spidermonkey.github.io/: spidermonkey.dev
-
   # Jira SE-1354
 - people.mozilla.org/: mozillians.org
 

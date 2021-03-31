@@ -250,6 +250,9 @@ refracts:
   # bug 1220879
 - prs.mozilla.io/: prs.paas.allizom.org
 
+  # SE-1619, jira
+- proton-form.herokuapp.com/: foxfooding.mozilla.community
+
   # bug 1315316
 - qsurvey.mozilla.com/s3/FirefoxInput/:
   - input.mozilla.org

@@ -185,6 +185,9 @@ refracts:
   - mozdev.org
   - www.mozdev.org
 
+  # SE-1561
+- mozilla.crowdicity.com/: ideas.mozilla.org
+
   # bug 1335596
   # NOTE: changed redirect to its final destination
 - mozilla.design/: designlanguage.mozilla.org

@@ -185,9 +185,6 @@ refracts:
   - mozdev.org
   - www.mozdev.org
 
-  # SE-1561
-- mozilla.crowdicity.com/: ideas.mozilla.org
-
   # bug 1335596
   # NOTE: changed redirect to its final destination
 - mozilla.design/: designlanguage.mozilla.org
@@ -202,6 +199,9 @@ refracts:
   - gv.dev
   - geckoview.dev
   status: 302
+
+  # SE-1561, SE-1666
+- mozilla.github.io/imo-placeholder/: ideas.mozilla.org
 
 - mozilla.github.io/oi-website/: openinnovation.mozilla.org
 

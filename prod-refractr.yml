@@ -205,8 +205,6 @@ refracts:
 
 - mozilla.github.io/oi-website/: openinnovation.mozilla.org
 
-- mozilla.grouphub.com/: extranet.mozilla.org
-
   # jira SE-1295
 - mozilla.hosted.panopto.com/:
   - air.mozilla.org

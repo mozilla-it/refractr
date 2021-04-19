@@ -16,6 +16,9 @@ refracts:
   - activations.mozilla.com
   - activations.mozilla.org
 
+  # SE-1683
+- addons.mozilla.org/: addons.mozilla.com
+
   # bug 503731, 528747, 537144
 - addons.mozilla.org/:
   - extensions.mozilla.org

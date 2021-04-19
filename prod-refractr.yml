@@ -14,12 +14,9 @@ refracts:
   # bug 998357
 - activations.cdn.mozilla.net/:
   - activations.mozilla.com
-  - activations.mozilla.org
+  - activations.mozilla.org 
 
-  # SE-1683
-- addons.mozilla.org/: addons.mozilla.com
-
-  # bug 503731, 528747, 537144
+  # bug 503731, 528747, 537144, SE-1683
 - addons.mozilla.org/:
   - extensions.mozilla.org
   - themes.mozilla.org
@@ -28,6 +25,7 @@ refracts:
   - addons.update.mozilla.org
   - firefoxaddons.com
   - www.firefoxaddons.com
+  - addons.mozilla.com
 
   # bug 1342698
   # NOTE: changed from http->https after verifying

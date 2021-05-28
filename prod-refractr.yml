@@ -511,6 +511,25 @@ refracts:
   - downloadmozillafirefox.com
   # bug 948963
   - spark.mozilla.org
+  # SE-1862
+  - boot2gecko.net
+  - www.boot2gecko.net
+  - firefoxos.com
+  - www.firefoxos.com
+  - firefox-academic-centers.org
+  - www.firefox-academic-centers.org
+  - firefox-academic-centers.com
+  - www.firefox-academic-centers.com
+  - firefox-academic-center.org
+  - www.firefox-academic-center.org
+  - firefox-academic-center.com
+  - www.firefox-academic-center.com
+  - mozillaservice.org
+  - www.mozillaservice.org
+  - opentochoice.org
+  - www.opentochoice.org
+  - onebillionplusyou.com
+  - www.onebillionplusyou.com
   status: 302
 
   # bug 1351245

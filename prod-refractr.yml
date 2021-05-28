@@ -391,6 +391,8 @@ refracts:
   - masterfirefoxos.mozilla.org
   # SE-1224
   - inhumanads.com
+  - www.inhumanads.com
+  - staging.inhumanads.com
   status: 302
 
 - www.mozilla.org/: mozilla-podcasts.org

@@ -143,6 +143,14 @@ refracts:
   - mozillafoundation.com
   - mozillafoundation.net
 
+  # SE-1677
+- foundation.mozilla.org/en/artifacts/thimble/:
+  - thimble.mozilla.org
+
+  # SE-1677
+- foundation.mozilla.org/en/artifacts/x-ray-goggles/:
+  - goggles.mozilla.org
+
 - fpn.firefox.com/: testpilot.firefox.com
 
   # bug 1334200

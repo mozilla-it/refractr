@@ -389,6 +389,8 @@ refracts:
   - mobilepartners.mozilla.org
   # bug 1329125
   - masterfirefoxos.mozilla.org
+  # SE-1224
+  - inhumanads.com
   status: 302
 
 - www.mozilla.org/: mozilla-podcasts.org

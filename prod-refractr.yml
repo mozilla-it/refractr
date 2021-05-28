@@ -92,8 +92,11 @@ refracts:
   - talkback-public.mozilla.org
   - talkback-reports.mozilla.org
 
+- developer.mozilla.org/:
   # bug 695084
-- developer.mozilla.org/: dev.mozilla.org
+  - dev.mozilla.org
+  # SE-1571
+  - developer.cdn.mozilla.net
 
   # bug 811323
 - developer.mozilla.org/demos/devderby/: devderby.mozilla.org

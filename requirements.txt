@@ -1,12 +1,13 @@
 doit
-black
 ruamel.yaml
 leatherman==0.1.10
 pytest==6.1.1
 nginx-config-builder==1.0.1
-aiohttp==3.6.3
-jinja2==2.11.2
-pyyaml==5.3.1
+aiohttp==3.7.4.post0
+jinja2==2.11.3
 jsonschema==3.2.0
 python-decouple==3.3
 tldextract==3.0.0
+
+# Not used directly; only included to fix a compatible version
+idna==2.10

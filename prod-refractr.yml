@@ -14,7 +14,7 @@ refracts:
   # bug 998357
 - activations.cdn.mozilla.net/:
   - activations.mozilla.com
-  - activations.mozilla.org 
+  - activations.mozilla.org
 
   # bug 503731, 528747, 537144, SE-1683
 - addons.mozilla.org/:
@@ -81,7 +81,7 @@ refracts:
 - discourse.mozilla.org/c/community-portal/mozilla-hispano/304: foro.mozilla-hispano.org
 
   # bug 1697638
-- community.mozilla.org/es/groups/mozilla-venezuela/: 
+- community.mozilla.org/es/groups/mozilla-venezuela/:
   - mozillavenezuela.org
   - www.mozillavenezuela.org
 
@@ -142,6 +142,7 @@ refracts:
 - foundation.mozilla.org/:
   - mozillafoundation.com
   - mozillafoundation.net
+  - surveillance.mozilla.org
 
   # SE-1677
 - foundation.mozilla.org/en/artifacts/thimble/: thimble.mozilla.org

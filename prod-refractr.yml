@@ -142,6 +142,7 @@ refracts:
 - foundation.mozilla.org/:
   - mozillafoundation.com
   - mozillafoundation.net
+  # SE-1627
   - surveillance.mozilla.org
 
   # SE-1677

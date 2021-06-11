@@ -266,8 +266,8 @@ refracts:
   # SE-1619, jira
 - proton-form.herokuapp.com/: foxfooding.mozilla.community
 
-  # bug 1315316
-- qsurvey.mozilla.com/s3/FirefoxInput/:
+  # SE-1902
+- ideas.mozilla.org/:
   - input.mozilla.org
   - input.mozilla.com
   - m.input.mozilla.org

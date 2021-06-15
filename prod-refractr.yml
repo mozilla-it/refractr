@@ -761,3 +761,7 @@ refracts:
   - http://phish-report.mozilla.com/?url=foobar: 'https://safebrowsing.google.com/safebrowsing/report_phish/?tpl=mozilla&url=foobar'
   - http://phish-report.mozilla.com/foobar: https://www.mozilla.org/foobar
   status: 302
+
+  # bug 1716653
+- relay.firefox.com/: mozmail.com
+  status: 302

@@ -765,3 +765,6 @@ refracts:
   # bug 1716653
 - relay.firefox.com/: mozmail.com
   status: 302
+
+- mozilla-hub.atlassian.net/: jira.mozilla.com
+  status: 302

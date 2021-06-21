@@ -266,13 +266,14 @@ refracts:
   # SE-1619, jira
 - proton-form.herokuapp.com/: foxfooding.mozilla.community
 
-  # SE-1902
+  # SE-1902, SE-2005
 - ideas.mozilla.org/:
   - input.mozilla.org
   - input.mozilla.com
   - m.input.mozilla.org
   - m.input.mozilla.com
   - feedback.mozilla.org
+  preserve-path: false
   status: 302
 
 - start.mozilla.org/:
@@ -284,7 +285,6 @@ refracts:
 
   # SE-1564
 - support.mozilla.org/en-US/kb/canary-domain-use-application-dnsnet:  use-application-dns.net
-
 
   # bug 20170327
 - videos.cdn.mozilla.net/:

@@ -366,6 +366,8 @@ refracts:
 - www.mozilla.org/:
   # bug 1598043
   - mozilla.ch
+  # bug 1660250
+  # jira SE-2237
   - www.mozilla.ch
   # bug 1559362
   - mozilla-uk.org

@@ -768,3 +768,9 @@ refracts:
 
 - mozilla-hub.atlassian.net/: jira.mozilla.com
   status: 302
+
+  # bug 1660250
+- dsts:
+  - /: community.mozilla.org/en/groups/tech-speakers/
+  srcs:
+  - techspeakers.mozilla.org

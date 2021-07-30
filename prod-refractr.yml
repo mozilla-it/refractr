@@ -240,7 +240,10 @@ refracts:
 - mozilla-services.readthedocs.io/en/latest/: docs.services.mozilla.com
 
   # Jira SE-1354
-- people.mozilla.org/: mozillians.org
+- people.mozilla.org/:
+  - mozillians.org
+  # bug 1617378
+  - www.mozillians.org
 
   # bug 1459170
 - perf-html.io/: cleopatra.io

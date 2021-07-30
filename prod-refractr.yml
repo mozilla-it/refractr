@@ -770,7 +770,4 @@ refracts:
   status: 302
 
   # bug 1660250
-- dsts:
-  - /: community.mozilla.org/en/groups/tech-speakers/
-  srcs:
-  - techspeakers.mozilla.org
+- community.mozilla.org/en/groups/tech-speakers/: techspeakers.mozilla.org

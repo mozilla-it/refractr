@@ -140,11 +140,6 @@ refracts:
 - community.mozilla.org/en/groups/tech-speakers/:
   - techspeakers.mozilla.org
 
-  # bug 1660250
-- dsts:
-  - /communities/mozilla-tech-speakers: community.mozilla.org/en/groups/tech-speakers/
-  srcs: developer.mozilla.com
-
   # bug 1195576
   # FIXME: this commented out redirect is incorrect, added correct one below
   #- mozillafoundation.org:

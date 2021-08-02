@@ -135,9 +135,15 @@ refracts:
   # SE-1371
 - searchfox.org/:  dxr.mozilla.org
 
-  # bug 1502902
-  # FIXME: valid anymore, considering the redirects below?
-- events.mozilla.org/techspeakers/: techspeakers.mozilla.org
+  # bug 1502902 (formerly events.mozilla.org/techspeakers/)
+  # bug 1660250
+- community.mozilla.org/en/groups/tech-speakers/:
+  - techspeakers.mozilla.org
+
+  # bug 1660250
+- dsts:
+  - /communities/mozilla-tech-speakers: community.mozilla.org/en/groups/tech-speakers/
+  srcs: developer.mozilla.com
 
   # bug 1195576
   # FIXME: this commented out redirect is incorrect, added correct one below
@@ -774,6 +780,3 @@ refracts:
 
 - mozilla-hub.atlassian.net/: jira.mozilla.com
   status: 302
-
-  # bug 1660250
-- community.mozilla.org/en/groups/tech-speakers/: techspeakers.mozilla.org

@@ -325,9 +325,6 @@ refracts:
   # bug 713065
 - wiki.mozilla.org/MarketingGuide/: guides.mozilla.org
 
-  # bug 1492531
-- wiki.mozilla.org/Pastebin/: pastebin.mozilla.org
-
   # bug 804895
 - wiki.mozilla.org/Platform/AreWeFunYet/:
   - arewefunyet.com

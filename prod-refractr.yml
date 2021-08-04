@@ -167,9 +167,6 @@ refracts:
   - hub.mozilla.com
   - hub.mozilla.org
 
-  # bug 613649
-- krakenbenchmark.mozilla.org/: krakenbenchmark.mozilla.com
-
   # bug 784556, 880423
 - mana.mozilla.org/wiki/display/SD/print.mozilla.com/: print.mozilla.com
 

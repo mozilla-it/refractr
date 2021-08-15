@@ -704,6 +704,44 @@ refracts:
   srcs: reps.mozilla.org
   status: 307
 
+  # SE-2412
+- dsts:
+  - if: '$request_uri ~ "^/update_check/(?<id>\d+)"'
+    ^.*$: 'versioncheck.addons.mozilla.org/en-US/themes/update-check/$id?src=gp'
+  - if: '$request_uri ~ "^(?<id>(?:/\w{2,3}(?:-\w{2,6})?))/update_check/(?<update_id>\d+)"'
+    ^.*$: 'versioncheck.addons.mozilla.org$id/themes/update-check/$update_id?src=gp'
+  - if: '$request_uri ~ "^(?:/\w{2,3}(?:-\w{2,6})?)?/gallery/[Dd]esigner/(?<id>.*)"'
+    ^.*$: 'addons.mozilla.org/firefox/user/$id/'
+  - if: '$request_uri ~ "^(?:/\w{2,3}(?:-\w{2,6})?)?/persona/(?<id>\d+)"'
+    ^.*$: 'addons.mozilla.org/persona/$id'
+  - if: '$request_uri ~ "^(?:/\w{2,3}(?:-\w{2,6})?)?/gallery/All/Movers"'
+    ^.*$: 'addons.mozilla.org/firefox/themes/?sort=up-and-coming'
+  - if: '$request_uri ~ "^(?:/\w{2,3}(?:-\w{2,6})?)?/gallery/All/Recent"'
+    ^.*$: 'addons.mozilla.org/firefox/themes/?sort=created'
+  - if: '$request_uri ~ "^(?:/\w{2,3}(?:-\w{2,6})?)?/gallery/All/Popular"'
+    ^.*$: 'addons.mozilla.org/firefox/themes/?sort=popular'
+  - redirect: addons.mozilla.org/themes/
+  srcs:
+  - getpersonas.com
+  - www.getpersonas.com
+  tests:
+  - http://getpersonas.com/update_check/1234: 'https://versioncheck.addons.mozilla.org/en-US/themes/update-check/1234?src=gp'
+  - http://www.getpersonas.com/update_check/5678: 'https://versioncheck.addons.mozilla.org/en-US/themes/update-check/5678?src=gp'
+  - http://getpersonas.com/a_c-12_d/update_check/1234: 'https://versioncheck.addons.mozilla.org/a_c-12_d/themes/update-check/1234?src=gp'
+  - http://www.getpersonas.com/a_c-12_d/update_check/12345678: 'https://versioncheck.addons.mozilla.org/a_c-12_d/themes/update-check/12345678?src=gp'
+  - http://getpersonas.com/a_c/gallery/Designer/something: 'https://addons.mozilla.org/firefox/user/something/'
+  - http://www.getpersonas.com/a_c/gallery/designer/something: 'https://addons.mozilla.org/firefox/user/something/'
+  - http://getpersonas.com/a_c/persona/456: 'https://addons.mozilla.org/persona/456'
+  - http://www.getpersonas.com/persona/45: 'https://addons.mozilla.org/persona/45'
+  - http://getpersonas.com/gallery/All/Movers: 'https://addons.mozilla.org/firefox/themes/?sort=up-and-coming'
+  - http://www.getpersonas.com/12d-a1/gallery/All/Movers: 'https://addons.mozilla.org/firefox/themes/?sort=up-and-coming'
+  - http://getpersonas.com/12_-a1/gallery/All/Recent: 'https://addons.mozilla.org/firefox/themes/?sort=created'
+  - http://www.getpersonas.com/gallery/All/Recent: 'https://addons.mozilla.org/firefox/themes/?sort=created'
+  - http://getpersonas.com/A_C/gallery/All/Popular: 'https://addons.mozilla.org/firefox/themes/?sort=popular'
+  - http://www.getpersonas.com/gallery/All/Popular: 'https://addons.mozilla.org/firefox/themes/?sort=popular'
+  - http://getpersonas.com/: 'https://addons.mozilla.org/themes/'
+  - http://www.getpersonas.com/not/a/real/path: 'https://addons.mozilla.org/themes/'
+
 - dsts:
   - if: '$query_string ~ "^hl=(?<hl>[^&]+)&url=(?<url>[^&]+)"'
     ^/$: 'www.stopbadware.org/firefox?hl=$hl&url=$url?'

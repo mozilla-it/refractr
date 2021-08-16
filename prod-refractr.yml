@@ -769,3 +769,16 @@ refracts:
 
 - mozilla-hub.atlassian.net/: jira.mozilla.com
   status: 302
+
+# bug SE-2241
+- dsts:
+  - if: '$request_uri'
+    ^/(\d+)$: bugzilla.mozilla.org/show_bug.cgi?id=$1
+  - ^/form(.+)$: bugzilla.mozilla.org/form$1
+  - ^/(.+)$: bugzilla.mozilla.org/buglist.cgi?quicksearch=$1
+  srcs:
+  - bugzil.la
+  tests:
+  - https://bugzil.la/123456: https://bugzilla.mozilla.org/show_bug.cgi?id=123456
+  - https://bugzil.la/form.foo: https://bugzilla.mozilla.org/form.foo
+  - https://bugzil.la/glonk: https://bugzilla.mozilla.org/buglist.cgi?quicksearch=glonk

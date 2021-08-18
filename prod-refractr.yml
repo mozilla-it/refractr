@@ -810,13 +810,17 @@ refracts:
 
 # bug SE-2241
 - dsts:
-  - if: '$request_uri'
+  - if: '$request_uri ~ ^/(\d+)$'
     ^/(\d+)$: bugzilla.mozilla.org/show_bug.cgi?id=$1
-  - ^/form(.+)$: bugzilla.mozilla.org/form$1
-  - ^/(.+)$: bugzilla.mozilla.org/buglist.cgi?quicksearch=$1
+  - if: '$request_uri ~ ^/form(.+)$'
+    ^/form(.+)$: bugzilla.mozilla.org/form$1
+  - if: '$request_uri ~ ^/(.+)'
+    ^/(.+)$: bugzilla.mozilla.org/buglist.cgi?quicksearch=$1
+  - redirect: bugzilla.mozilla.org/
   srcs:
   - bugzil.la
   tests:
+  - https://bugzil.la/: https://bugzilla.mozilla.org/
   - https://bugzil.la/123456: https://bugzilla.mozilla.org/show_bug.cgi?id=123456
   - https://bugzil.la/form.foo: https://bugzilla.mozilla.org/form.foo
   - https://bugzil.la/glonk: https://bugzilla.mozilla.org/buglist.cgi?quicksearch=glonk

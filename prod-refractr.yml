@@ -189,7 +189,7 @@ refracts:
 - zombiekeys.quickfolders.org/: zombiekeys.mozdev.org
 - quickfolders.org/: quickfolders.mozdev.org
 - github.com/eyalroz/bidimailui/: bidiui.mozdev.org
-- wiki.mozilla.org/Consulting/: consultants.mozdev.org
+- wiki.mozilla.org/Consulting: consultants.mozdev.org
 - www.amadzone.org/mozilla-archive-format/: maf.mozdev.org
 - smarttemplates.quickfolders.org/: smarttemplate4.mozdev.org
 - quickpasswords.quickfolders.org/: quickpasswords.mozdev.org
@@ -312,7 +312,7 @@ refracts:
 - wiki.mozilla.org/: wiki.mozilla.com
 
   # bug 1290260
-- wiki.mozilla.org/DeveloperServices/HistoricalVCS/: git.mozilla.org
+- wiki.mozilla.org/DeveloperServices/HistoricalVCS: git.mozilla.org
   status: 302
 
   # bug 510914
@@ -320,10 +320,10 @@ refracts:
 - m.wiki.mozilla.org/Main_Page/: library.mozilla.org
 
   # bug 713065
-- wiki.mozilla.org/MarketingGuide/: guides.mozilla.org
+- wiki.mozilla.org/MarketingGuide: guides.mozilla.org
 
   # bug 804895
-- wiki.mozilla.org/Platform/AreWeFunYet/:
+- wiki.mozilla.org/Platform/AreWeFunYet:
   - arewefunyet.com
   - www.arewefunyet.com
 

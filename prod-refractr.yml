@@ -832,5 +832,5 @@ refracts:
 # https://mozilla-hub.atlassian.net/browse/SVCSE-140
 - www.mozilla.org/: status.relay.firefox.com
   status: 302
-- status.vpn.mozilla.org/: https://www.mozilla.org/
+- www.mozilla.org/: status.vpn.mozilla.org
   status: 302

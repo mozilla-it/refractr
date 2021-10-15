@@ -26,8 +26,6 @@ refracts:
   - firefoxaddons.com
   - www.firefoxaddons.com
   - addons.mozilla.com
-  - add-ons.mozilla.com
-  - add-ons.mozilla.org
   - '*.add-ons.mozilla.com'
   - '*.add-ons.mozilla.org'
 

@@ -832,3 +832,5 @@ refracts:
   status: 302
 - www.mozilla.org/: status.vpn.mozilla.org
   status: 302
+- www.mozilla.org/: status.mozilla.org
+  status: 302

@@ -831,3 +831,13 @@ refracts:
   status: 302
 - www.mozilla.org/: status.mozilla.org
   status: 302
+
+- dsts:
+  - if: '$request_uri ~ "(?i)^/universityambassadors/?$"'
+    ^: 'campus.mozilla.community/?redirect_source=firefox-com'
+  preserve-path: false
+  srcs:
+  - www.firefox.com
+  tests:
+  - http://www.firefox.com/universityambassadors: 'https://campus.mozilla.community/?redirect_source=firefox-com'
+  - http://www.firefox.com/UniversityAmbassadors/: 'https://campus.mozilla.community/?redirect_source=firefox-com'

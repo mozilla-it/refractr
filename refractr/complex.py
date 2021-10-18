@@ -74,7 +74,7 @@ class ComplexRefract(BaseRefract):
         rewrite = KeyMultiValueOption(
             'rewrite', [
                 match,
-                create_target(target),
+                create_target(target, self.preserve_path),
                 status_to_word(status or self.status),
             ]
         )

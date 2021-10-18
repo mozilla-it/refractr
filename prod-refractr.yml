@@ -152,9 +152,6 @@ refracts:
   - surveillance.mozilla.org
 
   # SE-1677
-- foundation.mozilla.org/en/artifacts/thimble/: thimble.mozilla.org
-
-  # SE-1677
 - foundation.mozilla.org/en/artifacts/x-ray-goggles/: goggles.mozilla.org
 
 - fpn.firefox.com/: testpilot.firefox.com

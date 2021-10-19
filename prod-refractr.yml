@@ -887,7 +887,7 @@ refracts:
       ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=prosieben&utm_campaign=unfck&utm_content=podcast'
     - if: '$request_uri ~ "(?i)^/(unfu?ck|love|rendonslenetplusnet)/?$"'
       ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=referral&utm_source=firefox.com&utm_campaign=unfck'
-  status: 301
+  status: 302
   headers:
     # NOTE: this overrides the default behavior and removed includeSubdomains
     Strict-Transport-Security: max-age=0

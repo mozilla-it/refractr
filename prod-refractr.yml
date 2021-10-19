@@ -337,14 +337,6 @@ refracts:
 - www.extensiontest.com/: extensiontest.com
   status: 302
 
-  # Jira SE-1258 "Setup firefox.com to redirect to www.firefox.com"
-  # This redirects all firefox.com -> www.firefox.com including paths
-  # https://github.com/mozmeao/www.firefox.com/blob/master/nginx.conf
-- www.firefox.com/: firefox.com
-  headers:
-    # NOTE: this overrides the default behavior and removed includeSubdomains
-    Strict-Transport-Security: max-age=0
-
   # bug 1136318
   # NOTE: changed from http->https after verifying
 - www.mozilla.de/:
@@ -896,10 +888,16 @@ refracts:
     - if: '$request_uri ~ "(?i)^/(unfu?ck|love|rendonslenetplusnet)/?$"'
       ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=referral&utm_source=firefox.com&utm_campaign=unfck'
   status: 301
+  headers:
+    # NOTE: this overrides the default behavior and removed includeSubdomains
+    Strict-Transport-Security: max-age=0
   preserve-path: false
   srcs:
   - www.firefox.com
+  - firefox.com
   tests:
+  - http://www.firefox.com/: 'https://www.mozilla.org/firefox/new/?redirect_source=firefox-com'
+  - http://firefox.com/: 'https://www.mozilla.org/firefox/new/?redirect_source=firefox-com'
   - http://www.firefox.com/universityambassadors: 'https://campus.mozilla.community/?redirect_source=firefox-com'
   - http://www.firefox.com/UniversityAmbassadors/: 'https://campus.mozilla.community/?redirect_source=firefox-com'
   - http://www.firefox.com/os/: 'https://support.mozilla.org/products/firefox-os?redirect_source=firefox-com'
@@ -933,7 +931,6 @@ refracts:
   - http://www.firefox.com/explained/: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=explained&utm_campaign=unfck&utm_content=podcast'
   - http://www.firefox.com/wtf/: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=wtf&utm_campaign=unfck&utm_content=podcast'
   - http://www.firefox.com/liebe/: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=prosieben&utm_campaign=unfck&utm_content=podcast'
-  - http://www.firefox.com/: 'https://www.mozilla.org/firefox/new/?redirect_source=firefox-com'
   - http://www.firefox.com/unfck: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=referral&utm_source=firefox.com&utm_campaign=unfck'
   - http://www.firefox.com/unfuck: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=referral&utm_source=firefox.com&utm_campaign=unfck'
   - http://www.firefox.com/love: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=referral&utm_source=firefox.com&utm_campaign=unfck'

@@ -826,7 +826,6 @@ refracts:
 
 # https://mozilla-hub.atlassian.net/browse/SE-2450
 - dsts:
-    - /: 'www.mozilla.org/firefox/new/?redirect_source=firefox-com'
     - if: '$request_uri ~ "(?i)^/universityambassadors/?$"'
       ^: 'campus.mozilla.community/?redirect_source=firefox-com'
     - if: '$request_uri ~ "(?i)^/os/?$"'
@@ -887,6 +886,7 @@ refracts:
       ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=prosieben&utm_campaign=unfck&utm_content=podcast'
     - if: '$request_uri ~ "(?i)^/(unfu?ck|love|rendonslenetplusnet)/?$"'
       ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=referral&utm_source=firefox.com&utm_campaign=unfck'
+    - redirect: 'www.mozilla.org/firefox/new/?redirect_source=firefox-com' #fallback redirect
   status: 302
   headers:
     # NOTE: this overrides the default behavior and removed includeSubdomains
@@ -935,4 +935,4 @@ refracts:
   - http://www.firefox.com/unfuck: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=referral&utm_source=firefox.com&utm_campaign=unfck'
   - http://www.firefox.com/love: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=referral&utm_source=firefox.com&utm_campaign=unfck'
   - http://www.firefox.com/rendonslenetplusnet: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=referral&utm_source=firefox.com&utm_campaign=unfck'
-  
+  - http://www.firefox.com/foo/bar: 'https://www.mozilla.org/firefox/new/?redirect_source=firefox-com'

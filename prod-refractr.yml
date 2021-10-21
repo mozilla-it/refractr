@@ -351,14 +351,6 @@ refracts:
 - www.extensiontest.com/: extensiontest.com
   status: 302
 
-  # Jira SE-1258 "Setup firefox.com to redirect to www.firefox.com"
-  # This redirects all firefox.com -> www.firefox.com including paths
-  # https://github.com/mozmeao/www.firefox.com/blob/master/nginx.conf
-- www.firefox.com/: firefox.com
-  headers:
-    # NOTE: this overrides the default behavior and removed includeSubdomains
-    Strict-Transport-Security: max-age=0
-
   # bug 1136318
   # NOTE: changed from http->https after verifying
 - www.mozilla.de/:
@@ -842,12 +834,116 @@ refracts:
 - www.mozilla.org/: status.mozilla.org
   status: 302
 
+# https://mozilla-hub.atlassian.net/browse/SE-2450
 - dsts:
-  - if: '$request_uri ~ "(?i)^/universityambassadors/?$"'
-    ^: 'campus.mozilla.community/?redirect_source=firefox-com'
+    - if: '$request_uri ~ "(?i)^/universityambassadors/?$"'
+      ^: 'campus.mozilla.community/?redirect_source=firefox-com'
+    - if: '$request_uri ~ "(?i)^/os/?$"'
+      ^: 'support.mozilla.org/products/firefox-os?redirect_source=firefox-com'
+    - if: '$request_uri ~ "(?i)^/desktop/?$"'
+      ^: 'www.mozilla.org/firefox/desktop/?redirect_source=firefox-com'
+    - if: '$request_uri ~ "(?i)^/android/?$"'
+      ^: 'www.mozilla.org/firefox/android/?redirect_source=firefox-com'
+    - if: '$request_uri ~ "(?i)^/developer/?$"'
+      ^: 'www.mozilla.org/firefox/developer/?redirect_source=firefox-com'
+    - if: '$request_uri ~ "(?i)^/(10|independent)/?$"'
+      ^: 'www.mozilla.org/firefox/features/independent/?redirect_source=firefox-com'
+    - if: '$request_uri ~ "(?i)^/hello/?$"'
+      ^: 'www.mozilla.org/firefox/hello/?redirect_source=firefox-com'
+    - if: '$request_uri ~ "(?i)^/personal/?$"'
+      ^: 'www.mozilla.org/firefox/personal/?redirect_source=firefox-com'
+    - if: '$request_uri ~ "(?i)^/choose/?$"'
+      ^: 'www.mozilla.org/firefox/choose/?redirect_source=firefox-com'
+    - if: '$request_uri ~ "(?i)^/switch/?$"'
+      ^: 'www.mozilla.org/firefox/switch/?redirect_source=firefox-com'
+    - if: '$request_uri ~ "(?i)^/enterprise/?$"'
+      ^: 'www.mozilla.org/firefox/enterprise/?redirect_source=firefox-com'
+    - if: '$request_uri ~ "(?i)^/containers/?$"'
+      ^: 'www.mozilla.org/firefox/facebookcontainer/?redirect_source=firefox-com'
+    - if: '$request_uri ~ "(?i)^/pdx/?$"'
+      ^: 'www.mozilla.org/firefox/new/?xv=portland&campaign=city-portland-2018&redirect_source=firefox-com'
+    - if: '$request_uri ~ "(?i)^/pair/?$"'
+      ^: 'accounts.firefox.com/pair/'
+    - if: '$request_uri ~ "(?i)^/(join|rejoindre)/?$"'
+      ^: 'www.mozilla.org/firefox/accounts/?redirect_source=join'
+    - if: '$request_uri ~ "(?i)^/(privacy|privatsphaere)/?$"'
+      ^: 'www.mozilla.org/firefox/privacy/products/?redirect_source=firefox-com'
+    - if: '$request_uri ~ "(?i)^/viepriv(e|é)e/?$"'
+      ^: 'www.mozilla.org/firefox/privacy/products/?redirect_source=firefox-com'
+    - if: '$request_uri ~ "(?i)^/nightly/?$"'
+      ^: 'www.mozilla.org/en-US/firefox/channel/desktop/#nightly'
+    - if: '$request_uri ~ "(?i)^/armchair/?$"'
+      ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=armchair&utm_campaign=unfck&utm_content=podcast'
+    - if: '$request_uri ~ "(?i)^/jvn/?$"'
+      ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=jvn&utm_campaign=unfck&utm_content=podcast'
+    - if: '$request_uri ~ "(?i)^/literally/?$"'
+      ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=literally&utm_campaign=unfck&utm_content=podcast'
+    - if: '$request_uri ~ "(?i)^/pivot/?$"'
+      ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=pivot&utm_campaign=unfck&utm_content=podcast'
+    - if: '$request_uri ~ "(?i)^/podsave/?$"'
+      ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=podsave&utm_campaign=unfck&utm_content=podcast'
+    - if: '$request_uri ~ "(?i)^/smartless/?$"'
+      ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=smartless&utm_campaign=unfck&utm_content=podcast'
+    - if: '$request_uri ~ "(?i)^/thedaily/?$"'
+      ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=thedaily&utm_campaign=unfck&utm_content=podcast'
+    - if: '$request_uri ~ "(?i)^/ezra/?$"'
+      ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=ezra&utm_campaign=unfck&utm_content=podcast'
+    - if: '$request_uri ~ "(?i)^/explained/?$"'
+      ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=explained&utm_campaign=unfck&utm_content=podcast'
+    - if: '$request_uri ~ "(?i)^/wtf/?$"'
+      ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=wtf&utm_campaign=unfck&utm_content=podcast'
+    - if: '$request_uri ~ "(?i)^/liebe/?$"'
+      ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=prosieben&utm_campaign=unfck&utm_content=podcast'
+    - if: '$request_uri ~ "(?i)^/(unfu?ck|love|rendonslenetplusnet)/?$"'
+      ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=referral&utm_source=firefox.com&utm_campaign=unfck'
+    - redirect: 'www.mozilla.org/firefox/new/?redirect_source=firefox-com' #fallback redirect
+  status: 302
+  headers:
+    # NOTE: this overrides the default behavior and removed includeSubdomains
+    Strict-Transport-Security: max-age=0
   preserve-path: false
   srcs:
   - www.firefox.com
+  - firefox.com
   tests:
+  - http://www.firefox.com/: 'https://www.mozilla.org/firefox/new/?redirect_source=firefox-com'
+  - http://firefox.com/: 'https://www.mozilla.org/firefox/new/?redirect_source=firefox-com'
   - http://www.firefox.com/universityambassadors: 'https://campus.mozilla.community/?redirect_source=firefox-com'
   - http://www.firefox.com/UniversityAmbassadors/: 'https://campus.mozilla.community/?redirect_source=firefox-com'
+  - http://www.firefox.com/os/: 'https://support.mozilla.org/products/firefox-os?redirect_source=firefox-com'
+  - http://www.firefox.com/desktop/: 'https://www.mozilla.org/firefox/desktop/?redirect_source=firefox-com'
+  - http://www.firefox.com/android/: 'https://www.mozilla.org/firefox/android/?redirect_source=firefox-com'
+  - http://www.firefox.com/developer/: 'https://www.mozilla.org/firefox/developer/?redirect_source=firefox-com'
+  - http://www.firefox.com/10/: 'https://www.mozilla.org/firefox/features/independent/?redirect_source=firefox-com'
+  - http://www.firefox.com/independent/: 'https://www.mozilla.org/firefox/features/independent/?redirect_source=firefox-com'
+  - http://www.firefox.com/hello/: 'https://www.mozilla.org/firefox/hello/?redirect_source=firefox-com'
+  - http://www.firefox.com/personal/: 'https://www.mozilla.org/firefox/personal/?redirect_source=firefox-com'
+  - http://www.firefox.com/choose/: 'https://www.mozilla.org/firefox/choose/?redirect_source=firefox-com'
+  - http://www.firefox.com/switch/: 'https://www.mozilla.org/firefox/switch/?redirect_source=firefox-com'
+  - http://www.firefox.com/enterprise/: 'https://www.mozilla.org/firefox/enterprise/?redirect_source=firefox-com'
+  - http://www.firefox.com/containers/: 'https://www.mozilla.org/firefox/facebookcontainer/?redirect_source=firefox-com'
+  - http://www.firefox.com/pdx/: 'https://www.mozilla.org/firefox/new/?xv=portland&campaign=city-portland-2018&redirect_source=firefox-com'
+  - http://www.firefox.com/pair/: 'https://accounts.firefox.com/pair/'
+  - http://www.firefox.com/join/: 'https://www.mozilla.org/firefox/accounts/?redirect_source=join'
+  - http://www.firefox.com/rejoindre/: 'https://www.mozilla.org/firefox/accounts/?redirect_source=join'
+  - http://www.firefox.com/privacy/: 'https://www.mozilla.org/firefox/privacy/products/?redirect_source=firefox-com'
+  - http://www.firefox.com/privatsphaere/: 'https://www.mozilla.org/firefox/privacy/products/?redirect_source=firefox-com'
+  - http://www.firefox.com/vieprivee/: 'https://www.mozilla.org/firefox/privacy/products/?redirect_source=firefox-com'
+  - http://www.firefox.com/nightly/: 'https://www.mozilla.org/en-US/firefox/channel/desktop/#nightly'
+  - http://www.firefox.com/armchair/: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=armchair&utm_campaign=unfck&utm_content=podcast'
+  - http://www.firefox.com/jvn/: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=jvn&utm_campaign=unfck&utm_content=podcast'
+  - http://www.firefox.com/literally/: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=literally&utm_campaign=unfck&utm_content=podcast'
+  - http://www.firefox.com/pivot/: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=pivot&utm_campaign=unfck&utm_content=podcast'
+  - http://www.firefox.com/podsave/: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=podsave&utm_campaign=unfck&utm_content=podcast'
+  - http://www.firefox.com/smartless/: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=smartless&utm_campaign=unfck&utm_content=podcast'
+  - http://www.firefox.com/thedaily/: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=thedaily&utm_campaign=unfck&utm_content=podcast'
+  - http://www.firefox.com/ezra/: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=ezra&utm_campaign=unfck&utm_content=podcast'
+  - http://www.firefox.com/explained/: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=explained&utm_campaign=unfck&utm_content=podcast'
+  - http://www.firefox.com/wtf/: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=wtf&utm_campaign=unfck&utm_content=podcast'
+  - http://www.firefox.com/liebe/: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=prosieben&utm_campaign=unfck&utm_content=podcast'
+  - http://www.firefox.com/unfck: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=referral&utm_source=firefox.com&utm_campaign=unfck'
+  - http://www.firefox.com/unfuck: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=referral&utm_source=firefox.com&utm_campaign=unfck'
+  - http://www.firefox.com/love: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=referral&utm_source=firefox.com&utm_campaign=unfck'
+  - http://www.firefox.com/rendonslenetplusnet: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=referral&utm_source=firefox.com&utm_campaign=unfck'
+  - http://www.firefox.com/foo/bar: 'https://www.mozilla.org/firefox/new/?redirect_source=firefox-com'
+

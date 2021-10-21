@@ -836,43 +836,43 @@ refracts:
 
 # https://mozilla-hub.atlassian.net/browse/SE-2450
 - dsts:
-    - if: '$request_uri ~ "(?i)^/universityambassadors/?$"'
+    - if: '$request_uri ~ "(?i)^/universityambassadors/?$"' # bug 870410
       ^: 'campus.mozilla.community/?redirect_source=firefox-com'
     - if: '$request_uri ~ "(?i)^/os/?$"'
       ^: 'support.mozilla.org/products/firefox-os?redirect_source=firefox-com'
-    - if: '$request_uri ~ "(?i)^/desktop/?$"'
+    - if: '$request_uri ~ "(?i)^/desktop/?$"' # bug 1004274
       ^: 'www.mozilla.org/firefox/desktop/?redirect_source=firefox-com'
-    - if: '$request_uri ~ "(?i)^/android/?$"'
+    - if: '$request_uri ~ "(?i)^/android/?$"' # bug 1053356
       ^: 'www.mozilla.org/firefox/android/?redirect_source=firefox-com'
-    - if: '$request_uri ~ "(?i)^/developer/?$"'
+    - if: '$request_uri ~ "(?i)^/developer/?$"' # bug 1091132
       ^: 'www.mozilla.org/firefox/developer/?redirect_source=firefox-com'
-    - if: '$request_uri ~ "(?i)^/(10|independent)/?$"'
+    - if: '$request_uri ~ "(?i)^/(10|independent)/?$"' # bug 1091891, bug 1094235
       ^: 'www.mozilla.org/firefox/features/independent/?redirect_source=firefox-com'
-    - if: '$request_uri ~ "(?i)^/hello/?$"'
+    - if: '$request_uri ~ "(?i)^/hello/?$"' # bug 1098044
       ^: 'www.mozilla.org/firefox/hello/?redirect_source=firefox-com'
-    - if: '$request_uri ~ "(?i)^/personal/?$"'
+    - if: '$request_uri ~ "(?i)^/personal/?$"' # bug 1159397
       ^: 'www.mozilla.org/firefox/personal/?redirect_source=firefox-com'
-    - if: '$request_uri ~ "(?i)^/choose/?$"'
+    - if: '$request_uri ~ "(?i)^/choose/?$"' # bug 1219380
       ^: 'www.mozilla.org/firefox/choose/?redirect_source=firefox-com'
-    - if: '$request_uri ~ "(?i)^/switch/?$"'
+    - if: '$request_uri ~ "(?i)^/switch/?$"' # bug 1432228
       ^: 'www.mozilla.org/firefox/switch/?redirect_source=firefox-com'
-    - if: '$request_uri ~ "(?i)^/enterprise/?$"'
+    - if: '$request_uri ~ "(?i)^/enterprise/?$"' # Bug 1445276
       ^: 'www.mozilla.org/firefox/enterprise/?redirect_source=firefox-com'
-    - if: '$request_uri ~ "(?i)^/containers/?$"'
+    - if: '$request_uri ~ "(?i)^/containers/?$"' # bug 1451367
       ^: 'www.mozilla.org/firefox/facebookcontainer/?redirect_source=firefox-com'
-    - if: '$request_uri ~ "(?i)^/pdx/?$"'
+    - if: '$request_uri ~ "(?i)^/pdx/?$"' # bug 1456278
       ^: 'www.mozilla.org/firefox/new/?xv=portland&campaign=city-portland-2018&redirect_source=firefox-com'
-    - if: '$request_uri ~ "(?i)^/pair/?$"'
+    - if: '$request_uri ~ "(?i)^/pair/?$"' # bug 1539867
       ^: 'accounts.firefox.com/pair/'
-    - if: '$request_uri ~ "(?i)^/(join|rejoindre)/?$"'
+    - if: '$request_uri ~ "(?i)^/(join|rejoindre)/?$"' # bug 1548919
       ^: 'www.mozilla.org/firefox/accounts/?redirect_source=join'
-    - if: '$request_uri ~ "(?i)^/(privacy|privatsphaere)/?$"'
+    - if: '$request_uri ~ "(?i)^/(privacy|privatsphaere)/?$"' # SRE-431
       ^: 'www.mozilla.org/firefox/privacy/products/?redirect_source=firefox-com'
     - if: '$request_uri ~ "(?i)^/viepriv(e|é)e/?$"'
       ^: 'www.mozilla.org/firefox/privacy/products/?redirect_source=firefox-com'
-    - if: '$request_uri ~ "(?i)^/nightly/?$"'
+    - if: '$request_uri ~ "(?i)^/nightly/?$"' # https://github.com/mozmeao/www.firefox.com/issues/9
       ^: 'www.mozilla.org/en-US/firefox/channel/desktop/#nightly'
-    - if: '$request_uri ~ "(?i)^/armchair/?$"'
+    - if: '$request_uri ~ "(?i)^/armchair/?$"' # issue #21
       ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=armchair&utm_campaign=unfck&utm_content=podcast'
     - if: '$request_uri ~ "(?i)^/jvn/?$"'
       ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=jvn&utm_campaign=unfck&utm_content=podcast'
@@ -892,11 +892,11 @@ refracts:
       ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=explained&utm_campaign=unfck&utm_content=podcast'
     - if: '$request_uri ~ "(?i)^/wtf/?$"'
       ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=wtf&utm_campaign=unfck&utm_content=podcast'
-    - if: '$request_uri ~ "(?i)^/liebe/?$"'
+    - if: '$request_uri ~ "(?i)^/liebe/?$"' # issue 32
       ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=prosieben&utm_campaign=unfck&utm_content=podcast'
-    - if: '$request_uri ~ "(?i)^/(unfu?ck|love|rendonslenetplusnet)/?$"'
+    - if: '$request_uri ~ "(?i)^/(unfu?ck|love|rendonslenetplusnet)/?$"' # issues #19, #18, #15, #13, and #27, and Jira SE-1256
       ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=referral&utm_source=firefox.com&utm_campaign=unfck'
-    - redirect: 'www.mozilla.org/firefox/new/?redirect_source=firefox-com' #fallback redirect
+    - redirect: 'www.mozilla.org/firefox/new/?redirect_source=firefox-com' #fallback redirect, bug 896570, bug 1427843
   status: 302
   headers:
     # NOTE: this overrides the default behavior and removed includeSubdomains

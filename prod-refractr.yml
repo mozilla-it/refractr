@@ -236,11 +236,29 @@ refracts:
 
 - mozilla-services.readthedocs.io/en/latest/: docs.services.mozilla.com
 
-  # Jira SE-1354
-- people.mozilla.org/:
+# Jira SE-1354
+- dsts:
+  # u->p rewrite [SE-1960]
+  - if: '$request_uri ~ ^/u/([^/]+)/*$'
+    ^/u/([^/]+)/*$: people.mozilla.org/p/$1
+  # no rewrite
+  - if: '$request_uri ~ ^/(.+)$'
+    ^/(.+)$: people.mozilla.org/$1
+  # fallthrough
+  - redirect: people.mozilla.org/
+  srcs:
   - mozillians.org
   # bug 1617378
   - www.mozillians.org
+  tests:
+  # u->p rewrite
+  - https://mozillians.org/u/abcdefg/: https://people.mozilla.org/p/abcdefg
+  - https://www.mozillians.org/u/abcdefg: https://people.mozilla.org/p/abcdefg
+  # no rewrite
+  - https://mozillians.org/x/abcdefg: https://people.mozilla.org/x/abcdefg
+  # fallthrough
+  - https://www.mozillians.org/: https://people.mozilla.org/
+  - https://mozillians.org/: https://people.mozilla.org/
 
   # bug 1459170
 - perf-html.io/: cleopatra.io

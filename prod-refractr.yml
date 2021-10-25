@@ -314,10 +314,6 @@ refracts:
 - wiki.mozilla.org/DeveloperServices/HistoricalVCS: git.mozilla.org
   status: 302
 
-  # bug 510914
-  # NOTE: changed from http->https after verifying
-- m.wiki.mozilla.org/Main_Page/: library.mozilla.org
-
   # bug 713065
 - wiki.mozilla.org/MarketingGuide: guides.mozilla.org
 

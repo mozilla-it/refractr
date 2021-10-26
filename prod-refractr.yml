@@ -825,10 +825,6 @@ refracts:
   - https://bugzil.la/glonk: https://bugzilla.mozilla.org/buglist.cgi?quicksearch=glonk
 
 # https://mozilla-hub.atlassian.net/browse/SVCSE-140
-- www.mozilla.org/: status.relay.firefox.com
-  status: 302
-- www.mozilla.org/: status.vpn.mozilla.org
-  status: 302
 - www.mozilla.org/: status.mozilla.org
   status: 302
 

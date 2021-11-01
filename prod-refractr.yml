@@ -905,6 +905,7 @@ refracts:
   srcs:
   - www.firefox.com
   - firefox.com
+  - fxc-stage.moz.works
   tests:
   - http://www.firefox.com/: 'https://www.mozilla.org/firefox/new/?redirect_source=firefox-com'
   - http://firefox.com/: 'https://www.mozilla.org/firefox/new/?redirect_source=firefox-com'

@@ -1,8 +1,6 @@
-# refractr [![Build Status](https://travis-ci.com/mozilla-it/refractr.svg?branch=main)](https://travis-ci.com/mozilla-it/refractr)
+# refractr [![Build Status](https://github.com/mozilla-it/refractr/actions/workflows/publish.yml/badge.svg)](https://github.com/mozilla-it/refractr/actions/workflows/publish.yml)
 
 Containerized HTTP redirect and rewrite service with automatic Let's Encrypt SSL certs
-
-[![Build Status](https://travis-ci.com/mozilla-it/refractr.svg?branch=main)](https://travis-ci.com/mozilla-it/refractr)
 
 # Links
 * [SRE_INFO](SRE_INFO.md)

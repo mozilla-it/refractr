@@ -41,7 +41,7 @@ Note that the same Refractr container is used in both of these contexts.
 The traffic flow for Refractr starts with DNS for all of the domains pointing to the ELB.  From there the Nginx ingress forwards to cert-manager to handled all of the LE certs.  From there it is onto the Refractr Service which connects to the Refractr pods with the Nginx containers (with the refractr.conf) to handle all of the redirects and rewrites specified therein.  From there it is off to other destinations in the internet (where the refractrs specify).
 
 ## Continuous Integration (CI)
-The CI system used for Refractr is TravisCI. Tests are run on every push to any branch in the repo. However, only pushes to the **main** branch get published to the Docker Repository (ECR), mentioned below. In addition to tests, Pull Requests (PRs) require code reviews before allowing the change to be to the **main** branch.
+The CI system used for Refractr is Github Actions. Tests are run on every push to any branch in the repo. However, only pushes to the **main** branch and **tags** with `/v[0-9]+.[0-9]+.[0-9]+/` pattern get published to the Docker Repository (ECR), mentioned below. In addition to tests, Pull Requests (PRs) require code reviews before allowing the change to be to the **main** branch.
 
 ## The Handoff
 The handoff point between CI and CD is the Docker Repository. In this case we decided to use the Cloud Provider based Docker Repository. For AWS that is Elastic Container Registry (ECR).  Images are named refractr and have the output of git describe for the image tag.  All of the images pushed to the main branch get published to the ECR in the same AWS account that contains the Kubernetes (EKS) cluster.  This means permissions to deploy the container into the cluster are not an issue. Note: All ECR repositories have the [Image Scanning](https://docs.aws.amazon.com/AmazonECR/latest/userguide/image-scanning.html) turned on to prevent the leakage of credentials or secrets.
@@ -68,6 +68,7 @@ login      perform ECR docker login via AWS perms
 nginx      generate nginx.conf files from refractr.yml
 publish    publish docker image to aws ECR
 schema     test refractr.yml against schema.yml using jsonschema
+show       show CI variables
 test       run pytest tests against the locally running container
 version    write refractr/version json file
 ```
@@ -111,9 +112,17 @@ This task runs **docker-compose run refractr check (nginx -t)** to validate the 
 * build
 
 ### drun
-This task runs **docker-compose up** to get a local Refractr Docker container running, required for testing. This is designed to work locally on the dev system as well in TravisCI. This task requires the following tasks to be complete successfully first:
+This task runs **docker-compose up** to get a local Refractr Docker container running, required for testing. This is designed to work locally on the dev system as well in Github Actions. This task requires the following tasks to be complete successfully first:
 * creds
 * check
+
+### show
+This task shows the following CI environment variables and their values:
+* **CI**
+* **TAG**
+* **VERSION**
+* **BRANCH**
+* **DEPLOYED_ENV**
 
 ### test
 This task runs the tests specified in **test_refractr.py**.  This file itself generates a test for every redirect|rewrite found in the **refractr.yml** file. This task requires the following tasks to be completed successfully first:

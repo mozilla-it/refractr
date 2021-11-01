@@ -1,4 +1,5 @@
 doit
+awscli
 ruamel.yaml
 leatherman==0.1.10
 pytest==6.1.1

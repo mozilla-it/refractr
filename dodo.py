@@ -29,17 +29,6 @@ def envs(sep=' ', **kwargs):
         [f'{key}={value}' for key, value in sorted(dict(envs, **kwargs).items())]
     )
 
-def task_creds():
-    '''
-    verify the appropriate creds are present
-    '''
-    return {
-        'actions': [
-            f'echo "checking credentials"',
-        ],
-        'uptodate': [lambda: CFG.IS_AUTHORIZED],
-    }
-
 def write_json(filename, **items):
     with open(filename, 'w') as f:
         f.write(json.dumps(items, indent=4, sort_keys=True))
@@ -224,12 +213,10 @@ def task_login():
         cmd = f'env {ENVS} aws ecr get-login-password --region {CFG.AWS_REGION} | env {ENVS} docker login --username AWS --password-stdin {CFG.ECR_REPOURL}'
         call(cmd)
     return {
-        'task_dep': [
-            'creds',
-        ],
         'actions': [
             login,
         ],
+        'uptodate': [lambda: CFG.IS_AUTHORIZED],
     }
 
 def task_show():

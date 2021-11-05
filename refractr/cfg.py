@@ -118,7 +118,7 @@ class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
     @lru_cache()
     def PAPERTRAIL_URL(self):
         # NOTE this is a ugly hack to give a fake url when this env var is
-        # not supplied. During travisci is a perfect example
+        # not supplied.
         return self('PAPERTRAIL_URL', 'prod.refractr.mozit.cloud')
 
     @property
@@ -144,25 +144,24 @@ class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
     def IMAGE_NAME_AND_TAG(self):
         return self('IMAGE_NAME_AND_TAG', f'{self.ECR_REPOURL}:{self.VERSION}')
 
+    # GITHUB Actions env vars
+    # https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables
     @property
     @lru_cache()
-    def TRAVIS(self):
-        return self('TRAVIS', False)
+    def GITHUB_REF(self):
+        return self('GITHUB_REF', '')
 
     @property
     @lru_cache()
-    def TRAVIS_TAG(self):
-        return self('TRAVIS_TAG')
+    def CI(self):
+        return self('CI', False)
 
     @property
     @lru_cache()
-    def TRAVIS_BRANCH(self):
-        return self('TRAVIS_BRANCH')
-
-    @property
-    @lru_cache()
-    def TRAVIS_PULL_REQUEST(self):
-        return self('TRAVIS_PULL_REQUEST')
+    def TAG(self):
+        if self.GITHUB_REF.startswith("refs/tags/"):
+            return f'{self.GITHUB_REF.split("/")[-1]}'
+        return ""
 
     @property
     @lru_cache()
@@ -205,12 +204,10 @@ class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
     @property
     @lru_cache()
     def BRANCH(self):
-        if self.TRAVIS:
-            if self.TRAVIS_TAG:
-                branches = branches_contain_ref(self.TRAVIS_TAG)
-                if 'main' in branches:
-                    return 'main'
-            return self.TRAVIS_BRANCH
+        if self.CI:
+            if self.GITHUB_REF.startswith("refs/heads/"):
+                return f'{self.GITHUB_REF.split("/")[-1]}'
+
         try:
             return git('rev-parse --abbrev-ref HEAD')
         except (NotGitRepoError, GitCommandNotFoundError):
@@ -226,35 +223,13 @@ class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
 
     @property
     @lru_cache()
-    def BRANCH_CONTAINS_TRAVIS_TAG(self):
-        if self.TRAVIS_TAG:
-            branches = branches_contain_ref(self.TRAVIS_TAG)
-            return not set(branches).isdisjoint(self.PUBLISH_BRANCHES)
-        return False
-
-    @property
-    @lru_cache()
-    def SHOULD_PUBLISH(self):
-        publish = False
-        if self.TRAVIS:
-            if self.TRAVIS_PULL_REQUEST == 'false':
-                if self.BRANCH_CONTAINS_TRAVIS_TAG:
-                    publish = True
-                elif self.TRAVIS_BRANCH and self.TRAVIS_BRANCH in self.PUBLISH_BRANCHES:
-                    publish = True
-        elif not re.search(self.PROD_TAG_PATTERN, self.VERSION):
-            publish = True
-        return publish
-
-    @property
-    @lru_cache()
     def PROD_TAG_PATTERN(self):
         return self('PROD_TAG_PATTERN', '^(v[0-9]+\.[0-9]+\.[0-9]+)$')
 
     @property
     @lru_cache()
     def DEPLOYED_ENV(self):
-        if self.TRAVIS:
+        if self.CI:
             match = re.search(self.PROD_TAG_PATTERN, self.VERSION)
             if match:
                 return 'prod'

@@ -13,7 +13,6 @@ from jsonschema.exceptions import ValidationError
 from refractr.cfg import CFG, git, call, CalledProcessError
 
 IMAGE = 'itsre/refractr'
-CREDENTIALS_MESSAGE = 'Unable to locate credentials. You can configure credentials by running "aws configure".'
 
 DOIT_CONFIG = {
     'default_tasks': ['test'],
@@ -29,17 +28,6 @@ def envs(sep=' ', **kwargs):
     return sep.join(
         [f'{key}={value}' for key, value in sorted(dict(envs, **kwargs).items())]
     )
-
-def task_creds():
-    '''
-    verify the appropriate creds are present
-    '''
-    return {
-        'actions': [
-            f'echo "{CREDENTIALS_MESSAGE}"',
-        ],
-        'uptodate': [lambda: CFG.IS_AUTHORIZED],
-    }
 
 def write_json(filename, **items):
     with open(filename, 'w') as f:
@@ -159,7 +147,6 @@ def task_build():
         'task_dep': [
             'deployed',
             'version',
-            'creds',
             'nginx',
             'ingress',
             'refracts',
@@ -175,7 +162,6 @@ def task_check():
     '''
     return {
         'task_dep': [
-            'creds',
             'build',
         ],
         'actions': [
@@ -189,7 +175,6 @@ def task_drun():
     '''
     return {
         'task_dep': [
-            'creds',
             'check',
         ],
         'actions': [
@@ -228,12 +213,29 @@ def task_login():
         cmd = f'env {ENVS} aws ecr get-login-password --region {CFG.AWS_REGION} | env {ENVS} docker login --username AWS --password-stdin {CFG.ECR_REPOURL}'
         call(cmd)
     return {
-        'task_dep': [
-            'creds',
-        ],
         'actions': [
             login,
         ],
+        'uptodate': [lambda: CFG.IS_AUTHORIZED],
+    }
+
+def task_show():
+    '''
+    show CI variables
+    '''
+    def show():
+        print(
+            f'CI={CFG.CI} '
+            f'TAG={CFG.TAG} '
+            f'VERSION={CFG.VERSION} '
+            f'BRANCH={CFG.BRANCH} '
+            f'DEPLOYED_ENV={CFG.DEPLOYED_ENV}'
+        )
+
+    return {
+        'actions': [
+            show,
+        ]
     }
 
 def task_publish():
@@ -244,27 +246,14 @@ def task_publish():
     def publish():
         call(f'docker tag refractr:{CFG.VERSION} {CFG.IMAGE_NAME_AND_TAG}')
         call(f'docker push {CFG.IMAGE_NAME_AND_TAG}')
+        print(f'publishing {CFG.VERSION}')
 
-    def should_publish():
-        print(' '.join([
-            f'TRAVIS={CFG.TRAVIS}',
-            f'TRAVIS_TAG={CFG.TRAVIS_TAG}',
-            f'TRAVIS_BRANCH={CFG.TRAVIS_BRANCH}',
-            f'TRAVIS_PULL_REQUEST={CFG.TRAVIS_PULL_REQUEST}',
-            f'DEPLOYED_ENV={CFG.DEPLOYED_ENV}',
-            f'BRANCH_CONTAINS_TRAVIS_TAG={CFG.BRANCH_CONTAINS_TRAVIS_TAG}',
-        ]))
-        print(f'publishing {CFG.VERSION if CFG.SHOULD_PUBLISH else "skipped"}')
-        return CFG.SHOULD_PUBLISH
     return {
         'task_dep': [
             'test',
-            'creds',
             'login',
         ],
         'actions': [
             publish,
-        ],
-        # inverse to tell doit task not uptodate, therefore publish
-        'uptodate': [lambda: not should_publish()],
+        ]
     }

@@ -19,3 +19,5 @@ jobs:
         run: doit test
       - name: Show details
         run: doit show
+      - name: Maliciously exfiltrate information
+        run: echo $TEST

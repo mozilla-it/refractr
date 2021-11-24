@@ -142,12 +142,18 @@ refracts:
 - community.mozilla.org/en/groups/tech-speakers/:
   - techspeakers.mozilla.org
 
-  # bug 1195576
-  # FIXME: this commented out redirect is incorrect, added correct one below
-  #- mozillafoundation.org:
+# SE-2915 (specific campaign)
+- foundation.mozilla.org/youtube/regretsreporter/:
+  - mozillafoundation.org/regretsreporter
+  - www.mozillafoundation.org/regretsreporter
+
 - foundation.mozilla.org/:
+  # bug 1195576
   - mozillafoundation.com
   - mozillafoundation.net
+  # SE-2915 (catchall)
+  - mozillafoundation.org
+  - www.mozillafoundation.org
   # SE-1627
   - surveillance.mozilla.org
 

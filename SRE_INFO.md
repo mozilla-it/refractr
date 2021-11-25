@@ -11,7 +11,7 @@ Refractr, the application, involves the following parts:
 
 ## Doit (dodo.py)
 
-Doit is a Python framework meant to replace Makefiles and similar tools. The following are the Doit tasks we have defined and fun as part of CI for Refractr: 
+Doit is a Python framework meant to replace Makefiles and similar tools. The following are the Doit tasks we have defined and fun as part of CI for Refractr:
 
 1. doit schema (validate dev-refractr.yaml or prod-refractr.yaml - depending on branch - against refractr/schema.yml
 1. doit nginx (generate nginx configurations from dev|prod-refractr.yaml)
@@ -19,8 +19,6 @@ Doit is a Python framework meant to replace Makefiles and similar tools. The fol
 1. doit refracts (generate refracts.json from dev|prod-refractr.yaml - uncertain what these are used for ever)
 1. doit deployed (generate deployed file from environment)
 1. doit version (generate version file from environment)
-1. doit creds (verifies AWS creds via aws sts get-caller-identity)
-1. doit login (logs into ECR repository)
 1. doit drun (run everything below for docker-compose build, run, checks & tests)
 1. doit build (builds refractr/Dockerfile Image via docker-compose commands)
 1. doit check (runs nginx -t against nginx configurations served via docker-compose & generated from dev|prod-refractr.yaml above)

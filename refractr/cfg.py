@@ -93,15 +93,6 @@ def branches_contain_ref(ref):
 class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
 
     @property
-    def IS_AUTHORIZED(self):
-        try:
-            call('aws sts get-caller-identity')
-        except CalledProcessError as cpe:
-            if CREDENTIALS_MESSAGE in cpe.stderr:
-                return False
-            raise cpe
-
-    @property
     @lru_cache()
     def REPOROOT(self):
         with cd(os.path.dirname(__file__)):

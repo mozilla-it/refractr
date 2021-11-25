@@ -28,7 +28,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@master
+        uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: arn:aws:iam::783633885093:role/ecr-refractr-iam
           aws-region: us-west-2

@@ -145,6 +145,7 @@ class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
             ecr_repourl = f'{self.ECR_REGISTRY}/{self.REPONAME}'
         else:
             ecr_repourl = f'{self.AWS_ACCOUNT}.dkr.ecr.{self.AWS_REGION}.amazonaws.com/{self.REPONAME}'
+        return self('ECR_REPOURL', ecr_repourl)
 
     @property
     @lru_cache()

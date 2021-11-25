@@ -28,7 +28,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@master
         with:
           role-to-assume: arn:aws:iam::783633885093:role/ecr-refractr-iam
           aws-region: us-west-2
@@ -37,7 +37,7 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Publish
+      - name: Build, tag, and push image to Amazon ECR
         run: doit publish
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}

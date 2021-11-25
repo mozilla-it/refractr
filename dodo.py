@@ -200,25 +200,6 @@ def task_test():
         ],
     }
 
-def task_login():
-    '''
-    perform ECR docker login via AWS perms
-    '''
-
-    def login():
-        ENVS = envs(
-            AWS_REGION=CFG.AWS_REGION,
-            AWS_ACCOUNT=CFG.AWS_ACCOUNT,
-        )
-        cmd = f'env {ENVS} aws ecr get-login-password --region {CFG.AWS_REGION} | env {ENVS} docker login --username AWS --password-stdin {CFG.ECR_REPOURL}'
-        call(cmd)
-    return {
-        'actions': [
-            login,
-        ],
-        'uptodate': [lambda: CFG.IS_AUTHORIZED],
-    }
-
 def task_show():
     '''
     show CI variables
@@ -251,7 +232,6 @@ def task_publish():
     return {
         'task_dep': [
             'test',
-            'login',
         ],
         'actions': [
             publish,

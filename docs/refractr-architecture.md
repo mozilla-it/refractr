@@ -60,11 +60,9 @@ The **mozilla-it/refractr** repository has a **dodo.py** ([doit](https://pydoit.
 ~/repos/mozilla-it/version > doit list
 build      run docker-compose build for refractr
 check      run nginx -t test on refractr nginx config
-creds      verify the appropriate creds are present
 deployed   write refractr/deployed json file
 drun       run refractr container via docker-compose up -d
 ingress    create ingress.yaml from refractr.yml,ingress.yaml.template
-login      perform ECR docker login via AWS perms
 nginx      generate nginx.conf files from refractr.yml
 publish    publish docker image to aws ECR
 schema     test refractr.yml against schema.yml using jsonschema
@@ -72,9 +70,6 @@ show       show CI variables
 test       run pytest tests against the locally running container
 version    write refractr/version json file
 ```
-### creds
-This task runs aws **get-caller-identity** to validate correct **maws** login creds.
-
 ### deployed
 The task generates the **deployed** json file with the values:
 * **DEPLOYED_BY**
@@ -102,18 +97,15 @@ This task runs the **bin/refractr ingress** command to generate the **ingress.ya
 This task runs **docker-compose build refractr**.  The Refractr Docker image that is produced has the refractr name and is tagged with the **git describe** output.  This task requires the following tasks to be completed successfully first:
 * deployed
 * version
-* creds
 * nginx
 * ingress
 
 ### check
 This task runs **docker-compose run refractr check (nginx -t)** to validate the veracity of the provided Nginx Configuration file ( **refractr.conf** ).  This task requires the following tasks to be completed successfully first:
-* creds
 * build
 
 ### drun
 This task runs **docker-compose up** to get a local Refractr Docker container running, required for testing. This is designed to work locally on the dev system as well in Github Actions. This task requires the following tasks to be complete successfully first:
-* creds
 * check
 
 ### show
@@ -129,15 +121,9 @@ This task runs the tests specified in **test_refractr.py**.  This file itself ge
 * build
 * drun
 
-### login
-This task runs **aws ecr get-login-password** and **docker login** to be authorized to publish Docker images to the ECR repository. This task requires the following tasks to be completed successfully first:
-* FIXME
-
 ### publish
 This task runs **docker tag refractr:<git describe output>** and **docker push** to the ECR repository. This task requires the following tasks to be completed successfully first:
-* creds
 * tests
-* login
 
 ## Refractr CLI
 The **refractr cli** is an Argparse command tool to transform the **refractr.yml** to the **refractr.conf** (for nginx) and **ingress.yaml** (for cert-manager|ingress). This tool was written to print output of transformations to terminal.  This allows the user to "see" what the transformations will do.  The same fascilities will be used during the build of the docker image.  The help output is shown below will all of the subcommands described.

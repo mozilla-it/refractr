@@ -142,6 +142,9 @@ refracts:
 - community.mozilla.org/en/groups/tech-speakers/:
   - techspeakers.mozilla.org
 
+# SVCSE-217
+- firefox-source-docs.mozilla.org/bug-mgmt/: firefox-bug-handling.mozilla.org
+
   # bug 1195576
   # FIXME: this commented out redirect is incorrect, added correct one below
   #- mozillafoundation.org:

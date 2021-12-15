@@ -49,8 +49,15 @@ refracts:
 - blog.mozilla.org/webdev/: webdev.mozilla.org
 
 # https://github.com/mozilla/bedrock/issues/10736
+# maintain a few subpaths that are important to the careers site
+- dsts:
+  - /listings: wwww.mozilla.org/careers/listings
+  - /feed: www.mozilla.org/careers/feed
+  - /: www.mozilla.org/careers/
+  srcs: careers.mozilla.org
+
+# https://github.com/mozilla/bedrock/issues/10736
 - www.mozilla.org/careers/:
-  - careers.mozilla.org
   # bug 1246674
   - careers.mozilla.com
   # bug 1243236

@@ -48,15 +48,14 @@ refracts:
   # bug 908234
 - blog.mozilla.org/webdev/: webdev.mozilla.org
 
-- careers.mozilla.org/:
+# https://github.com/mozilla/bedrock/issues/10736
+- www.mozilla.org/careers/:
+  - careers.mozilla.org
   # bug 1246674
   - careers.mozilla.com
   # bug 1243236
   - jobs.mozilla.org
   - jobs.mozilla.com
-  status: 302
-
-- careers.mozilla.org/university/:
   - college.mozilla.org
   - college.mozilla.com
   - interns.mozilla.com

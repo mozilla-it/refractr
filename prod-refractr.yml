@@ -51,7 +51,7 @@ refracts:
 # https://github.com/mozilla/bedrock/issues/10736
 # maintain a few subpaths that are important to the careers site
 - dsts:
-  - /listings: wwww.mozilla.org/careers/listings
+  - /listings: www.mozilla.org/careers/listings
   - /feed: www.mozilla.org/careers/feed
   - /: www.mozilla.org/careers/
   srcs: careers.mozilla.org

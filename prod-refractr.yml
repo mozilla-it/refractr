@@ -49,7 +49,7 @@ refracts:
 - blog.mozilla.org/webdev/: webdev.mozilla.org
 
   # SE-2698
-- securitywiki.mozilla.org/: https://mana.mozilla.org/wiki/display/FIREFOX/Security
+- mana.mozilla.org/wiki/display/FIREFOX/Security: securitywiki.mozilla.org
 
 # https://github.com/mozilla/bedrock/issues/10736
 # maintain a few subpaths that are important to the careers site

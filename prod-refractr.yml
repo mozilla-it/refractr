@@ -52,12 +52,19 @@ refracts:
 - mana.mozilla.org/wiki/display/FIREFOX/Security: securitywiki.mozilla.org
 
 # https://github.com/mozilla/bedrock/issues/10736
-# maintain a few subpaths that are important to the careers site
 - dsts:
-  - /listings: www.mozilla.org/careers/listings
-  - /feed: www.mozilla.org/careers/feed
-  - /: www.mozilla.org/careers/
-  srcs: careers.mozilla.org
+  - if: '$request_uri ~ ^/(.*)$'
+    ^/(.*)$: www.mozilla.org/careers/$1
+  - redirect: www.mozilla.org/careers/
+  srcs:
+  - careers.mozilla.org
+  tests:
+  - https://careers.mozilla.org/: https://www.mozilla.org/careers/
+  - https://careers.mozilla.org/#locations: https://www.mozilla.org/careers/#locations
+  - https://careers.mozilla.org/listings: https://www.mozilla.org/careers/listings
+  - https://careers.mozilla.org/listings/: https://www.mozilla.org/careers/listings/
+  - https://careers.mozilla.org/feed/: https://www.mozilla.org/feed/
+  - https://careers.mozilla.org/position/gh/12345/: https://www.mozilla.org/careers/position/gh/12345/
 
 # https://github.com/mozilla/bedrock/issues/10736
 - www.mozilla.org/careers/:

@@ -638,6 +638,12 @@ refracts:
 - www.openwebgames.com/: openwebgames.com
   status: 302
 
+  # SE-2950
+- wiki.mozilla.org/india/: wiki.mozillaindia.org
+  status: 302
+- developer.mozilla.org/: devs.mozillaindia.org
+  status: 302
+
   # NOTE: changed from http->https after verifying
   #- www.thunderbird.net/:
 - www.thunderbird.net/calendar/:

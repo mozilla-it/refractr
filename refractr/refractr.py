@@ -93,8 +93,7 @@ class Refractr:
     def load_refract(self, spec):
         # this is a simple http->https redirect
         if isinstance(spec, str):
-            # nginx ingress will give a 308 status code, not 301
-            return SimpleRefract(f'{spec}/', spec, 308)
+            return SimpleRefract(f'{spec}/', spec, 301)
         tests = spec.pop('tests', None)
         nginx = spec.pop('nginx', None)
         if nginx:

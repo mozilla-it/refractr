@@ -300,13 +300,14 @@ refracts:
   # SE-1619, jira
 - proton-form.herokuapp.com/: foxfooding.mozilla.community
 
-  # SE-1902, SE-2005
+  # SE-1902, SE-2005, SE-3040
 - ideas.mozilla.org/:
   - input.mozilla.org
   - input.mozilla.com
   - m.input.mozilla.org
   - m.input.mozilla.com
   - feedback.mozilla.org
+  - ideas.mozilla.com
   preserve-path: false
   status: 302
 

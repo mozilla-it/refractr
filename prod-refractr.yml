@@ -921,10 +921,10 @@ refracts:
     - if: '$request_uri ~ "(?i)^/(unfu?ck|love|rendonslenetplusnet)/?$"' # issues #19, #18, #15, #13, and #27, and Jira SE-1256
       ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=referral&utm_source=firefox.com&utm_campaign=unfck'
     # in the case of no query string add the default args
-    - if: '$request_uri ~ "(?i)^/(turningred|truecolors)/?$"' # SE-3052
+    - if: '$request_uri ~ "(?i)^/(turningred|truecolou?rs)/?$"' # SE-3052
       ^: 'truecolors.firefox.com/?utm_campaign=firefox-disney-us&utm_medium=web&utm_source=redirect&utm_content=firefox.com-turningred'
     # request query string is automatically preserved
-    - if: '$request_uri ~ "(?i)^/(turningred|truecolors)/?\?"' # SE-3052
+    - if: '$request_uri ~ "(?i)^/(turningred|truecolou?rs)/?\?"' # SE-3052
       ^: 'truecolors.firefox.com/'
     - redirect: 'www.mozilla.org/firefox/new/?redirect_source=firefox-com' #fallback redirect, bug 896570, bug 1427843
   status: 302
@@ -980,6 +980,7 @@ refracts:
   - http://www.firefox.com/turningred/: 'https://truecolors.firefox.com/?utm_campaign=firefox-disney-us&utm_medium=web&utm_source=redirect&utm_content=firefox.com-turningred'
   - http://www.firefox.com/turningred/?utm_source=dude: 'https://truecolors.firefox.com/?utm_source=dude'
   - http://www.firefox.com/truecolors/: 'https://truecolors.firefox.com/?utm_campaign=firefox-disney-us&utm_medium=web&utm_source=redirect&utm_content=firefox.com-turningred'
+  - http://www.firefox.com/truecolours/: 'https://truecolors.firefox.com/?utm_campaign=firefox-disney-us&utm_medium=web&utm_source=redirect&utm_content=firefox.com-turningred'
   - http://www.firefox.com/truecolors/?utm_source=dude: 'https://truecolors.firefox.com/?utm_source=dude'
 
 # SE-3052
@@ -992,8 +993,10 @@ refracts:
   preserve-path: false
   srcs:
   - turningred.firefox.com
+  - truecolours.firefox.com
   tests:
   - http://turningred.firefox.com/colorways: 'https://truecolors.firefox.com/colorways?utm_campaign=firefox-disney-us&utm_medium=web&utm_source=redirect&utm_content=turningred.firefox.com'
   - http://turningred.firefox.com/colorways?utm_source=dude: 'https://truecolors.firefox.com/colorways?utm_source=dude'
   - http://turningred.firefox.com/: 'https://truecolors.firefox.com/?utm_campaign=firefox-disney-us&utm_medium=web&utm_source=redirect&utm_content=turningred.firefox.com'
   - http://turningred.firefox.com/?utm_source=dude: 'https://truecolors.firefox.com/?utm_source=dude'
+  - http://truecolours.firefox.com/: 'https://truecolors.firefox.com/?utm_campaign=firefox-disney-us&utm_medium=web&utm_source=redirect&utm_content=turningred.firefox.com'

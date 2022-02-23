@@ -12,3 +12,4 @@ tldextract==3.0.0
 
 # Not used directly; only included to fix a compatible version
 idna==2.10
+markupsafe==2.0.1

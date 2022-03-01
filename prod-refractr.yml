@@ -226,8 +226,8 @@ refracts:
   - geckoview.dev
   status: 302
 
-  # SE-1561, SE-1666, SE-1856
-- mozilla.crowdicity.com/ : ideas.mozilla.org
+  # SE-1561, SE-1666, SE-1856, SE-3059
+- connect.mozilla.org/ : ideas.mozilla.org
 
 - mozilla.github.io/oi-website/: openinnovation.mozilla.org
 

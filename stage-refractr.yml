@@ -12,12 +12,8 @@ refracts:
 
 - mozilla.org/:
   - refractr.allizom.org
-  - wildcard.refractr.allizom.org
-  #- '*.refractr.allizom.org'
 
 - mozilla.com/: refractr1.allizom.org
-
-- mozilla.org/: refractr2.allizom.org
 
 - m.youtube.com/: ftv.stage.mozaws.net # SVCSE-350 FTV redirect to youtube
   status: 302

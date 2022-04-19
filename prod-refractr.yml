@@ -1014,3 +1014,6 @@ refracts:
   - http://ftv.cdn.mozilla.net/ytht: https://m.youtube.com/
   - http://ftv.cdn.mozilla.net/ytfc: https://m.youtube.com/
   - http://ftv.cdn.mozilla.net/ytfcfoo: https://m.youtube.com/
+
+# SE-3083
+- support.mozilla.org/en-US/kb/end-support-firefox-reality: webxr.today

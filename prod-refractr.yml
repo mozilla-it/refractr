@@ -1016,4 +1016,11 @@ refracts:
   - http://ftv.cdn.mozilla.net/ytfcfoo: https://m.youtube.com/
 
 # SE-3083
-- support.mozilla.org/en-US/kb/end-support-firefox-reality: webxr.today
+- dsts:
+    - redirect: mozilla.org/en-US/kb/end-support-firefox-reality
+  srcs:
+    - www.webxr.today
+    - webxr.today
+  tests:
+    - http://www.webxr.today/: "https://mozilla.org/en-US/kb/end-support-firefox-reality"
+    - http://webxr.today/: "https://mozilla.org/en-US/kb/end-support-firefox-reality"

@@ -1017,10 +1017,10 @@ refracts:
 
 # SE-3083
 - dsts:
-    - redirect: mozilla.org/en-US/kb/end-support-firefox-reality
+    - redirect: support.mozilla.org/en-US/kb/end-support-firefox-reality
   srcs:
     - www.webxr.today
     - webxr.today
   tests:
-    - http://www.webxr.today/: "https://mozilla.org/en-US/kb/end-support-firefox-reality"
-    - http://webxr.today/: "https://mozilla.org/en-US/kb/end-support-firefox-reality"
+    - http://www.webxr.today/: "https://support.mozilla.org/en-US/kb/end-support-firefox-reality"
+    - http://webxr.today/: "https://support.mozilla.org/en-US/kb/end-support-firefox-reality"

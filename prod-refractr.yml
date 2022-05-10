@@ -1001,7 +1001,7 @@ refracts:
   - http://turningred.firefox.com/?utm_source=dude: 'https://truecolors.firefox.com/?utm_source=dude'
   - http://truecolours.firefox.com/: 'https://truecolors.firefox.com/?utm_campaign=firefox-disney-us&utm_medium=web&utm_source=redirect&utm_content=turningred.firefox.com'
 
-# SE-3060
+# SE-3060 & SVCSE-350
 - dsts:
   - if: '$request_uri ~ ^/ytht(.*)$'
     ^: 'm.youtube.com/'
@@ -1010,10 +1010,13 @@ refracts:
   preserve-path: false
   srcs:
   - ftv.cdn.mozilla.net
+  - ftv.prod.mozaws.net
   tests:
   - http://ftv.cdn.mozilla.net/ytht: https://m.youtube.com/
   - http://ftv.cdn.mozilla.net/ytfc: https://m.youtube.com/
   - http://ftv.cdn.mozilla.net/ytfcfoo: https://m.youtube.com/
+  - http://ftv.prod.mozaws.net/ytht: https://m.youtube.com/
+  - http://ftv.prod.mozaws.net/ytfc: https://m.youtube.com/
 
 # SE-3083
 - dsts:

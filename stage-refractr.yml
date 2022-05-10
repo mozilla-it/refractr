@@ -15,9 +15,6 @@ refracts:
 
 - mozilla.com/: refractr1.allizom.org
 
-- m.youtube.com/: ftv.stage.mozaws.net # SVCSE-350 FTV redirect to youtube
-  status: 302
-
 # this domain doesn't point to refractr atm
 # - mozilla.org/:
 #   - malware-error.allizom.org

@@ -1030,3 +1030,7 @@ refracts:
 
 # SE-3133
 - www.tekcopteg.com/: tekcopteg.com
+
+# SVCSE-350
+- m.youtube.com/: ftv.stage.mozaws.net
+  status: 302

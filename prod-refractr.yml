@@ -1030,3 +1030,15 @@ refracts:
 
 # SE-3133
 - www.tekcopteg.com/: tekcopteg.com
+
+# SE-2418
+- dsts:
+    - redirect: webthings.io/
+  srcs: 
+    - iot.mozilla.org
+    - '*.iot.mozilla.org'
+  tests:
+    - http://iot.mozilla.org/: "https://webthings.io/"
+    - http://web.iot.mozilla.org/: "https://webthings.io/"
+
+

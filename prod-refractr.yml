@@ -1041,4 +1041,9 @@ refracts:
     - http://iot.mozilla.org/: "https://webthings.io/"
     - http://web.iot.mozilla.org/: "https://webthings.io/"
 
-
+# 404 Hosts
+- nginx: | 
+     server { 
+       server_name discovery.addons.mozilla.org discovery.addons.allizom.org discovery.addons-dev.allizom.org;
+       return 404;
+     }

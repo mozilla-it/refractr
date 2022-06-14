@@ -98,7 +98,7 @@ class Refractr:
         tests = spec.pop('tests', None)
         nginx = spec.pop('nginx', None)
         if nginx:
-            return NginxRefract(nginx, tests)
+            return NginxRefract(nginx)
         dsts = spec.pop('dsts', None)
         srcs = spec.pop('srcs', None)
         status = spec.pop('status', 301)

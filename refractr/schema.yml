@@ -141,8 +141,6 @@ defs:
     properties:
       nginx:
         type: string
-      tests:
-        $ref: '#/defs/tests'
   simple-refract:
     default: {}
     title: simple-refract

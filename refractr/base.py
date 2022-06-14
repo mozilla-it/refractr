@@ -54,7 +54,12 @@ class BaseRefract:
         self.hsts_img = hsts_img
         self.preserve_path = preserve_path
         self.wildcard_file = wildcard_file
-        self.tests = tuplify((tests or []) + self.generate_tests())
+
+        extra_tests = []
+        if hasattr(self, 'generate_tests'):
+            extra_tests = self.generate_tests()
+
+        self.tests = tuplify((tests or []) + extra_tests)
 
     def __str__(self):
         return yaml_format(self.json())
@@ -88,6 +93,8 @@ class BaseRefract:
         generated tests will always match location redirects
         rewrites do no generate tests; so this is to help identify that
         '''
+        if hasattr(self, 'caller') and self.caller == "NginxRefractr":
+            return 0
         dst_count = len(self.dsts) if isinstance(self.dsts, list) else 1
         test_count = len(self.tests)
         return test_count - dst_count

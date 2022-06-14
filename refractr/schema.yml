@@ -105,12 +105,31 @@ defs:
     patternProperties:
       '^\^.*$':
         $ref: '#/defs/dst-url'
+  dst-headers:
+    default: {}
+    title: dst-headers
+    type: object
+    minProperties: 3
+    additionalProperties: false
+    properties:
+      url: 
+        title: val
+        type: string
+        pattern: '(.*)'
+      headers:
+        $ref: '#/defs/headers'
+      endpoint:
+        default: ''
+        title: endpoint-val
+        type: string
+        pattern: '(.*)'
   dsts:
     type: array
     items:
       oneOf:
       - $ref: '#/defs/dst-redirect'
       - $ref: '#/defs/dst-rewrite'
+      - $ref: '#/defs/dst-headers'
   test:
     default: {}
     title: test
@@ -184,6 +203,8 @@ defs:
         - $ref: '#/defs/src-urls'
       dsts:
         $ref: '#/defs/dsts'
+        headers: 
+          $ref: '#/defs/headers'
       status:
         type: integer
       hsts-img:

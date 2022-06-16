@@ -3,18 +3,18 @@ import re
 from refractr.base import BaseRefract
 
 class NginxRefract(BaseRefract):
-    def __init__(self, nginx, tests):
+    def __init__(self, nginx):
         self.nginx = '\n' + nginx.strip()
         pattern = ' +server_name(( +[^ ;]+)+);'
         match = re.search(pattern, self.nginx)
         srcs = match.group(1).strip().split(' ')
-        super().__init__(srcs=srcs, tests=tests)
+        self.caller = "NginxRefractr"
+        super().__init__(srcs=srcs)
 
     def json(self):
         return dict(
             srcs=self.srcs,
             nginx=self.nginx,
-            tests=self.tests,
         )
 
     def render(self):

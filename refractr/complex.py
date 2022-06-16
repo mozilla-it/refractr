@@ -1,5 +1,6 @@
 import re
 
+from nginx.config.helpers import duplicate_options
 from nginx.config.api import KeyValueOption
 from nginx.config.api import KeyMultiValueOption
 from nginx.config.api import Section, Location
@@ -86,6 +87,31 @@ class ComplexRefract(BaseRefract):
             )
         return rewrite
 
+    def render_additional_headers(self, dst, status):
+        headers = dst.pop('headers', None)
+        sections = []
+        try:
+            headers_nginx = [duplicate_options(
+              'add_header',
+              [
+                  list(item)
+                  for item
+                  in headers.items()
+              ],
+            )]
+            url = dst.pop('url', None)
+            redirect = dst.pop('endpoint', None)
+            target = KeyMultiValueOption(
+              'return', [
+                  status or self.status,
+                  create_target(f'{redirect}{url}', self.preserve_path),
+                ]
+            )
+            sections += [Location(f'= {url}', *headers_nginx, target)]
+        except:
+            raise
+        return sections
+
     def render_if(self, dsts, status):
         sections = []
         if_ = dsts.pop('if', None)
@@ -120,6 +146,9 @@ class ComplexRefract(BaseRefract):
             status = dst.pop('status', self.status)
             if 'if' in dst:
                 stmts += self.render_if(dst, status)
+                continue
+            if 'url' in dst:
+                stmts += self.render_additional_headers(dst, status)
                 continue
             try:
                 key, value = head_body(dst)

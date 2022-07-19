@@ -1,5 +1,5 @@
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
@@ -24,8 +24,11 @@ spec:
   - host: "{{ domain }}"
     http:
       paths:
-      - backend:
-          serviceName: refractr
-          servicePort: 80
-        path: /
+        - path: /
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: refractr
+              port:
+                number: 80
   {% endfor %}

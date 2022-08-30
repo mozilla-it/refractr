@@ -316,6 +316,16 @@ refracts:
   # SE-1564
 - support.mozilla.org/en-US/kb/canary-domain-use-application-dnsnet:  use-application-dns.net
 
+- support.mozilla.org/kb/take-screenshots-firefox:
+  - screenshot.firefox.com
+  - screenshot.firefoxusercontent.com
+  - screenshotcdn.firefox.com
+  - screenshotcdn.firefoxusercontent.com
+  - screenshots.firefox.com
+  - screenshots.firefoxusercontent.com
+  - screenshotscdn.firefox.com
+  - screenshotscdn.firefoxusercontent.com
+
   # bug 20170327
 - videos.cdn.mozilla.net/:
   - videos-cdn.mozilla.net

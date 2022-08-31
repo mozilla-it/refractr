@@ -1048,3 +1048,26 @@ refracts:
        server_name discovery.addons.mozilla.org discovery.addons.allizom.org discovery.addons-dev.allizom.org;
        return 404;
      }
+
+
+# screenshots.firefox.com migration SVCSE-449
+- nginx: |
+    server {
+      server_name screenshot.firefox.com screenshot.firefoxusercontent.com screenshotcdn.firefox.com screenshotcdn.firefoxusercontent.com screenshots.firefox.com screenshots.firefoxusercontent.com screenshotscdn.firefox.com screenshotscdn.firefoxusercontent.com;
+
+      location / {
+        return 301 https://support.mozilla.org/kb/take-screenshots-firefox;
+      }
+
+      location /event {
+        return 410;
+      }
+
+      location /images {
+        return 410;
+      }
+
+      location /timing {
+        return 410;
+      }
+    }

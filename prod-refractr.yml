@@ -932,8 +932,8 @@ refracts:
       ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=referral&utm_source=firefox.com&utm_campaign=unfck'
     - if: '$request_uri ~ "(?i)^/famil(y|ies)/?$"' # Jira SE-3278
       ^: 'www.mozilla.org/firefox/family/?utm_medium=referral&utm_source=firefox.com&utm_campaign=firefox-for-families'
-    - if: '$request_uri ~ "(?i)^/famil(y|ies)/?\?(?<query>.+)$"' # Jira SE-3278
-      ^: 'www.mozilla.org/firefox/family/?$query'
+    - if: '$request_uri ~ "(?i)^/famil(y|ies)/?\?.*$"' # Jira SE-3278
+      ^: 'www.mozilla.org/firefox/family/'
     - redirect: 'www.mozilla.org/firefox/new/?redirect_source=firefox-com' #fallback redirect, bug 896570, bug 1427843
   status: 302
   headers:

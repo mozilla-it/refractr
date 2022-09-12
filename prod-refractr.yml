@@ -1049,6 +1049,14 @@ refracts:
     - http://iot.mozilla.org/: "https://webthings.io/"
     - http://web.iot.mozilla.org/: "https://webthings.io/"
 
+# SE-3300
+- dsts:
+    - /: mozilla.org/about/webvision/
+    - /full/: mozilla.org/about/webvision/full/
+  srcs: webvision.mozilla.org
+  tests:
+    - http://webvision.mozilla.org/: https://mozilla.org/about/webvision/
+    - http://webvision.mozilla.org/full/: https://mozilla.org/about/webvision/full/
 
 # 404 Hosts
 - nginx: |

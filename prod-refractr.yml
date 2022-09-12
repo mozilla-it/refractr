@@ -1055,8 +1055,8 @@ refracts:
     - /full/: mozilla.org/about/webvision/full/
   srcs: webvision.mozilla.org
   tests:
-    - https://webvision.mozilla.org/: https://mozilla.org/about/webvision/
-    - https://webvision.mozilla.org/full/: https://mozilla.org/about/webvision/full/
+    - http://webvision.mozilla.org/: https://mozilla.org/about/webvision/
+    - http://webvision.mozilla.org/full/: https://mozilla.org/about/webvision/full/
 
 # 404 Hosts
 - nginx: |

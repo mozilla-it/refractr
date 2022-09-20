@@ -20,12 +20,24 @@ EOF
 }
 
 hydrate() {
-    if [ -z "$PAPERTRAIL_URL" ]; then
-        echo "$SCRIPT ERROR: PAPERTRAIL_URL env var must be set!"
+    if [ -z "$PAPERTRAIL_URL" ] && [ -z "$GCP_DEPLOY" ]; then
+        echo "$SCRIPT ERROR: PAPERTRAIL_URL or GCP_DEPLOY env var must be set!"
         exit 1
     fi
-    echo "hydrating nginx.conf.template"
-    envsubst '\$PAPERTRAIL_URL' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
+    if [ -n "$PAPERTRAIL_URL" ]; then
+      echo "hydrating AWS nginx.conf.template"
+      envsubst '\$PAPERTRAIL_URL' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
+    fi
+    if [ -n "$GCP_DEPLOY" ]; then
+      echo "hydrating GCP nginx.conf.template"
+      # Cribbed from the nginx-unpriv container configuration
+      # https://github.com/nginxinc/docker-nginx-unprivileged/blob/main/mainline/debian/Dockerfile
+      sed '/access_log/d' /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
+      sed -i 's,pid /var/run/nginx.pid,pid /tmp/nginx.pid,' /etc/nginx/nginx.conf
+      sed -i '/user nginx;/d' /etc/nginx/nginx.conf
+      sed -i "/^http {/a \    proxy_temp_path /tmp/proxy_temp;\n    client_body_temp_path /tmp/client_temp;\n    fastcgi_temp_path /tmp/fastcgi_temp;\n    uwsgi_temp_path /tmp/uwsgi_temp;\n    scgi_temp_path /tmp/scgi_temp;\n" /etc/nginx/nginx.conf
+      sed -i "s/80/8000/" /etc/nginx/conf.d/default.conf
+    fi
 }
 
 case "$ACTION" in

@@ -1058,6 +1058,9 @@ refracts:
     - http://webvision.mozilla.org/: https://mozilla.org/about/webvision/
     - http://webvision.mozilla.org/full/: https://mozilla.org/about/webvision/full/
 
+# SE-3315
+- developer.mozilla.org/en-US/docs/MDN: mdn-contributor-docs.mozilla.org
+
 # 404 Hosts
 - nginx: |
      server {

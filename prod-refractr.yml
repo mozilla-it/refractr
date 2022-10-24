@@ -1061,6 +1061,14 @@ refracts:
 # SE-3315
 - developer.mozilla.org/en-US/docs/MDN: mdn-contributor-docs.mozilla.org
 
+# SE-3342
+- dsts: 
+    - redirect: mozilla-hub.atlassian.net/
+  srcs: mana.mozilla.org
+  status: 301
+  tests:
+  - https://mana.mozilla.org/wiki/display/PR/Career+Development+Resources: https://mozilla-hub.atlassian.net/wiki/display/PR/Career+Development+Resources
+
 # 404 Hosts
 - nginx: |
      server {

@@ -1,5 +1,5 @@
 # SRE Info
-This is the SRE_INFO.md file which should be found in the root of any source code that is administered by the Mozilla Web IT SRE team. We are available on #it-web-sre on slack.
+This is the SRE_INFO.md file which should be found in the root of any source code that is administered by the Mozilla SRE Green team. We are available on #sre on slack.
 
 ## Overview
 Refractr, the application, involves the following parts:
@@ -11,7 +11,7 @@ Refractr, the application, involves the following parts:
 
 ## Doit (dodo.py)
 
-Doit is a Python framework meant to replace Makefiles and similar tools. The following are the Doit tasks we have defined and fun as part of CI for Refractr:
+Doit is a Python framework meant to replace Makefiles and similar tools. The following are the Doit tasks we have defined and run as part of CI for Refractr:
 
 1. doit schema (validate dev-refractr.yaml or prod-refractr.yaml - depending on branch - against refractr/schema.yml
 1. doit nginx (generate nginx configurations from dev|prod-refractr.yaml)

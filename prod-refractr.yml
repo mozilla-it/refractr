@@ -1069,6 +1069,8 @@ refracts:
   tests:
   - https://mana.mozilla.org/wiki/display/PR/Career+Development+Resources: https://mozilla-hub.atlassian.net/wiki/display/PR/Career+Development+Resources
 
+- mozilla-hub-sandbox-721.atlassian.net/: mana.allizom.org
+
 # 404 Hosts
 - nginx: |
      server {

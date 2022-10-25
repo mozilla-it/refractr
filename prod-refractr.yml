@@ -1063,11 +1063,13 @@ refracts:
 
 # SE-3342
 - dsts: 
-    - redirect: mozilla-hub.atlassian.net/
+  - if: '$request_uri ~ ^/wiki/(.*)'
+    ^: mozilla-hub.atlassian.net/
+  - redirect: mozilla-hub.atlassian.net/wiki/
   srcs: mana.mozilla.org
-  status: 301
   tests:
-  - https://mana.mozilla.org/wiki/display/PR/Career+Development+Resources: https://mozilla-hub.atlassian.net/wiki/display/PR/Career+Development+Resources
+    - http://mana.mozilla.org/wiki/display/PR/Career+Development+Resources: https://mozilla-hub.atlassian.net/wiki/display/PR/Career+Development+Resources
+    - http://mana.mozilla.org/: https://mozilla-hub.atlassian.net/wiki/
 
 - mozilla-hub-sandbox-721.atlassian.net/: mana.allizom.org
 

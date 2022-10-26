@@ -1073,6 +1073,9 @@ refracts:
 
 - mozilla-hub-sandbox-721.atlassian.net/: mana.allizom.org
 
+# DSRE-671
+- mozilla.cloud.looker.com/dashboards/918: missioncontrol.telemetry.mozilla.org
+
 # 404 Hosts
 - nginx: |
      server {

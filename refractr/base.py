@@ -20,6 +20,13 @@ def preserve(url):
 
 def create_target(dst, preserve_path=True):
     url = URL(dst).https
+    # urllib may return "a slightly different, but equivalent URL"
+    # which may remove a trailing '?' - the trailing '?' is used in the
+    # nginx confguration to indicate that query params should not be appended. 
+    # The trailing '?' is only present in nginx.conf, not the redireceted url
+    # (https://github.com/python/cpython/blob/main/Lib/urllib/parse.py#L483-L492)
+    if not url.endswith('?') and dst.endswith('?'):
+        url += '?'
     if preserve_path and URL(dst).path == '/':
         return preserve(url)
     return url

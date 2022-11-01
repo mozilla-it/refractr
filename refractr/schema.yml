@@ -72,7 +72,7 @@ defs:
     title: dst-url
     type: string
     # single '$' added to file matcher to allow nginx exprs: $lang $request_uri
-    pattern: '^(?!https?:\/\/)([A-z0-9]+([A-z0-9\.\-$]+)\/?)([A-z0-9\-_]+\/)*([A-z0-9$\/\.\-_:]+)?(\?[A-z0-9$\.\-:=]+(&[A-z0-9$\.\-:=]+)*)?(#[A-z0-9\-_]+)?\??$' # added optional '?' for nginx rewrite
+    pattern: '^(?!https?:\/\/)([A-z0-9]+([A-z0-9\.\-$]+)\/?)([A-z0-9\-_]+\/)*([A-z0-9$\/\.\-_:+]+)?(\?[A-z0-9$\.\-:=]+(&[A-z0-9$\.\-:=]+)*)?(#[A-z0-9\-_]+)?\??$' # added optional '?' for nginx rewrite
   nginx-url:
     default: ''
     title: nginx-url

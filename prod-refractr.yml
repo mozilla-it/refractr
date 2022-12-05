@@ -1080,7 +1080,7 @@ refracts:
 - mozilla.cloud.looker.com/dashboards/918: missioncontrol.telemetry.mozilla.org
 
 # SE-3386
-- blog.mozilla.org/en/mozilla/pulse-joins-the-mozilla-family/?utm_source=getpulse.team:
+- blog.mozilla.org/en/mozilla/pulse-joins-the-mozilla-family/:
   - automaticstatus.com
   - commons.so
   - focustime.ai

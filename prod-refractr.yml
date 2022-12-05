@@ -1090,6 +1090,15 @@ refracts:
   - lentil.ai
   - loopteam.co
   - reloc.io
+  - '*.automaticstatus.com'
+  - '*.commons.so'
+  - '*.focustime.ai'
+  - '*.getpulse.me'
+  - '*.getpulse.team'
+  - '*.holopod.com'
+  - '*.lentil.ai'
+  - '*.loopteam.co'
+  - '*.reloc.io'
 
 # 404 Hosts
 - nginx: |

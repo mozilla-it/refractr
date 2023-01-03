@@ -378,7 +378,7 @@ refracts:
       X-Backend-Server: TS
       Cache-Control: max-age=3600
     endpoint: www.mozilla.org
-  - ^/(.*): www.mozilla.org/
+  - ^/(.*): 'www.mozilla.org/$1'
   srcs: mozilla.org
   headers:
     X-Backend-Server: TS

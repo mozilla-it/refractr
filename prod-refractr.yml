@@ -1100,6 +1100,9 @@ refracts:
   - www.loopteam.co
   - www.reloc.io
 
+# IO-2308 redirect webdx to fxdx
+- fxdx.dev/: webdx.dev
+
 # SE-3415 Redirect mixedreality.mozilla.org to hubs.mozilla.com/labs/
 - hubs.mozilla.com/labs/: mixedreality.mozilla.org
 

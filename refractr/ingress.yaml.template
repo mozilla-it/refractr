@@ -1,10 +1,9 @@
 ---
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
     cert-manager.io/issuer: letsencrypt
-    kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/rewrite-target: /
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.org/server-snippets: "server_name ~^.*$;"     # Catch all server names
@@ -13,6 +12,7 @@ metadata:
       more_set_headers "Content-Security-Policy: frame-ancestors 'none'";
   name: refractr
 spec:
+  ingressClassName: nginx
   tls:
   {% for domain in domains %}
   - hosts:
@@ -25,7 +25,10 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: refractr
-          servicePort: 80
+          service:
+            name: refractr
+            port:
+              number: 80
+        pathType: Prefix
         path: /
   {% endfor %}

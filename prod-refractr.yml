@@ -1107,7 +1107,7 @@ refracts:
 - hubs.mozilla.com/labs/: mixedreality.mozilla.org
 
 # SE-3426
-- acorn.firefox.com: design.firefox.com
+- acorn.firefox.com/: design.firefox.com
 
 # 404 Hosts
 - nginx: |

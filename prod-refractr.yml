@@ -10,6 +10,9 @@ default-headers:
   Strict-Transport-Security: '"max-age=60; includeSubDomains" always'
 
 refracts:
+  # OPST-305
+- remote-settings-dev.allizom.org/:
+  - settings.dev.mozaws.net
 
   # bug 998357
 - activations.cdn.mozilla.net/:

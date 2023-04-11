@@ -14,6 +14,18 @@ refracts:
 - remote-settings-dev.allizom.org/:
   - settings.dev.mozaws.net
 
+  # OPST-305
+- remote-settings.allizom.org/:
+  - settings-writer.stage.mozaws.net
+
+  # OPST-305
+- firefox.settings.services.allizom.org/:
+  - settings-cdn.stage.mozaws.net
+
+  # OPST-305
+- firefox-settings-attachments.cdn.allizom.org/:
+  - firefox-settings-attachments-cdn.stage.mozaws.net
+
   # bug 998357
 - activations.cdn.mozilla.net/:
   - activations.mozilla.com

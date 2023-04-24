@@ -1115,6 +1115,9 @@ refracts:
 # SE-3415 Redirect mixedreality.mozilla.org to hubs.mozilla.com/labs/
 - hubs.mozilla.com/labs/: mixedreality.mozilla.org
 
+# OPST-277 Redirect mdn.mozillademos.org to mdn.dev
+- mdn.dev: mdn.mozillademos.org
+
 # SE-3426
 - acorn.firefox.com/: design.firefox.com
 

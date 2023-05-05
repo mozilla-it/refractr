@@ -1123,6 +1123,9 @@ refracts:
 # OPST-277 Redirect mdn.mozillademos.org to mdn.dev
 - mdn.dev/: mdn.mozillademos.org
 
+# OPST-277 Redirect insights.developer.mozilla.org to mdn.dev/archives/insights/
+- mdn.dev/archives/insights/: insights.developer.mozilla.org
+
 # SE-3426
 - acorn.firefox.com/: design.firefox.com
 

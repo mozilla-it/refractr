@@ -295,8 +295,8 @@ refracts:
   - url: /*
     headers:
       Clear-Site-Data: "storage"
-    endpoint: profiler.firefox.com
-  - ^/(.*): profiler.firefox.com
+    endpoint: profiler.firefox.com/
+  - ^/(.*): profiler.firefox.com/
   srcs: perf-html.io
   headers:
     Clear-Site-Data: "storage"

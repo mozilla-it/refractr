@@ -294,12 +294,12 @@ refracts:
 - dsts:
   - url: /*
     headers:
-      Clear-Site-Data: "storage"
+      Clear-Site-Data: \"storage\"
     endpoint: profiler.firefox.com/
   - ^/(.*): profiler.firefox.com/
   srcs: perf-html.io
   headers:
-    Clear-Site-Data: "storage"
+    Clear-Site-Data: \"storage\"
   tests:
   - https://perf-html.io/: https://profiler.firefox.com/
 

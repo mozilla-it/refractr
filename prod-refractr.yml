@@ -1132,11 +1132,23 @@ refracts:
 # SE-3415 Redirect mixedreality.mozilla.org to hubs.mozilla.com/labs/
 - hubs.mozilla.com/labs/: mixedreality.mozilla.org
 
-# OPST-277 Redirect mdn.mozillademos.org to mdn.dev
-- mdn.dev/: mdn.mozillademos.org
+# OPST-277 Redirect mdn.mozillademos.org/* to mdn.dev/archives/media/*
+- dsts:
+  - ^/(.*): 'mdn.dev/archives/media/$1'
+  srcs:
+  - mdn.mozillademos.org
+  - media.prod.mdn.mozit.cloud
+  - media.stage.mdn.mozit.cloud
+  tests:
+  - https://mdn.mozillademos.org/attachments/: https://mdn.dev/archives/media/attachments/
+  - https://mdn.mozillademos.org/samples/: https://mdn.dev/archives/media/samples/
 
-# OPST-277 Redirect insights.developer.mozilla.org to mdn.dev/archives/insights/
-- mdn.dev/archives/insights/: insights.developer.mozilla.org
+# OPST-277 Redirect insights.developer.mozilla.org/* to mdn.dev/archives/insights/*
+- dsts:
+  - ^/(.*): 'mdn.dev/archives/insights/$1'
+  srcs: insights.developer.mozilla.org
+  tests:
+  - https://insights.developer.mozilla.org/reports/pdf/MDN-Web-DNA-Report-2020.pdf: https://mdn.dev/archives/insights/reports/pdf/MDN-Web-DNA-Report-2020.pdf
 
 # SE-3426
 - acorn.firefox.com/: design.firefox.com

@@ -344,6 +344,9 @@ refracts:
   # SE-1564
 - support.mozilla.org/en-US/kb/canary-domain-use-application-dnsnet:  use-application-dns.net
 
+  # SVCSE-1316
+- support.mozilla.org/kb/firefox-private-network-no-longer-available?utm_source=inproduct&utm_medium=support: fpn.firefox.com
+
   # bug 20170327
 - videos.cdn.mozilla.net/:
   - videos-cdn.mozilla.net

@@ -184,8 +184,6 @@ refracts:
   # SE-1677
 - foundation.mozilla.org/en/artifacts/x-ray-goggles/: goggles.mozilla.org
 
-- fpn.firefox.com/: testpilot.firefox.com
-
   # bug 1334200
 - github.com/mozilla/popcorn-js/:
   - popcornjs.org
@@ -345,10 +343,13 @@ refracts:
 - support.mozilla.org/en-US/kb/canary-domain-use-application-dnsnet:  use-application-dns.net
 
   # SVCSE-1316
+- archive.mozilla.org/pub/vpn/fpn/secure-proxy.xpi: fpn.firefox.com/downloads/browser/latest/secure-proxy.xpi
+- archive.mozilla.org/pub/vpn/fpn/updates.json: fpn.firefox.com/downloads/browser/updates.json
 - support.mozilla.org/kb/firefox-private-network-no-longer-available?utm_source=inproduct&utm_medium=support:
     - fpn.firefox.com
     - premium.firefox.com
     - private-network.firefox.com
+    - testpilot.firefox.com
 
   # bug 20170327
 - videos.cdn.mozilla.net/:

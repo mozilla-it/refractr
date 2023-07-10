@@ -343,7 +343,6 @@ refracts:
 - support.mozilla.org/en-US/kb/canary-domain-use-application-dnsnet:  use-application-dns.net
 
   # SVCSE-1316
-
 - dsts:
     - /downloads/browser/latest/secure-proxy.xpi: https://archive.mozilla.org/pub/vpn/fpn/secure-proxy.xpi
     - /downloads/browser/updates.json: https://archive.mozilla.org/pub/vpn/fpn/updates.json

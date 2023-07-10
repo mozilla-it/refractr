@@ -344,9 +344,9 @@ refracts:
 
   # SVCSE-1316
 - dsts:
-    - /downloads/browser/latest/secure-proxy.xpi: https://archive.mozilla.org/pub/vpn/fpn/secure-proxy.xpi
-    - /downloads/browser/updates.json: https://archive.mozilla.org/pub/vpn/fpn/updates.json
-    - /: https://support.mozilla.org/kb/firefox-private-network-no-longer-available?utm_source=inproduct&utm_medium=support
+    - /downloads/browser/latest/secure-proxy.xpi: archive.mozilla.org/pub/vpn/fpn/secure-proxy.xpi
+    - /downloads/browser/updates.json: archive.mozilla.org/pub/vpn/fpn/updates.json
+    - /: support.mozilla.org/kb/firefox-private-network-no-longer-available?utm_source=inproduct&utm_medium=support
   srcs:
     - fpn.firefox.com
     - premium.firefox.com

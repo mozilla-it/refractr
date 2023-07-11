@@ -346,7 +346,9 @@ refracts:
 - dsts:
     - /downloads/browser/latest/secure-proxy.xpi: archive.mozilla.org/pub/vpn/fpn/secure-proxy.xpi
     - /downloads/browser/updates.json: archive.mozilla.org/pub/vpn/fpn/updates.json
-    - /: support.mozilla.org/kb/firefox-private-network-no-longer-available?utm_source=inproduct&utm_medium=support
+    # Needs to start with ^/ to switch from `location = /` to `location /`
+    # https://github.com/mozilla-it/refractr/blob/80c019c468bb8ad6633bc5d53e6b154d8142dd6c/refractr/complex.py#L159-L160
+    - ^/(.*): support.mozilla.org/kb/firefox-private-network-no-longer-available?utm_source=inproduct&utm_medium=support
   srcs:
     - fpn.firefox.com
     - premium.firefox.com

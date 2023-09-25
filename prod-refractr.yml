@@ -1199,8 +1199,8 @@ refracts:
 
 # SE-3598 - Pocket support migration to SUMO
 - dsts:
-  - if: '$uri ~ ^/article/(.*)$'
-    ^/(\d+)$: support.mozilla.org/kb/pocket/$1
+  - if: '$request_uri ~ ^/article/(.*)$'
+    ^/article/(.*$): support.mozilla.org/kb/pocket/$1
   - redirect: support.mozilla.org/products/pocket
   srcs:
   - help.getpocket.com

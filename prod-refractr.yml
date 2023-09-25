@@ -153,7 +153,7 @@ refracts:
   # bug 998526, 20170328
 - docs.google.com/forms/d/1VSlo6TZ5p42LyTx2q7Wd5vQ5hZHvWtA9JN6JWicXmBM/viewform/: confsurvey.mozilla.org
 
-  # SE-1187 
+  # SE-1187
 - docs.mozilla-releng.net/:
   - mozilla-releng.net
   - www.mozilla-releng.net
@@ -1101,7 +1101,7 @@ refracts:
 - developer.mozilla.org/en-US/docs/MDN: mdn-contributor-docs.mozilla.org
 
 # SE-3342
-- dsts: 
+- dsts:
   - if: $query_string ~ "pageId=109979676"
     ^: mozilla-hub.atlassian.net/wiki/spaces/PR/pages/24451391/Time+Off+Vacation?
   - if: '$request_uri ~ ^/wiki/(.*)'
@@ -1123,7 +1123,7 @@ refracts:
   - focustime.ai
   - getpulse.me
   - getpulse.team
-  - holopod.com 
+  - holopod.com
   - lentil.ai
   - loopteam.co
   - reloc.io
@@ -1196,3 +1196,19 @@ refracts:
         return 410;
       }
     }
+
+# SE-3598 - Pocket support migration to SUMO
+- dsts:
+  - if: '$uri ~ ^/article/(.*)$'
+    ^/(\d+)$: support.mozilla.org/kb/pocket/$1
+  - redirect: support.mozilla.org/products/pocket
+  srcs:
+  - help.getpocket.com
+  status: 302
+  preserve-path: false
+  tests:
+  - https://help.getpocket.com/: https://support.mozilla.org/products/pocket
+  - https://help.getpocket.com/article/885-saving-to-pocket-on-android: https://support.mozilla.org/kb/pocket/885-saving-to-pocket-on-android
+  - https://help.getpocket.com/article/123-smith-article/foo/bar: https://support.mozilla.org/kb/pocket/123-smith-article/foo/bar
+  - https://help.getpocket.com/categories/857-category: https://support.mozilla.org/products/pocket
+  - https://help.getpocket.com/notarticle/fooo/bar: https://support.mozilla.org/products/pocket

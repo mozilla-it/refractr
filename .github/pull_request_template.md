@@ -3,7 +3,6 @@
 JIRA ticket: [link to relevant JIRA or other system ticket]
 
 When creating a PR for Refractr, confirm you've done the following steps for smooth CI and CD experiences:
-- [ ] Is this the right place for your redirect (e.g. developer.mozilla.com/* redirects should be managed by MDN; other examples here as known)?
 - [ ] Have you updated the relevant YAML in the PR?
 - [ ] Have you checked the relevant YAML for any possible dupes regarding your domain?
 - [ ] Have you checked if there are any TLS cert concerns - e.g. if the domain being redirected already exists, and it is being changed to point at Refractr, is a temporary TLS 'outage' while waiting for Lets Encrypt certification via HTTP challenge okay? If not, [have you followed these steps for using DNS challenges with our cert-manager setup](https://mana.mozilla.org/wiki/display/SRE/Refractr+-+How+To+-+DNS+Challenges)?

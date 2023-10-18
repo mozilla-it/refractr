@@ -1224,11 +1224,16 @@ refracts:
     - mozilla.dev
     - www.mozilla.dev
     - developer.mozilla.com
-    - wiki.developer.mozilla.org
-    - beta.developer.mozilla.org
   tests:
     - https://mozilla.dev/: "https://developer.mozilla.org/"
     - https://www.mozilla.dev/: "https://developer.mozilla.org/"
     - https://developer.mozilla.com/: "https://developer.mozilla.org/"
+
+- dsts:
+  - ^/(.*): 'developer.mozilla.org/$1'
+  srcs:
+  - wiki.developer.mozilla.org
+  - beta.developer.mozilla.org
+  tests:
+    - https://wiki.developer.mozilla.org/: "https://developer.mozilla.org/"
     - https://wiki.developer.mozilla.org/foo: "https://developer.mozilla.org/foo"
-    - https://beta.developer.mozilla.org/foo: "https://developer.mozilla.org/foo"

@@ -1216,3 +1216,19 @@ refracts:
 # SE-3620
 - blog.mozilla.org/en/mozilla/rise-25-winners/?source=web-redirect: rise25.mozilla.org
   status: 302
+
+# SE-3660
+- dsts:
+    - redirect: developer.mozilla.org
+  srcs:
+    - mozilla.dev
+    - www.mozilla.dev
+    - developer.mozilla.com
+    - wiki.developer.mozilla.org
+    - beta.developer.mozilla.org
+  tests:
+    - https://mozilla.dev/: "https://developer.mozilla.org/"
+    - https://www.mozilla.dev/: "https://developer.mozilla.org/"
+    - https://developer.mozilla.com/: "https://developer.mozilla.org/"
+    - https://wiki.developer.mozilla.org/foo: "https://developer.mozilla.org/foo"
+    - https://beta.developer.mozilla.org/foo: "https://developer.mozilla.org/foo"

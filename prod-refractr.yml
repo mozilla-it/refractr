@@ -22,6 +22,11 @@ refracts:
 - firefox-settings-attachments.cdn.allizom.org/:
   - firefox-settings-attachments-cdn.stage.mozaws.net
 
+  # SVCSE-1586
+- accounts.firefox.com/:
+  - accounts.mozilla.org
+  - accounts.mozilla.com
+
   # bug 998357
 - activations.cdn.mozilla.net/:
   - activations.mozilla.com

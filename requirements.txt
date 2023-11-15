@@ -1,6 +1,6 @@
 doit
 awscli
-ruamel.yaml
+ruamel.yaml==0.17.26
 leatherman==0.1.10
 pytest==7.1.2
 nginx-config-builder==1.0.1

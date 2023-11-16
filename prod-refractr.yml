@@ -1245,6 +1245,6 @@ refracts:
     - https://beta.developer.mozilla.org/foo: "https://developer.mozilla.org/foo"
 
 #  https://bugzilla.mozilla.org/show_bug.cgi?id=1865075
-- prod.pastebin.prod.webservices.mozgcp.net:
+- prod.pastebin.prod.webservices.mozgcp.net/:
   - paste.mozilla.org
   - pastebin.mozilla.org

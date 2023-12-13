@@ -213,7 +213,7 @@ refracts:
   status: 302
 
   # SVCSE-1589
-- monitor.mozilla.org/: monitor.firefox
+- monitor.mozilla.org/: monitor.firefox.com
 
   # bug 1330438
 - moz-releng-docs.readthedocs.io/en/latest/: docs.pub.build.mozilla.org

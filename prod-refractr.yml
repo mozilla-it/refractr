@@ -212,6 +212,9 @@ refracts:
 - medium.com/mozilla-open-innovation/: open.mozilla.org
   status: 302
 
+  # SVCSE-1589
+- monitor.mozilla.org/: monitor.firefox.com
+
   # bug 1330438
 - moz-releng-docs.readthedocs.io/en/latest/: docs.pub.build.mozilla.org
 

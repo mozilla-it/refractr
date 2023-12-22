@@ -1172,8 +1172,11 @@ refracts:
 # SE-3426
 - acorn.firefox.com/: design.firefox.com
 
-# DSRE-1301
-- rally.mozilla.org/: members.rally.mozilla.org
+- www.mozilla.org/:
+   # DSRE-1301
+  - members.rally.mozilla.org
+  # DSRE-1173
+  - rally.mozilla.org
 
 # 404 Hosts
 - nginx: |

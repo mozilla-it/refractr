@@ -1247,3 +1247,5 @@ refracts:
     - https://wiki.developer.mozilla.org/foo: "https://developer.mozilla.org/foo"
     - https://beta.developer.mozilla.org/foo: "https://developer.mozilla.org/foo"
 
+# SE-3779
+- www.mozilla.org/: experiencethearch.mozilla.org

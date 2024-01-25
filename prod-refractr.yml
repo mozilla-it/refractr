@@ -163,12 +163,11 @@ refracts:
   - mozilla-releng.net
   - www.mozilla-releng.net
 
-  # bug 1263033
-- donate.mozilla.org/: join.mozilla.org
-  status: 307
-
-  # bug 1311146
-- donate.mozilla.org/: sendto.mozilla.org
+  # bug 1263033, 1311146, and 1876247
+- donate.mozilla.org/:
+  - give.mozilla.org
+  - join.mozilla.org
+  - sendto.mozilla.org
   status: 307
 
   # SE-1371

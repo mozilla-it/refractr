@@ -1249,3 +1249,8 @@ refracts:
 
 # SE-3779
 - www.mozilla.org/: experiencethearch.mozilla.org
+
+#SVCSE-1515
+- status.services.mozilla.com:
+  - status.vpn.mozilla.org
+  - status.relay.firefox.com

@@ -242,6 +242,11 @@ refracts:
   - mozillaecuador.org
   - www.mozillaecuador.org
 
+  # IO-2668
+- moztw.org/community/
+  - mozilla.tw
+  - www.mozilla.tw
+
   # bug 1533035
 - mozilla.github.io/geckoview/:
   - gv.dev

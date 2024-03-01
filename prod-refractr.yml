@@ -1259,3 +1259,8 @@ refracts:
 - status.services.mozilla.com/:
   - status.vpn.mozilla.org
   - status.relay.firefox.com
+
+# SE-3873
+- github.com/mozilla/contribute.json:
+  - contributejson.org
+  - www.contributejson.org

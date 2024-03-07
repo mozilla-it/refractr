@@ -1256,3 +1256,8 @@ refracts:
 - github.com/mozilla/contribute.json:
   - contributejson.org
   - www.contributejson.org
+
+# SE-3883
+- developer.mozilla.org/en-US/docs/Games/:
+  - www.openwebgames.com
+  - openwebgames.com  

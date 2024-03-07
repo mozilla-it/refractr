@@ -691,10 +691,6 @@ refracts:
   - mozilla.com.ru
   - www.mozilla.com.ru
 
-  # bug 1255190
-- www.openwebgames.com/: openwebgames.com
-  status: 302
-
   # SE-2950
 - wiki.mozilla.org/india/: wiki.mozillaindia.org
   status: 302
@@ -1256,6 +1252,10 @@ refracts:
 - github.com/mozilla/contribute.json:
   - contributejson.org
   - www.contributejson.org
+
+# bug 1255190
+- www.openwebgames.com/: openwebgames.com
+  status: 302
 
 # SE-3883
 - developer.mozilla.org/en-US/docs/Games/:

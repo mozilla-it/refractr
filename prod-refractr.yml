@@ -407,10 +407,6 @@ refracts:
   # bug 1320683
 - www.arewestableyet.com/: arewestableyet.com
 
-  # bug 1185027
-- www.contributejson.org/: contributejson.org
-  status: 302
-
   # bug 1384357
 - www.extensiontest.com/: extensiontest.com
   status: 302

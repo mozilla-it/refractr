@@ -1222,10 +1222,6 @@ refracts:
   - https://help.getpocket.com/categories/857-category: https://support.mozilla.org/products/pocket
   - https://help.getpocket.com/notarticle/fooo/bar: https://support.mozilla.org/products/pocket
 
-# SE-3620
-- blog.mozilla.org/en/mozilla/rise-25-winners/?source=web-redirect: rise25.mozilla.org
-  status: 302
-
 # SE-3660
 - dsts:
     - redirect: developer.mozilla.org/

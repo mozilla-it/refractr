@@ -208,10 +208,6 @@ refracts:
   - apps.mozilla.org
   - market.mozilla.org
 
-  # bug 1421587
-- medium.com/mozilla-open-innovation/: open.mozilla.org
-  status: 302
-
   # SVCSE-1589
 - monitor.mozilla.org/: monitor.firefox.com
 

@@ -1,0 +1,11 @@
+aiohttp
+awscli
+doit
+jinja2
+jsonschema
+leatherman
+nginx-config-builder
+pytest
+python-decouple
+ruamel.yaml
+tldextract

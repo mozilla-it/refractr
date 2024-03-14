@@ -1249,10 +1249,11 @@ refracts:
   - contributejson.org
   - www.contributejson.org
 
-# SE-3883
+# SE-3883, SE-3899
 - developer.mozilla.org/en-US/docs/Games/:
   - openwebgames.com
   - www.openwebgames.com
+  - games.mozilla.org
 
 # SE-3896
 - nginx: |

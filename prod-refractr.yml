@@ -1253,3 +1253,10 @@ refracts:
 - developer.mozilla.org/en-US/docs/Games/:
   - openwebgames.com
   - www.openwebgames.com
+
+# SE-3896
+- nginx: |
+     server {
+       server_name labs.mozilla.org labs.mozilla.com;
+       return 404;
+     }

@@ -237,3 +237,20 @@ def task_publish():
             publish,
         ]
     }
+
+def task_refractslisting():
+    '''
+    create refracts list  from loading refractr.json
+    '''
+    cmd = f'bin/refractr --output json show > {CFG.IMAGE}/refracts.json'
+    cmd1 = 'bin/refacts-listing'
+    return {
+        'task_dep': [
+            'schema',
+        ],
+        'actions': [ 
+            cmd,
+            cmd1,
+            f'echo "{cmd1}"',
+        ]
+    }

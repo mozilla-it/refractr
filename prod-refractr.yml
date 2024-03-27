@@ -1261,3 +1261,8 @@ refracts:
        server_name labs.mozilla.org labs.mozilla.com;
        return 404;
      }
+
+# SE-3916
+- github.com/Mozilla-Ocho/llamafile:
+  - llamafile.ai
+  - www.llamafile.ai

@@ -1,29 +1,48 @@
 #!/usr/bin/env python3
 
-import json
 import csv
+import json
 
-refacts_dict = {} 
+refacts_dict = {}
 
-with open('refractr/image/refracts.json') as user_file:
-  file_contents = user_file.read()
+with open("refractr/image/refracts.json") as user_file:
+    file_contents = user_file.read()
 
 parsed_json = json.loads(file_contents)
-key_to_check = 'dsts'
+key_to_check = "dsts"
 with open("refracts.txt", "a") as f:
     for refract in range(len(parsed_json["refracts"])):
-        if key_to_check in parsed_json["refracts"][refract] :
-            print(parsed_json['refracts'][refract]['srcs'],"redirects to", parsed_json['refracts'][refract]['dsts'] , file=f) 
+        if key_to_check in parsed_json["refracts"][refract]:
+            print(
+                parsed_json["refracts"][refract]["srcs"],
+                "redirects to",
+                parsed_json["refracts"][refract]["dsts"],
+                file=f,
+            )
         else:
-            print(parsed_json['refracts'][refract]['srcs'],"redirects to", parsed_json['refracts'][refract]['nginx'], file=f) 
+            print(
+                parsed_json["refracts"][refract]["srcs"],
+                "redirects to",
+                parsed_json["refracts"][refract]["nginx"],
+                file=f,
+            )
 
 
-with open('refracts.csv', "w") as csv_file:
-        writer = csv.writer(csv_file)
-        for refract in range(len(parsed_json["refracts"])):
-            if key_to_check in parsed_json["refracts"][refract] :
-                 writer.writerow([f"{parsed_json['refracts'][refract]['srcs']}" , f"{parsed_json['refracts'][refract]['dsts']}"])
-                
-                
-            else:
-                writer.writerow([f"{parsed_json['refracts'][refract]['srcs']}" , f"{parsed_json['refracts'][refract]['nginx']}"])
+with open("refracts.csv", "w") as csv_file:
+    writer = csv.writer(csv_file)
+    for refract in range(len(parsed_json["refracts"])):
+        if key_to_check in parsed_json["refracts"][refract]:
+            writer.writerow(
+                [
+                    f"{parsed_json['refracts'][refract]['srcs']}",
+                    f"{parsed_json['refracts'][refract]['dsts']}",
+                ]
+            )
+
+        else:
+            writer.writerow(
+                [
+                    f"{parsed_json['refracts'][refract]['srcs']}",
+                    f"{parsed_json['refracts'][refract]['nginx']}",
+                ]
+            )

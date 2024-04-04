@@ -327,9 +327,6 @@ refracts:
   # bug 1220879
 - prs.mozilla.io/: prs.paas.allizom.org
 
-  # SE-1619, jira
-- proton-form.herokuapp.com/: foxfooding.mozilla.community
-
   # SE-1902, SE-2005, SE-3040
 - ideas.mozilla.org/:
   - input.mozilla.org

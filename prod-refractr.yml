@@ -190,11 +190,6 @@ refracts:
   - popcornjs.org
   - www.popcornjs.org
 
-  # bug 1462137
-- hubs.mozilla.com/:
-  - hub.mozilla.com
-  - hub.mozilla.org
-
   # bug 784556, 880423
 - mana.mozilla.org/wiki/display/SD/print.mozilla.com/: print.mozilla.com
 
@@ -343,6 +338,12 @@ refracts:
 
   # SE-1564
 - support.mozilla.org/en-US/kb/canary-domain-use-application-dnsnet:  use-application-dns.net
+
+  # SVCSE-1946
+- support.mozilla.org/en-US/kb/end-support-mozilla-hubs:
+    - hubs.mozilla.org
+    - hubs.mozilla.com
+    - mixedreality.mozilla.org
 
   # SVCSE-1316
 - dsts:
@@ -1130,9 +1131,6 @@ refracts:
 
 # IO-2308 redirect webdx to fxdx
 - fxdx.dev/: webdx.dev
-
-# SE-3415 Redirect mixedreality.mozilla.org to hubs.mozilla.com/labs/
-- hubs.mozilla.com/labs/: mixedreality.mozilla.org
 
 # OPST-277 Redirect mdn.mozillademos.org/* to mdn.dev/archives/media/*
 - dsts:

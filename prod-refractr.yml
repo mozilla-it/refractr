@@ -1265,3 +1265,10 @@ refracts:
 # OPST-1236
 - telescope.nonprod.webservices.mozgcp.net/:
   - delivery-checks.stage.mozaws.net
+
+# SE-4055
+- nginx: |
+    server {
+      server_name ai.mozilla.org;
+      return 301 https://mozilla-hub.atlassian.net/wiki/spaces/ai360/pages/647135695/Mozilla+Ai360/;
+    }

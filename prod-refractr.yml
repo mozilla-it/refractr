@@ -1272,3 +1272,11 @@ refracts:
       server_name ai.mozilla.org;
       return 301 https://mozilla-hub.atlassian.net/wiki/spaces/ai360/pages/647135695/Mozilla+Ai360/;
     }
+
+# SE-4040
+- nginx: |
+    server {
+      server_name search.services.mozilla.com;
+      add_header Retry-After 86400 always;
+      return 503;
+    }

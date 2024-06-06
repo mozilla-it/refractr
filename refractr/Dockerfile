@@ -24,6 +24,8 @@ RUN rm /etc/nginx/conf.d/default.conf
 COPY image/ /refractr
 COPY nginx/ /etc/nginx/
 
+RUN chown -R nginx:nginx /etc/nginx
+
 EXPOSE 80
 STOPSIGNAL SIGTERM
 

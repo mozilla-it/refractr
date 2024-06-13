@@ -185,6 +185,9 @@ refracts:
   # SE-1677
 - foundation.mozilla.org/en/artifacts/x-ray-goggles/: goggles.mozilla.org
 
+  # SVCSE-2048
+- future.mozilla.org/builders/: builders.mozilla.community
+
   # bug 1334200
 - github.com/mozilla/popcorn-js/:
   - popcornjs.org

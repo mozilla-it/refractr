@@ -1280,6 +1280,6 @@ refracts:
 - nginx: |
     server {
       server_name search.services.mozilla.com;
-      add_header Retry-After 86400 always;
+      add_header Retry-After 2592000 always;
       return 503;
     }

@@ -142,6 +142,9 @@ refractr/image/refracts
 refractr/image/deployed
 refractr/image/version
 
+# ignore generated certificate_manager_input.yaml
+refractr/image/certificate_manager_input.yaml
+
 # ignore doit db
 .doit.db
 

@@ -4,6 +4,7 @@
 default-domains:
   - stage.mozilla-redirects.xyz
   - stage.refractr.mozit.cloud
+  - stage.refractr.nonprod.webservices.mozgcp.net
 
 default-headers:
   Strict-Transport-Security: '"max-age=60; includeSubDomains" always'

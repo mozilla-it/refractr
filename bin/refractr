@@ -267,26 +267,27 @@ def main(args):
         morph = {}
 
         for domain in domains["domains"]:
-            parts = domain.split(".")
-            slug = "-".join(parts)
+            is_wildcard = False
+            primary_domain = domain
 
             if domain.startswith("*"):
-                slug = "-".join(parts[1:])
+                is_wildcard = True
+                primary_domain = ".".join(domain.split(".")[1:])
 
-            if slug not in morph:
-                morph[slug] = {}
+            if primary_domain not in morph:
+                morph[primary_domain] = {}
 
-            if "hostname" not in morph[slug]:
-                morph[slug]["hostname"] = domain
+            if "hostname" not in morph[primary_domain]:
+                morph[primary_domain]["hostname"] = primary_domain
 
-            if domain.startswith("*"):
-                if "additional_domains" not in morph[slug]:
-                    morph[slug]["additional_domains"] = []
+            if is_wildcard:
+                if "additional_domains" not in morph[primary_domain]:
+                    morph[primary_domain]["additional_domains"] = []
 
-                morph[slug]["additional_domains"].append(domain)
+                morph[primary_domain]["additional_domains"].append(domain)
 
-                if "dns_authorization" not in morph[slug]:
-                    morph[slug]["dns_authorization"] = True
+                if "dns_authorization" not in morph[primary_domain]:
+                    morph[primary_domain]["dns_authorization"] = True
 
         output_print(
             [morph[item] for item in morph],

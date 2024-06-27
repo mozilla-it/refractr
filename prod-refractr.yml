@@ -1289,3 +1289,8 @@ refracts:
 # SE-4100
 - mozilla-cws.atlassian.net/:
   - jira.mozilla-community.org
+
+# SE-3493
+- mozilla.rs/:
+  - mozilla-srbija.org
+  - www.mozilla-srbija.org

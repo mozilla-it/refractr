@@ -4,6 +4,7 @@
 default-domains:
   - prod.mozilla-redirects.xyz
   - prod.refractr.mozit.cloud
+  - prod.refractr.prod.webservices.mozgcp.net
   - refractr.mozilla.org
 
 default-headers:

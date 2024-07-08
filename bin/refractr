@@ -290,7 +290,7 @@ def main(args):
                     morph[primary_domain]["dns_authorization"] = True
 
         output_print(
-            [morph[item] for item in morph],
+            [morph[key] for key in sorted(morph)],
             parsed.output,
             default_flow_style=False,
             explicit_start=True,

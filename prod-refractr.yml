@@ -593,6 +593,7 @@ refracts:
   # bug 1056359
 - www.mozilla.org/en-US/firefox/new/:
   - mozilla.it
+  - www.mozilla.it
   - wwww.mozilla.it
 
 - www.mozilla.org/firefox/:

@@ -400,8 +400,9 @@ refracts:
   - arewefunyet.com
   - www.arewefunyet.com
 
-  # bug 1320683
-- www.arewestableyet.com/: arewestableyet.com
+- www.mozilla.org/:
+  - arewestableyet.com
+  - www.arewestableyet.com
 
   # bug 1384357
 - www.extensiontest.com/: extensiontest.com

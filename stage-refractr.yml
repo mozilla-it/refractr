@@ -2,8 +2,6 @@
 # the ingress.yaml.template by being added to the domains
 # output from refractr.py
 default-domains:
-  - stage.mozilla-redirects.xyz
-  - stage.refractr.mozit.cloud
   - stage.refractr.nonprod.webservices.mozgcp.net
 
 default-headers:

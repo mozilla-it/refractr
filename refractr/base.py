@@ -1,35 +1,36 @@
-from nginx.config.helpers import duplicate_options
-from nginx.config.api import KeyValueOption
-from nginx.config.api import Location
-
 from leatherman.dictionary import head_body
 from leatherman.repr import __repr__
-from leatherman.yaml import yaml_format
+from nginx.config.api import KeyValueOption, Location
+from nginx.config.helpers import duplicate_options
+from yaml import dump
 
+from refractr.cfg import CFG, cd
 from refractr.url import URL
 from refractr.utils import *
-from refractr.cfg import CFG, cd
 
-WILDCARD = 'wildcard'
-REQUEST_URI = '$request_uri'
+WILDCARD = "wildcard"
+REQUEST_URI = "$request_uri"
+
 
 def preserve(url):
-    if url.endswith('/'):
+    if url.endswith("/"):
         return url[0:-1] + REQUEST_URI
     return url + REQUEST_URI
+
 
 def create_target(dst, preserve_path=True):
     url = URL(dst).https
     # urllib may return "a slightly different, but equivalent URL"
     # which may remove a trailing '?' - the trailing '?' is used in the
-    # nginx confguration to indicate that query params should not be appended. 
+    # nginx confguration to indicate that query params should not be appended.
     # The trailing '?' is only present in nginx.conf, not the redireceted url
     # (https://github.com/python/cpython/blob/main/Lib/urllib/parse.py#L483-L492)
-    if not url.endswith('?') and dst.endswith('?'):
-        url += '?'
-    if preserve_path and URL(dst).path == '/':
+    if not url.endswith("?") and dst.endswith("?"):
+        url += "?"
+    if preserve_path and URL(dst).path == "/":
         return preserve(url)
     return url
+
 
 def tuplify(obj):
     if isinstance(obj, dict):
@@ -40,20 +41,29 @@ def tuplify(obj):
         return (obj,)
     return obj
 
+
 def listify(obj):
     if isinstance(obj, tuple):
         return list(obj)
     return obj
 
+
 def lowercase(items):
-    return [
-        item.lower()
-        for item
-        in items
-    ]
+    return [item.lower() for item in items]
+
 
 class BaseRefract:
-    def __init__(self, dsts=None, srcs=None, status=None, headers=None, hsts_img=False, preserve_path=False, wildcard_file=None, tests=None):
+    def __init__(
+        self,
+        dsts=None,
+        srcs=None,
+        status=None,
+        headers=None,
+        hsts_img=False,
+        preserve_path=False,
+        wildcard_file=None,
+        tests=None,
+    ):
         self.dsts = tuplify(dsts)
         self._srcs = tuplify(srcs)
         self.status = status
@@ -63,13 +73,13 @@ class BaseRefract:
         self.wildcard_file = wildcard_file
 
         extra_tests = []
-        if hasattr(self, 'generate_tests'):
+        if hasattr(self, "generate_tests"):
             extra_tests = self.generate_tests()
 
         self.tests = tuplify((tests or []) + extra_tests)
 
     def __str__(self):
-        return yaml_format(self.json())
+        return dump(self.json(), explicit_start=True, default_flow_style=False)
 
     __repr__ = __repr__
 
@@ -87,7 +97,7 @@ class BaseRefract:
             for src in self._srcs:
                 if src.startswith(WILDCARD):
                     for subdomain in self.wildcard_extrapolated_subdomains:
-                        src1 = subdomain + src[len(WILDCARD):]
+                        src1 = subdomain + src[len(WILDCARD) :]
                         srcs.append(src1)
                 else:
                     srcs.append(src)
@@ -96,11 +106,11 @@ class BaseRefract:
 
     @property
     def balance(self):
-        '''
+        """
         generated tests will always match location redirects
         rewrites do no generate tests; so this is to help identify that
-        '''
-        if hasattr(self, 'caller') and self.caller == "NginxRefractr":
+        """
+        if hasattr(self, "caller") and self.caller == "NginxRefractr":
             return 0
         dst_count = len(self.dsts) if isinstance(self.dsts, list) else 1
         test_count = len(self.tests)
@@ -110,10 +120,9 @@ class BaseRefract:
     def wildcard_extrapolated_subdomains(self):
         with cd(CFG.REPOROOT):
             return [
-                line for
-                line in
-                open(self.wildcard_file).read().strip().split('\n')
-                if not line.startswith('#')
+                line
+                for line in open(self.wildcard_file).read().strip().split("\n")
+                if not line.startswith("#")
             ]
 
     def json(self):
@@ -130,33 +139,23 @@ class BaseRefract:
 
     def render_headers(self):
         return duplicate_options(
-            'add_header',
-            [
-                list(item)
-                for item
-                in self.headers.items()
-            ],
+            "add_header",
+            [list(item) for item in self.headers.items()],
         )
 
     def render_hsts_img(self):
-        return Location(
-            '/set_hsts.gif',
-            KeyValueOption(
-                'return',
-                200)
-        )
+        return Location("/set_hsts.gif", KeyValueOption("return", 200))
 
     @property
     def server_name(self):
         if self.wildcard_file:
-            nltab = '\n' + ' '*8
+            nltab = "\n" + " " * 8
             return join([nltab + URL(src).netloc for src in self.srcs])
         return join([URL(src).netloc for src in self.srcs])
 
     @property
     def server_name_include(self):
-        return self.srcs[0] + '.include'
-
+        return self.srcs[0] + ".include"
 
     def render(self):
         raise NotImplementedError

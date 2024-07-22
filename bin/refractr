@@ -9,11 +9,11 @@ import sys
 sys.dont_write_bytecode = True
 
 from argparse import ArgumentParser
-from json import dumps
+from json import dumps as json_dumps
 
 from jinja2 import Environment, FileSystemLoader
 from leatherman.dbg import dbg
-from ruamel.yaml import dump as yaml_dump
+from yaml import dump as yaml_dump
 
 REAL_FILE = os.path.abspath(__file__)
 REAL_NAME = os.path.basename(REAL_FILE)
@@ -71,7 +71,7 @@ def output_print(data, output_format, default_flow_style=False, explicit_start=F
         )
 
     elif output_format == "json":
-        print(dumps(data, indent=2))
+        print(json_dumps(data, indent=2))
 
 
 def add_subparser(subparsers, action, **kwargs):

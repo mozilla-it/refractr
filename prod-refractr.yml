@@ -219,8 +219,7 @@ refracts:
   # NOTE: changed redirect to its final destination
 - mozilla.design/: designlanguage.mozilla.org
 
-  # bug 855746
-- mozilla.ec/:
+- community.mozilla.org/:
   - mozillaecuador.org
   - www.mozillaecuador.org
 

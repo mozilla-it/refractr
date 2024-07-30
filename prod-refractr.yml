@@ -565,9 +565,7 @@ refracts:
   - mozilla.ca
   - www.mozilla.ca
 
-  # bug 941881
-  # NOTE: changed from http->https after verifying
-- www.mozilla.org/en-US/contribute/studentambassadors/:
+- www.mozilla.org/contribute/:
   - ambassadors.mozilla.org
   - students.mozilla.org
   - fsa.mozilla.org

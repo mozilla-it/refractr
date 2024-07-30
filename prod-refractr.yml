@@ -194,12 +194,6 @@ refracts:
   # bug 784556, 880423
 - mana.mozilla.org/wiki/display/SD/print.mozilla.com/: print.mozilla.com
 
-  # bug 731317m 730102
-- marketplace.mozilla.org/:
-  - apps.mozilla.com
-  - apps.mozilla.org
-  - market.mozilla.org
-
   # SVCSE-1589
 - monitor.mozilla.org/: monitor.firefox.com
 

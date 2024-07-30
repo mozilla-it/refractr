@@ -28,11 +28,6 @@ refracts:
   - accounts.mozilla.org
   - accounts.mozilla.com
 
-  # bug 998357
-- activations.cdn.mozilla.net/:
-  - activations.mozilla.com
-  - activations.mozilla.org
-
   # bug 503731, 528747, 537144, SE-1683, SE-2688
 - addons.mozilla.org/:
   - extensions.mozilla.org

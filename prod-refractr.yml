@@ -335,9 +335,11 @@ refracts:
 
   # SVCSE-1946
 - support.mozilla.org/en-US/kb/end-support-mozilla-hubs:
-    - hubs.mozilla.org
-    - hubs.mozilla.com
-    - mixedreality.mozilla.org
+  - hub.mozilla.com
+  - hub.mozilla.org
+  - hubs.mozilla.com
+  - hubs.mozilla.org
+  - mixedreality.mozilla.org
 
   # SVCSE-1316
 - dsts:

@@ -9,3 +9,7 @@ pytest
 python-decouple
 ruamel.yaml
 tldextract
+google-api-core
+google-auth
+google-cloud-certificate-manager
+googleapis-common-protos

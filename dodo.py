@@ -257,7 +257,7 @@ def task_refractslisting():
     create refracts list  from loading refractr.json
     """
     cmd = f"bin/refractr --output json show > {CFG.IMAGE}/refracts.json"
-    cmd1 = "bin/refacts-listing"
+    cmd1 = "bin/refracts-listing"
     return {
         "task_dep": [
             "schema",

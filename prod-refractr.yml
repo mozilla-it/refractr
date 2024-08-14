@@ -249,10 +249,6 @@ refracts:
 - mozilla-releng.net/treestatus/: treestatus.mozilla.org
   status: 302
 
-  # bug 1293353
-- mozilla.service-now.com/: thehub.mozilla.com
-  status: 302
-
 - mozilla-services.readthedocs.io/en/latest/: docs.services.mozilla.com
 
 # Jira SE-1354
@@ -304,13 +300,6 @@ refracts:
   # bug 1304806
 - phonebook.mozilla.org/: phonebook.mozilla.com
   status: 302
-
-  # bug 1234248
-- planet.firefox.com/ux/: ux.firefox.com
-  status: 302
-
-  # bug 1220879
-- prs.mozilla.io/: prs.paas.allizom.org
 
   # SE-1902, SE-2005, SE-3040
 - ideas.mozilla.org/:

@@ -116,7 +116,7 @@ existing_certs = refractr_list_certificate_map_entries()
 
 
 # read the content of the cert manager input
-with open('test_list.yaml', 'r') as f:
+with open('../image/certificate_manager_input.yaml', 'r') as f:
     doc = yaml.safe_load(f)
 
 # iterate over the cert list not created .
@@ -144,7 +144,6 @@ for cert in doc:
 
         else:
             # create certificate for domains with no wildcards.
-            print(cert['hostname'])
             managed_domain = [f"{cert['hostname']}"]
             refractr_create_certificate(hostname=managed_domain,certname=certname)
 

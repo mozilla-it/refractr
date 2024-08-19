@@ -58,7 +58,7 @@ def refractr_create_certificate(hostname, certname, dns_auth=None):
     print(response)
 
 
-def refractr_create_certificate_map_entry(hostname,certname,map_entry_id):
+def refractr_create_certificate_map_entry(hostname, certname, map_entry_id):
     # Create a client
     client = certificate_manager_v1.CertificateManagerClient()
 

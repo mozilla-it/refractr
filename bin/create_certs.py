@@ -5,7 +5,7 @@ import yaml
 import os
 import sys
 
-def refractr_create_dns_authorization(hostname,id):
+def refractr_create_dns_authorization(hostname, id):
     # Create a client
     client = certificate_manager_v1.CertificateManagerClient()
 

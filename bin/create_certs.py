@@ -135,7 +135,7 @@ for cert in doc:
             dns_auth= [f"{refractr_create_dns_authorization(cert['hostname'],id)}"]
 
             managed_domains = []
-            managed_domains = [cert["hostname"] , cert["additional_domains"][0]]
+            managed_domains = [cert["hostname"], cert["additional_domains"][0]]
             # create certificate and passing the dnsAuthorization
             refractr_create_certificate(hostname=managed_domains,certname=certname,dns_auth=dns_auth)
 

@@ -41,7 +41,7 @@ def refractr_create_certificate(hostname, certname, dns_auth=None):
     certificate.name = f"projects/{PROJECT_ID}/locations/global/certificates/{certname}"
 
     # Initialize request argument(s)
-    request = certificate_manager_v1.CreateCertificateRequest(
+    request= certificate_manager_v1.CreateCertificateRequest(
         parent= f"projects/{PROJECT_ID}/locations/global",
         certificate_id=certname,
         certificate=certificate,

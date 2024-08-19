@@ -32,7 +32,7 @@ def refractr_create_dns_authorization(hostname, id):
     return response.name
 
 
-def refractr_create_certificate(hostname,certname, dns_auth=None):
+def refractr_create_certificate(hostname, certname, dns_auth=None):
     # Create a client
     client = certificate_manager_v1.CertificateManagerClient()
     certificate = certificate_manager_v1.Certificate()

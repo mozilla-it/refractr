@@ -129,7 +129,7 @@ for cert in doc:
             random_id = os.urandom(8).hex()
 
             # the dns authorization id
-            id =  f'{cert['hostname'].replace('.','-')}-dns-auth-{random_id}'
+            id =  f"{cert['hostname'].replace('.','-')}-dns-auth-{random_id}"
 
             # creating the dns authorization for additional domains and storing the DNS auth in a variable
             dns_auth= [f"{refractr_create_dns_authorization(cert['hostname'],id)}"]

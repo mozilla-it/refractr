@@ -145,7 +145,7 @@ for cert in doc:
         else:
             # create certificate for domains with no wildcards.
             managed_domain = [f"{cert['hostname']}"]
-            refractr_create_certificate(hostname=managed_domain,certname=certname)
+            refractr_create_certificate(hostname=managed_domain, certname=certname)
 
             random_id = os.urandom(8).hex()
             # random map entry id

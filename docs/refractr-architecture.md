@@ -58,10 +58,10 @@ This allows the SRE to promote the commit that has been deployed to stage to pro
 The **mozilla-it/refractr** repository has a **dodo.py** ([doit](https://pydoit.org/)) that defines the list of tasks that can be performed. This approach was chosen to allow the developer to run the same automation at their desk as what is run during CI. This promotes tight feedback loops for the developers and confidence that once the changes are pushed they are most likely to succeed because they have already run them locally.  Below is the output of the **doit list** command.  Note: this requires to be logged into the correct AWS account via **maws**.
 ```
 ~/repos/mozilla-it/version > doit list
-build      run docker-compose build for refractr
+build      run docker compose build for refractr
 check      run nginx -t test on refractr nginx config
 deployed   write refractr/deployed json file
-drun       run refractr container via docker-compose up -d
+drun       run refractr container via docker compose up -d
 ingress    create ingress.yaml from refractr.yml,ingress.yaml.template
 nginx      generate nginx.conf files from refractr.yml
 publish    publish docker image to aws ECR
@@ -94,18 +94,18 @@ This task runs the **bin/refractr ingress** command to generate the **ingress.ya
 * schema
 
 ### build
-This task runs **docker-compose build refractr**.  The Refractr Docker image that is produced has the refractr name and is tagged with the **git describe** output.  This task requires the following tasks to be completed successfully first:
+This task runs **docker compose build refractr**.  The Refractr Docker image that is produced has the refractr name and is tagged with the **git describe** output.  This task requires the following tasks to be completed successfully first:
 * deployed
 * version
 * nginx
 * ingress
 
 ### check
-This task runs **docker-compose run refractr check (nginx -t)** to validate the veracity of the provided Nginx Configuration file ( **refractr.conf** ).  This task requires the following tasks to be completed successfully first:
+This task runs **docker compose run refractr check (nginx -t)** to validate the veracity of the provided Nginx Configuration file ( **refractr.conf** ).  This task requires the following tasks to be completed successfully first:
 * build
 
 ### drun
-This task runs **docker-compose up** to get a local Refractr Docker container running, required for testing. This is designed to work locally on the dev system as well in Github Actions. This task requires the following tasks to be complete successfully first:
+This task runs **docker compose up** to get a local Refractr Docker container running, required for testing. This is designed to work locally on the dev system as well in Github Actions. This task requires the following tasks to be complete successfully first:
 * check
 
 ### show

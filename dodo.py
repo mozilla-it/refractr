@@ -147,7 +147,7 @@ def task_refracts():
 
 def task_build():
     """
-    run docker-compose build for refractr
+    run docker compose build for refractr
     """
     return {
         "task_dep": [
@@ -158,7 +158,7 @@ def task_build():
             "refracts",
         ],
         "actions": [
-            f"env {envs()} docker-compose build refractr",
+            f"env {envs()} docker compose build refractr",
         ],
     }
 
@@ -172,14 +172,14 @@ def task_check():
             "build",
         ],
         "actions": [
-            f"env {envs()} docker-compose run refractr check",
+            f"env {envs()} docker compose run refractr check",
         ],
     }
 
 
 def task_drun():
     """
-    run refractr container via docker-compose up -d
+    run refractr container via docker compose up -d
     """
     return {
         "task_dep": [
@@ -187,9 +187,9 @@ def task_drun():
         ],
         "actions": [
             # https://github.com/docker/compose/issues/1113#issuecomment-185466449
-            f"env {envs()} docker-compose rm --force refractr",
+            f"env {envs()} docker compose rm --force refractr",
             LongRunning(
-                f"nohup env {envs()} docker-compose up -d --remove-orphans refractr >/dev/null &"
+                f"nohup env {envs()} docker compose up -d --remove-orphans refractr >/dev/null &"
             ),
         ],
     }

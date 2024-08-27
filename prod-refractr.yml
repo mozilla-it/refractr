@@ -1285,3 +1285,7 @@ refracts:
 - mozilla.rs/:
   - mozilla-srbija.org
   - www.mozilla-srbija.org
+
+# SE-3888
+- mozilla.github.io/performance/:
+  - performance.mozilla.org

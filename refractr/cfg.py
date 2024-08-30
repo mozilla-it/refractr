@@ -110,7 +110,7 @@ class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
     def PAPERTRAIL_URL(self):
         # NOTE this is a ugly hack to give a fake url when this env var is
         # not supplied.
-        return self('PAPERTRAIL_URL', 'prod.refractr.mozit.cloud')
+        return self('PAPERTRAIL_URL', 'prod.refractr.prod.webservices.mozgcp.net.')
 
     @property
     @lru_cache()

@@ -316,8 +316,11 @@ refracts:
   - start.mozilla.com
   - start-prod.mozilla.com
 
-  # bug 835529
-- support.mozilla.org/: www.support.mozilla.org
+  # bug 835529 , 1912874
+- support.mozilla.org/:
+  - www.support.mozilla.org
+  - support.mozilla.com
+
 
   # SE-1564
 - support.mozilla.org/en-US/kb/canary-domain-use-application-dnsnet:  use-application-dns.net
@@ -1278,3 +1281,4 @@ refracts:
 # SE-3888
 - mozilla.github.io/performance/:
   - performance.mozilla.org
+

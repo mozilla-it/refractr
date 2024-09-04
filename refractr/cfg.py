@@ -16,9 +16,6 @@ DIR = os.path.abspath(os.path.dirname(__file__))
 CWD = os.path.abspath(os.getcwd())
 REL = os.path.relpath(DIR, CWD)
 
-CREDENTIALS_MESSAGE = 'Unable to locate credentials. You can configure credentials by running "aws configure".'
-
-
 class NotGitRepoError(Exception):
     def __init__(self, cwd=os.getcwd()):
         msg = f"not a git repository error cwd={cwd}"
@@ -105,37 +102,6 @@ class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
     def REPONAME(self):
         reponame = os.path.basename(self.REPOROOT)
         return self("REPONAME", reponame)
-
-    @property
-    @lru_cache()
-    def AWS_ACCOUNT(self):
-        _, stdout, _ = call("aws sts get-caller-identity")
-        obj = json.loads(stdout)
-        return obj["Account"]
-
-    @property
-    @lru_cache()
-    def AWS_REGION(self):
-        return self("AWS_REGION", "us-west-2")
-
-    @property
-    @lru_cache()
-    def ECR_REGISTRY(self):
-        return self("ECR_REGISTRY", "")
-
-    @property
-    @lru_cache()
-    def ECR_REPOURL(self):
-        if self.ECR_REGISTRY:
-            ecr_repourl = f"{self.ECR_REGISTRY}/{self.REPONAME}"
-        else:
-            ecr_repourl = f"{self.AWS_ACCOUNT}.dkr.ecr.{self.AWS_REGION}.amazonaws.com/{self.REPONAME}"
-        return self("ECR_REPOURL", ecr_repourl)
-
-    @property
-    @lru_cache()
-    def IMAGE_NAME_AND_TAG(self):
-        return self("IMAGE_NAME_AND_TAG", f"{self.ECR_REPOURL}:{self.VERSION}")
 
     # GITHUB Actions env vars
     # https://docs.github.com/en/actions/learn-github-actions/environment-variables#default-environment-variables
@@ -279,6 +245,5 @@ class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
             return git("rev-parse HEAD")
         except (NotGitRepoError, GitCommandNotFoundError):
             return self("REVISION")
-
 
 CFG = AutoConfigPlus()

@@ -116,23 +116,6 @@ def task_nginx():
     }
 
 
-def task_ingress():
-    """
-    create ingress.yaml from refractr.yml domains and ingress.yaml.template
-    """
-    ingress_yaml = os.path.basename(CFG.INGRESS_YAML_TEMPLATE.replace(".template", ""))
-    cmd = f"bin/refractr ingress --ingress-template {CFG.INGRESS_YAML_TEMPLATE} > {CFG.IMAGE}/{ingress_yaml}"
-    return {
-        "task_dep": [
-            "schema",
-        ],
-        "actions": [
-            cmd,
-            f'echo "{cmd}"',
-        ],
-    }
-
-
 def task_refracts():
     """
     create refracts.json from loading refractr.yml
@@ -158,7 +141,6 @@ def task_build():
             "deployed",
             "version",
             "nginx",
-            "ingress",
             "refracts",
         ],
         "actions": [
@@ -233,26 +215,6 @@ def task_show():
         "actions": [
             show,
         ]
-    }
-
-
-def task_publish():
-    """
-    publish docker image to aws ECR
-    """
-
-    def publish():
-        call(f"docker tag refractr:{CFG.VERSION} {CFG.IMAGE_NAME_AND_TAG}")
-        call(f"docker push {CFG.IMAGE_NAME_AND_TAG}")
-        print(f"publishing {CFG.VERSION}")
-
-    return {
-        "task_dep": [
-            "test",
-        ],
-        "actions": [
-            publish,
-        ],
     }
 
 

@@ -20,9 +20,7 @@ certificate_manager_input   create input file for certificate manager tf module
 check                       run nginx -t test on refractr nginx config
 deployed                    write refractr/deployed json file
 drun                        run refractr container via docker compose up -d
-ingress                     create ingress.yaml from refractr.yml domains and ingress.yaml.template
 nginx                       generate nginx.conf files from refractr.yml
-publish                     publish docker image to aws ECR
 refracts                    create refracts.json from loading refractr.yml
 refractslisting             create refracts list  from loading refractr.json
 schema                      test refractr.yml against schema.yml using jsonschema

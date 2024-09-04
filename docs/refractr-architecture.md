@@ -48,9 +48,7 @@ certificate_manager_input   create input file for certificate manager tf module
 check                       run nginx -t test on refractr nginx config
 deployed                    write refractr/deployed json file
 drun                        run refractr container via docker compose up -d
-ingress                     create ingress.yaml from refractr.yml domains and ingress.yaml.template
 nginx                       generate nginx.conf files from refractr.yml
-publish                     publish docker image to aws ECR
 refracts                    create refracts.json from loading refractr.yml
 refractslisting             create refracts list  from loading refractr.json
 schema                      test refractr.yml against schema.yml using jsonschema
@@ -83,7 +81,6 @@ This task runs **docker compose build refractr**.  The Refractr Docker image tha
 * deployed
 * version
 * nginx
-* ingress
 
 ### check
 This task runs **docker compose run refractr check (nginx -t)** to validate the veracity of the provided Nginx Configuration file ( **refractr.conf** ).  This task requires the following tasks to be completed successfully first:
@@ -107,7 +104,7 @@ This task runs the tests specified in **test_refractr.py**.  This file itself ge
 * drun
 
 ## Refractr CLI
-The **refractr cli** is an Argparse command tool to transform the **refractr.yml** to the **refractr.conf** (for nginx) and **ingress.yaml** (for cert-manager|ingress). This tool was written to print output of transformations to terminal.  This allows the user to "see" what the transformations will do.  The same fascilities will be used during the build of the docker image.  The help output is shown below will all of the subcommands described.
+The **refractr cli** is an Argparse command tool to transform the **refractr.yml** to the **refractr.conf** (for nginx). This tool was written to print output of transformations to terminal.  This allows the user to "see" what the transformations will do.  The same fascilities will be used during the build of the docker image.  The help output is shown below will all of the subcommands described.
 ```
 ~/repos/mozilla-it/refractr > bin/refractr --help
 usage: refractr [-h] [-c CFG] [-o OUPUT] {show,sh,domains,do,certificate_manager_input,cmi,nginx,ngx,ingress,ing,validate,val} ...

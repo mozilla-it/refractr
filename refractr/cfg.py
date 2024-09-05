@@ -16,6 +16,7 @@ DIR = os.path.abspath(os.path.dirname(__file__))
 CWD = os.path.abspath(os.getcwd())
 REL = os.path.relpath(DIR, CWD)
 
+
 class NotGitRepoError(Exception):
     def __init__(self, cwd=os.getcwd()):
         msg = f"not a git repository error cwd={cwd}"
@@ -245,5 +246,6 @@ class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
             return git("rev-parse HEAD")
         except (NotGitRepoError, GitCommandNotFoundError):
             return self("REVISION")
+
 
 CFG = AutoConfigPlus()

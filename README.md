@@ -9,7 +9,7 @@ HTTP redirect and rewrite service based on nginx
 
 ## refractr at mozilla
 
-refractr runs on GKE at mozilla, it is build with GHA and installed via helm.
+refractr runs on GKE at mozilla, it is built with GHA and installed via helm.
 
 ## refractr.yaml spec
 

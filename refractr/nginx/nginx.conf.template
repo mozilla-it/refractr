@@ -1,14 +1,18 @@
-user nginx;
 worker_processes 4;
 error_log /var/log/nginx/error.log warn;
-pid /var/run/nginx.pid;
+pid /tmp/nginx.pid;
 
 events {
     worker_connections 1024;
 }
 
-
 http {
+    proxy_temp_path       /tmp/proxy_temp;
+    client_body_temp_path /tmp/client_temp;
+    fastcgi_temp_path     /tmp/fastcgi_temp;
+    uwsgi_temp_path       /tmp/uwsgi_temp;
+    scgi_temp_path        /tmp/scgi_temp;
+
     include /etc/nginx/mime.types;
     default_type application/octet-stream;
 
@@ -21,10 +25,6 @@ http {
       ~^kube-probe 0;
       default 1;
     }
-
-    access_log /var/log/nginx/access.log main if=$log_agent;
-
-    access_log syslog:server=$PAPERTRAIL_URL main if=$log_agent;
 
     sendfile on;
 

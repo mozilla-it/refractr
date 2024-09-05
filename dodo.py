@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import json
 import os
 import re
@@ -8,7 +6,7 @@ from functools import lru_cache
 from doit.tools import LongRunning
 from jsonschema import validate
 from jsonschema.exceptions import ValidationError
-from ruamel.yaml import safe_load
+from ruamel.yaml import YAML
 
 from refractr.cfg import CFG, CalledProcessError, call, git
 
@@ -24,7 +22,6 @@ DOIT_CONFIG = {
 def envs(sep=" ", **kwargs):
     envs = dict(
         REFRACTR_VERSION=CFG.VERSION,
-        PAPERTRAIL_URL=CFG.PAPERTRAIL_URL,
     )
     return sep.join(
         [f"{key}={value}" for key, value in sorted(dict(envs, **kwargs).items())]
@@ -76,16 +73,23 @@ def task_schema():
         assert os.path.isfile(CFG.SCHEMA_YML)
         print(f"validating {CFG.REFRACTR_YML} against {CFG.SCHEMA_YML} =>", end=" ")
         with open(CFG.REFRACTR_YML, "r") as f:
-            refractr_yml = safe_load(f)
+            yaml = YAML(typ="safe")
+            refractr_yml = yaml.load(f)
+
         with open(CFG.SCHEMA_YML, "r") as f:
-            schema_yml = safe_load(f)
+            yaml = YAML(typ="safe")
+            schema_yml = yaml.load(f)
+
         try:
             validate(refractr_yml, schema_yml)
             print("SUCCESS")
+
             return True
+
         except ValidationError as ve:
             print("FAILURE")
             print(ve)
+
             return False
 
     return {
@@ -101,23 +105,6 @@ def task_nginx():
     generate nginx.conf files from refractr.yml
     """
     cmd = f"bin/refractr nginx > {CFG.NGINX}/conf.d/refractr.conf"
-    return {
-        "task_dep": [
-            "schema",
-        ],
-        "actions": [
-            cmd,
-            f'echo "{cmd}"',
-        ],
-    }
-
-
-def task_ingress():
-    """
-    create ingress.yaml from refractr.yml domains and ingress.yaml.template
-    """
-    ingress_yaml = os.path.basename(CFG.INGRESS_YAML_TEMPLATE.replace(".template", ""))
-    cmd = f"bin/refractr ingress --ingress-template {CFG.INGRESS_YAML_TEMPLATE} > {CFG.IMAGE}/{ingress_yaml}"
     return {
         "task_dep": [
             "schema",
@@ -154,7 +141,6 @@ def task_build():
             "deployed",
             "version",
             "nginx",
-            "ingress",
             "refracts",
         ],
         "actions": [
@@ -229,26 +215,6 @@ def task_show():
         "actions": [
             show,
         ]
-    }
-
-
-def task_publish():
-    """
-    publish docker image to aws ECR
-    """
-
-    def publish():
-        call(f"docker tag refractr:{CFG.VERSION} {CFG.IMAGE_NAME_AND_TAG}")
-        call(f"docker push {CFG.IMAGE_NAME_AND_TAG}")
-        print(f"publishing {CFG.VERSION}")
-
-    return {
-        "task_dep": [
-            "test",
-        ],
-        "actions": [
-            publish,
-        ],
     }
 
 

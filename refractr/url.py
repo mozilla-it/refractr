@@ -1,40 +1,44 @@
-from urllib.parse import urlparse, ParseResult
 from collections import UserString
+from urllib.parse import ParseResult, urlparse
+
 from refractr.exceptions import URLError
 from refractr.utils import *
 
 # makes visualizing as string easier to read
 ParseResult.__repr__ = lambda self: self.geturl()
 
+
 def replace(pr, **kwargs):
     if kwargs:
         return ParseResult(
-            scheme=kwargs.get('scheme', pr.scheme),
-            netloc=kwargs.get('netloc', pr.netloc),
-            path=kwargs.get('path', pr.path),
-            params=kwargs.get('params', pr.params),
-            query=kwargs.get('query', pr.query),
-            fragment=kwargs.get('fragment', pr.fragment))
+            scheme=kwargs.get("scheme", pr.scheme),
+            netloc=kwargs.get("netloc", pr.netloc),
+            path=kwargs.get("path", pr.path),
+            params=kwargs.get("params", pr.params),
+            query=kwargs.get("query", pr.query),
+            fragment=kwargs.get("fragment", pr.fragment),
+        )
     return pr
+
 
 class URL(UserString):
     def __init__(self, url, **kwargs):
         if url:
-            if url.startswith('http'):
+            if url.startswith("http"):
                 self._pr = urlparse(url)
             else:
-                self._pr = urlparse(f'https://{url}')
+                self._pr = urlparse(f"https://{url}")
             self._pr = replace(self._pr, **kwargs)
         else:
             raise URLError(url)
 
     @property
     def http(self):
-        return replace(self._pr, scheme='http').geturl()
+        return replace(self._pr, scheme="http").geturl()
 
     @property
     def https(self):
-        return replace(self._pr, scheme='https').geturl()
+        return replace(self._pr, scheme="https").geturl()
 
     @property
     def url(self):

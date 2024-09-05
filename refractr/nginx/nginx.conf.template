@@ -1,30 +1,26 @@
-user nginx;
-worker_processes 4;
-error_log /var/log/nginx/error.log warn;
-pid /var/run/nginx.pid;
+
+worker_processes auto;
+
+error_log /var/log/nginx/error.log notice;
+pid       /tmp/nginx.pid;
 
 events {
     worker_connections 1024;
 }
 
-
 http {
-    include /etc/nginx/mime.types;
+    proxy_temp_path       /tmp/proxy_temp;
+    client_body_temp_path /tmp/client_temp;
+    fastcgi_temp_path     /tmp/fastcgi_temp;
+    uwsgi_temp_path       /tmp/uwsgi_temp;
+    scgi_temp_path        /tmp/scgi_temp;
+
+    include      /etc/nginx/mime.types;
     default_type application/octet-stream;
 
     log_format main  '$server_name $http_host [$time_local] "$request" '
                      '$status $body_bytes_sent "$http_referer" '
                      '"$http_user_agent"';
-
-    # Do not log k8s health probes
-    map $http_user_agent $log_agent {
-      ~^kube-probe 0;
-      default 1;
-    }
-
-    access_log /var/log/nginx/access.log main if=$log_agent;
-
-    access_log syslog:server=$PAPERTRAIL_URL main if=$log_agent;
 
     sendfile on;
 

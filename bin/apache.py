@@ -1,19 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import errno
 import os
 import re
 import sys
-import click
-import errno
-
 from pathlib import Path
 
+import click
 from leatherman.fuzzy import fuzzy
-from leatherman.output import (
-    output_print,
-    default_output,
-)
+from leatherman.output import default_output, output_print
 
 
 def mkdir_p(path):

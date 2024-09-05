@@ -1,29 +1,31 @@
 #!/usr/bin/env python3
 
+import asyncio
 import os
 import re
 import sys
-import aiohttp
-import asyncio
 
-from refractr.exceptions import InsufficientAmountOfTestsError
-from refractr.utils import *
-from refractr.url import URL
+import aiohttp
+from leatherman.dbg import dbg
 from leatherman.dictionary import head_body
 from leatherman.repr import __repr__
-from leatherman.dbg import dbg
 
-LOOP_RESULT = 'LOOP!'
-STATUS_RESULT = 'STATUS!'
-MATCHED_RESULT = 'MATCHED'
-MISMATCH_RESULT = 'MISMATCH'
-SUCCESS_RESULT = 'SUCCESS'
-FAILURE_RESULT = 'FAILURE'
+from refractr.exceptions import InsufficientAmountOfTestsError
+from refractr.url import URL
+from refractr.utils import *
+
+LOOP_RESULT = "LOOP!"
+STATUS_RESULT = "STATUS!"
+MATCHED_RESULT = "MATCHED"
+MISMATCH_RESULT = "MISMATCH"
+SUCCESS_RESULT = "SUCCESS"
+FAILURE_RESULT = "FAILURE"
+
 
 class Hop:
     def __init__(self, test, src, dst=None, status=None, ex=None):
         assert isinstance(test, Test)
-        self.test = test #ref to test instance
+        self.test = test  # ref to test instance
         self.src = src
         self.dst = dst
         self.status = status
@@ -32,10 +34,10 @@ class Hop:
     __repr__ = __repr__
 
     def __str__(self):
-        result = self.result or ''
+        result = self.result or ""
         if isinstance(self.ex, Exception):
-            return f'{self.src} => {result}'
-        return f'{self.status} {self.src} -> {self.dst} {result}'.rstrip()
+            return f"{self.src} => {result}"
+        return f"{self.status} {self.src} -> {self.dst} {result}".rstrip()
 
     @property
     def result(self):
@@ -48,6 +50,7 @@ class Hop:
                 return MATCHED_RESULT
             return STATUS_RESULT
         return None
+
 
 class Test:
     def __init__(self, expect_dst, expect_status):
@@ -70,6 +73,7 @@ class Test:
             self._result = hop.result
         self.hops += [hop]
 
+
 class RefractrValidator:
     def __init__(self, netloc=None, early=False, verbose=False):
         self._loop = asyncio.get_event_loop()
@@ -87,14 +91,16 @@ class RefractrValidator:
             headers.update(Host=URL(src).netloc)
             src = URL(src, netloc=netloc).url
             # force to http for localhost
-            if netloc == 'localhost':
+            if netloc == "localhost":
                 src = URL(src).http
         ctor = aiohttp.TCPConnector(ssl=self.ssl)
         async with aiohttp.ClientSession(connector=ctor, loop=self._loop) as session:
-            async with session.request('GET', src, headers=headers, allow_redirects=False) as response:
+            async with session.request(
+                "GET", src, headers=headers, allow_redirects=False
+            ) as response:
                 headers = response.headers
-                dst = headers.get('Location', None)
-                if dst and URL(dst).netloc == '':
+                dst = headers.get("Location", None)
+                if dst and URL(dst).netloc == "":
                     dst = URL(dst, netloc=URL(src).netloc).url
                 return dst, response.status, response.reason
 
@@ -103,7 +109,7 @@ class RefractrValidator:
         src = given_src
         hops = []
         if expect_status == None:
-            test_result = 'ExpectStatusNotSpecified'
+            test_result = "ExpectStatusNotSpecified"
             return hops, test_result
         test = Test(expect_dst, expect_status)
         while src:
@@ -137,30 +143,27 @@ class RefractrValidator:
         if refract.balance < 0:
             raise InsufficientAmountOfTestsError(refract.balance)
         for test in refract.tests:
-            status = test.pop('status', refract.status)
+            status = test.pop("status", refract.status)
             src, dst = head_body(test)
-            names += [
-                f'{src} -> {dst}'
-            ]
-            futures += [
-                asyncio.ensure_future(
-                    self._follow_hops(src, dst, status))
-            ]
+            names += [f"{src} -> {dst}"]
+            futures += [asyncio.ensure_future(self._follow_hops(src, dst, status))]
         results = await asyncio.gather(*futures)
         tests = []
         for name, test in zip(names, results):
             if test.result != MATCHED_RESULT:
                 validate_result = FAILURE_RESULT
-            tests += [{
-                name: {
-                    'hops': [str(hop) for hop in test.hops],
-                    'test-result': test.result,
+            tests += [
+                {
+                    name: {
+                        "hops": [str(hop) for hop in test.hops],
+                        "test-result": test.result,
+                    }
                 }
-            }]
+            ]
         return {
-            'netloc': self.netloc or 'public',
-            'tests': tests,
-            'validate-result': validate_result,
+            "netloc": self.netloc or "public",
+            "tests": tests,
+            "validate-result": validate_result,
         }
 
     def validate_refract(self, refract):
@@ -175,12 +178,12 @@ class RefractrValidator:
         validated = []
         for refract, validation in zip(refracts, results):
             json = refract.json()
-            json.pop('tests')
-            json['validation'] = validation
+            json.pop("tests")
+            json["validation"] = validation
             validated += [json]
         return {
-            'refracts': validated,
-            'refracts-count': len(validated),
+            "refracts": validated,
+            "refracts-count": len(validated),
         }
 
     def validate_refracts(self, refracts):

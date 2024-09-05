@@ -28,7 +28,7 @@ spec:
           service:
             name: refractr
             port:
-              number: 80
+              number: 8000
         pathType: Prefix
         path: /
   {% endfor %}

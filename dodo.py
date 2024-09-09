@@ -1,12 +1,13 @@
 import json
-import os
+import pathlib
 import re
+import sys
 from functools import lru_cache
 
 from doit.tools import LongRunning
 from jsonschema import validate
 from jsonschema.exceptions import ValidationError
-from ruamel.yaml import YAML
+from yaml import safe_load
 
 from refractr.cfg import CFG, CalledProcessError, call, git
 
@@ -69,19 +70,28 @@ def task_schema():
     """
 
     def schema():
-        assert os.path.isfile(CFG.REFRACTR_YML)
-        assert os.path.isfile(CFG.SCHEMA_YML)
-        print(f"validating {CFG.REFRACTR_YML} against {CFG.SCHEMA_YML} =>", end=" ")
-        with open(CFG.REFRACTR_YML, "r") as f:
-            yaml = YAML(typ="safe")
-            refractr_yml = yaml.load(f)
+        schema_json = pathlib.Path(CFG.SCHEMA_JSON)
+        schema = None
 
-        with open(CFG.SCHEMA_YML, "r") as f:
-            yaml = YAML(typ="safe")
-            schema_yml = yaml.load(f)
+        refractr_yaml = pathlib.Path(CFG.REFRACTR_YML)
+        refracts = None
+
+        print(f"validating {CFG.REFRACTR_YML} against {schema_json} =>", end=" ")
 
         try:
-            validate(refractr_yml, schema_yml)
+            with refractr_yaml.open("r") as fh:
+                refracts = safe_load(fh)
+
+            with schema_json.open("r") as fh:
+                schema = json.load(fh)
+
+        except FileNotFoundError as err:
+            print(f'FAILURE: {err.strerror} ("{err.filename}")')
+            sys.exit(1)
+
+        try:
+            validate(refracts, schema)
+
             print("SUCCESS")
 
             return True

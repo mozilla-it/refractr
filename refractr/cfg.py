@@ -138,8 +138,8 @@ class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
 
     @property
     @lru_cache()
-    def SCHEMA_YML(self):
-        return self("SCHEMA_YML", f"{self.REFRACTR}/schema.yml")
+    def SCHEMA_JSON(self):
+        return self("SCHEMA_JSON", f"{self.REFRACTR}/schema.json")
 
     @property
     @lru_cache()

@@ -1281,3 +1281,7 @@ refracts:
 # SE-3888
 - mozilla.github.io/performance/:
   - performance.mozilla.org
+
+# SE-4149
+- mozilla.testrail.io/:
+  - testrail.stage.mozaws.net

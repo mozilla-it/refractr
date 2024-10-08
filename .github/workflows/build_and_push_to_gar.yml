@@ -1,0 +1,77 @@
+---
+name: build and push to GAR
+on:
+  push:
+    branches:
+      - main
+
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+
+
+env:
+  POETRY_VERSION: 1.8.3
+  PYTHON_VERSION: 3.11.10
+
+jobs:
+  build-and-push:
+    name: build and push
+    runs-on:
+      - ubuntu-latest
+
+    environment: build
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: install poetry
+        run: python -m pip install poetry==${{ env.POETRY_VERSION }}
+
+      - name: setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: poetry
+
+      - name: install dependencies
+        run: poetry install
+
+      - name: doit show
+        run: poetry run doit show
+
+      - name: doit test
+        run: poetry run doit show
+
+      - id: set-tag
+        run: |-
+          echo TAG=$(cd src; git describe --tags --abbrev=7) |tee -a ${GITHUB_OUTPUT}
+
+      - uses: docker/setup-buildx-action@v3
+
+      - id: gcp-auth
+        uses: google-github-actions/auth@v2
+        with:
+          token_format: access_token
+          service_account: artifact-writer@${{ secrets.GAR_PROJECT_ID }}.iam.gserviceaccount.com
+          workload_identity_provider: projects/${{ secrets.WORKLOAD_IDENTITY_POOL_PROJECT_NUMBER }}/locations/global/workloadIdentityPools/github-actions/providers/github-actions
+
+      - id: docker-login
+        uses: docker/login-action@v3
+        with:
+          registry: us-docker.pkg.dev
+          username: oauth2accesstoken
+          password: ${{ steps.gcp-auth.outputs.access_token }}
+
+      - id: build-and-push
+        uses: docker/build-push-action@v6
+        with:
+          context: refractr/
+          tags: |
+            us-docker.pkg.dev/${{ secrets.GAR_PROJECT_ID }}/refractr-prod/refractr:${{ steps.set-tag.outputs.TAG }}
+            us-docker.pkg.dev/${{ secrets.GAR_PROJECT_ID }}/refractr-prod/refractr:latest
+
+          push: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

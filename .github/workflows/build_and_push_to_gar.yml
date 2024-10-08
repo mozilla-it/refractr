@@ -42,11 +42,11 @@ jobs:
         run: poetry run doit show
 
       - name: doit test
-        run: poetry run doit show
+        run: poetry run doit test
 
       - id: set-tag
         run: |-
-          echo TAG=$(cd src; git describe --tags --abbrev=7) |tee -a ${GITHUB_OUTPUT}
+          echo TAG=$(git describe --tags --abbrev=7) |tee -a ${GITHUB_OUTPUT}
 
       - uses: docker/setup-buildx-action@v3
 

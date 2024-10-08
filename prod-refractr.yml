@@ -1283,3 +1283,16 @@ refracts:
 # SE-4149
 - mozilla.testrail.io/:
   - testrail.stage.mozaws.net
+
+# MP-1553 HTTP Observatory move for MDN staging environment
+- dsts:
+  - ^/analyze/(.*): 'developer.allizom.org/en-US/observatory/analyze?host=$1'
+  - /faq/: developer.allizom.org/en-US/observatory/docs/faq
+  - /statistics/: developer.allizom.org/en-US/observatory
+  - /terms/: developer.allizom.org/en-US/observatory
+  - /: developer.allizom.org/en-US/observatory
+  srcs: observatory.allizom.org
+  status: 301
+  tests:
+    - https://observatory.allizom.org/analyze/mdn.dev: https://developer.allizom.org/en-US/observatory/analyze?host=mdn.dev
+    - http://observatory.allizom.org/: https://developer.allizom.org/en-US/observatory

@@ -1296,3 +1296,16 @@ refracts:
   tests:
     - https://observatory.allizom.org/analyze/mdn.dev: https://developer.allizom.org/en-US/observatory/analyze?host=mdn.dev
     - http://observatory.allizom.org/: https://developer.allizom.org/en-US/observatory
+
+# MP-1553 HTTP Observatory move for MDN prod environment
+- dsts:
+  - ^/analyze/(.*): 'developer.mozilla.org/en-US/observatory/analyze?host=$1'
+  - /faq/: developer.mozilla.org/en-US/observatory/docs/faq
+  - /statistics/: developer.mozilla.org/en-US/observatory
+  - /terms/: developer.mozilla.org/en-US/observatory
+  - /: developer.mozilla.org/en-US/observatory
+  srcs: observatory.mozilla.org
+  status: 301
+  tests:
+    - https://observatory.mozilla.org/analyze/mdn.dev: https://developer.mozilla.org/en-US/observatory/analyze?host=mdn.dev
+    - http://observatory.mozilla.org/: https://developer.mozilla.org/en-US/observatory

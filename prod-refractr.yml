@@ -1305,3 +1305,7 @@ refracts:
   tests:
     - https://observatory.mozilla.org/analyze/mdn.dev: https://developer.mozilla.org/en-US/observatory/analyze?host=mdn.dev
     - http://observatory.mozilla.org/: https://developer.mozilla.org/en-US/observatory
+
+# DSRE-1793
+- stage.experimenter.nonprod.webservices.mozgcp.net:
+    - stage.experimenter.nonprod.dataops.mozgcp.net

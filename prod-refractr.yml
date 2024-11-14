@@ -120,7 +120,7 @@ refracts:
   - talkback-public.mozilla.org
   - talkback-reports.mozilla.org
 
-  # bug 695084, SE-1571, MP-1163, MP-1238, MP-1641
+  # bug 695084, SE-1571, MP-1163, MP-1238, MP-1731
 - developer.mozilla.org/:
   - dev.mozilla.org
   - developer.cdn.mozilla.net

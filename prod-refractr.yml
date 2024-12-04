@@ -1311,6 +1311,5 @@ refracts:
 - stage.experimenter.nonprod.webservices.mozgcp.net/:
     - stage.experimenter.nonprod.dataops.mozgcp.net
 
-- whattrainisitnow.com
+- whattrainisitnow.com/:
     - www.whattrainisitnow.com
-    - prod.whattrainisitnow.prod.webservices.mozgcp.net

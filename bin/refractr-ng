@@ -1,0 +1,76 @@
+#!/usr/bin/env python
+
+import json
+import os
+import re
+from dataclasses import dataclass, field
+from pathlib import PurePath
+from shlex import split
+from subprocess import run
+from typing import Tuple
+
+import click
+from decouple import config
+
+from refractr.refractr import Refractr
+
+
+def get_version():
+    cmd = split("git describe --abbrev=7 --always --tags")
+    output = run(cmd, capture_output=True)
+
+    return output.stdout.decode("utf-8")
+
+
+@dataclass
+class Settings:
+    config_path: str = field(init=False)
+    ci: bool = field(init=False)
+    env: str = "dev"
+    version: str = field(default_factory=get_version)
+
+    def __post_init__(self):
+        self.ci = config("CI", cast=bool, default=False)
+
+        if self.ci:
+            match = re.match(r"^(?P<tag>v[0-9]+\.[0-9]+\.[0-9]+$)", self.version)
+
+            if match:
+                self.env = "prod"
+
+            else:
+                self.env = "stage"
+
+        self.config_path = f"{PurePath(__file__).parent}/../{self.env}-refractr.yml"
+
+
+@click.group()
+@click.pass_context
+def cli(ctx: click.Context):
+    ctx.ensure_object(dict)
+    ctx.obj["settings"] = Settings()
+    ctx.obj["refractr"] = Refractr(config=ctx.obj["settings"].config_path)
+
+
+@cli.command()
+@click.pass_context
+def dump_settings(ctx: click.Context):
+    """dump settings that change cli behavior"""
+    print(f'CI={ctx.obj["settings"].ci} DEPLOYED_ENV={ctx.obj["settings"].env}')
+
+
+@cli.command()
+@click.argument("patterns", nargs=-1)
+@click.pass_context
+def show(ctx: click.Context, patterns: Tuple[str] = ()):
+    """print refracts"""
+    if not len(patterns):
+        patterns = ("*",)
+
+    output = ctx.obj["refractr"].show(list(patterns), None, None, False)
+
+    print(json.dumps(output, indent=2))
+
+
+if __name__ == "__main__":
+    cli()

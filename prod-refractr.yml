@@ -1036,16 +1036,6 @@ refracts:
   - http://ftv.prod.mozaws.net/ytht: https://m.youtube.com/
   - http://ftv.prod.mozaws.net/ytfc: https://m.youtube.com/
 
-# SE-3083
-- dsts:
-    - redirect: support.mozilla.org/en-US/kb/end-support-firefox-reality
-  srcs:
-    - www.webxr.today
-    - webxr.today
-  tests:
-    - http://www.webxr.today/: "https://support.mozilla.org/en-US/kb/end-support-firefox-reality"
-    - http://webxr.today/: "https://support.mozilla.org/en-US/kb/end-support-firefox-reality"
-
 # SE-3133
 - www.tekcopteg.com/: tekcopteg.com
 

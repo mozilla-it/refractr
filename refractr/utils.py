@@ -5,15 +5,6 @@ from itertools import product
 from urllib import parse
 
 from leatherman.dbg import dbg
-from ruamel import yaml
-
-
-def setup_yaml():
-    """https://stackoverflow.com/a/8661021"""
-    represent_dict_order = lambda self, data: self.represent_mapping(
-        "tag:yaml.org,2002:map", data.items()
-    )
-    yaml.add_representer(OrderedDict, represent_dict_order)
 
 
 def eprint(*args, **kwargs):

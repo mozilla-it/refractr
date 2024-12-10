@@ -2,11 +2,11 @@ import os
 from itertools import chain
 
 import tldextract
+import yaml
 from leatherman.dbg import dbg
 from leatherman.dictionary import head_body
 from leatherman.fuzzy import fuzzy
 from leatherman.repr import __repr__
-from ruamel.yaml import YAML
 
 from refractr.complex import ComplexRefract
 from refractr.exceptions import *
@@ -18,8 +18,6 @@ from refractr.validate import RefractrValidator
 DIR = os.path.dirname(__file__)
 
 extract = tldextract.TLDExtract(cache_dir=f"{DIR}/.tld-cache")
-
-setup_yaml()
 
 
 def filter_only(refracts, only=None):
@@ -60,8 +58,7 @@ class Refractr:
     def __init__(self, config=None, netloc=None, early=False, verbose=None, **kwargs):
         self.validator = RefractrValidator(netloc, early, verbose)
         with open(config, "r") as f:
-            yaml = YAML(typ="safe")
-            cfg = yaml.load(f)
+            cfg = yaml.safe_load(f)
 
         self.default_domains = cfg.get("default-domains", [])
         self.default_headers = cfg.get("default-headers", {})

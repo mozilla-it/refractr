@@ -130,7 +130,7 @@ def task_refracts():
     """
     create refracts.json from loading refractr.yml
     """
-    cmd = f"bin/refractr-ng show --output json > {CFG.IMAGE}/refracts"
+    cmd = f"bin/refractr --output json show > {CFG.IMAGE}/refracts"
     return {
         "task_dep": [
             "schema",
@@ -232,7 +232,7 @@ def task_refractslisting():
     """
     create refracts list  from loading refractr.json
     """
-    cmd = f"bin/refractr-ng show --output json > {CFG.IMAGE}/refracts.json"
+    cmd = f"bin/refractr --output json show > {CFG.IMAGE}/refracts.json"
     cmd1 = "bin/refracts-listing"
     return {
         "task_dep": [

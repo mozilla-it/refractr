@@ -91,7 +91,7 @@ def show(ctx: click.Context, patterns: Tuple[str] = (), output: str = "json"):
 @cli.command()
 @click.pass_context
 def certificate_manager_input(ctx: click.Context):
-    """generate output suitable for parsing with google certificate manager tf module"""
+    """generate output suitable for certificate manager tf module"""
     domains = ctx.obj["refractr"].domains(
         None, None, None, False
     )
@@ -131,31 +131,19 @@ def blackbox_exporter_input(ctx: click.Context):
     checks = []
 
     for domain in ctx.obj["refractr"].domains(None, None, None, False)["domains"]:
-        https_redirect = {}
-        https = {}
+        check = {
+            "module": "refractr",
+        }
 
         hostname = domain
 
         if domain.startswith("*"):
             hostname = domain.replace("*", "acme")
 
-        https["name"] = f"https_{hostname}"
-        https_redirect["name"] = f"https-redirect-{hostname}"
+        check["name"] = hostname
+        check["url"] = f"https://{hostname}"
 
-        https["url"] = f"https://{hostname}"
-        https_redirect["url"] = f"http://{hostname}"
-
-        https["module"] = "https"
-        https_redirect["module"] = "https-redirect"
-
-        if ctx.obj["settings"].env == "prod":
-            https["hostname"] = https_redirect["hostname"] = "prod.refractr.prod.webservices.mozgcp.net"
-
-        else:
-            https["hostname"] = https_redirect["hostname"] = "stage.refractr.nonprod.webservices.mozgcp.net"
-
-        checks.append(https_redirect)
-        checks.append(https)
+        checks.append(check)
 
     print(yaml.dump(checks, default_flow_style=False, explicit_start=True))
 

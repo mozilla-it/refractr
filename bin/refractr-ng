@@ -1,0 +1,152 @@
+#!/usr/bin/env python
+
+import json
+import os
+import re
+import sys
+from dataclasses import dataclass, field
+from enum import Enum
+from pathlib import PurePath
+from shlex import split
+from subprocess import run
+from typing import Tuple
+
+import click
+import yaml
+from decouple import config
+
+from refractr.refractr import Refractr
+
+
+def get_version():
+    cmd = split("git describe --abbrev=7 --always --tags")
+    output = run(cmd, capture_output=True)
+
+    return output.stdout.decode("utf-8").rstrip()
+
+
+@dataclass
+class Settings:
+    config_path: str = field(init=False)
+    ci: bool = field(init=False)
+    env: str = "dev"
+    version: str = field(default_factory=get_version)
+
+    def __post_init__(self):
+        self.ci = config("CI", cast=bool, default=False)
+
+        if self.ci:
+            match = re.match(r"^(?P<tag>v[0-9]+\.[0-9]+\.[0-9]+$)", self.version)
+
+            if match:
+                self.env = "prod"
+
+            else:
+                self.env = "stage"
+
+        self.config_path = f"{PurePath(__file__).parent}/../{self.env}-refractr.yml"
+
+    def __str__(self):
+        return f"CI={self.ci} VERSION={self.version} DEPLOYED_ENV={self.env}"
+
+
+class OutputFormat(Enum):
+    json = 0
+    yaml = 1
+
+
+@click.group()
+@click.pass_context
+def cli(ctx: click.Context):
+    ctx.ensure_object(dict)
+    ctx.obj["settings"] = Settings()
+    ctx.obj["refractr"] = Refractr(config=ctx.obj["settings"].config_path)
+
+
+@cli.command()
+@click.pass_context
+def dump_settings(ctx: click.Context):
+    """dump settings that change cli behavior"""
+    print(ctx.obj["settings"])
+
+
+@cli.command()
+@click.argument("patterns", nargs=-1)
+@click.option("--output", "-o", type=click.Choice([x.name for x in OutputFormat]), default=OutputFormat(int(sys.stdout.isatty())).name)
+@click.pass_context
+def show(ctx: click.Context, patterns: Tuple[str] = (), output: str = "json"):
+    """print refracts"""
+    if not len(patterns):
+        patterns = None
+
+    refracts = ctx.obj["refractr"].show(patterns, None, None, False)
+
+    if output == "json":
+        print(json.dumps(refracts, indent=2))
+
+    if output == "yaml":
+        print(yaml.dump(refracts, default_flow_style=False, explicit_start=False))
+
+
+@cli.command()
+@click.pass_context
+def certificate_manager_input(ctx: click.Context):
+    """generate output suitable for certificate manager tf module"""
+    domains = ctx.obj["refractr"].domains(
+        None, None, None, False
+    )
+
+    morph = {}
+
+    for domain in domains["domains"]:
+        is_wildcard = False
+        primary_domain = domain
+
+        if domain.startswith("*"):
+            is_wildcard = True
+            primary_domain = ".".join(domain.split(".")[1:])
+
+        if primary_domain not in morph:
+            morph[primary_domain] = {}
+
+        if "hostname" not in morph[primary_domain]:
+            morph[primary_domain]["hostname"] = primary_domain
+
+        if is_wildcard:
+            if "additional_domains" not in morph[primary_domain]:
+                morph[primary_domain]["additional_domains"] = []
+
+                morph[primary_domain]["additional_domains"].append(domain)
+
+            if "dns_authorization" not in morph[primary_domain]:
+                morph[primary_domain]["dns_authorization"] = True
+
+    print(yaml.dump([morph[key] for key in sorted(morph)], default_flow_style=False, explicit_start=True))
+
+
+@cli.command()
+@click.pass_context
+def blackbox_exporter_input(ctx: click.Context):
+    """generate checks to pass to blackbox-exporter"""
+    checks = []
+
+    for domain in ctx.obj["refractr"].domains(None, None, None, False)["domains"]:
+        check = {
+            "module": "refractr",
+        }
+
+        hostname = domain
+
+        if domain.startswith("*"):
+            hostname = domain.replace("*", "acme")
+
+        check["name"] = hostname
+        check["url"] = f"https://{hostname}"
+
+        checks.append(check)
+
+    print(yaml.dump(checks, default_flow_style=False, explicit_start=True))
+
+
+if __name__ == "__main__":
+    cli()

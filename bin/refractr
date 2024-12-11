@@ -67,7 +67,7 @@ def output_print(data, output_format, default_flow_style=False, explicit_start=F
                 data,
                 default_flow_style=default_flow_style,
                 explicit_start=explicit_start,
-            ).rstrip()
+            )
         )
 
     elif output_format == "json":

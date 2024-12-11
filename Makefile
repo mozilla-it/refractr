@@ -1,4 +1,4 @@
-format: refractr/ tests/ bin/
+fmt: refractr/ tests/ bin/
 	@poetry run black $^
 	@poetry run isort $^
 

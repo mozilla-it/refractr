@@ -15,10 +15,10 @@ leatherman = "^0.1.10"
 nginx-config-builder = "^1.0.1"
 pytest = "^7.1.2"
 python-decouple = "^3.3"
-ruamel-yaml = "^0.18.6"
 tldextract = "^3.0.0"
 pyyaml = "^6.0.2"
 google-cloud-certificate-manager = "^1.7.2"
+click = "^8.1.7"
 
 
 [tool.poetry.group.dev.dependencies]

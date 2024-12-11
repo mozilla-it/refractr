@@ -155,3 +155,6 @@ terraform.tfstate*
 
 # ignore the ./.tld-cache file that tldextract creates
 refractr/.tld-cache
+
+# pyenv version
+/.python-version

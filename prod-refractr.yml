@@ -1296,3 +1296,7 @@ refracts:
 
 - whattrainisitnow.com/:
     - www.whattrainisitnow.com
+
+# SE-4257
+- www.mozilla.org/advertising/:
+    - advertising.mozilla.org

@@ -566,8 +566,8 @@ refracts:
   - www.leandatapractices.com
   status: 302
 
-  # bug 1056359
-- www.mozilla.org/en-US/firefox/new/:
+  # bug 1944953
+- www.mozilla.org/it/firefox/new/?utm_source=mozilla-it&utm_medium=referral:
   - mozilla.it
   - www.mozilla.it
   - wwww.mozilla.it

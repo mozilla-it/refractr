@@ -1302,3 +1302,9 @@ refracts:
   - mozilla.rs
   - www.mozilla-srbija.org
   - www.mozilla.rs
+
+# SE-4311
+- mozilla.org/ja:
+  - mozilla-japan.org
+  - www.mozilla-japan.org
+

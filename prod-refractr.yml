@@ -1255,11 +1255,6 @@ refracts:
 - mozilla-cws.atlassian.net/:
   - jira.mozilla-community.org
 
-# SE-3493
-- mozilla.rs/:
-  - mozilla-srbija.org
-  - www.mozilla-srbija.org
-
 # SE-4149
 - mozilla.testrail.io/:
   - testrail.stage.mozaws.net
@@ -1300,3 +1295,9 @@ refracts:
 # SE-4257
 - www.mozilla.org/advertising/:
     - advertising.mozilla.org
+
+# SE-4318
+- mozilla.org/sr:
+  - mozilla-srbija.org
+  - mozilla.rs
+  - www.mozilla-srbija.org

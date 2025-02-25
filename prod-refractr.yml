@@ -320,13 +320,14 @@ refracts:
   # SE-1564
 - support.mozilla.org/en-US/kb/canary-domain-use-application-dnsnet:  use-application-dns.net
 
-  # SVCSE-1946
+# SVCSE-1946, SE-2835
 - support.mozilla.org/en-US/kb/end-support-mozilla-hubs:
   - hub.mozilla.com
   - hub.mozilla.org
   - hubs.mozilla.com
   - hubs.mozilla.org
   - mixedreality.mozilla.org
+  - vr.mozilla.org
 
   # SVCSE-1316
 - dsts:

@@ -1309,3 +1309,7 @@ refracts:
   - mozilla-japan.org
   - www.mozilla-japan.org
 
+# SE-4298
+- mozilla.org/ro:
+  - mozilla.ro
+  - www.mozilla.ro

@@ -1313,3 +1313,17 @@ refracts:
 - mozilla.org/ro:
   - mozilla.ro
   - www.mozilla.ro
+
+# SE-4288
+- nginx: |
+    server {
+      server_name mozilla.social;
+
+      location / {
+        return 410;
+      }
+
+      location = /en-US/about/legal/report-infringement-form {
+        return 301 https://cm-bridge.prod.cinder.prod.webservices.mozgcp.net/infringement-form;
+      }
+    }

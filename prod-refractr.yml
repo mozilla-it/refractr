@@ -120,10 +120,11 @@ refracts:
   - talkback-public.mozilla.org
   - talkback-reports.mozilla.org
 
-  # bug 695084, SE-1571, MP-1163, MP-1238, MP-1731
+  # bug 695084, SE-1571, MP-1163, MP-1238, MP-1731, MP-1892
 - developer.mozilla.org/:
   - dev.mozilla.org
   - developer.cdn.mozilla.net
+  - '*.content.dev.mdn.mozit.cloud'
   - yari-demos.prod.mdn.mozit.cloud
   - yari-demos.stage.mdn.mozit.cloud
   - de.test.developer.allizom.org

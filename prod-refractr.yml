@@ -1221,7 +1221,7 @@ refracts:
 # SE-3896
 - nginx: |
      server {
-       server_name labs.mozilla.org labs.mozilla.com;
+       server_name labs.mozilla.com;
        return 404;
      }
 

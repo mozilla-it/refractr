@@ -125,8 +125,6 @@ refracts:
   - dev.mozilla.org
   - developer.cdn.mozilla.net
   - '*.content.dev.mdn.mozit.cloud'
-  - yari-demos.prod.mdn.mozit.cloud
-  - yari-demos.stage.mdn.mozit.cloud
   - de.test.developer.allizom.org
 
   # bug 811323
@@ -1109,8 +1107,6 @@ refracts:
   - ^/(.*): 'mdn.dev/archives/media/$1'
   srcs:
   - mdn.mozillademos.org
-  - media.prod.mdn.mozit.cloud
-  - media.stage.mdn.mozit.cloud
   tests:
   - https://mdn.mozillademos.org/attachments/: https://mdn.dev/archives/media/attachments/
   - https://mdn.mozillademos.org/samples/: https://mdn.dev/archives/media/samples/

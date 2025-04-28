@@ -2,13 +2,12 @@
 
 JIRA ticket: [link to relevant JIRA or other system ticket]
 
-When creating a PR for Refractr, confirm you've done the following steps for smooth CI and CD experiences:
+When creating a PR for Refractr, confirm you've done the following steps for a smooth CI and CD experience:
 - [ ] Have you updated the relevant YAML in the PR?
 - [ ] Have you checked the relevant YAML for any possible dupes regarding your domain?
-- [ ] Have you checked if there are any TLS cert concerns - e.g. if the domain being redirected already exists, and it is being changed to point at Refractr, is a temporary TLS 'outage' while waiting for Lets Encrypt certification via HTTP challenge okay? If not, [have you followed these steps for using DNS challenges with our cert-manager setup](https://mana.mozilla.org/wiki/display/SRE/Refractr+-+How+To+-+DNS+Challenges)?
-- [ ] If desired, have you generated the Nginx manually to confirm addition works as expected? 
-- [ ] If desired, are you able to connect to EKS (cluster itse-apps-prod-1, namespace fluxcd) to more closely monitor the deploys?
+- [ ] Have you checked if there are any TLS cert concerns - e.g. if the domain being redirected already exists, and it is being changed to point at refractr, is a temporary TLS 'outage' while waiting for certification via HTTP challenge okay? If not, add a note to the JIRA ticket.
+- [ ] If desired, have you generated the nginx config manually to confirm updates work as expected?
 
 After PR merge, next steps include:
-- [ ] If going straight from main merge & Stage deploy to a release & production deploy, create the relevant GitHub release with an incremented version / tag applied.
-- [ ] Confirm you are ready and able to perform the requested DNS creation or change post-deploy? 
+- [ ] A merge to the `main` branch will automatically deploy refractr's stage environment -- deploying the prod environment requires a GitHub release to be created.
+- [ ] Once deployed, refractr's certmap must be updated and DNS entries must be changed -- SRE can help with this. Please pull someone in on the JIRA ticket or ask for help in #sre on Slack.

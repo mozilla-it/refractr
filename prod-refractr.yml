@@ -1320,3 +1320,7 @@ refracts:
         return 301 https://cm-bridge.prod.cinder.prod.webservices.mozgcp.net/infringement-form;
       }
     }
+
+# OPST-2405
+- newproducts.mozilla.org/:
+  - labs.mozilla.org

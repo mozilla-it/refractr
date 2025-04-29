@@ -4,12 +4,12 @@ HTTP redirect and rewrite service based on nginx
 
 ## Links
 
-* [SRE_INFO](SRE_INFO.md)
+* [SRE_INFO](docs/SRE_INFO.md)
 * [Refractr Architecture](docs/refractr-architecture.md)
 
 ## refractr at mozilla
 
-refractr runs on GKE at mozilla, it is built with GHA and installed via helm.
+refractr runs on GKE at mozilla, app image is build with GitHub Actions, GKE resources are defined in a helm chart, app is deployed with Argo CD.
 
 ## refractr.yaml spec
 

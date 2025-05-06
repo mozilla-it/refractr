@@ -1304,3 +1304,16 @@ refracts:
 # OPST-2405
 - newproducts.mozilla.org/:
   - labs.mozilla.org
+
+# OPST-2429
+- srcs:
+    - future.mozilla.org
+
+  dsts:
+    - ^/(.*)$: newproducts.mozilla.org/
+
+  preserve-path: false
+
+  tests:
+    - http://future.mozilla.org/: https://newproducts.mozilla.org/
+    - http://future.mozilla.org/foo: https://newproducts.mozilla.org/

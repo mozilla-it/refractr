@@ -10,10 +10,6 @@ default-headers:
 
 refracts:
   # OPST-305
-- firefox.settings.services.allizom.org/:
-  - settings-cdn.stage.mozaws.net
-
-  # OPST-305
 - firefox-settings-attachments.cdn.allizom.org/:
   - firefox-settings-attachments-cdn.stage.mozaws.net
 

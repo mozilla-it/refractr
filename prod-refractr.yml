@@ -10,10 +10,6 @@ default-headers:
 
 refracts:
   # OPST-305
-- remote-settings-dev.allizom.org/:
-  - settings.dev.mozaws.net
-
-  # OPST-305
 - firefox.settings.services.allizom.org/:
   - settings-cdn.stage.mozaws.net
 

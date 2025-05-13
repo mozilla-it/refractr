@@ -1310,6 +1310,8 @@ refracts:
     - future.mozilla.org
 
   dsts:
+    - /news/: newproducts.mozilla.org/#stories
+    - /projects/: newproducts.mozilla.org/#products
     - ^/(.*)$: newproducts.mozilla.org/
 
   preserve-path: false

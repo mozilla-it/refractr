@@ -1214,14 +1214,6 @@ refracts:
   - llamafile.ai
   - www.llamafile.ai
 
-# OPST-1236
-- telescope.prod.webservices.mozgcp.net/:
-  - delivery-checks.prod.mozaws.net
-
-# OPST-1236
-- telescope.nonprod.webservices.mozgcp.net/:
-  - delivery-checks.stage.mozaws.net
-
 # SE-4055
 - nginx: |
     server {

@@ -9,10 +9,6 @@ default-headers:
   Strict-Transport-Security: '"max-age=60; includeSubDomains" always'
 
 refracts:
-  # OPST-305
-- firefox-settings-attachments.cdn.allizom.org/:
-  - firefox-settings-attachments-cdn.stage.mozaws.net
-
   # SVCSE-1586
 - accounts.firefox.com/:
   - accounts.mozilla.org

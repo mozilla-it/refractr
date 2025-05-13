@@ -1183,9 +1183,6 @@ refracts:
     - https://wiki.developer.mozilla.org/foo: "https://developer.mozilla.org/foo"
     - https://beta.developer.mozilla.org/foo: "https://developer.mozilla.org/foo"
 
-# SE-3779
-- www.mozilla.org/: experiencethearch.mozilla.org
-
 #SVCSE-1515
 - status.services.mozilla.com/:
   - status.vpn.mozilla.org
@@ -1319,3 +1316,9 @@ refracts:
   tests:
     - http://future.mozilla.org/: https://newproducts.mozilla.org/
     - http://future.mozilla.org/foo: https://newproducts.mozilla.org/
+
+# SE-3779, IO-3247
+- mozilla.org/:
+  - experiencethearch.com
+  - experiencethearch.mozilla.org
+  - www.experiencethearch.com

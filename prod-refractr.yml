@@ -1322,3 +1322,11 @@ refracts:
   - experiencethearch.com
   - experiencethearch.mozilla.org
   - www.experiencethearch.com
+
+# OPST-2535
+- community.mozilla.org/:
+  - opensource.mozilla.community
+
+# OPST-2535
+- www.mozilla.org/en-US/about/governance/policies/participation/reporting/:
+  - cpg-hotline.mozilla.community

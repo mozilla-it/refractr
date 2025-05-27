@@ -225,10 +225,6 @@ refracts:
   - air.mozilla.com
   - airmo.mozilla.org
 
-  # bug 1441865
-- mozilla-releng.net/treestatus/: treestatus.mozilla.org
-  status: 302
-
 - mozilla-services.readthedocs.io/en/latest/: docs.services.mozilla.com
 
 # Jira SE-1354

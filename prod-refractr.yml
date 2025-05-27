@@ -116,9 +116,6 @@ refracts:
   - '*.content.dev.mdn.mozit.cloud'
   - de.test.developer.allizom.org
 
-  # bug 811323
-- developer.mozilla.org/demos/devderby/: devderby.mozilla.org
-
   # bug 1290923
 - disconnect.me/trackerprotection/:
   - trackingprotection.info

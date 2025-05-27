@@ -9,8 +9,9 @@ default-headers:
   Strict-Transport-Security: '"max-age=60; includeSubDomains" always'
 
 refracts:
-  # SVCSE-1586
+  # SVCSE-1586, SVCSE-2831
 - accounts.firefox.com/:
+  - confirm.accounts.firefox.com
   - accounts.mozilla.org
   - accounts.mozilla.com
 

@@ -1311,11 +1311,13 @@ refracts:
     - http://future.mozilla.org/: https://newproducts.mozilla.org/
     - http://future.mozilla.org/foo: https://newproducts.mozilla.org/
 
-# SE-3779, IO-3247
+# SE-3779, IO-3247, OPST-2478
 - mozilla.org/:
   - experiencethearch.com
   - experiencethearch.mozilla.org
+  - mozillapanama.org
   - www.experiencethearch.com
+  - www.mozillapanama.org
 
 # OPST-2535
 - community.mozilla.org/:

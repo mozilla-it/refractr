@@ -858,131 +858,9 @@ refracts:
 - www.mozilla.org/: status.mozilla.org
   status: 302
 
-# https://mozilla-hub.atlassian.net/browse/SE-2450
+#  SE-3189 then updated by SREIN-32
 - dsts:
-    - if: '$request_uri ~ "(?i)^/universityambassadors/?$"' # bug 870410
-      ^: 'campus.mozilla.community/?redirect_source=firefox-com'
-    - if: '$request_uri ~ "(?i)^/os/?$"'
-      ^: 'support.mozilla.org/products/firefox-os?redirect_source=firefox-com'
-    - if: '$request_uri ~ "(?i)^/desktop/?$"' # bug 1004274
-      ^: 'www.mozilla.org/firefox/desktop/?redirect_source=firefox-com'
-    - if: '$request_uri ~ "(?i)^/android/?$"' # bug 1053356
-      ^: 'www.mozilla.org/firefox/android/?redirect_source=firefox-com'
-    - if: '$request_uri ~ "(?i)^/developer/?$"' # bug 1091132
-      ^: 'www.mozilla.org/firefox/developer/?redirect_source=firefox-com'
-    - if: '$request_uri ~ "(?i)^/(10|independent)/?$"' # bug 1091891, bug 1094235
-      ^: 'www.mozilla.org/firefox/features/independent/?redirect_source=firefox-com'
-    - if: '$request_uri ~ "(?i)^/hello/?$"' # bug 1098044
-      ^: 'www.mozilla.org/firefox/hello/?redirect_source=firefox-com'
-    - if: '$request_uri ~ "(?i)^/personal/?$"' # bug 1159397
-      ^: 'www.mozilla.org/firefox/personal/?redirect_source=firefox-com'
-    - if: '$request_uri ~ "(?i)^/choose/?$"' # bug 1219380
-      ^: 'www.mozilla.org/firefox/choose/?redirect_source=firefox-com'
-    - if: '$request_uri ~ "(?i)^/switch/?$"' # bug 1432228
-      ^: 'www.mozilla.org/firefox/switch/?redirect_source=firefox-com'
-    - if: '$request_uri ~ "(?i)^/enterprise/?$"' # Bug 1445276
-      ^: 'www.mozilla.org/firefox/enterprise/?redirect_source=firefox-com'
-    - if: '$request_uri ~ "(?i)^/containers/?$"' # bug 1451367
-      ^: 'www.mozilla.org/firefox/facebookcontainer/?redirect_source=firefox-com'
-    - if: '$request_uri ~ "(?i)^/pdx/?$"' # bug 1456278
-      ^: 'www.mozilla.org/firefox/new/?xv=portland&campaign=city-portland-2018&redirect_source=firefox-com'
-    - if: '$request_uri ~ "(?i)^/pair/?$"' # bug 1539867
-      ^: 'accounts.firefox.com/pair/'
-    - if: '$request_uri ~ "(?i)^/(join|rejoindre)/?$"' # bug 1548919
-      ^: 'www.mozilla.org/firefox/accounts/?redirect_source=join'
-    - if: '$request_uri ~ "(?i)^/(privacy|privatsphaere)/?$"' # SRE-431
-      ^: 'www.mozilla.org/firefox/privacy/products/?redirect_source=firefox-com'
-    - if: '$request_uri ~ "(?i)^/viepriv(e|é)e/?$"'
-      ^: 'www.mozilla.org/firefox/privacy/products/?redirect_source=firefox-com'
-    - if: '$request_uri ~ "(?i)^/nightly/?$"' # https://github.com/mozmeao/www.firefox.com/issues/9
-      ^: 'www.mozilla.org/en-US/firefox/channel/desktop/#nightly'
-    - if: '$request_uri ~ "(?i)^/armchair/?$"' # issue #21
-      ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=armchair&utm_campaign=unfck&utm_content=podcast'
-    - if: '$request_uri ~ "(?i)^/jvn/?$"'
-      ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=jvn&utm_campaign=unfck&utm_content=podcast'
-    - if: '$request_uri ~ "(?i)^/literally/?$"'
-      ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=literally&utm_campaign=unfck&utm_content=podcast'
-    - if: '$request_uri ~ "(?i)^/pivot/?$"'
-      ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=pivot&utm_campaign=unfck&utm_content=podcast'
-    - if: '$request_uri ~ "(?i)^/podsave/?$"'
-      ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=podsave&utm_campaign=unfck&utm_content=podcast'
-    - if: '$request_uri ~ "(?i)^/smartless/?$"'
-      ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=smartless&utm_campaign=unfck&utm_content=podcast'
-    - if: '$request_uri ~ "(?i)^/thedaily/?$"'
-      ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=thedaily&utm_campaign=unfck&utm_content=podcast'
-    - if: '$request_uri ~ "(?i)^/ezra/?$"'
-      ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=ezra&utm_campaign=unfck&utm_content=podcast'
-    - if: '$request_uri ~ "(?i)^/explained/?$"'
-      ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=explained&utm_campaign=unfck&utm_content=podcast'
-    - if: '$request_uri ~ "(?i)^/wtf/?$"'
-      ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=wtf&utm_campaign=unfck&utm_content=podcast'
-    - if: '$request_uri ~ "(?i)^/liebe/?$"' # issue 32
-      ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=prosieben&utm_campaign=unfck&utm_content=podcast'
-    - if: '$request_uri ~ "(?i)^/(unfu?ck|love|rendonslenetplusnet)/?$"' # issues #19, #18, #15, #13, and #27, and Jira SE-1256
-      ^: 'www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=referral&utm_source=firefox.com&utm_campaign=unfck'
-    - if: '$request_uri ~ "(?i)^/famil(y|ies)/?$"' # Jira SE-3278
-      ^: 'www.mozilla.org/firefox/family/?utm_medium=referral&utm_source=firefox.com&utm_campaign=firefox-for-families'
-    - if: '$request_uri ~ "(?i)^/famil(y|ies)/?\?.*$"' # Jira SE-3278
-      ^: 'www.mozilla.org/firefox/family/'
-    - redirect: 'www.mozilla.org/firefox/new/?redirect_source=firefox-com' #fallback redirect, bug 896570, bug 1427843
-  status: 302
-  headers:
-    # NOTE: this overrides the default behavior and removed includeSubdomains
-    Strict-Transport-Security: max-age=0
-  preserve-path: false
-  srcs:
-  - www.firefox.com
-  - firefox.com
-  - fxc-stage.moz.works
-  tests:
-  - http://www.firefox.com/: 'https://www.mozilla.org/firefox/new/?redirect_source=firefox-com'
-  - http://firefox.com/: 'https://www.mozilla.org/firefox/new/?redirect_source=firefox-com'
-  - http://www.firefox.com/universityambassadors: 'https://campus.mozilla.community/?redirect_source=firefox-com'
-  - http://www.firefox.com/UniversityAmbassadors/: 'https://campus.mozilla.community/?redirect_source=firefox-com'
-  - http://www.firefox.com/os/: 'https://support.mozilla.org/products/firefox-os?redirect_source=firefox-com'
-  - http://www.firefox.com/desktop/: 'https://www.mozilla.org/firefox/desktop/?redirect_source=firefox-com'
-  - http://www.firefox.com/android/: 'https://www.mozilla.org/firefox/android/?redirect_source=firefox-com'
-  - http://www.firefox.com/developer/: 'https://www.mozilla.org/firefox/developer/?redirect_source=firefox-com'
-  - http://www.firefox.com/10/: 'https://www.mozilla.org/firefox/features/independent/?redirect_source=firefox-com'
-  - http://www.firefox.com/independent/: 'https://www.mozilla.org/firefox/features/independent/?redirect_source=firefox-com'
-  - http://www.firefox.com/hello/: 'https://www.mozilla.org/firefox/hello/?redirect_source=firefox-com'
-  - http://www.firefox.com/personal/: 'https://www.mozilla.org/firefox/personal/?redirect_source=firefox-com'
-  - http://www.firefox.com/choose/: 'https://www.mozilla.org/firefox/choose/?redirect_source=firefox-com'
-  - http://www.firefox.com/switch/: 'https://www.mozilla.org/firefox/switch/?redirect_source=firefox-com'
-  - http://www.firefox.com/enterprise/: 'https://www.mozilla.org/firefox/enterprise/?redirect_source=firefox-com'
-  - http://www.firefox.com/containers/: 'https://www.mozilla.org/firefox/facebookcontainer/?redirect_source=firefox-com'
-  - http://www.firefox.com/pdx/: 'https://www.mozilla.org/firefox/new/?xv=portland&campaign=city-portland-2018&redirect_source=firefox-com'
-  - http://www.firefox.com/pair/: 'https://accounts.firefox.com/pair/'
-  - http://www.firefox.com/join/: 'https://www.mozilla.org/firefox/accounts/?redirect_source=join'
-  - http://www.firefox.com/rejoindre/: 'https://www.mozilla.org/firefox/accounts/?redirect_source=join'
-  - http://www.firefox.com/privacy/: 'https://www.mozilla.org/firefox/privacy/products/?redirect_source=firefox-com'
-  - http://www.firefox.com/privatsphaere/: 'https://www.mozilla.org/firefox/privacy/products/?redirect_source=firefox-com'
-  - http://www.firefox.com/vieprivee/: 'https://www.mozilla.org/firefox/privacy/products/?redirect_source=firefox-com'
-  - http://www.firefox.com/nightly/: 'https://www.mozilla.org/en-US/firefox/channel/desktop/#nightly'
-  - http://www.firefox.com/armchair/: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=armchair&utm_campaign=unfck&utm_content=podcast'
-  - http://www.firefox.com/jvn/: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=jvn&utm_campaign=unfck&utm_content=podcast'
-  - http://www.firefox.com/literally/: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=literally&utm_campaign=unfck&utm_content=podcast'
-  - http://www.firefox.com/pivot/: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=pivot&utm_campaign=unfck&utm_content=podcast'
-  - http://www.firefox.com/podsave/: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=podsave&utm_campaign=unfck&utm_content=podcast'
-  - http://www.firefox.com/smartless/: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=smartless&utm_campaign=unfck&utm_content=podcast'
-  - http://www.firefox.com/thedaily/: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=thedaily&utm_campaign=unfck&utm_content=podcast'
-  - http://www.firefox.com/ezra/: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=ezra&utm_campaign=unfck&utm_content=podcast'
-  - http://www.firefox.com/explained/: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=explained&utm_campaign=unfck&utm_content=podcast'
-  - http://www.firefox.com/wtf/: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=wtf&utm_campaign=unfck&utm_content=podcast'
-  - http://www.firefox.com/liebe/: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=audio&utm_source=prosieben&utm_campaign=unfck&utm_content=podcast'
-  - http://www.firefox.com/unfck: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=referral&utm_source=firefox.com&utm_campaign=unfck'
-  - http://www.firefox.com/unfuck: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=referral&utm_source=firefox.com&utm_campaign=unfck'
-  - http://www.firefox.com/love: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=referral&utm_source=firefox.com&utm_campaign=unfck'
-  - http://www.firefox.com/rendonslenetplusnet: 'https://www.mozilla.org/firefox/unfck/?redirect_source=firefox-com&utm_medium=referral&utm_source=firefox.com&utm_campaign=unfck'
-  - http://www.firefox.com/family: 'https://www.mozilla.org/firefox/family/?utm_medium=referral&utm_source=firefox.com&utm_campaign=firefox-for-families'
-  - http://www.firefox.com/families: 'https://www.mozilla.org/firefox/family/?utm_medium=referral&utm_source=firefox.com&utm_campaign=firefox-for-families'
-  - "http://www.firefox.com/family?dude=abides": 'https://www.mozilla.org/firefox/family/?dude=abides'
-  - "http://www.firefox.com/families?dude=abides": 'https://www.mozilla.org/firefox/family/?dude=abides'
-  - http://www.firefox.com/foo/bar: 'https://www.mozilla.org/firefox/new/?redirect_source=firefox-com'
-
-#  SE-3189
-- dsts:
-  - ^/(.*): www.mozilla.org/firefox/
+  - ^/(.*): www.firefox.com/
   status: 302
   preserve-path: false
   srcs:
@@ -990,9 +868,9 @@ refracts:
   - truecolours.firefox.com
   - truecolors.firefox.com
   tests:
-  - http://truecolors.firefox.com/: 'https://www.mozilla.org/firefox/'
-  - http://truecolours.firefox.com/: 'https://www.mozilla.org/firefox/'
-  - http://turningred.firefox.com/: 'https://www.mozilla.org/firefox/'
+  - http://truecolors.firefox.com/: 'https://www.firefox.com/'
+  - http://truecolours.firefox.com/: 'https://www.firefox.com/'
+  - http://turningred.firefox.com/: 'https://www.firefox.com/'
 
 
 # SE-3060 & SVCSE-350

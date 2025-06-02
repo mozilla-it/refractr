@@ -37,9 +37,6 @@ refracts:
   - impactmozilla.com
   - www.impactmozilla.com
 
-  # bug 655911
-- blog.mozilla.org/website-archive/2010/12/08/mozilla-uninstall-survey/: survey.mozilla.com
-
   # bug 1214568
 - blog.mozilla.org/creative/: creative.mozilla.org
   status: 302
@@ -128,9 +125,6 @@ refracts:
   # bug 1200302
 - discourse.mozilla.org/c/add-ons/: forums.mozilla.org
   status: 307
-
-  # bug 998526, 20170328
-- docs.google.com/forms/d/1VSlo6TZ5p42LyTx2q7Wd5vQ5hZHvWtA9JN6JWicXmBM/viewform/: confsurvey.mozilla.org
 
   # SE-1187
 - docs.mozilla-releng.net/:

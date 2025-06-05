@@ -859,19 +859,17 @@ refracts:
   status: 302
 
 #  SE-3189 then updated by SREIN-32
-- dsts:
-  - ^/(.*): www.firefox.com/
+- www.firefox.com/:
+  - firefox.com
+  status: 302 # Consider removing after discussion with SEO team
+
+# SE-3189, SREIN-32
+- www.firefox.com/:
+  - truecolors.firefox.com
+  - truecolours.firefox.com
+  - turningred.firefox.com
   status: 302
   preserve-path: false
-  srcs:
-  - turningred.firefox.com
-  - truecolours.firefox.com
-  - truecolors.firefox.com
-  tests:
-  - http://truecolors.firefox.com/: 'https://www.firefox.com/'
-  - http://truecolours.firefox.com/: 'https://www.firefox.com/'
-  - http://turningred.firefox.com/: 'https://www.firefox.com/'
-
 
 # SE-3060 & SVCSE-350
 - dsts:

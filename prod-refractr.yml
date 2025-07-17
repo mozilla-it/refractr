@@ -1197,10 +1197,11 @@ refracts:
 - www.mozilla.org/en-US/about/governance/policies/participation/reporting/:
   - cpg-hotline.mozilla.community
 
-- https://blog.mozilla.org/en/mozilla/building-whats-next/:
-  - 'fakespot.com'
+# SREIN-196
+- blog.mozilla.org/en/mozilla/building-whats-next/:
+  - fakespot.com
   - '*.fakespot.com'
-  - 'orbitbymozilla.com'
+  - orbitbymozilla.com
   - '*.orbitbymozilla.com'
-  - 'orbitbyfirefox.com'
+  - orbitbyfirefox.com
   - '*.orbitbyfirefox.com'

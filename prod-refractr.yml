@@ -856,8 +856,8 @@ refracts:
 
 # SREIN-588
 - dsts:
-  - if: '$request_uri ~ ^.*\.bugzilla.mozilla.org/(.*)$'
-    .*\.bugzilla.mozilla.org/(.*)$: bugzilla.mozilla.org/$1
+  - if: '$request_uri ~ ^/(.*)$'
+    ^/(.*)$: bugzilla.mozilla.org/$1
   - redirect: bugzilla.mozilla.org/
   srcs:
   - '*.bugzilla.mozilla.org'

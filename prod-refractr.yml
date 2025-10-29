@@ -854,17 +854,6 @@ refracts:
   - https://bugzil.la/form.foo: https://bugzilla.mozilla.org/form.foo
   - https://bugzil.la/glonk: https://bugzilla.mozilla.org/buglist.cgi?quicksearch=glonk
 
-# SREIN-588
-- dsts:
-  - if: '$request_uri ~ ^.*\.bugzilla.mozilla.org/(.*)$'
-    .*\.bugzilla.mozilla.org/(.*)$: bugzilla.mozilla.org/$1
-  - redirect: bugzilla.mozilla.org/
-  srcs:
-  - '*.bugzilla.mozilla.org'
-  tests:
-  - https://test.bugzilla.mozilla.org/foo: https://bugzilla.mozilla.org/foo
-  - https://bug1245.bugzilla.mozilla.org/show_bug.cgi?id=4566: https://bugzilla.mozilla.org/show_bug.cgi?id=4566
-
 # https://mozilla-hub.atlassian.net/browse/SVCSE-140
 - www.mozilla.org/: status.mozilla.org
   status: 302

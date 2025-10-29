@@ -76,13 +76,7 @@ class Test:
 
 class RefractrValidator:
     def __init__(self, netloc=None, early=False, verbose=False):
-        try:
-            # If we're already inside an event loop
-            self._loop = asyncio.get_running_loop()
-        except RuntimeError:
-            # No running loop: create one and set it for this thread
-            self._loop = asyncio.new_event_loop()
-            asyncio.set_event_loop(self._loop)
+        self._loop = asyncio.get_event_loop()
         self.netloc = netloc
         self.early = early
         self.verbose = verbose

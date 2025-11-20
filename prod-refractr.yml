@@ -290,6 +290,9 @@ refracts:
 - support.mozilla.org/:
   - www.support.mozilla.org
   - support.mozilla.com
+  # SREIN-636
+  - supportfirefox.com
+  - www.supportfirefox.com
 
 
   # SE-1564
@@ -478,6 +481,12 @@ refracts:
 - www.mozilla.org/firefox/new/?redirect_source=getfirefox-com:
   - getfirefox.com
   - www.getfirefox.com
+  # SREIN-636
+  - fastestfirefox.com
+  - www.fastestfirefox.com
+  # SREIN-636
+  - firefoxvictory.com
+  - www.firefoxvictory.com
 
   # bug 1463086
 - mozilla.org/nl/:
@@ -1165,6 +1174,9 @@ refracts:
 # OPST-2405
 - newproducts.mozilla.org/:
   - labs.mozilla.org
+  # SREIN-636
+  - mozillaocho.com
+  - www.mozillaocho.com
 
 # OPST-2429
 - srcs:
@@ -1210,3 +1222,49 @@ refracts:
 - www.firefox.com/features/translate/:
   - translate.firefox.com
 
+# SREIN-636
+- www.mozilla.org/firefox/new/?xv=batmprivate&utm_source=browseagainstthemachine-com&utm_medium=referral:
+  - browseagainstthemachine.com
+  - www.browseagainstthemachine.com
+
+# SREIN-636
+- www.mozilla.org/firefox/new/?utm_medium=referral&utm_source=downloadfirefox-us
+  - downloadfirefox.us
+  - www.downloadfirefox.us
+
+# SREIN-636
+- www.mozilla.org/firefox/new/?utm_medium=referral&utm_source=fire-fox-us
+  - fire-fox.us
+  - www.fire-fox.us
+
+# SREIN-636
+- www.mozilla.org/firefox/new/?utm_medium=referral&utm_source=mozillafirefox-us
+  - mozillafirefox.us
+  - www.mozillafirefox.us
+
+# SREIN-636
+- firefox.com/:
+  - firefox.name
+  - www.firefox.name
+  - producefirefox.com
+  - www.producefirefox.com
+
+# SREIN-636
+- www.mozilla.org/:
+  - mozilla-france.com
+  - www.mozilla-france.com
+  - mozilla-france.org
+  - www.mozilla-france.org
+  - mozilla-nigeria.org
+  - www.mozilla-nigeria.org
+  - mozilla-pakistan.org
+  - www.mozilla-pakistan.org
+  - firefoxstore.org
+  - www.firefoxstore.org
+  - mozillastore.com
+  - www.mozillastore.com
+
+# SREIN-636
+- viewsourceconf.org/
+  - viewsourceconf.com
+  - www.viewsourceconf.com

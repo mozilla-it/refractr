@@ -31,4 +31,3 @@ validate:
         - 301 http://wiki.mozilla.com -> https://wiki.mozilla.org/ MATCHED
         test-result: MATCHED
     validate-result: SUCCESS
-

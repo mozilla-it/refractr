@@ -68,4 +68,3 @@ validate:
         hops:
         - 301 http://en-uk.start.mozilla.com/ -> https://start.mozilla.org/en-uk/ MATCHED
         test-result: MATCHED
-

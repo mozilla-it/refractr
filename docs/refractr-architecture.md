@@ -29,7 +29,7 @@ The refractr.yml spec allows for specifying tests in the form of given-source to
 ### minimal changes
 Due to the nature of redirects and rewrites it is common to add new domains or subtract old ones. This means that the nginx config needs to be told which are the valid list of domains and update them when deploying a new refractr Docker image to GKE. When a new version of the refractr image is pushed to prod, redirects are already live.
 
-In a second step, certificates must be created and linked to refractr's Loadbalancer -- this step currently requires a second PR to be opened after deployment. All certificates are managed with GCP's certificate manager api and attached to the Loadbalancer by a certmap, we manage all of those resources via terraform in refractr's infrastructure project. 
+In a second step, certificates must be created and linked to refractr's Loadbalancer -- this step currently requires a second PR to be opened after deployment. All certificates are managed with GCP's certificate manager api and attached to the Loadbalancer by a certmap, we manage all of those resources via terraform in refractr's infrastructure project.
 
 ## refractr traffic flow
 Traffic flow to refractr starts with DNS. A domain that should be handled by the system must be pointed to it's Loadbalancer, usually by a CNAME, in some cases, by A / AAAA records. Once a request reaches the Loadbalancer, we force HTTPS, then forward to the actual application pods, which then handle individual redirects as configured.

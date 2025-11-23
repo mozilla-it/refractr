@@ -59,4 +59,3 @@ validate:
         - 301 http://lockwise.firefox.com/ -> https://www.mozilla.org/firefox/lockwise/ MATCHED
         test-result: MATCHED
     validate-result: SUCCESS
-

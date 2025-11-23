@@ -5,8 +5,6 @@
 # Available pre-commit hooks
 #   https://pre-commit.com/hooks.html
 
-default_language_version:
-    python: python3.7
 fail_fast: true
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks

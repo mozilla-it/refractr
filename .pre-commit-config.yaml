@@ -24,8 +24,9 @@ repos:
   hooks:
   - id: detect-secrets
     args: ['--baseline', '.secrets.baseline']
-- repo: https://github.com/mozilla-it/jsonschema-on-yaml
-  rev: main
+- repo: https://github.com/python-jsonschema/check-jsonschema
+  rev: 0.35.0
   hooks:
-  - id: jsonschema-on-yaml
-    args: ['refractr/refractr.yml', 'refractr/schema.yml']
+    - id: check-jsonschema
+      files: 'refractr\.yml$'
+      args: ['--schemafile', 'refractr/schema.json']

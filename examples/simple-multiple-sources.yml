@@ -41,4 +41,3 @@ validate:
         - 301 http://labs.mozilla.com -> https://labs.mozilla.org/ MATCHED
         test-result: MATCHED
     validate-result: SUCCESS
-

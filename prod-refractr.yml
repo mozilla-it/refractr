@@ -1228,17 +1228,17 @@ refracts:
   - www.browseagainstthemachine.com
 
 # SREIN-636
-- www.mozilla.org/firefox/new/?utm_medium=referral&utm_source=downloadfirefox-us
+- www.mozilla.org/firefox/new/?utm_medium=referral&utm_source=downloadfirefox-us:
   - downloadfirefox.us
   - www.downloadfirefox.us
 
 # SREIN-636
-- www.mozilla.org/firefox/new/?utm_medium=referral&utm_source=fire-fox-us
+- www.mozilla.org/firefox/new/?utm_medium=referral&utm_source=fire-fox-us:
   - fire-fox.us
   - www.fire-fox.us
 
 # SREIN-636
-- www.mozilla.org/firefox/new/?utm_medium=referral&utm_source=mozillafirefox-us
+- www.mozilla.org/firefox/new/?utm_medium=referral&utm_source=mozillafirefox-us:
   - mozillafirefox.us
   - www.mozillafirefox.us
 
@@ -1265,6 +1265,6 @@ refracts:
   - www.mozillastore.com
 
 # SREIN-636
-- viewsourceconf.org/
+- viewsourceconf.org/:
   - viewsourceconf.com
   - www.viewsourceconf.com

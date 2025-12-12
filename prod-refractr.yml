@@ -415,8 +415,6 @@ refracts:
   # bug 126196
   - mozilla.hu
   - www.mozilla.hu
-  # bug 1331870
-  - events.mozspaces.org
   # We're not using website-beta right now.
   - website-beta.mozilla.org
   # split out store.mozilla.org|com as per bug 1142629

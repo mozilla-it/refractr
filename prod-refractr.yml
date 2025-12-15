@@ -86,14 +86,6 @@ refracts:
   # bug 1627952
 - community.mozilla.org/campaigns/firefox-quantum-sprint/: firefoxsprint.mozilla.community
 
-  # bug 1697571
-- community.mozilla.org/es/groups/mozilla-hispano/:
-  - mozilla-hispano.org
-  - www.mozilla-hispano.org
-
-  # bug 1697571
-- discourse.mozilla.org/c/community-portal/mozilla-hispano/304: foro.mozilla-hispano.org
-
   # bug 1697638
 - community.mozilla.org/es/groups/mozilla-venezuela/:
   - mozillavenezuela.org

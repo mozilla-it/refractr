@@ -1258,3 +1258,7 @@ refracts:
 - viewsourceconf.org/:
   - viewsourceconf.com
   - www.viewsourceconf.com
+
+# IO-3544
+- brand.mozilla.com/hub/26:
+  - brand.firefox.com

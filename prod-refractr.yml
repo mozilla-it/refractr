@@ -1262,3 +1262,4 @@ refracts:
 # IO-3544
 - brand.mozilla.com/hub/26:
   - brand.firefox.com
+  - www.brand.firefox.com

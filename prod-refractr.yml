@@ -163,6 +163,11 @@ refracts:
   # SVCSE-1589
 - monitor.mozilla.org/: monitor.firefox.com
 
+  # IO-3649
+- mozillafoundation.org/nothing-personal/irl-podcast:
+  - irlpodcast.org
+  - www.irlpodcast.org
+
   # bug 1330438
 - moz-releng-docs.readthedocs.io/en/latest/: docs.pub.build.mozilla.org
 

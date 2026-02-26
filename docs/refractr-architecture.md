@@ -29,13 +29,13 @@ The refractr.yml spec allows for specifying tests in the form of given-source to
 ### minimal changes
 Due to the nature of redirects and rewrites it is common to add new domains or subtract old ones. This means that the nginx config needs to be told which are the valid list of domains and update them when deploying a new refractr Docker image to GKE. When a new version of the refractr image is pushed to prod, redirects are already live.
 
-In a second step, certificates must be created and linked to refractr's Loadbalancer -- this step currently requires a second PR to be opened after deployment. All certificates are managed with GCP's certificate manager api and attached to the Loadbalancer by a certmap, we manage all of those resources via terraform in refractr's infrastructure project.
+Certificates are updated automatically. The terraform configuration reads `prod-refractr.yml` directly via an HTTP data source, so certificate changes are detected by Spacelift drift detection and auto-reconciled without a separate PR.
 
 ## refractr traffic flow
 Traffic flow to refractr starts with DNS. A domain that should be handled by the system must be pointed to it's Loadbalancer, usually by a CNAME, in some cases, by A / AAAA records. Once a request reaches the Loadbalancer, we force HTTPS, then forward to the actual application pods, which then handle individual redirects as configured.
 
 ## Continuous Integration (CI)
-CI is done with GitHub Actions. Tests run on every push to any branch in the repo. However, only pushes to the **main** branch and **tags** (matching the `/v[0-9]+.[0-9]+.[0-9]+/`) will cause an update of refractr's Docker image. In addition to tests, Pull Requests (PRs) require code reviews before allowing the change to be to the **main** branch.
+CI is done with GitHub Actions. Tests run on every push to any branch in the repo. Pushes to the **main** branch build a stage image (tagged with `git describe` output), then CI auto-creates the next semver tag. The tag push triggers a second workflow run that builds the prod image. In addition to tests, Pull Requests (PRs) require code reviews before allowing the change to be merged to the **main** branch.
 
 ## The Handoff
 The handoff point between CI and CD is the Docker Repository. In this case we decided to use the Cloud Provider based Docker Repository. For GCP that is Google Artifact Registry (GAR). Images are named refractr and have the output of git describe for the image tag. Image tags are watched and deployed by Argo CD.

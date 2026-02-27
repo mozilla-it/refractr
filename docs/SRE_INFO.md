@@ -47,7 +47,7 @@ When an update to e.g. `prod-refractr.yaml` was made, you can validate the syste
 
 #### deployment
 
-We automatically deploy a stage & prod env for refractr. When a PR merges to `main`, CI builds a stage image (tagged with `git describe` output like `v0.0.225-3-gabcdef1`), then auto-creates the next semver tag (e.g., `v0.0.226`). The tag push triggers a second CI run that builds the prod image. Argo CD picks up both images automatically. No manual tagging or release creation is needed.
+We automatically deploy a stage & prod env for refractr. Both environments use the same deployment: when a PR merges to `main`, CI builds a single image (tagged with `git describe` output like `v0.0.225-3-gabcdef1`) and Argo CD deploys it to both stage and prod.
 
 #### update certificates
 

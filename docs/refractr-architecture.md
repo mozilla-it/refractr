@@ -35,7 +35,7 @@ Certificates are updated automatically. The terraform configuration reads `prod-
 Traffic flow to refractr starts with DNS. A domain that should be handled by the system must be pointed to it's Loadbalancer, usually by a CNAME, in some cases, by A / AAAA records. Once a request reaches the Loadbalancer, we force HTTPS, then forward to the actual application pods, which then handle individual redirects as configured.
 
 ## Continuous Integration (CI)
-CI is done with GitHub Actions. Tests run on every push to any branch in the repo. Pushes to the **main** branch build a stage image (tagged with `git describe` output), then CI auto-creates the next semver tag. The tag push triggers a second workflow run that builds the prod image. In addition to tests, Pull Requests (PRs) require code reviews before allowing the change to be merged to the **main** branch.
+CI is done with GitHub Actions. Tests run on every push to any branch in the repo. Pushes to the **main** branch build a single image (tagged with `git describe` output) that is deployed to both stage and prod by Argo CD. In addition to tests, Pull Requests (PRs) require code reviews before allowing the change to be merged to the **main** branch.
 
 ## The Handoff
 The handoff point between CI and CD is the Docker Repository. In this case we decided to use the Cloud Provider based Docker Repository. For GCP that is Google Artifact Registry (GAR). Images are named refractr and have the output of git describe for the image tag. Image tags are watched and deployed by Argo CD.

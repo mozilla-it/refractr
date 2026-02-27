@@ -47,15 +47,15 @@ When an update to e.g. `prod-refractr.yaml` was made, you can validate the syste
 
 #### deployment
 
-We automatically deploy a stage & prod env for refractr. Stage is deployed whenever a merge to `main` is done, prod is deployed when a GitHub release is created (or a tag has been pushed), that matches the pattern `v\d+\.\d+\.\d+`. In both cases, GitHub actions will build the docker image, Argo CD will ship it to GKE.
+We automatically deploy a stage & prod env for refractr. Both environments use the same deployment: when a PR merges to `main`, CI builds a single image (tagged with `git describe` output like `v0.0.225-3-gabcdef1`) and Argo CD deploys it to both stage and prod.
 
 #### update certificates
 
-Refractr's Loadbalancer is build from Gateway API resources by GCP's Gateway API Controller. The system handles ~180 redirects and forces TLS for every refract, which results in ~360 SSL certificates attached to the Loadbalancer. To be able to make use of such a high number of SSL certificates at once, we're using GCP's certificate manager API to map hostnames to certificates. Certificate manager API defines a certmap (that is attached to the Gateway API Loadbalancer via an annotation), which in turn defines entries that map hostnames to certificates.
+Refractr's Loadbalancer is built from Gateway API resources by GCP's Gateway API Controller. The system handles ~180 redirects and forces TLS for every refract, which results in ~360 SSL certificates attached to the Loadbalancer. To be able to make use of such a high number of SSL certificates at once, we're using GCP's certificate manager API to map hostnames to certificates. Certificate manager API defines a certmap (that is attached to the Gateway API Loadbalancer via an annotation), which in turn defines entries that map hostnames to certificates.
 
-Certificates and certificate-map-entries are managed with terraform, because no method for building them alongside the Gateway API resources directly from GKE was available at the time of migrating to mozcloud.
+Certificates and certificate-map-entries are managed with terraform, using a [terraform-module](https://github.com/mozilla/terraform-modules/tree/main/google_certificate_manager_certificate_map) that reads refract definitions from `prod-refractr.yml` directly via an HTTP data source.
 
-To simplify this, we're using a [terraform-module](https://github.com/mozilla/terraform-modules/tree/main/google_certificate_manager_certificate_map), which reads all refract definitions in from a single yaml document. This document can be generated with a `doit` task, `$ poetry run doit certificate_manager_input`. Once generated and put in place, refractr's certmap can be updated with a PR in to the infra repo.
+Certificate updates are automated via Spacelift. When a new prod image is deployed, argocd-image-updater commits the new image tag to `webservices-infra`, which triggers a Spacelift tracked run on the `refractr-prod` stack. A plan policy auto-approves changes to certificate manager resources. Additionally, hourly drift detection catches any certificate changes that may have been missed and auto-reconciles them.
 
 #### DNS
 

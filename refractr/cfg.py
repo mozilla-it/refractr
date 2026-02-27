@@ -42,7 +42,6 @@ def cd(path):
 def call(
     cmd, stdout=PIPE, stderr=PIPE, shell=True, nerf=False, throw=True, verbose=False
 ):
-
     if nerf:
         return (None, "nerfed", "nerfed")
     process = Popen(cmd, stdout=stdout, stderr=stderr, shell=shell)  # nosec
@@ -90,7 +89,6 @@ def branches_contain_ref(ref):
 
 
 class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
-
     @property
     @lru_cache()
     def REPOROOT(self):
@@ -120,7 +118,7 @@ class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
     @lru_cache()
     def TAG(self):
         if self.GITHUB_REF.startswith("refs/tags/"):
-            return f'{self.GITHUB_REF.split("/")[-1]}'
+            return f"{self.GITHUB_REF.split('/')[-1]}"
         return ""
 
     @property
@@ -169,7 +167,7 @@ class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
     def BRANCH(self):
         if self.CI:
             if self.GITHUB_REF.startswith("refs/heads/"):
-                return f'{self.GITHUB_REF.split("/")[-1]}'
+                return f"{self.GITHUB_REF.split('/')[-1]}"
 
         try:
             return git("rev-parse --abbrev-ref HEAD")
@@ -187,12 +185,16 @@ class AutoConfigPlus(AutoConfig):  # pylint: disable=too-many-public-methods
     @property
     @lru_cache()
     def PROD_TAG_PATTERN(self):
-        return self("PROD_TAG_PATTERN", "^(v[0-9]+\.[0-9]+\.[0-9]+)$")
+        return self(
+            "PROD_TAG_PATTERN", r"^v[0-9]+\.[0-9]+\.[0-9]+(-[0-9]+-g[0-9a-f]+)?$"
+        )
 
     @property
     @lru_cache()
     def DEPLOYED_ENV(self):
         if self.CI:
+            # As of 2026-03 prod and stage are deployed from the same tag so this match
+            # should always succeed
             match = re.search(self.PROD_TAG_PATTERN, self.VERSION)
             if match:
                 return "prod"

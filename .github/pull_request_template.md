@@ -9,5 +9,5 @@ When creating a PR for Refractr, confirm you've done the following steps for a s
 - [ ] If desired, have you generated the nginx config manually to confirm updates work as expected?
 
 After PR merge:
-- [ ] A merge to `main` automatically deploys both stage and prod (for prod, CI auto-creates the next semver tag).
+- [ ] A merge to `main` automatically deploys both stage and prod.
 - [ ] TLS certificates are created automatically by [Spacelift](https://mozilla.app.spacelift.io/stack/refractr-prod). DNS changes may still require SRE or IT to make changes in other systems (e.g. Markmonitor, Route53) -- ask in #mozcloud-support on Slack or in the JIRA ticket.

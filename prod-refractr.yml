@@ -1267,3 +1267,8 @@ refracts:
 # IO-3544
 - brand.mozilla.com/d/5UkPdpbtt8LS:
   - brand.firefox.com
+
+# SVCSE-4368
+- www.mozilla.org/anonym/:
+  - anonymco.com
+  - www.anonymco.com

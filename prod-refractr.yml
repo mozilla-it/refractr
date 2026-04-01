@@ -1272,3 +1272,10 @@ refracts:
 - www.mozilla.org/anonym/:
   - anonymco.com
   - www.anonymco.com
+
+# SVCSE-4369
+- datacollective.mozillafoundation.org/:
+  - mozilladatacollective.com
+
+- dev.datacollective.mozillafoundation.org/:
+  - mozilladatacollective.com

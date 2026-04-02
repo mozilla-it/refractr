@@ -1274,8 +1274,16 @@ refracts:
   - www.anonymco.com
 
 # SVCSE-4369
-- datacollective.mozillafoundation.org/:
-  - mozilladatacollective.com
-
-- dev.datacollective.mozillafoundation.org/:
-  - mozilladatacollective.com
+- dsts:
+  - if: '$request_uri ~ ^/(.*)$'
+    ^/(.*)$: mozilladatacollective.com/$1
+  - redirect: mozilladatacollective.com/
+  srcs:
+  - datacollective.mozillafoundation.org
+  - dev.datacollective.mozillafoundation.org
+  tests:
+  - https://datacollective.mozillafoundation.org/: https://mozilladatacollective.com/
+  - https://datacollective.mozillafoundation.org/datasets/abc123: https://mozilladatacollective.com/datasets/abc123
+  - https://datacollective.mozillafoundation.org/datasets/: https://mozilladatacollective.com/datasets/
+  - https://dev.datacollective.mozillafoundation.org/: https://mozilladatacollective.com/
+  - https://dev.datacollective.mozillafoundation.org/datasets/abc123: https://mozilladatacollective.com/datasets/abc123

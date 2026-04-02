@@ -1268,10 +1268,24 @@ refracts:
 - brand.mozilla.com/d/5UkPdpbtt8LS:
   - brand.firefox.com
 
-# SVCSE-4368
-- www.mozilla.org/anonym/:
+# SVCSE-4368 / SVCSE-4390
+- dsts:
+  - if: '$request_uri ~ ^/advertiser-agreement/?$'
+    ^/advertiser-agreement/?$: www.mozilla.org/en-US/anonym/advertiser-agreement/
+  - if: '$request_uri ~ ^/advertiser-dpa/?$'
+    ^/advertiser-dpa/?$: www.mozilla.org/en-US/anonym/dpa-page/
+  - if: '$request_uri ~ ^/product-documentation/?$'
+    ^/product-documentation/?$: www.mozilla.org/en-US/anonym/product-documentation/
+  - redirect: www.mozilla.org/anonym/
+  srcs:
   - anonymco.com
   - www.anonymco.com
+  tests:
+  - https://www.anonymco.com/advertiser-agreement: https://www.mozilla.org/en-US/anonym/advertiser-agreement/
+  - https://www.anonymco.com/advertiser-dpa: https://www.mozilla.org/en-US/anonym/dpa-page/
+  - https://www.anonymco.com/product-documentation: https://www.mozilla.org/en-US/anonym/product-documentation/
+  - https://www.anonymco.com/: https://www.mozilla.org/anonym/
+  - https://anonymco.com/: https://www.mozilla.org/anonym/
 
 # SVCSE-4369
 - dsts:
